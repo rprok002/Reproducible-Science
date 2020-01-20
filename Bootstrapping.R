@@ -144,7 +144,7 @@ trc.int <- function (mCall, LHS, data){
 }
 # Selfstart Function
 SS.trc <- selfStart(model=trcModel,initial= trc.int)    
-#Create a dataframe to store month parameter values (parms.Month.night).
+
 iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"),
                  data = night[which(night$MONTH == 07),])
 iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"),
@@ -310,5 +310,121 @@ dec <- subset(night, night$MONTH==12)
 
 #determine what TA values work for model
 #know from running model before that apr-oct don't work in the model
+#model is based off TA values, so something must be throwing the model off
+#Determine min and max of TA for each month
+
+month=c("jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec")
+min=c(min(jan$TA),min(feb$TA),min(mar$TA),min(apr$TA),min(may$TA),min(jun$TA),min(jul$TA),min(aug$TA),min(sep$TA),min(oct$TA),min(nov$TA),min(dec$TA))
+max=c(max(jan$TA),max(feb$TA),max(mar$TA),max(apr$TA),max(may$TA),max(jun$TA),max(jul$TA),max(aug$TA),max(sep$TA),max(oct$TA),max(nov$TA),max(dec$TA))
+
+values=data.frame(month,min,max)
+values
+
+par(mfrow=c(2,1))
+plot(min)
+plot(max)
 
 
+#Values that don't seem to work are 22.2 degrees celcius and higher. 21.6 degrees celcius works, but we don't know for range of 21.6-22.2 degrees celcius, so we are going to be conservative and go with 21.6 degrees celcius
+#TA values that work for model
+work <- subset(night,night$TA<21.6)
+#TA values that don't work for model
+dontwork <- subset(night,night$TA>21.6)
+
+#Create a dataframe to store month parameter values (parms.Month.night).
+# Selfstart for the trc:
+trcworkModel <- function(TA, a, b) {
+  y=a * exp(b-TA)
+  return(y)
+}
+
+# Create a function to find initial values for the selfstart function:
+trcwork.int <- function (mCall, LHS, data){
+  x <- work$TA
+  y <- work$NEE
+  
+  a <-1.00703982 + -0.08089044* (min(na.omit(y)))
+  b <- 0.051654 + 0.001400 * (min(na.omit(y)))
+  
+  value = list(a, b)
+  names(value) <- mCall[c("a", "b")]
+  return(value)
+}
+
+# Selfstart Function
+SS.trcwork <- selfStart(model=trcworkModel,initial= trcwork.int)
+#rerun model with values that work
+#get initial values for new dataset
+
+iv <- getInitial(NEE ~ SS.trcwork('TA', "a", "b"),
+                 data = work)
+iv
+
+#nls for new data set
+y = nls( NEE ~ a * exp(b-TA), work,
+         start=list(a= iv$a , b= iv$b),
+         na.action=na.exclude, trace=F, control=nls.control(warnOnly=T))
+summary(y)
+
+# Create Dataframe to store the data: Creates a blank data frame for data to be entered into
+
+parms.Month.night <- data.frame(
+  
+  MONTH=numeric(),
+  
+  a=numeric(),
+  
+  b=numeric(),
+  
+  a.pvalue=numeric(),
+  
+  b.pvalue=numeric(), stringsAsFactors=FALSE, row.names=NULL)
+
+parms.Month.night[1:12, 1] <- seq(1,12,1) # Creates time file to merge with parm file
+
+#Write a function to fit the model and extract paramters
+#(nee.night.work).
+
+
+#Functions: based off of initial values
+
+nee.night.work <- function(dataframe){y.df = nls(NEE ~ a * exp(b-TA),
+                                            
+                                            dataframe, start=list(a= iv$a , b=iv$b ),
+                                            
+                                            na.action=na.exclude, trace=F,
+                                            
+                                            control=nls.control(warnOnly=T))
+
+y.df <- as.data.frame(cbind(t(coef(summary(y.df))[1:2, 1]), t(coef(summary(y.df)) [1:2, 4])))
+
+
+
+names(y.df) <- c("a", "b", "a.pvalue", "b.pvalue")                     
+
+return(y.df)}
+
+# This loop fits monthly models (1:12):
+#Bootstraps to create more data based off of function created by initial values to see if created data still fits the model
+
+try(for(j in unique(work$MONTH)){
+  
+  print(j)
+  
+  
+  
+  iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"), data = work[which(work$MONTH == j),])
+  
+  
+  
+  y4 <- try(nee.night.work(work[which(work$MONTH == j),]), silent=T) # Fit night model
+  
+  
+  
+  try(parms.Month.night[c(parms.Month.night$MONTH == j ), 2:5 ] <- cbind(y4), silent=T)
+  
+  
+  
+  rm(y4)
+  
+}, silent=T)
