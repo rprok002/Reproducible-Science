@@ -413,7 +413,11 @@ try(for(j in unique(work$MONTH)){
   
   
   
+<<<<<<< HEAD
   iv <- getInitial(NEE ~ SS.trcwork('TA', "a", "b"), data = work[which(work$MONTH == j),])
+=======
+  iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"), data = work[which(work$MONTH == j),])
+>>>>>>> c82798967d6ed9c8872602ab684320b7e0f38569
   
   
   
