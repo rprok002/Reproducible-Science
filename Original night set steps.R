@@ -23,7 +23,7 @@ SS.trc <- selfStart(model=trcModel,initial= trc.int)
 
 #Get initial values
 iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"),
-                 data = night[which(night$MONTH >0),])
+                 data = night[which(night$MONTH ==j),])
 iv
 
 #nls for new data set
@@ -84,14 +84,15 @@ plot(night$TA,night$NEE)
 #Bootstrapping
 # Create file to store parms and se
 boot.NEE.night <- data.frame(parms.Month.night[, c("MONTH")]); names (boot.NEE.night) <- "MONTH"
-boot.NEE.night$a.est <- 0
+boot.NEE.night$a.est<- 0
 boot.NEE.night$b.est<- 0
 boot.NEE.night$a.se<- 0
 boot.NEE.night$b.se<- 0
 
 for ( j in unique(boot.NEE.night$Month)){
+  
   y5 <-night[which(night$MONTH == j),] # Subsets data
-          
+}       
   # Determines the starting values:
   iv <- getInitial(NEE ~ SS.trc('TA', "a", "b"), data = y5)
   
@@ -101,14 +102,16 @@ for ( j in unique(boot.NEE.night$Month)){
            na.action=na.exclude, trace=F, control=nls.control(warnOnly=T))
   
   # Bootstrap and extract values:
+  {
   try(results <- nlsBoot(night.fit, niter=100 ), silent=T)
-  try(a <- t(results$estiboot)[1, 1:3], silent=T)
+  try(a <- t(results$estiboot)[1, 1:2], silent=T)
   try(names(a) <- c('a.est','b.est'), silent=T)
-  try(b <- t(results$estiboot)[2, 1:3], silent=T)
+  try(b <- t(results$estiboot)[2, 1:2], silent=T)
   try(names(b) <- c('a.se','b.se'), silent=T)
   try(c <- t(data.frame(c(a,b))), silent=T)
   # Add bootstrap data to dataframe:
-  try(boot.NEE.night[c(boot.NEE.night$MONTH == j), 2:7] <- c[1, 1:6], silent=T)
-  try(rm(night.fit, a, b, c, results, y5), silent=T)
+  try(boot.NEE.night[c(boot.NEE.night$MONTH == j), 2:5] <- c[1, 1:4], silent=T)
+  (rm(night.fit, a, b, c, results, y5))
 }
-trc <- merge( parms.Month.night, boot.NEE.night, by.x="MONTH", by.y="MONTH") # Merge dataframes
+trc <- merge( parms.Month.night, boot.NEE.night) # Merge dataframes
+trc
