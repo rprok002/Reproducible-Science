@@ -78,3 +78,5 @@ parms.Month.night
 
 
 nee.night(night)
+#plot scatter plot and fitted line
+plot(jan$TA,jan$NEE)
