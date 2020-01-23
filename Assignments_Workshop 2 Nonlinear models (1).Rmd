@@ -1,0 +1,25 @@
+---
+title: "Workshop 2_Nonlinear Models"
+author: "Rachel Prokopius"
+date: "1/23/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Objectives
+The objective of the analysis was to fit light-response curves 
+
+
+# Methods
+
+## Site Information (include a map of the harvard forest site)
+
+## Photosynthetic Potential
+
+## Ecosystem Respiration
+
+# Results (at least 1 plot and one table)
+
+# Discussion (1 paragrapgh)
