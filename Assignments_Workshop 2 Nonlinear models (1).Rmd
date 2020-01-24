@@ -2,7 +2,9 @@
 title: "Workshop 2_Nonlinear Models"
 author: "Rachel Prokopius"
 date: "1/23/2020"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -239,7 +241,7 @@ trc <- merge( parms.Month.night, boot.NEE.night,by.x="MONTH", by.y="MONTH") # Me
 trc
 
 # Results 
-![respiration](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/respiration.jpeg)
+![respiration](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/table.jpg)
 
 ![graph](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Rplot02.jpeg)
 
