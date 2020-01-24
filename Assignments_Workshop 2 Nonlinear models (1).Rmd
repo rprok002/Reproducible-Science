@@ -136,6 +136,7 @@ lrc <- merge( parms.Month, boot.NEE, by.x="MONTH", by.y="MONTH")
 lrc
 
 ## Ecosystem Respiration
+The equation used to estimate photosynthetic potential of the study site was NEE ~ a * exp(b*TA), where a and b are parameters that need to be estimated for the model.
 
 ### Estimate initial values for the photosynthetic potential model using selfStart:
 load("~/Desktop/NLM_Workshop.RData")
@@ -241,9 +242,9 @@ trc <- merge( parms.Month.night, boot.NEE.night,by.x="MONTH", by.y="MONTH") # Me
 trc
 
 # Results 
-![respiration](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/table.jpg)
+![Table of a and b parameters for the respiration curve](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/table.jpg)
 
-![graph](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Rplot02.jpeg)
+![High Density scatter plot showing distribution of air temperatue and NEE values for the data set](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Rplot02.jpeg)
 
 # Discussion (1 paragrapgh)
 
