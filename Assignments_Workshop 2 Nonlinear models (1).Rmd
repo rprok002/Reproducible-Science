@@ -1,7 +1,7 @@
 ---
 title: "Workshop 2_Nonlinear Models"
 author: "Rachel Prokopius"
-date: "1/23/2020"
+date: "1/24/2020"
 output:
   html_document:
     df_print: paged
@@ -11,12 +11,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Objectives
+
 The objective of the analysis was to fit light-response curves to data collected at Harvard Forest in Massachusetts in order to better estimate net ecosystem exchange (NEE) during periods of photosynthesis (day) and plant respiration (night). These estimations will inform researchers about the photosynthetic potential and ecosystem respiration for the studied area of Harvard Forest. 
 
 
 # Methods
 
-## Site Information (include a map of the harvard forest site)
+## Site Information 
+
 ![site image and map](C:/Users/Rachel Prokopius/Documents/FALCON HD/Graduate School/First Year/Spring Semester/Quantitative Ecology/Reproducible Science/Harvard Forest.jpg)
 
 ###### Images from Google Maps and https://harvardforest.fas.harvard.edu/about-us
@@ -33,9 +35,11 @@ Data was collected from Environmental Measurement Station Eddy Flux Towers (EMS)
 
 
 ## Photosynthetic Potential
+
 The equation used to estimate photosynthetic potential of the study site was NEE ~ (a1 * PAR * ax)/(a1 * PAR + ax) + r, where a1, ax and r are all parameters that need to be estimated for the model.
 
 ### Estimate initial values for the photosynthetic potential model using selfStart:
+
 load("~/Desktop/NLM_Workshop.RData")
 library(nlstools)
 lrcModel <- function(PAR, a1, ax, r) {
@@ -64,6 +68,7 @@ SS.lrc <- selfStart(model=lrcModel,initial= lrc.int)
 iv <- getInitial(NEE ~ SS.lrc('PAR', "a1", "ax", "r"),
 data = day[which(day$MONTH == 07),])
 iv
+
 ### Create a dataframe to store month parameter values a1, ax and r (parms.Month):
 
 parms.Month <- data.frame(
@@ -136,9 +141,10 @@ lrc <- merge( parms.Month, boot.NEE, by.x="MONTH", by.y="MONTH")
 lrc
 
 ## Ecosystem Respiration
-The equation used to estimate photosynthetic potential of the study site was NEE ~ a * exp(b*TA), where a and b are parameters that need to be estimated for the model.
+The equation used to estimate ecosystem respiration of the study site was NEE ~ a * exp(b*TA), where a and b are parameters that need to be estimated for the model.
 
 ### Estimate initial values for the photosynthetic potential model using selfStart:
+
 load("~/Desktop/NLM_Workshop.RData")
 library(nlstools)
 trcModel <- function(TA, a, b) {
@@ -208,6 +214,7 @@ try(for(j in unique(night$MONTH)){
 parms.Month.night
 
 ### Bootstrapping
+
 boot.NEE.night <- data.frame(parms.Month.night[, c("MONTH")]); names (boot.NEE.night) <- "MONTH"
 boot.NEE.night$a.est <- 0
 boot.NEE.night$b.est <- 0
