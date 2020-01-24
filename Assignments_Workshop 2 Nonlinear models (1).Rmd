@@ -9,12 +9,27 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Objectives
-The objective of the analysis was to fit light-response curves to data collected at Harvard Forest in Massachusetts in order to better estimate net ecosystem exchange (NEE) from photosynthetic potential and plant respiration 
+The objective of the analysis was to fit light-response curves to data collected at Harvard Forest in Massachusetts in order to better estimate net ecosystem exchange (NEE) during periods of photosynthesis (day) and plant respiration (night). These estimations will inform researchers about the photosynthetic potential and ecosystem respiration for the studied area of Harvard Forest. 
 
 
 # Methods
 
 ## Site Information (include a map of the harvard forest site)
+![site image and map](C:/Users/Rachel Prokopius/Documents/FALCON HD/Graduate School/First Year/Spring Semester/Quantitative Ecology/Reproducible Science/Harvard Forest.jpg)
+
+######Images from Google Maps and https://harvardforest.fas.harvard.edu/about-us
+
+Harvard Forest is a deciduous forest that is part of the sciences program at Harvard College. The specific study site is found at the following GPS coordinates:
+
+Latitude: 42.53
+Longitude: -72.19
+Elevation: 330
+
+The study site is a cool and moist temperature forest, with mean annual temperatures ranging from -7°C to 20°C. Precipitation is fairly consistent throughout the year.The dominant tree species found in the area are Red oak (*Quercus rubra*), Red maple (*Acer rubrum*), Black birch (*Betula lenta*), White pine (*Pinus strobus*)and Eastern hemlock (*Tsuga canadensis*).
+
+Data was collected from Environmental Measurement Station Eddy Flux Towers (EMS) in the study area. The data set used in the analysis has hourly measurements of NEE (per unit ground area), air temperature (°C)
+
+
 
 ## Photosynthetic Potential
 
