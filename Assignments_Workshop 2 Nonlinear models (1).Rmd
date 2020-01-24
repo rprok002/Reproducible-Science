@@ -161,7 +161,7 @@ trc.int <- function (mCall, LHS, data){
 
 SS.trc <- selfStart(model=trcModel,initial= trc.int)
 
-### Create a dataframe to store month parameter values a1, ax and r (parms.Month.night):
+### Create a dataframe to store month parameter values a and b (parms.Month.night):
 
 parms.Month.night <- data.frame(
   
@@ -177,15 +177,15 @@ parms.Month.night <- data.frame(
 
 parms.Month.night [1:12, 1] <- seq(1,12,1)
 
-### Write a function to fit the model and extract paramter values a1, ax and r (nee.night):
+### Write a function to fit the model and extract paramter values a and b (nee.night):
 
 nee.night <- function(dataframe){y.df = nls(NEE ~ a * exp(b*TA),
                                             
-                                            dataframe, start=list(a= iv$a ,b=iv$b),
+                                    dataframe,start=list(a=iv$a,b=iv$b),
                                             
-                                            na.action=na.exclude, trace=F,
+                                    na.action=na.exclude,trace=F,
                                             
-                                            control=nls.control(warnOnly=T))
+                                    control=nls.control(warnOnly=T))
 
 y.df <- as.data.frame(cbind(t(coef(summary(y.df))[1:2, 1]), t(coef(summary(y.df)) [1:2, 4])))
 
@@ -241,10 +241,28 @@ for ( j in unique(boot.NEE.night$MONTH)){
 trc <- merge( parms.Month.night, boot.NEE.night,by.x="MONTH", by.y="MONTH") # Merge dataframes
 trc
 
-# Results 
-![Table of a and b parameters for the respiration curve](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/table.jpg)
+# Results
 
+### Table 1
+![Table of a and b parameters and bootstrapping estimates for the respiration curve](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/table.jpg)
+
+Table 1 includes monthly parameter values estimated from the self-start function for ecosystem respiration, the significance of each of these parameters, and the estimates and standard errors for the parameters calculated through bootstrapping.
+
+### Figure 1
 ![High Density scatter plot showing distribution of air temperatue and NEE values for the data set](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Rplot02.jpeg)
 
-# Discussion (1 paragrapgh)
+Figure 1 represents the relationship between air temperature and net ecosystem exchange for the Harvard Forest study area. In order to more clearly visualize the high volume of data, a high-intensity scatter plot was constructed. 
 
+### Table 2
+![Table of a1, ax and r parameters and bootstrapping estimates for the photosynthetic potential curve](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-science/day table.jpg)
+
+Table 2 includes monthly parameter values estimated from the self-start function for the photosynthetic potential curve, the significance of each of these parameters, and the estimates and standard errors for the parameters calculated through bootstrapping.
+
+### Figure 2
+![High Density scatter plot showing distribution of photosynthetically active radiation and NEE values for the data set](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/day plot.jpg)
+
+Figure 2 represents the relationship photosynthetically active radiation and net ecosystem exchange for the Harvard Forest study area. In order to more clearly visualize the high volume of data, a high-intensity scatter plot was constructed. 
+
+# Discussion 
+
+Though the nonlinear models constructed for the respiration data set were statistically significant, and most of the values for the photosynthetic potential were statistically significant, I would argue that it is not ecologically relevant. Though portions of the data sets show little variation in relationship between air temperature or PAR and NEE (the darker portions of the scatter plot), it is clear that there is much variation in the data spread throughout the year (Figure 1). This is further seen by the estimated parameter values after construction the nonlinear model; for example, the a parameter ranges from 1.101 in March to 4.799 in August, and continues to demonstrate this large range after bootstrapping (Table 1). Because August is in the growing season when leaves are actively photosynthesizing during the day and therefore sequestering carbon for respiration at night, it is logical that parameter a values are higher for August than for months in the non-growing season such as January or February (Table 1) Given the differences in parameter values throughout the year, further analysis of this data should include separate nonlinear models for each month. The data set may also be able to be sectioned off to construct a few models for the entire year instead of one for each month. For example, due to the relative closeness of parameter a values from January until April, from May until August, and from September until December, and argument could be made for fitting nonlinear models to certain sets of months. Further analysis is required to determine the validity of this idea.
