@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 # Objectives
-The objective of the analysis was to fit light-response curves 
+The objective of the analysis was to fit light-response curves to data collected at Harvard Forest in Massachusetts in order to better estimate net ecosystem exchange (NEE) from photosynthetic potential and plant respiration 
 
 
 # Methods
