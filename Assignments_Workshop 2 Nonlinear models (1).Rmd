@@ -1,5 +1,5 @@
 ---
-title: "Workshop 2_Nonlinear Models"
+title: "Workshop 2: Nonlinear Models"
 author: "Rachel Prokopius"
 date: "1/24/2020"
 output:
