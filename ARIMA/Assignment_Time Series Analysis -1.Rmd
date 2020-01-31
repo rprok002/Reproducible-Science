@@ -1,0 +1,39 @@
+---
+title: "Workshop 3_Timeseries Models"
+author: "Sparkle L. Malone"
+date: "1/31/2020"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Objectives
+The primary objectives of this analysis is to determine and account for the temporal variation and seasonality in a data set that violates the assumed independence of the data set. Once this variation is accounted for, it can be determined which independent variables best explain and can predict future values of the dependent variable. 
+
+# Methods
+
+## Site Information 
+
+![site images and map locations of TS/Ph-7a](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/ARIMA/Site.jpg)
+
+The research area is the TS/Ph-7a site, one of the 23 research sites for the Florida Coastal Everglades Long-term Ecological Research program. The site sits at the mouth of Taylor Slough and the GPS coordinates for the site are:
+
+Latitude: 25.19080491
+Longitude: -80.63910514
+
+The site is comprised of limestone bedrock and the primary vegetation is mangrove forest. The site experiences distinct wet (June-November) and dry (December-May) seasons. An Environmental Measurement Station Eddy Flux Tower (EMS) is located at the site and recorded the data set for this analysis, which includes NEE (g C m2 day−1), total daily photosynthetically active radiation ( W m−2 day−1), air temperature (°C), water temperature minimum and maximum (°C), and water salinity minimum, maximum, and mean from January 1st through December 31st of 2018. 
+
+Data and images obtained from https://fce-lter.fiu.edu/research/sites/index.php and Google Maps
+
+## Statistical Analysis
+
+Four R packages were loaded and used to analyse the data: zoo, tsclean, forecast and xts.
+
+The independent variable (NEE) was graphed as a time series to determine any outliers, and if outliers were present the tsclean package was run to remove them. Once cleaned, the independent variable was decomposed and tests for stationarity and autocorrelation were performed and plotted for visual analysis. If the data was not stationary, the function diff() was used to difference the time series and the test for stationarity was rerun. An ARIMA model was fit to the data set and, if autocorrelations were present, the model was rerun with altered p redisual values that corresponded to spikes in the autocorrelation plots until the resulting autocorrelation plots no longer contained autocorrelations. AIC values of the models were compared using the AIC function, and the Ljung-Box test of independence was performed to ensure the residuals of the resulting ARIMA model are not autocorrelated. The forcast function was used to determine projections of NEE with the ARIMA model created from the data set.
+
+The above steps were repeated with the independent variables of maximum salinity and air temperature (°C).
+# Results (minimum of 1 plot and one table)
+
+
+Figure 2. Forecast for future NEE values using maximum salinity as the regressor. ARIMA(3,1,1)(2,0,1)[30].
+# Discussion (1 paragrapgh)

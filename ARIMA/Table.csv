@@ -1,0 +1,4 @@
+Arima Model,Dickey-Fuller Value,Stationary P-value,ARIMA df,ARIMA AIC value,Ljung-Box test Q* value,df,P-value
+NEE,-4.4703,<0.01,18,704.7739,23.109,19,0.2326
+diff(Max Salinity),-8.9764,<0.01,9,700.5729,37.929,28,0.09976
+diff(Air Temperature),-9.979,<0.01,8,660.8001,37.296,29,0.1388
