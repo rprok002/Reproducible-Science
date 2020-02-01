@@ -188,8 +188,9 @@ AIC(arima.nee2,arima.nee4 )
 
 checkresiduals(arima.nee4, lag=36)
 
-par(mfrow=c(1,1))
-plot(nee , typ="l"); lines(fitted(arima.nee4),col="blue")
+par(mfrow=c(1,1), mai=c(1.25,1.8,0.6, 1.5))
+plot(nee , typ="l", main="Original and ARIMA-modeled Data Series 
+     for NEE regulated by Maximum Salinity" , xlab="Time" , ylab="NEE (g C m2 day−1)"); lines(fitted(arima.nee4),col="blue")
 
 par(mfrow=c(1,1), mai=c(1.25,0.8,0.5, 0.5))
 plot(forecast(arima.nee4, h=30,xreg=sal.i), main="Forecasts from Max Salinity Regression with ARIMA" , xlab="Time" , ylab="NEE (g C m2 day−1)")
@@ -302,11 +303,12 @@ tsdisplay(residuals(arima.nee8), lag.max=45)
 AIC(arima.nee4,arima.nee8 )
 checkresiduals(arima.nee8, lag=36)
 
-par(mfrow=c(1,1))
-plot(nee , typ="l"); lines(fitted(arima.nee8),col="purple")
+par(mfrow=c(1,1), mai=c(1.25,1.8,0.6, 1.5))
+plot(nee , typ="l", main="Original and ARIMA-modeled Data Series 
+     for NEE regulated by Air Temperature (°C)" , xlab="Time" , ylab="NEE (g C m2 day−1)"); lines(fitted(arima.nee8),col="purple")
 
 par(mfrow=c(1,1), mai=c(1.25,0.8,0.5, 0.5))
-plot(forecast(arima.nee8, h=30,xreg=airtempclean), main="Forecasts from Air Temperature Regression with ARIMA" , xlab="Time" , ylab="NEE (g C m2 day−1)")
+plot(forecast(arima.nee8, h=30,xreg=airtempclean), lines(fitted(arima.nee8),col="purple"), main="Forecasts from Air Temperature Regression with ARIMA" , xlab="Time" , ylab="NEE (g C m2 day−1)")
 
 
 df<- ARIMAtable[1:3,1:8]
