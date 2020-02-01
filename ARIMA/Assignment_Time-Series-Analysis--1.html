@@ -389,10 +389,16 @@ summary {
 <div id="statistical-analysis" class="section level2">
 <h2>Statistical Analysis</h2>
 <p>Four R packages were loaded and used to analyse the data: zoo, tsclean, forecast and xts.</p>
-<p>The independent variable (NEE) was graphed as a time series to determine any outliers, and if outliers were present the tsclean package was run to remove them. Once cleaned, the independent variable was decomposed and tests for stationarity and autocorrelation were performed and plotted for visual analysis. If the data was not stationary, the function diff() was used to difference the time series and the test for stationarity was rerun. An ARIMA model was fit to the data set and, if autocorrelations were present, the model was rerun with altered p redisual values that corresponded to spikes in the autocorrelation plots until the resulting autocorrelation plots no longer contained autocorrelations. AIC values of the models were compared using the AIC function, and the Ljung-Box test of independence was performed to ensure the residuals of the resulting ARIMA model are not autocorrelated. The forcast function was used to determine projections of NEE with the ARIMA model created from the data set.</p>
-<p>The above steps were repeated with the independent variables of maximum salinity and air temperature (°C). # Results (minimum of 1 plot and one table)</p>
-<p>Figure 2. Forecast for future NEE values using maximum salinity as the regressor. ARIMA(3,1,1)(2,0,1)[30]. # Discussion (1 paragrapgh)</p>
+<p>The independent variable (NEE) was graphed as a time series to determine any outliers, and if outliers were present the tsclean package was run to remove them. Once cleaned, the independent variable was decomposed and tests for stationarity (p&lt;0.05) and autocorrelation were performed and plotted for visual analysis. If the data was not stationary, the function diff() was used to difference the time series and the test for stationarity was rerun. An ARIMA model was fit to the data set and, if autocorrelations were present, the model was rerun with altered p redisual values that corresponded to spikes in the autocorrelation plots until the resulting autocorrelation plots no longer contained autocorrelations. AIC values of the models were compared using the AIC function, and the Ljung-Box test of independence was performed to ensure the residuals of the resulting ARIMA model are not autocorrelated (P&gt;0.05). The forcast function was used to determine projections of NEE with the ARIMA model created from the data set.</p>
+<p>The above steps were repeated with the independent variables of maximum salinity (Max Salinity) and air temperature (Air Temperature °C).</p>
 </div>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p>!(C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Table 1.jpg)</p>
+<p>All data series in Table 1 had outliers present which were removed through the tsclean package. The test of stationarity for the NEE model without independent variable addition (Model NEE) had a signifiant p-value, and could therefore be used without differencing the series.The maximum salinity and air temperatures were originally determined not to be stationary (Dickey-Fuller = -2.1936, p-value = 0.4952 and Dickey-Fuller = -2.1179, p-value = 0.5272 respectively) and were differenced in order to obtain stationary data series (Table 1). All tested data series showed independence through the Ljung-Box test (Table 1).</p>
+<p>data sets<br />
+Figure 2. Forecast for future NEE values using maximum salinity as the regressor. ARIMA(3,1,1)(2,0,1)[30]. # Discussion (1 paragrapgh)</p>
 </div>
 
 

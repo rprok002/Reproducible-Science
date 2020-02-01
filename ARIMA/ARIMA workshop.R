@@ -1,4 +1,4 @@
-load("~/FALCON HD/GitHub/ARIMA/ARIMA_Workshop.RData")
+load("~/FALCON HD/GitHub//Reproducible-Science/ARIMA/ARIMA_Workshop.RData")
 library(zoo)
 library(tseries)
 library(forecast)
@@ -107,7 +107,7 @@ arima.nee2 <-arima(nee , order=c(10,1,3), seasonal= list(order=c(2,0,2)))
 AIC(arima.nee1, arima.nee2)
 tsdisplay(residuals(arima.nee2), lag.max= 30)
 par(mfrow=c(1,1))
-plot(nee , typ="l"); lines(fitted(arima.nee2),col="red")
+plot(nee , typ="l", main="Original and ARIMA-modeled Data Series for NEE" , xlab="Time" , ylab="NEE (g C m2 day−1)"); lines(fitted(arima.nee2),col="red")
 
 #Next, we just need test for independence. The Ljung-Box is a test of independence at all lags up to the one specified.
 #Instead of testing randomness at each distinct lag, it tests the “overall” randomness based on a number of

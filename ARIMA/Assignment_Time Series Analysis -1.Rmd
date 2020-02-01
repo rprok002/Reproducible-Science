@@ -14,7 +14,7 @@ The primary objectives of this analysis is to determine and account for the temp
 
 ## Site Information 
 
-![site images and map locations of TS/Ph-7a](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/ARIMA/Site.jpg)
+![site images and map locations of TS/Ph-7a](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Site.jpg)
 
 The research area is the TS/Ph-7a site, one of the 23 research sites for the Florida Coastal Everglades Long-term Ecological Research program. The site sits at the mouth of Taylor Slough and the GPS coordinates for the site are:
 
@@ -29,11 +29,22 @@ Data and images obtained from https://fce-lter.fiu.edu/research/sites/index.php 
 
 Four R packages were loaded and used to analyse the data: zoo, tsclean, forecast and xts.
 
-The independent variable (NEE) was graphed as a time series to determine any outliers, and if outliers were present the tsclean package was run to remove them. Once cleaned, the independent variable was decomposed and tests for stationarity and autocorrelation were performed and plotted for visual analysis. If the data was not stationary, the function diff() was used to difference the time series and the test for stationarity was rerun. An ARIMA model was fit to the data set and, if autocorrelations were present, the model was rerun with altered p redisual values that corresponded to spikes in the autocorrelation plots until the resulting autocorrelation plots no longer contained autocorrelations. AIC values of the models were compared using the AIC function, and the Ljung-Box test of independence was performed to ensure the residuals of the resulting ARIMA model are not autocorrelated. The forcast function was used to determine projections of NEE with the ARIMA model created from the data set.
+The independent variable (NEE) was graphed as a time series to determine any outliers, and if outliers were present the tsclean package was run to remove them. Once cleaned, the independent variable was decomposed and tests for stationarity (p<0.05) and autocorrelation were performed and plotted for visual analysis. If the data was not stationary, the function diff() was used to difference the time series and the test for stationarity was rerun. An ARIMA model was fit to the data set and, if autocorrelations were present, the model was rerun with altered p redisual values that corresponded to spikes in the autocorrelation plots until the resulting autocorrelation plots no longer contained autocorrelations. AIC values of the models were compared using the AIC function, and the Ljung-Box test of independence was performed to ensure the residuals of the resulting ARIMA model are not autocorrelated (P>0.05). The forcast function was used to determine projections of NEE with the ARIMA model created from the data set.
 
-The above steps were repeated with the independent variables of maximum salinity and air temperature (°C).
-# Results (minimum of 1 plot and one table)
+The above steps were repeated with the independent variables of maximum salinity (Max Salinity) and air temperature (Air Temperature °C).
 
 
+# Results 
+
+![Table 1](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Table 1.jpg)
+
+All data series in Table 1 had outliers present which were removed through the tsclean package. The test of stationarity for the NEE model without independent variable addition (Model NEE) had a signifiant p-value, and could therefore be used without differencing the series.The maximum salinity and air temperatures were originally determined not to be stationary (Dickey-Fuller = -2.1936, p-value = 0.4952 and Dickey-Fuller = -2.1179, p-value = 0.5272 respectively) and were differenced in order to obtain stationary data series (Table 1). All tested data series showed independence through the Ljung-Box test (Table 1). 
+
+![Figure 1.Time series of NEE plotted with original data series (black) and ARIMA-modeled data series (red)](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Figure 1 NEE.jpeg)
+
+![Figure 2.Time series of NEE plotted with original data series (black) and ARIMA-modeled data series regulated by maximum salinity (blue)](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Max Salinity compare plot.jpeg)
+
+
+ARIMA models were run for the dependent variable NEE and the independent variables maximum salinity and air temperature to account for temporal and seasonal variation in the data series. The resulting models were plotted against the models created for each data series (Figures 1-3).
 Figure 2. Forecast for future NEE values using maximum salinity as the regressor. ARIMA(3,1,1)(2,0,1)[30].
 # Discussion (1 paragrapgh)
