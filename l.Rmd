@@ -1,5 +1,5 @@
 ---
-title: "Prokopius Project Proposal"
+title: "Revised Prokopius Project Proposal"
 author: "Rachel Prokopius 1/10/2020"
 ---
 
@@ -8,12 +8,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Research Statement:
-I am a first-year graduate student at Florida International University. My research focus is amphibian conservation in the face of the chytrid fungus epidemic. More specifically, I am interested in the possible behavioral changes frogs may exhibit if able to detect and actively avoid infection by chytrid, the physiological mechanisms that could contribute to recognition and avoidance behavior, and the conservation policy changes that can come about through these studies. My study species is the marsupial frog, genus *Gastrotheca*, in high-elevation sites in Ecuador. 
+I am a first-year graduate student at Florida International University. Before becoming a graduate student, I performed biological research as an undergraduate student at Northern Kentucky University looking to develop better methods for determining the size of macroinvertebrates in stream systems, which would then be used to predict energectic content and relative stream health. I spent three years collecting data in Northern Kentucky, USA and Karlstad, Sweden and running linear models between surface area and dry mass values to compare to the traditional length-to-dry mass relationship used in literature since the 1980's. However, certain linear plots appeared to have a nonlinear trend in the relationship between the dependent variable of dry mass (mg) and independent variables of surface area (square mm) and length (mm).
 
 ## Objectives and Hypothesis:
-As a preliminary portion of the project, I must first determine whether *Gastrotheca* frogs have the innate behavior in nature to  avoid chytrid fungus. I hypothesize that chytrid presence determines frog presence. If *Gastrotheca* frogs avoid chytrid fungus in nature, more frogs will be found in areas where chytrid is found versus areas where it is not found. 
+The objective of this project is to determine the extent to which nonlinear modeling explains the relationship between surface area and length to dry mass of stream macroinvertebrates in Northern Kentucky and Sweden. I predict that nonlinear models will better explain the relationships between variables, and of the nonlinear models the surface area models will better explain dry mass values then will length measurements.
 
 ## Methods (Data Selection and Analysis)
-No data has been collected on amphibian presence density based on chytrid presence in Ecuador. In order to determine the best sites in Ecuador to study *Gastrotheca* frogs and chytrid presence, presence data of *Gastrotheca riobambae* and chytrid fungus will be compared through species distribution analysis. Frog presence data will be used from Bresciano et al. 2015 and GBIF. Chytrid distribution has yet to be determined. 
+I will use data collected throughout my undergraduate years for this analysis. I will use the nlm function in Rstudio to fit nonlinear models to the data sets and produce Rsquared values with which to compare model fitness.
 
 
