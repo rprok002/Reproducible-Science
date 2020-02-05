@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 # Objectives
 
-The primary objectives of this analysis is to build a species distribution model for the provided data of observations of the saguaro cactus in the southeastern United States and northern Mexico.
+The primary objectives of this analysis is to build a species distribution model for the provided data of observations of the saguaro cactus in the southeastern United States and northwestern Mexico.
 
 # Methods
 
@@ -17,7 +17,7 @@ The primary objectives of this analysis is to build a species distribution model
 
 ![Saguaro cactus, *Carnegiea gigantea*](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Species Distribution Model/cactus image.jpg)
 
-The study species is the saguaro cactus, *Carnegiea gigantea*, is native to the southeastern United States and northern Mexico. The plant is specially adapted to the dry, hot environment of this portion of the world by retaining large quantities of water during the few annual rainstorms and slowly using this water throughout the year. The cactus reproduces via flower blossoms and fruits, and can live to be about 150 years old.   
+The study species is the saguaro cactus, *Carnegiea gigantea*, which is native to the southeastern United States and northwestern Mexico. The plant is specially adapted to the dry, hot environment of this portion of the world by retaining large quantities of water during the few annual rainstorms and slowly using this water throughout the year. The cactus reproduces via flower blossoms and fruits, and can live to be about 150 years old.   
 
 Species image obtained from https://en.wikipedia.org/wiki/Saguaro
 Data set and species distribution model tutorial obtained from https://jcoliver.github.io/learn-r/011-species-distribution-models.html
@@ -26,25 +26,21 @@ Data set and species distribution model tutorial obtained from https://jcoliver.
 
 Five R packages were loaded and used to analyse the data: sp, raster, maptools, rgdal and dismo.
 
-Saguaro cactus GPS coordinates were uploaded to Rstudio and plotted on a base map of the southwestern United States and northern Mexico. Bioclimate data was downloaded and restricted to the pertaining geographical area of the base map. Pseudo-data points were calculated to allow the model to account for both presence and absence of the cactus. THe observation points and pseudo-data points were randomly sampled into either a training group for building the model or a testing group for testing the validity of the created model. The created model was used to determine a threshold through the "spec_sens" sensitivity for presence and absence data for the saguaro cactus, and the original observations and pseudo-data points were resampled for only the points located above the calculated threshold and replotted on the base map. 
+Saguaro cactus GPS coordinates were uploaded to Rstudio and plotted on a base map of the southwestern United States and northwestern Mexico. Bioclimate data was downloaded and restricted to the pertaining geographical area of the base map. Pseudo-data points were calculated to allow the model to account for both presence and absence of the cactus. The observation points and pseudo-data points were randomly sampled into either a training group for building the model or a testing group for testing the validity of the created model. The created model was used to determine a threshold through the "spec_sens" sensitivity for presence data for the saguaro cactus, and the model was reconfigured based on this threshold to determine the areas of highest likelihood that the cactus could be found. This range was plotted along with the original presence points on the base map. 
 
 
 # Results 
 
-![Table 1](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/ARIMA/Table 1.jpg)
+No data table outputs were generated for this analysis. A total of 400 presence points and 400 pseudo-absence points were used to build and test the model. 
 
-All data series in Table 1 had outliers present which were removed through the tsclean package. The test of stationarity for the NEE model without independent variable addition (Model NEE) had a signifiant p-value, and could therefore be used without differencing the series.The maximum salinity and air temperatures were originally determined not to be stationary (Dickey-Fuller = -2.1936, p-value = 0.4952 and Dickey-Fuller = -2.1179, p-value = 0.5272 respectively) and were differenced in order to obtain stationary data series (Table 1). All tested data series showed independence through the Ljung-Box test with p-values greater than 0.05 (Table 1). 
 
 ![Figure 1. Plot of presence and absence data for saguaro cactus in the southeastern United States and northern Mexico](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Species Distribution Model/graph.jpg)
 
-From the species distribution model, the minimun threshold for saguaro cactus presence was 0.009275. Once the model was reconfigured with the threshold, presence and absence data from the model were able to be plotted on the base map of the United States and Mexico (Figure 1).
+From the species distribution model, the minimun threshold for saguaro cactus presence was 0.009275. Once the model was reconfigured with similarity values above the threshold, presence and absence data from the model were able to be plotted on the base map of the United States and Mexico (Figure 1).The original data points were plotted as black crosses, the predicted presence range is colored green, and the absence points were given no coloration.
 
 # Discussion 
 
-When analyzing ARIMA models, the AIC value tests the goodness of fit of the model to the data set. The lower the AIC value is, the better the model fits the data set. While maximum salinity of water at the TS/Ph-7a site in the Florida Everglades generates a model of NEE with an AIC value only slightly lower than the the model generated by NEE alone, air temperature greatly decreases the AIC value of the resulting model (Table 1). This result suggests that air temperature is a better estimator of NEE than maximum salinity is for the TS/Ph-7a site of the Florida Everglades, and would therefore be more useful in creating future projections of NEE (Figure 6). Net Ecosystem Exchange (NEE) is defined as the overall exchange of carbon dioxide in an ecosystem (Chapin et al. 2011). Much of the carbon dioxide exchange in plant ecosystems is due to plant photosynthesis and respiration, both of which are affected by air temperature (Hofstra and Hesketh 1969). Air temperature is also known to fluctuate seasonally,  so data sets with outputs such as NEE that are affected by air temperature are ideal for the use of ARIMA models to account for the effect of seasonality on the dependent variable.
+The saguaro cactus is known to have an incredibly limited home range, relegated only to the the southeastern portion of Arizona and the northwestern portion of Mexico, though some plants have also been seen to extend into the outskirts of California (https://en.wikipedia.org/wiki/Saguaro). One of the main limits to the cactus' range extension is elevation; the plant is not adapted to withstand low temperatures, so higher elevations do not provide ideal habitat. This limited range is seen in the distribution model for this analysis; the presence data points plotted for the cactus seem to outline the predicted range generated by the model, suggesting that the cactus has reached its range limits in the area (Figure 1). The saguaro cactus is a keystone species, meaning it provides vital resources and habitat for organisms in the area and would be highly detrimental for these organisms if the cactus populations were to be negatively affected (https://en.wikipedia.org/wiki/Saguaro). Because the cactus is reletaged to such a small home range, it is vital to protect its habitat in order to ensure the proliferation of many other species in the area. 
 
-# Literature Cited
 
-1.Chapin III, S. F., Matson, P. A. & Vitousek, P. Principles of Terrestrial Ecosystem Ecology. (Springer-Verlag, 2011). 
 
-2.Hofstra, G. & Hesketh, J. D. Effects of temperature on the gas exchange of leaves in the light and dark. *Planta* 85, 228–237 (1969).
