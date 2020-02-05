@@ -91,10 +91,12 @@ plot(wrld_simpl,
      col = "grey95")
 
 # Only plot areas where probability of occurrence is greater than the threshold
-plot(predict.presence > bc.threshold, 
+plot(predict.presence > bc.threshold,  main = "*Carnegiea gigantea* Distribution in Southwest Florida", 
+     xlab= "Longitude", ylab= "Latitude",
      add = TRUE, 
      legend = FALSE, 
      col = c(NA, "olivedrab"))
+    
 
 # And add those observations
 points(x = obs.data$longitude, 
@@ -104,5 +106,5 @@ points(x = obs.data$longitude,
        cex = 0.6)
 
 # Redraw those country borders
-plot(wrld_simpl, add = TRUE, border = "grey5")
+plot(wrld_simpl, add = TRUE, border = "grey5", )
 box()
