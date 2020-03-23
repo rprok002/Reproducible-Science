@@ -1,0 +1,9 @@
+B3=read.csv(file.choose())
+B3y=B3[,1]
+B3displace=B3[,2]
+B3barrels=B3[,7]
+multreg=lm(B3y~B3displace+B3barrels)
+multreg
+residmodel=resid(multreg)
+residmodel
+qqnorm(residmodel)
