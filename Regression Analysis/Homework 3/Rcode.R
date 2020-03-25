@@ -24,25 +24,25 @@ lm.displacement=lm(B3y~B3displace)
 lm.displacement
 #Get residuals for displacement model
 resid1=resid(lm.displacement)
-#Create partial regression for barrels as y
-lm.barrelsasy=lm(B3barrels~B3displace)
-lm.barrelsasy
-#Get residuals for barrels as y
-residbarrelsasy=resid(lm.barrelsasy)
+#Create partial regression for barrels as ith
+lm.barrelsith=lm(B3y~B3barrels)
+lm.barrelsith
+#Get residuals for barrels as ith
+residbarrelsith=resid(lm.barrelsith)
 #Plot partial regression models
-plot(resid1,residbarrelsasy,main="Partial Regression Plot for Barrels Removed")
+plot(resid1,residbarrelsith,main="Partial Regression Plot for Barrels as ith")
 #Create partial regression for barrels
 lm.barrels=lm(B3y~B3barrels)
 lm.barrels
-#Get residuals for barrels model
+#Get residuals for displacement as ith
 resid2=resid(lm.barrels)
-#Create partial regression for displacement as y
-lm.displaceasy=lm(B3displace~B3barrels)
-lm.displaceasy
-#Get residuals for displacement as y
-residdisplaceasy=resid(lm.displaceasy)
+#Create partial regression for displacement as ith
+lm.displaceith=lm(B3y~B3displace)
+lm.displaceith
+#Get residuals for displacement as ith
+residdisplaceith=resid(lm.displaceith)
 #Plot partial regression models
-plot(resid2,residdisplaceasy,main="Partial Regression Plot for Displacement Removed")
+plot(resid2,residdisplaceith,main="Partial Regression Plot for Displacement as ith")
 
 
 #Studentized residuals (standardized)
@@ -119,8 +119,11 @@ studentrlm.solvent
 #Getting hat values
 hatlm.solvent=hatvalues(multreg2)
 hatmultreg2
+#Get MSE
+MSEfull=98.5
+MSEfull
 #Get numerator
-Press1=(studentrmultreg2^2)
+Press1=(studentrmultreg2^2)*MSEfull
 Press1
 
 #calculate all press statistics
@@ -157,6 +160,8 @@ Rsquarefull=1-(PRESS/SSTfull)
 Rsquarefull
 Rsquarepartial=1-(PRESSsolvent/SSTsolvent)
 Rsquarepartial
+
 #Questions for professor:
 #1) We are looking for pattern on a line with a slope of 1, right?
-#2) What is the 0.0767 multiplied to the student squared?
+#2) What is the 0.0767 multiplied to the student squared? Is it MSE? Because if so I'm calculating 3970 for the PRESS and that seems incredibly high
+#3) For the questions for Chapter 5, is it simply running lm(variables), and then running an anova, and then doing an exponential and a log and such and repeating and looking at the stats for each?
