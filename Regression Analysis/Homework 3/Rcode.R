@@ -25,7 +25,7 @@ lm.displacement
 #Get residuals for displacement model
 resid1=resid(lm.displacement)
 #Create partial regression for barrels as ith
-lm.barrelsith=lm(B3y~B3barrels)
+lm.barrelsith=lm(B3barrels~B3displace)
 lm.barrelsith
 #Get residuals for barrels as ith
 residbarrelsith=resid(lm.barrelsith)
@@ -37,7 +37,7 @@ lm.barrels
 #Get residuals for displacement as ith
 resid2=resid(lm.barrels)
 #Create partial regression for displacement as ith
-lm.displaceith=lm(B3y~B3displace)
+lm.displaceith=lm(B3displace~B3barrels)
 lm.displaceith
 #Get residuals for displacement as ith
 residdisplaceith=resid(lm.displaceith)
@@ -84,7 +84,7 @@ lm.solvent
 residsolv=resid(lm.solvent)
 residsolv
 #Create partial regression for hydrogen as ith term
-lm.hydrogenith=lm(B5y~B5hydrogen)
+lm.hydrogenith=lm(B5hydrogen~B5solvent)
 lm.hydrogenith
 #Get residuals for hydrogen as ith term
 residhydrogenith=resid(lm.hydrogenith)
@@ -96,7 +96,7 @@ lm.hydrogen
 #Get residuals for hydrogen
 residhydr=resid(lm.hydrogen)
 #Create partial regression for solvent as ith
-lm.solventith=lm(B5y~B5solvent)
+lm.solventith=lm(B5solvent~B5hydrogen)
 lm.solventith
 #Get residuals for solvent as ith
 residsolventith=resid(lm.solventith)
@@ -117,7 +117,7 @@ studentrlm.solvent
 
 #PRESS Statistic for full model
 #Getting hat values
-hatlm.solvent=hatvalues(multreg2)
+hatmultreg2=hatvalues(multreg2)
 hatmultreg2
 #Get MSE
 MSEfull=98.5
@@ -138,8 +138,12 @@ PRESS
 #Getting hat values
 hatlm.solvent=hatvalues(lm.solvent)
 hatlm.solvent
+#Get MSE for solvent model
+anova(lm.solvent)
+MSEsolvent=114.4
+MSEsolvent
 #Get numerator
-Press1solvent=(studentrlm.solvent^2)
+Press1solvent=(studentrlm.solvent^2)*MSEsolvent
 Press1solvent
 
 #calculate all press statistics
