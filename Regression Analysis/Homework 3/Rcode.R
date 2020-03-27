@@ -211,7 +211,7 @@ logT=log(Temp)
 expT=exp(Temp)
 #Fit a transformed model
 
-new4.TV=exp(Viscosity~Temp)
+new4.TV=lm(Viscosity~logT)
 new4.TV
 summary(new4.TV)
 
@@ -226,3 +226,157 @@ plot(predictnew4.TV,residnew4.TV, main= "Residuals vs. Predicted Response", xlab
 
 #Create a normal probability plot of the unstandardized residuals
 qqnorm(residnew4.TV)
+
+#PRESS Statistic for full model
+library(qpcR)
+
+PRESS(lm.TV)
+
+#PRESS statistic for solvent model
+
+PRESS(new4.TV)
+
+#Question 5.4
+#Choose the file needed
+Data=read.csv(file.choose())
+x=Data[,3]
+y=Data[,4]
+plot(x,y, main= "Scatter Plot of Y vs X", xlab= "X", ylab= "Y")
+
+#Fit a straight-line model
+lm.xy=lm(y~x)
+lm.xy
+summary(lm.xy)
+
+#Get the unstandardized residuals of the model
+residlm.xy=resid(lm.xy)
+residlm.xy
+
+#Get predicted values from the model
+predictlm.xy=predict(lm.xy)
+predictlm.xy
+plot(predictlm.xy,residlm.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residlm.xy)
+
+#Fit a transformed model
+Newx=1/x
+Newy=1/y
+new.xy=lm(Newy~Newx)
+new.xy
+summary(new.TV)
+
+#Get the unstandardized residuals of the model
+residnew.xy=resid(new.xy)
+residnew.xy
+
+#Get predicted values from the model
+predictnew.xy=predict(new.xy)
+predictnew.xy
+plot(predictnew.xy,residnew.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew.xy)
+
+#Fit a transformed model
+logy=log(y)
+new2.xy=lm(logy~Newx)
+new2.xy
+summary(new2.xy)
+
+#Get the unstandardized residuals of the model
+residnew2.xy=resid(new2.xy)
+residnew2.xy
+
+#Get predicted values from the model
+predictnew2.xy=predict(new2.xy)
+predictnew2.xy
+plot(predictnew2.xy,residnew2.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew2.xy)
+
+#Fit a transformed model
+new3.xy=lm(logy~x)
+new3.xy
+summary(new3.xy)
+
+#Get the unstandardized residuals of the model
+residnew3.xy=resid(new3.xy)
+residnew3.xy
+
+#Get predicted values from the model
+predictnew3.xy=predict(new3.xy)
+predictnew3.xy
+plot(predictnew3.xy,residnew3.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew3.xy)
+
+plot(Temp,NegNewV, main= "Scatter Plot of Viscosity vs Temperature", xlab= "Temperature (degrees C)", ylab= "1/(Viscosity (mPa*s))")
+
+New2y=1/y
+New2x=1/x
+#Fit a transformed model
+
+new4.xy=lm(New2y~x)
+new4.xy
+summary(new4.xy)
+
+#Get the unstandardized residuals of the model
+residnew4.xy=resid(new4.xy)
+residnew4.xy
+
+#Get predicted values from the model
+predictnew4.xy=predict(new4.xy)
+predictnew4.xy
+plot(predictnew4.xy,residnew4.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew4.xy)
+
+#Fit a transformed model
+
+new5.xy=lm(y~New2x)
+new5.xy
+summary(new5.xy)
+
+#Get the unstandardized residuals of the model
+residnew5.xy=resid(new5.xy)
+residnew5.xy
+
+#Get predicted values from the model
+predictnew5.xy=predict(new5.xy)
+predictnew5.xy
+plot(predictnew5.xy,residnew5.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew5.xy)
+
+#Fit a transformed model
+
+new6.xy=lm(New2y~New2x)
+new6.xy
+summary(new6.xy)
+
+#Get the unstandardized residuals of the model
+residnew6.xy=resid(new6.xy)
+residnew6.xy
+
+#Get predicted values from the model
+predictnew6.xy=predict(new6.xy)
+predictnew6.xy
+plot(predictnew6.xy,residnew6.xy, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew6.xy)
+
+#PRESS Statistic for full model
+library(qpcR)
+
+PRESS(lm.xy)
+
+#PRESS statistic for solvent model
+
+PRESS(new3.xy)
