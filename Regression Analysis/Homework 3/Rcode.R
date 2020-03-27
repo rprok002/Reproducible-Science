@@ -120,4 +120,109 @@ PRESS(multreg2)
 #Getting hat values
 PRESS(lm.solvent)
 
+#Question 5.1
+#Choose the file needed
+Data=read.csv(file.choose())
+Temp=Data[,1]
+Viscosity=Data[,2]
+plot(Temp,Viscosity, main= "Scatter Plot of Viscosity vs Temperature", xlab= "Temperature (degrees C)", ylab= "Viscosity (mPa*s)")
 
+#Fit a straight-line model
+lm.TV=lm(Viscosity~Temp)
+lm.TV
+summary(lm.TV)
+
+#Get the unstandardized residuals of the model
+residlm.TV=resid(lm.TV)
+residlm.TV
+
+#Get predicted values from the model
+predictlm.TV=predict(lm.TV)
+predictlm.TV
+plot(predictlm.TV,residlm.TV, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residlm.TV)
+
+#Fit a transformed model
+NewV=1/Viscosity
+NewT=1/Temp
+new.TV=lm(NewV~NewT)
+new.TV
+summary(new.TV)
+
+#Get the unstandardized residuals of the model
+residnew.TV=resid(new.TV)
+residnew.TV
+
+#Get predicted values from the model
+predictnew.TV=predict(new.TV)
+predictnew.TV
+plot(predictnew.TV,residnew.TV, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew.TV)
+
+#Fit a transformed model
+NewV=1/Viscosity
+NewT=1/Temp
+new2.TV=lm(Viscosity~NewT)
+new2.TV
+summary(new2.TV)
+
+#Get the unstandardized residuals of the model
+residnew2.TV=resid(new2.TV)
+residnew2.TV
+
+#Get predicted values from the model
+predictnew2.TV=predict(new2.TV)
+predictnew2.TV
+plot(predictnew2.TV,residnew2.TV, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew2.TV)
+
+#Fit a transformed model
+NewV=1/Viscosity
+NewT=1/Temp
+NegNewV=-(1/Viscosity)
+new3.TV=lm(NegNewV~Temp)
+new3.TV
+summary(new3.TV)
+
+#Get the unstandardized residuals of the model
+residnew3.TV=resid(new3.TV)
+residnew3.TV
+
+#Get predicted values from the model
+predictnew3.TV=predict(new3.TV)
+predictnew3.TV
+plot(predictnew3.TV,residnew3.TV, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew3.TV)
+
+plot(Temp,NegNewV, main= "Scatter Plot of Viscosity vs Temperature", xlab= "Temperature (degrees C)", ylab= "1/(Viscosity (mPa*s))")
+
+V2=Viscosity^2
+T2=Temp^2
+logV=log(Viscosity)
+logT=log(Temp)
+expT=exp(Temp)
+#Fit a transformed model
+
+new4.TV=exp(Viscosity~Temp)
+new4.TV
+summary(new4.TV)
+
+#Get the unstandardized residuals of the model
+residnew4.TV=resid(new4.TV)
+residnew4.TV
+
+#Get predicted values from the model
+predictnew4.TV=predict(new4.TV)
+predictnew4.TV
+plot(predictnew4.TV,residnew4.TV, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residnew4.TV)
