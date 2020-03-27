@@ -1,3 +1,4 @@
+library(qpcR)
 #Question 4.4
 #Choose the file needed
 B3=read.csv(file.choose())
@@ -17,7 +18,7 @@ qqnorm(residmodel)
 predictmultreg=predict(multreg)
 predictmultreg
 #Plot residuals vs the predicted response
-plot(predictmultreg,residmodel)
+plot(predictmultreg,residmodel, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Create partial regression for displacement
 lm.displacement=lm(B3y~B3displace)
@@ -30,7 +31,7 @@ lm.barrelsith
 #Get residuals for barrels as ith
 residbarrelsith=resid(lm.barrelsith)
 #Plot partial regression models
-plot(resid1,residbarrelsith,main="Partial Regression Plot for Barrels as ith")
+plot(resid1,residbarrelsith,main="Partial Regression Plot for Barrels as ith", xlab= "Residuals for y=x1", ylab= "Residuals for x6=x1")
 #Create partial regression for barrels
 lm.barrels=lm(B3y~B3barrels)
 lm.barrels
@@ -42,17 +43,15 @@ lm.displaceith
 #Get residuals for displacement as ith
 residdisplaceith=resid(lm.displaceith)
 #Plot partial regression models
-plot(resid2,residdisplaceith,main="Partial Regression Plot for Displacement as ith")
+plot(resid2,residdisplaceith,main="Partial Regression Plot for Displacement as ith", xlab= "Residuals for y=x6", ylab= "Residuals for x1=x6")
 
 
 #Studentized residuals (standardized)
 standr=rstandard(multreg)
 standr
-qqnorm(standr,main= "Normal QQ-Plot for Standardized Residuals")
 #Student residuals (studentized)
 studentr=rstudent(multreg)
 studentr
-qqnorm(studentr,main= "Normal QQ-Plot for Studentized Residuals")
 
 
 
@@ -75,7 +74,7 @@ qqnorm(residmodel2)
 predictmultreg2=predict(multreg2)
 predictmultreg2
 #Plot residuals vs the predicted response
-plot(predictmultreg2,residmodel2)
+plot(predictmultreg2,residmodel2, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Create partial regression for solvent
 lm.solvent=lm(B5y~B5solvent)
@@ -89,7 +88,7 @@ lm.hydrogenith
 #Get residuals for hydrogen as ith term
 residhydrogenith=resid(lm.hydrogenith)
 #Plot partial regression models
-plot(residsolv,residhydrogenith,main="Partial Regression Plot for Hydrogen as ith")
+plot(residsolv,residhydrogenith,main="Partial Regression Plot for Hydrogen as ith", xlab= "y=x6", ylab= "x7=x6")
 #Create partial regression for solvent as ith
 lm.hydrogen=lm(B5y~B5hydrogen)
 lm.hydrogen
@@ -101,71 +100,24 @@ lm.solventith
 #Get residuals for solvent as ith
 residsolventith=resid(lm.solventith)
 #Plot partial regression models
-plot(residhydr,residsolventith,main="Partial Regression Plot for Solvent as ith")
+plot(residhydr,residsolventith,main="Partial Regression Plot for Solvent as ith", xlab= "y=x7", ylab= "x6=x7")
 
 
 #Studentized residuals (standardized)
 standrmultreg2=rstandard(multreg2)
 standrmultreg2
-qqnorm(standrmultreg2,main= "Normal QQ-Plot for Standardized Residuals")
 #Student residuals (studentized)
 studentrmultreg2=rstudent(multreg2)
 studentrmultreg2
-qqnorm(studentrmultreg2,main= "Normal QQ-Plot for Studentized Residuals")
-studentrlm.solvent=rstudent(lm.solvent)
-studentrlm.solvent
+
 
 #PRESS Statistic for full model
+library(qpcR)
 #Getting hat values
-hatmultreg2=hatvalues(multreg2)
-hatmultreg2
-#Get MSE
-MSEfull=98.5
-MSEfull
-#Get numerator
-Press1=(studentrmultreg2^2)*MSEfull
-Press1
-
-#calculate all press statistics
-Press2=Press1/(1-hatmultreg2)
-Press2
-
-#Add all press stats to get PRESS residual
-PRESS=sum(Press2)
-PRESS
+PRESS(multreg2)
 
 #PRESS statistic for solvent model
 #Getting hat values
-hatlm.solvent=hatvalues(lm.solvent)
-hatlm.solvent
-#Get MSE for solvent model
-anova(lm.solvent)
-MSEsolvent=114.4
-MSEsolvent
-#Get numerator
-Press1solvent=(studentrlm.solvent^2)*MSEsolvent
-Press1solvent
+PRESS(lm.solvent)
 
-#calculate all press statistics
-Press2solvent=Press1solvent/(1-hatlm.solvent)
-Press2solvent
 
-#Add all press stats to get PRESS residual
-PRESSsolvent=sum(Press2solvent)
-PRESSsolvent
-
-#Model comparision with R^2
-anova(multreg2)
-SSTfull=5506.3
-anova(lm.solvent)
-SSTsolvent=5009
-
-Rsquarefull=1-(PRESS/SSTfull)
-Rsquarefull
-Rsquarepartial=1-(PRESSsolvent/SSTsolvent)
-Rsquarepartial
-
-#Questions for professor:
-#1) We are looking for pattern on a line with a slope of 1, right?
-#2) What is the 0.0767 multiplied to the student squared? Is it MSE? Because if so I'm calculating 3970 for the PRESS and that seems incredibly high
-#3) For the questions for Chapter 5, is it simply running lm(variables), and then running an anova, and then doing an exponential and a log and such and repeating and looking at the stats for each?
