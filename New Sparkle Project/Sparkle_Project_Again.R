@@ -54,23 +54,22 @@ anova(lm.Triicelength)
 summary(lm.Triicelength)
 plot(lm.Triicelength)
 plot(Triicelength, Triicemass)
+
+
 library(nlstools)
 #Create a dataframe to store month parameter values (parms.Month.night).
 # Selfstart for the trc:
-trcModel <- function(TA, a, b) {
-  y=a * exp(b*TA)
+TrifreshModel <- function(TrifreshSA, a, b) {
+  y=a * exp(b*TrifreshSA)
   return(y)
 }
 
 
 
 # Create a function to find initial values for the selfstart function:
-trc.int <- function (mCall, LHS, data){
-  x <- data$TA
-  y <- data$NEE
-  
-  a <-1.00703982 + -0.08089044* (min(na.omit(y)))
-  b <- 0.051654 + 0.001400 * (min(na.omit(y)))
+Trifresh.int <- function (mCall, LHS, data){
+  x <- Tri.fresh$SA.after..mm2.
+  y <- Tri.fresh$Mass.mg.
   
   value = list(a, b)
   names(value) <- mCall[c("a", "b")]
@@ -78,7 +77,7 @@ trc.int <- function (mCall, LHS, data){
 }
 
 # Selfstart Function
-SS.trc <- selfStart(model=trcModel,initial= trc.int)
+SS.Trifresh <- selfStart(model=TrifreshModel,initial= Trifresh.int)
 
 
 
