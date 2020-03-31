@@ -6,9 +6,13 @@ condition
 Tri.ice <- subset(newTri, condition == 1)
 Tri.alcohol <- subset(newTri, condition == 2 & length < 100)
 Tri.fresh <- subset(newTri, condition == 3)
+#2 as "Hydropsychidae", 3 as "Phryganeidae", 4 as "Polycentropodidae, 5 as "Rhyacophilidae"
+Tri.fresh$Family <- as.numeric(as.factor(Tri.fresh$Family))
 TrifreshSA=Tri.fresh[,5]
 Trifreshlength=Tri.fresh[,7]
 Trifreshmass=Tri.fresh[,8]
+Trifreshfamily=Tri.fresh[,11]
+
 TrialcoholSA=Tri.alcohol[,5]
 Trialcohollength=Tri.alcohol[,7]
 Trialcoholmass=Tri.alcohol[,8]
@@ -81,9 +85,9 @@ SS.Trifresh <- selfStart(model=TrifreshModel,initial= Trifresh.int)
 
 
 
-parms.Month <- data.frame(
+TrifreshSA.Family <- data.frame(
   
-  MONTH=numeric(),
+  Family=factor(),
   
   a=numeric(),
   
@@ -93,9 +97,9 @@ parms.Month <- data.frame(
   
   b.pvalue=numeric(), stringsAsFactors=FALSE, row.names=NULL)
 
-parms.Month [1:12, 1] <- seq(1,12,1) # Creates time file to merge with parm file
+TrifreshSA.Family [2:5, 1] <- seq(2,5,1) # Creates time file to merge with parm file
 
-nee.night <- function(dataframe){y.df = nls(NEE ~ a * exp(b*TA),
+TrifreshSAFamily <- function(dataframe){y.df = nls(Trifreshmass ~ a * exp(b*TrifreshSA),
                                             
                                             dataframe, start=list(a= iv$a , b=iv$b ),
                                             
