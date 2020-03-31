@@ -7,7 +7,6 @@ Tri.ice <- subset(newTri, condition == 1)
 Tri.alcohol <- subset(newTri, condition == 2 & length < 100)
 Tri.fresh <- subset(newTri, condition == 3)
 #2 as "Hydropsychidae", 3 as "Phryganeidae", 4 as "Polycentropodidae, 5 as "Rhyacophilidae"
-Tri.fresh$Family <- as.numeric(as.factor(Tri.fresh$Family))
 TrifreshSA=Tri.fresh[,5]
 Trifreshlength=Tri.fresh[,7]
 Trifreshmass=Tri.fresh[,8]
@@ -82,46 +81,44 @@ Tri.int <- function (mCall, LHS, data){
 
 SS.Tri <- selfStart(model=TriModel,initial= Tri.int)
 
-iv <- getInitial(NEE ~ SS.lrc('PAR', "a1", "ax", "r"),
-                 data = day[which(day$MONTH == 07),])
-iv
+iv.Tri <- getInitial(Trifreshmass ~ SS.Tri("TrifreshSA", "a", "b"),
+                 data = Tri.fresh)
+iv.Tri
 ### Create a dataframe to store month parameter values a1, ax and r (parms.Month):
 
-parms.Month <- data.frame(
-  MONTH=numeric(),
-  a1=numeric(),
-  ax=numeric(),
-  r=numeric(),
-  a1.pvalue=numeric(),
-  ax.pvalue=numeric(),
-  r.pvalue=numeric(), stringsAsFactors=FALSE, row.names=NULL)
-parms.Month[1:12, 1] <- seq(1,12,1) 
+Tri.Family <- data.frame(
+  Family=factor(),
+  a=numeric(),
+  b=numeric(),
+  a.pvalue=numeric(),
+  b.pvalue=numeric(), stringsAsFactors=FALSE, row.names=NULL)
+Tri.Family [1:4,1]<- seq(1,4,1)
 
-### Write a function to fit the model and extract paramter values a1, ax and r (nee.day):
+### Write a function to fit the model 
 
-nee.day <- function(dataframe){ y = nls( NEE ~ (a1 * PAR * ax)/(a1 * PAR + ax) + r, dataframe,
-                                         start=list(a1= iv$a1 , ax= iv$ax, r= iv$r),
+Trifreshfamily <- function(dataframe){ y = nls( Trifreshmass ~ a * exp(b*TrifreshSA), dataframe,
+                                         start=list(a= iv$a , b= iv$b),
                                          na.action=na.exclude, trace=F,
                                          control=nls.control(warnOnly=T))
 
-y.df <- as.data.frame(cbind(t(coef(summary(y)) [1:3, 1]), t(coef(summary(y)) [1:3, 4])))
-names(y.df) <-c("a1","ax", "r", "a1.pvalue", "ax.pvalue", "r.pvalue")
+y.df <- as.data.frame(cbind(t(coef(summary(y)) [1:2, 1]), t(coef(summary(y)) [1:3, 4])))
+names(y.df) <-c("a","b", "a.pvalue", "b.pvalue")
 return (y.df )}
 
-### Write a loop to fit monthly curves and add paramters to a dataframe (parms.Month):
+### Write a loop to fit curves and add paramters to a dataframe:
 
-try(for(j in unique(day$MONTH)){
+try(for(j in unique(Tri.fresh$Family)){
   
   
-  iv <- getInitial(NEE ~ SS.lrc('PAR', "a1", "ax", "r"), data = day[which(day$MONTH == j),])
+  iv <- getInitial(Trifreshmass ~ SS.lrc("TrifreshSA", "a", "b"), data = Tri.fresh[which(Tri.fresh$Family == j),])
   
-  y3 <- try(nee.day(day[which(day$MONTH == j),]), silent=T)
+  y3 <- try(Trifreshfamily(Tri.fresh[which(Tri.fresh$Family == j),]), silent=T)
   
-  try(parms.Month[c(parms.Month$MONTH == j ), 2:7 ] <- cbind(y3), silent=T)
+  try(Tri.Family[c(Tri.Family$Family == j ), 2:7 ] <- cbind(y3), silent=T)
   rm(y3)
 }, silent=T)
-parms.Month
-
+Tri.Family
+Warnings()
 ### Bootstrapping
 
 boot.NEE <- data.frame(parms.Month[, c("MONTH")]); names (boot.NEE) <- "MONTH"
@@ -155,3 +152,6 @@ for( j in unique(boot.NEE$Month)){
 
 lrc <- merge( parms.Month, boot.NEE, by.x="MONTH", by.y="MONTH") 
 lrc
+
+iv.Tri <- getInitial(Trifreshmass ~ SS.Tri("TrifreshSA", "a", "b"),
+                     data = Tri.fresh[which(Tri.fresh$Family == 2),])
