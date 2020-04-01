@@ -1,0 +1,28 @@
+---
+title: "Final Project"
+author: "Rachel Prokopius"
+date: "3/31/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Macroinvertebrates, the larval stage of an insect's life cycle, contribute immensely to the ecosystem energetics of marine and aquatic systems.Because of this, measuring and interpreting the energetic content of these water-based insect larvae can greatly assist scientists in studying energy-associated ecosystem processes such as predator-prey selectivity and trophic-level energetic transfer (Gilinsky 1984, Oertli 1993, Turesson et al. 2002, Zhao et al. 2005, Helmus et al. 2013). The standard length-to-mass relationship has been used since the 1980's to relate macroinvertebrate size to dry mass, which is then converted to caloric content via relationships measured and recorded since the 1960's (Cummins and Wuycheck 1971, Smock et al. 1980, Brodmann and Reyer 1999, Wilt et al. 2014).
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
