@@ -43,6 +43,35 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Literature Cited
 
+Brodmann, P. A., and H. U. Reyer. 1999. Nestling provisioning in water pipits (*Anthus spinoletta*): do parents go for specific nutrients or profitable prey? Oecologia 120:506–514.
 
+Cummins KW, Wuycheck JC. 1971. Caloric equivalents for investigation in ecological energetics. Mitt Int Vercin Limnol 18:1-158.
 
+Eklöf J, Austin Å, Bergström, Donadi, Eriksson BDHK, Hansen J, Sunblad G. 2017. Size matters: relationships between body size and body mass of common coastal, aquatic invertebrates in the Baltic Sea. PeerJ 5, e2906.
+
+Gilinsky E. 1984. The role of fish predation and spatial heterogeneity in determining benthic community structure. Ecology 65(2):455-68.
+
+Helmus HR, Mercado-Silva N, Zanden MJV. 2013. Subsidies to predators, apparent competition and the phylogenetic structure of prey communities. Oecologia 173(3):997-1007.
+
+Johnston TA, Cunjak RA. 1999. Dry mass-length relationships for benthic insects: a review with new data from Catamaran Brook, New Brunswick, Canada. Freshwater Biol 41:653-74.
+
+Mährlein M, Pätzig M, Brauns M, Dolman AM. 2016. Length-mass relationships for lake macroinvertebrates corrected for back-transformation and preservation effects. Hydrobiologia 768:37-50.
+
+Oertli B. 1993. Leaf litter processing and energy flow through macroinvertebrates in a woodland pond (Switzerland). Oecologia 96:466-77.
+
+Paavo B, Ziegelmeyer A, Lavric E, Probert K. 2008. Morphometric correlations and body mass regressions for *Armandia maculate*, *Aglaophamus macrourna* (Polychaeta) and *Zethalia zelandica* (Gastropoda). New Zeal J Mar Fresh 42:85-91.
+
+Pond GJ, Fritz KM, Johnson BR. 2016. Macroinvertebrate and organic matter export from headwater tributaries of a Central Appalachian stream. Hydrobiologia 779:75-91.
+
+Sample BE, Cooper RJ, Greer RD, Whitmore RC. 1993. Estimation of insect biomass by length and width. The American Midland Naturalist 129(2):234-40.
+
+Smock LA. 1980. Relationships between body size and biomass of aquatic insects. Freshwater Biol 10:375-83.
+
+Turesson H, Persson A, Brönmark C. 2002. Prey selection of piscivorous pikeperch (*Stizostedion lucioperca*) includes active prey choice. Ecol Freshw Fish 11:223-33.
+
+Velghe K, Gregory-Eaves I. 2013. Body size is a significant predictor of congruency in species richness patterns: a meta-analysis of aquatic studies. Plos One 8(2).
+
+Wilt LM, Grebmeier JM, Miller TJ, Cooper LW. 2014. Caloric content of Chukchi Sea benthic invertebrates: modeling spatial and environmental variation. Deep-Sea Res Pt II 102:97-106.
+
+Zhao X, Fox MG, Miller TJ, Lasenby DC. 2005. Effect of prey density, prey mobility and habitat structure on size selection and consumption of amphipods by a benthic feeding fish. Arch Hydrobiologia 165(2):269-88.
 
