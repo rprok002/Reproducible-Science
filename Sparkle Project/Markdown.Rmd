@@ -13,6 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
           Macroinvertebrates, the larval stage of an insect's life cycle, contribute immensely to the ecosystem energetics of marine and aquatic systems.Because of this, measuring and interpreting the energetic content of these water-based insect larvae can greatly assist scientists in studying energy-associated ecosystem processes such as predator-prey selectivity and trophic-level energetic transfer (Gilinsky 1984, Oertli 1993, Turesson et al. 2002, Zhao et al. 2005, Helmus et al. 2013). The standard length-to-mass relationship has been used since the 1980's to relate macroinvertebrate size to dry mass, which is then converted to caloric content via relationships measured and recorded since the 1960's (Cummins and Wuycheck 1971, Smock 1980, Brodmann and Reyer 1999, Wilt et al. 2014). 
           What is not standard, however, is the protocol for measuring the length of the macroinvertebrate specimen; measurements may include, but are not limited to, the length from the anterior labium to posterior of the last abdominal segment of the insect larvae, the width of the mesothorax, labium and head capsule, and any other measurements the researcher deems it fit to add (Sample et. al 1993, Johnston and Culjak 1999, Eklöf et al. 2017).Lengths can be determined by hand-measuring, using simple digital imaging and analysis software to compute the measurements or by taking measurements from previous literature (Sample et. al 1993, Paavo et al. 2008, Velghe and Gregory-Eaves 2013, Pond et al. 2016).Because of the wide variety of unique body parts and length-mass relationships between macroinvertebrate taxa, it is generally accepted that length-dry mass relationships must be taxon specific at the very least to the family level (Smock 1980, Mährlein et al. 2016, Eklöf et al. 2017). Because of the wide variety of measurement techniques for macroinvertebrate length-dry mass relationships that are oftentimes researcher-specific, getting accurate, reusable relationships has proven incredibly difficult. Additionally, the wide variety of morphological characteristics between macroinvertebrate families makes standardizing length measurement protocols nearly impossible (Figure 1). 
+
+![Figure 1. Image illustrating the unique morphologies of different macroinvertebrate families. Images taken at 1x power with a Motic 3.0 Camera. Size bars for each macroinvertebrate are included. Macroinvertebrate familes from left to right: Ephemeroptera, Plecoptera, Trichoptera](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Sparkle Project/Figure 1.jpg)
+
           With advancements in technology and increased access to inexpensive computer programs for analyzing images (for example, ImageJ), it is possible to obtain potentially more-accurate measurements for aquatic organisms, namely the surface-area of the organism. Because of the variety of morphological characteristics unique to certain macroinvertebrate families and the relative subjectivity of length measurements, measurement of surface area from macroinvertebrate images may be a better measurement when compared to the standard length measurements. Previous analysis of the dataset obtained for this study have suggested this hypothesis to be true. However, analysis of the relationship between both surface area and length to macroinvertebrate dry mass appear to be more nonlinear than linear. Therefore, this project aims to determine whether a nonlinear model is statistically a better predictor of dry mass from surface area and length of macroinvertebrates. It is hypothesized that the comparison of measurement methods for macroinvertebrates will show that surface area is a stronger predictor (i.e. has a higher Rsquared value) of macroinvertebrate dry mass than length when the mathematical function relating the two variables is an exponential function.    
 
 # Methods
@@ -24,12 +27,12 @@ knitr::opts_chunk$set(echo = TRUE)
             After specimens were preserved for at least 24 hours in their respective mediums, they were reimaged using the process illustrated above and their new measurements recorded for comparison to fresh specimen measurements. Each specimen was returned to its respective vial without a preservation medium and dried uncapped in a drying oven at 60°C for at least 24 hours. Once dried, the specimens were removed from the drying oven and quickly capped in order to minimize condensation on the specimens as they were moved from a warmer to a cooler environment. Each specimen was massed in milligrams on a microgram scale that measured to two places passed the decimal. 
             Statistical analyses were performed with the data collected from the macroinvertebrate specimens. Regressions and nonlinear models were generated to create surface area-mass relationships and length-mass relationships for different Orders of macroinvertebrates and in different preservative mediums (fresh, frozen or alcohol).All statistical analysis was performed with R 3.6.2, and the "nls" library was used to generate the nonlinear models.
 
-## Including Plots
+# Results
+
+#Discussion
+
+#Literature Cited
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
