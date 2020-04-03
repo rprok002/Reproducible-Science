@@ -340,97 +340,116 @@ plot(Rhyaicelength, Rhyaicemass, main= "Rhyacophilidae Ice Mass vs. Length", xla
 lines(Tri.ice.Rhya$length.after..mm., fitted(lm.Rhyaicelength), col="green")
 
 library(nlstools)
-TriModel <- function(TrifreshSA, a, b) {
-  Trifreshmass=a * exp(b*TrifreshSA)
-  return(Trifreshmass)
-}
+library(nls2)
 
-Tri.int <- function (mCall, LHS, data){
-  TrifreshSA <- Tri.fresh$SA.after..mm2.
-  Trifreshmass <- Tri.fresh$Mass.mg.
-  a <- 0.0003853  
-  b <- -1.4164144  
- 
-  
-  value = list(a,b) 
-  names(value) <- mCall[c("a", "b")] 
-  return(value)
-}
+Hydroalcoholfirst= nls2(Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Hydro, start=list(a= 0.5 , b= 0.0001))
 
-
-SS.Tri <- selfStart(model=TriModel,initial= Tri.int)
-
-iv.Tri <- getInitial(Trifreshmass ~ SS.Tri("TrifreshSA", "a", "b"),
-                 data = Tri.fresh)
-iv.Tri
-### Create a dataframe to store month parameter values a1, ax and r (parms.Month):
-
-Tri.Family <- data.frame(
-  Family=factor(),
-  a=numeric(),
-  b=numeric(),
-  a.pvalue=numeric(),
-  b.pvalue=numeric(), stringsAsFactors=FALSE, row.names=NULL)
-Tri.Family [1:4,1]<- seq(1,4,1)
-
-### Write a function to fit the model 
-
-Trifreshfamily <- function(dataframe){ y = nls( Trifreshmass ~ a * exp(b*TrifreshSA), dataframe,
-                                         start=list(a= iv$a , b= iv$b),
+summary(Hydroalcoholfirst)
+Hydroalcohol= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Hydro,
+                                         start=list(a= 1 , b= 0.00006107),
                                          na.action=na.exclude, trace=F,
                                          control=nls.control(warnOnly=T))
 
-y.df <- as.data.frame(cbind(t(coef(summary(y)) [1:2, 1]), t(coef(summary(y)) [1:3, 4])))
-names(y.df) <-c("a","b", "a.pvalue", "b.pvalue")
-return (y.df )}
+plot(Tri.alcohol.Hydro$SA.after..mm2.,Tri.alcohol.Hydro$Mass.mg., main= "Hydropsychidae Alcohol Mass vs. Surface Area", xlab="Hydropsychidae Alcohol Surface Area (sq mm)", ylab="Hydropsychidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Hydro$SA.after..mm2., fitted(Hydroalcohol), col="purple")
+summary(Hydroalcohol)
 
-### Write a loop to fit curves and add paramters to a dataframe:
 
-try(for(j in unique(Tri.fresh$Family)){
-  
-  
-  iv <- getInitial(Trifreshmass ~ SS.lrc("TrifreshSA", "a", "b"), data = Tri.fresh[which(Tri.fresh$Family == j),])
-  
-  y3 <- try(Trifreshfamily(Tri.fresh[which(Tri.fresh$Family == j),]), silent=T)
-  
-  try(Tri.Family[c(Tri.Family$Family == j ), 2:7 ] <- cbind(y3), silent=T)
-  rm(y3)
-}, silent=T)
-Tri.Family
-Warnings()
-### Bootstrapping
+Hydroalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Hydro,
+                   start=list(a= 1 , b= 0.00006107),
+                   na.action=na.exclude, trace=F,
+                   control=nls.control(warnOnly=T))
 
-boot.NEE <- data.frame(parms.Month[, c("MONTH")]); names (boot.NEE) <- "MONTH"
-boot.NEE$a1.est <- 0
-boot.NEE$ax.est<- 0
-boot.NEE$r.est<- 0
-boot.NEE$a1.se<- 0
-boot.NEE$ax.se<- 0
-boot.NEE$r.se<- 0
+plot(Tri.alcohol.Hydro$length.after..mm.,Tri.alcohol.Hydro$Mass.mg., main= "Hydropsychidae Alcohol Mass vs. Length", xlab="Hydropsychidae Alcohol Length (mm)", ylab="Hydropsychidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Hydro$length.after..mm., fitted(Hydroalcohollength), col="purple")
+summary(Hydroalcohollength)
 
-for( j in unique(boot.NEE$Month)){
-  
-  y1 <-day[which(day$MONTH == j),] 
-  
-  iv <- getInitial(NEE ~ SS.lrc('PAR', "a1", "ax", "r"), data = y1)
-  
-  day.fit <- nls( NEE ~ (a1 * PAR * ax)/(a1 * PAR + ax) + r, data=y1,
-                  start=list(a1= iv$a1 , ax= iv$ax, r= iv$r),
-                  na.action=na.exclude, trace=F, control=nls.control(warnOnly=T))
-  
-  try(results <- nlsBoot(day.fit, niter=100 ), silent=T)
-  try(a <- t(results$estiboot)[1, 1:3], silent=T)
-  try(names(a) <- c('a1.est', 'ax.est', 'r.est'), silent=T)
-  try( b <- t(results$estiboot)[2, 1:3], silent=T)
-  try(names(b) <- c('a1.se', 'ax.se', 'r.se'), silent=T)
-  try(c <- t(data.frame(c(a,b))), silent=T)
-  
-  try(boot.NEE[c(boot.NEE$MONTH == j), 2:7] <- c[1, 1:6], silent=T)
-  try(rm(day.fit, a, b, c, results, y1), silent=T)
-}
+TrialcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol,
+                         start=list(a= 1 , b= 0.00006107),
+                         na.action=na.exclude, trace=F,
+                         control=nls.control(warnOnly=T))
 
-lrc <- merge( parms.Month, boot.NEE, by.x="MONTH", by.y="MONTH") 
-lrc
+plot(Tri.alcohol$SA.after..mm2.,Tri.alcohol$Mass.mg., main= "Trichoptera Alcohol Mass vs. Surface Area", xlab="Trichoptera Alcohol Surface Area (sq mm)", ylab="Trichoptera Alcohol Mass (mg)")
+lines(Tri.alcohol$SA.after..mm2., fitted(TrialcoholSA), col="purple")
+summary(TrialcoholSA)
 
-iv.Tri <- getInitial(Trifreshmass ~ SS.Tri("TrifreshSA", "a", "b"),
-                     data = Tri.fresh[which(Tri.fresh$Family == 2),])
+Trialcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol,
+                   start=list(a= 1 , b= 0.00006107),
+                   na.action=na.exclude, trace=F,
+                   control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol$length.after..mm.,Tri.alcohol$Mass.mg., main= "Trichoptera Alcohol Mass vs. Length", xlab="Trichoptera Alcohol Length (mm)", ylab="Trichoptera Alcohol Mass (mg)")
+lines(Tri.alcohol$length.after..mm., fitted(Trialcohollength), col="purple")
+summary(Trialcohollength)
+
+PhryalcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Phry,
+                       start=list(a= 1 , b= 0.00006107),
+                       na.action=na.exclude, trace=F,
+                       control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Phry$SA.after..mm2.,Tri.alcohol.Phry$Mass.mg., main= "Phryganeidae Alcohol Mass vs. Surface Area", xlab="Phryganeidae Alcohol Surface Area (sq mm)", ylab="Phryganeidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Phry$SA.after..mm2., fitted(PhryalcoholSA), col="purple")
+summary(PhryalcoholSA)
+
+Phryalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Phry,
+                    start=list(a= 1 , b= 0.00006107),
+                    na.action=na.exclude, trace=F,
+                    control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Phry$length.after..mm.,Tri.alcohol.Phry$Mass.mg., main= "Phryganeidae Alcohol Mass vs. Length", xlab="Phryganeidae Alcohol Length (mm)", ylab="Phryganeidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Phry$length.after..mm., fitted(Phryalcohollength), col="purple")
+summary(Phryalcohollength)
+
+PolylcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Poly,
+                        start=list(a= 1 , b= 0.00006107),
+                        na.action=na.exclude, trace=F,
+                        control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Poly$SA.after..mm2.,Tri.alcohol.Poly$Mass.mg., main= "	Polycentropodidae Alcohol Mass vs. Surface Area", xlab="	Polycentropodidae Alcohol Surface Area (sq mm)", ylab="Polycentropodidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Poly$SA.after..mm2., fitted(PolylcoholSA), col="purple")
+summary(PolylcoholSA)
+
+Polyalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Poly,
+                        start=list(a= 1 , b= 0.00006107),
+                        na.action=na.exclude, trace=F,
+                        control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Poly$length.after..mm.,Tri.alcohol.Poly$Mass.mg., main= "Polycentropodidae Alcohol Mass vs. Length", xlab="Polycentropodidae Alcohol Length (mm)", ylab="Polycentropodidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Poly$length.after..mm., fitted(Polyalcohollength), col="purple")
+summary(Polyalcohollength)
+
+RhyalcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Rhya,
+                   start=list(a= 1 , b= 0.00006107),
+                   na.action=na.exclude, trace=F,
+                   control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Rhya$SA.after..mm2.,Tri.alcohol.Rhya$Mass.mg., main= "	Rhyacophilidae Alcohol Mass vs. Surface Area", xlab="	Rhyacophilidae Alcohol Surface Area (sq mm)", ylab="Rhyacophilidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Rhya$SA.after..mm2., fitted(RhyalcoholSA), col="purple")
+summary(RhyalcoholSA)
+
+Rhyaalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Rhya,
+                        start=list(a= 1 , b= 0.00006107),
+                        na.action=na.exclude, trace=F,
+                        control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Rhya$length.after..mm.,Tri.alcohol.Rhya$Mass.mg., main= "Rhyacophilidae Alcohol Mass vs. Length", xlab="Rhyacophilidae Alcohol Length (mm)", ylab="Rhyacophilidae Alcohol Mass (mg)")
+lines(Tri.alcohol.Rhya$length.after..mm., fitted(Rhyaalcohollength), col="purple")
+summary(Rhyaalcohollength)
+
+BralcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Bra,
+                   start=list(a= 1 , b= 0.00006107),
+                   na.action=na.exclude, trace=F,
+                   control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Bra$SA.after..mm2.,Tri.alcohol.Bra$Mass.mg., main= "	Bracgycentridae Alcohol Mass vs. Surface Area", xlab="	Bracgycentridae Alcohol Surface Area (sq mm)", ylab="Bracgycentridae Alcohol Mass (mg)")
+lines(Tri.alcohol.Bra$SA.after..mm2., fitted(BralcoholSA), col="purple")
+summary(BralcoholSA)
+
+Braalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Bra,
+                        start=list(a= 1 , b= 0.00006107),
+                        na.action=na.exclude, trace=F,
+                        control=nls.control(warnOnly=T))
+
+plot(Tri.alcohol.Bra$length.after..mm.,Tri.alcohol.Bra$Mass.mg., main= "Bracgycentridae Alcohol Mass vs. Length", xlab="Bracgycentridae Alcohol Length (mm)", ylab="Bracgycentridae Alcohol Mass (mg)")
+lines(Tri.alcohol.Bra$length.after..mm., fitted(Braalcohollength), col="purple")
+summary(Braalcohollength)
