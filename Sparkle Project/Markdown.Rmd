@@ -41,6 +41,7 @@ knitr::opts_chunk$set(echo = TRUE)
             Linear models consistently show higher Rsquared values for surface area to mass relationships than length to mass relationships. All significant relationships to an alpha level of 0.05 for Trichoptera Order as a whole and for individual Trichoptera Families are included in Table 1.Relationships for Trichoptera Families are only included when both surface area and length to mass relationships are both significant to an alpha level of 0.05 (Table 1) 
 ![Table 1. Summary table of statistics for linear models for surface area and length to mass relationships for individual Trichoptera families and preservation techniques ](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Sparkle Project/Linear summary table.jpg)
 
+![Figure 3. Surface area and length to mass relationships for the Trichoptera Order and the Hydropsychidae Family ](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Sparkle Project/Figure 4.jpg)
 # Discussion
 
 # Literature Cited
