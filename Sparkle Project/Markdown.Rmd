@@ -44,7 +44,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ![Figure 3. Surface area and length to mass relationships for the Trichoptera Order and the Hydropsychidae Family ](C:/Users/Rachel Prokopius/Documents/FALCON HD/GitHub/Reproducible-Science/Sparkle Project/Figure 4.jpg)
 
 # Discussion
-
+          Data collected from both Sweden and Northern Kentucky aquatic systems suggested that surface area measurements of macroinvertebrate taxa are more accurate than the traditional length-mass relationship previously established and used in literature (Smock 1980, Benke et al. 1999, Eklöf et al. 2017). Rsquared values in the 0.65-1.0 range are ideal for using regressions to make comparisons between variables, obviously with values closer to 1.0 being overall preferred. Rsquared values tended to be higher for Trichoptera Families that had larger sample sizes, which suggests that for certain Trichoptera Families (ex. Polycentropodidae, Rhyacophilidae) more data must be collected to determine accurate size to mass relationships for the particular families.
+          
 # Literature Cited
 
 Brodmann, P. A., and H. U. Reyer. 1999. Nestling provisioning in water pipits (*Anthus spinoletta*): do parents go for specific nutrients or profitable prey? Oecologia 120:506–514.
