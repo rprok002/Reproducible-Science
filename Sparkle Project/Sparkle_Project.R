@@ -1,36 +1,142 @@
 Tri=read.csv(file.choose())
+#Subsetting
 newTri <- na.omit(Tri)
 length=newTri[,7]
 condition=newTri[,3]
 condition
-Tri.ice <- subset(newTri, condition == 1)
-Tri.alcohol <- subset(newTri, condition == 2 & length < 100)
+
 Tri.fresh <- subset(newTri, condition == 3)
-#2 as "Hydropsychidae", 3 as "Phryganeidae", 4 as "Polycentropodidae, 5 as "Rhyacophilidae"
 TrifreshSA=Tri.fresh[,5]
 Trifreshlength=Tri.fresh[,7]
 Trifreshmass=Tri.fresh[,8]
 Trifreshfamily=Tri.fresh[,11]
 
+Tri.fresh.Hydro <- subset(newTri, condition ==3 & Family == "Hydropsychidae")
+Tri.fresh.Phry <- subset(newTri, condition ==3 & Family == "Phryganeidae")
+Tri.fresh.Poly <- subset(newTri, condition ==3 & Family == "Polycentropodidae")
+Tri.fresh.Rhya <- subset(newTri, condition ==3 & Family == "Rhyacophilidae")
+HydrofreshSA=Tri.fresh.Hydro[,5]
+Hydrofreshlength=Tri.fresh.Hydro[,7]
+Hydrofreshmass=Tri.fresh.Hydro[,8]
+Hydrofreshfamily=Tri.fresh.Hydro[,11]
+PhryfreshSA=Tri.fresh.Phry[,5]
+Phryfreshlength=Tri.fresh.Phry[,7]
+Phryfreshmass=Tri.fresh.Phry[,8]
+Phryfreshfamily=Tri.fresh.Phry[,11]
+PolyfreshSA=Tri.fresh.Poly[,5]
+Polyfreshlength=Tri.fresh.Poly[,7]
+Polyfreshmass=Tri.fresh.Poly[,8]
+Polyfreshfamily=Tri.fresh.Poly[,11]
+RhyafreshSA=Tri.fresh.Rhya[,5]
+Rhyafreshlength=Tri.fresh.Rhya[,7]
+Rhyafreshmass=Tri.fresh.Rhya[,8]
+Rhyafreshfamily=Tri.fresh.Rhya[,11]
+
+Tri.alcohol <- subset(newTri, condition == 2 & length < 100)
 TrialcoholSA=Tri.alcohol[,5]
 Trialcohollength=Tri.alcohol[,7]
 Trialcoholmass=Tri.alcohol[,8]
+
+Tri.alcohol.Hydro <- subset(newTri, condition ==2 & Family == "Hydropsychidae")
+Tri.alcohol.Phry <- subset(newTri, condition ==2 & Family == "Phryganeidae")
+Tri.alcohol.Poly <- subset(newTri, condition ==2 & Family == "Polycentropodidae")
+Tri.alcohol.Rhya <- subset(newTri, condition ==2 & Family == "Rhyacophilidae")
+Tri.alcohol.Bra <- subset(newTri, condition ==2 & Family == "Bracgycentridae")
+HydroalcoholSA=Tri.alcohol.Hydro[,5]
+Hydroalcohollength=Tri.alcohol.Hydro[,7]
+Hydroalcoholmass=Tri.alcohol.Hydro[,8]
+Hydroalcoholfamily=Tri.alcohol.Hydro[,11]
+PhryalcoholSA=Tri.alcohol.Phry[,5]
+Phryalcohollength=Tri.alcohol.Phry[,7]
+Phryalcoholmass=Tri.alcohol.Phry[,8]
+Phryalcoholfamily=Tri.alcohol.Phry[,11]
+PolyalcoholSA=Tri.alcohol.Poly[,5]
+Polyalcohollength=Tri.alcohol.Poly[,7]
+Polyalcoholmass=Tri.alcohol.Poly[,8]
+Polyalcoholfamily=Tri.alcohol.Poly[,11]
+RhyaalcoholSA=Tri.alcohol.Rhya[,5]
+Rhyaalcohollength=Tri.alcohol.Rhya[,7]
+Rhyaalcoholmass=Tri.alcohol.Rhya[,8]
+Rhyaalcoholfamily=Tri.alcohol.Rhya[,11]
+BraalcoholSA=Tri.alcohol.Bra[,5]
+Braalcohollength=Tri.alcohol.Bra[,7]
+Braalcoholmass=Tri.alcohol.Bra[,8]
+Braalcoholfamily=Tri.alcohol.Bra[,11]
+
+Tri.ice <- subset(newTri, condition == 1)
 TriiceSA=Tri.ice[,5]
 Triicelength=Tri.ice[,7]
 Triicemass=Tri.ice[,8]
+
+Tri.ice.Hydro <- subset(newTri, condition ==1 & Family == "Hydropsychidae")
+Tri.ice.Poly <- subset(newTri, condition ==1 & Family == "Polycentropodidae")
+Tri.ice.Rhya <- subset(newTri, condition ==1 & Family == "Rhyacophilidae")
+HydroiceSA=Tri.ice.Hydro[,5]
+Hydroicelength=Tri.ice.Hydro[,7]
+Hydroicemass=Tri.ice.Hydro[,8]
+Hydroicefamily=Tri.ice.Hydro[,11]
+PolyiceSA=Tri.ice.Poly[,5]
+Polyicelength=Tri.ice.Poly[,7]
+Polyicemass=Tri.ice.Poly[,8]
+Polyicefamily=Tri.ice.Poly[,11]
+RhyaiceSA=Tri.ice.Rhya[,5]
+Rhyaicelength=Tri.ice.Rhya[,7]
+Rhyaicemass=Tri.ice.Rhya[,8]
+Rhyaicefamily=Tri.ice.Rhya[,11]
+
 #Linear model fresh Trichoptera
 lm.Trifresh=lm(Trifreshmass~TrifreshSA)
 lm.Trifresh
 anova(lm.Trifresh)
 summary(lm.Trifresh)
-plot(TrifreshSA, Trifreshmass)
+plot(TrifreshSA, Trifreshmass, main= "Trichoptera Fresh Mass vs. Surface Area", xlab="Trichoptera Fresh Surface Area (sq mm)", ylab="Trichoptera Fresh Mass (mg)") 
+lines(Tri.fresh$SA.after..mm2., fitted(lm.Trifresh), col="blue")
 plot(lm.Trifresh)
+
 lm.Trifreshlength=lm(Trifreshmass~Trifreshlength)
 lm.Trifreshlength
 anova(lm.Trifreshlength)
 summary(lm.Trifreshlength)
 plot(lm.Trifreshlength)
-plot(Trifreshlength, Trifreshmass)
+plot(Trifreshlength, Trifreshmass, main= "Trichoptera Fresh Mass vs. Length", xlab="Trichoptera Fresh Length (mm)", ylab="Trichoptera Fresh Mass (mg)")
+lines(Tri.fresh$length.after..mm., fitted(lm.Trifreshlength), col="blue")
+
+#Linear model Hydro
+lm.Hydrofresh=lm(Hydrofreshmass~HydrofreshSA)
+lm.Hydrofresh
+anova(lm.Hydrofresh)
+summary(lm.Hydrofresh)
+plot(HydrofreshSA, Hydrofreshmass, main= "Hydropsychidae Fresh Mass vs. Surface Area", xlab="Hydropsychidae Fresh Surface Area (sq mm)", ylab="Hydropsychidae Fresh Mass (mg)") 
+lines(Tri.fresh.Hydro$SA.after..mm2., fitted(lm.Hydrofresh), col="blue")
+plot(lm.Hydrofresh)
+
+#Linear model Phry
+lm.Phryfresh=lm(Phryfreshmass~PhryfreshSA)
+lm.Phryfresh
+anova(lm.Phryfresh)
+summary(lm.Phryfresh)
+plot(PhryfreshSA, Phryfreshmass, main= "Phryganeidae Fresh Mass vs. Surface Area", xlab="Phryganeidae Fresh Surface Area (sq mm)", ylab="Phryganeidae Fresh Mass (mg)") 
+lines(Tri.fresh.Phry$SA.after..mm2., fitted(lm.Phryfresh), col="blue")
+plot(lm.Phryfresh)
+
+#Linear model Phry
+lm.Polyfresh=lm(Polyfreshmass~PolyfreshSA)
+lm.Polyfresh
+anova(lm.Polyfresh)
+summary(lm.Polyfresh)
+plot(PolyfreshSA, Polyfreshmass, main= "Polycentropodidae Fresh Mass vs. Surface Area", xlab="Polycentropodidae Fresh Surface Area (sq mm)", ylab="Polycentropodidae Fresh Mass (mg)") 
+lines(Tri.fresh.Poly$SA.after..mm2., fitted(lm.Polyfresh), col="blue")
+plot(lm.Polyfresh)
+
+#Linear model Rhya
+lm.Rhyafresh=lm(Rhyafreshmass~RhyafreshSA)
+lm.Rhyafresh
+anova(lm.Rhyafresh)
+summary(lm.Rhyafresh)
+plot(RhyafreshSA, Rhyafreshmass, main= "Rhyacophilidae Fresh Mass vs. Surface Area", xlab="Rhyacophilidae Fresh Surface Area (sq mm)", ylab="Rhyacophilidae Fresh Mass (mg)") 
+lines(Tri.fresh.Rhya$SA.after..mm2., fitted(lm.Rhyafresh), col="blue")
+plot(lm.Rhyafresh)
+
 #Linear model alcohol Trichoptera
 lm.Trialcohol=lm(Trialcoholmass~TrialcoholSA)
 lm.Trialcohol
