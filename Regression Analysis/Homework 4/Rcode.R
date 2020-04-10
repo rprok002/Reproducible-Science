@@ -90,15 +90,78 @@ lnCrecclear=log(Creclear)
 lnCrecclear
 lnCrecon=log(Crecon)
 lnCrecon
-Altage=(140-Age)
+Altage=log(140-Age)
 Altage
 lnWeight=log(Weight)
 lnWeight
 
 #Scatter plots
 plot(lnCrecon,lnCrecclear, main= "Ln Creatinine Clearance vs. Ln Creatinine Concentration", xlab ="Ln Creatinine Concentration", ylab="Ln Creatinine Clearance ($1000's)")
-plot(Altage,lnCrecclear, main= "Ln Creatinine Clearance vs. (140-Age)", xlab ="(140-Age)", ylab="Ln Creatinine Clearance ($1000's)")
+plot(Altage,lnCrecclear, main= "Ln Creatinine Clearance vs. Ln (140-Age)", xlab ="Ln (140-Age)", ylab="Ln Creatinine Clearance ($1000's)")
 plot(lnWeight,lnCrecclear, main= "Ln Creatinine Clearance vs. Ln Weight", xlab ="Ln Weight", ylab="Ln Creatinine Clearance ($1000's)")
 
 #Matrix plot
 pairs(~lnCrecon+Altage+lnWeight,data=Hmwk4, main = "Correlation Matrix")
+
+#VIF
+vif(lm.theo)
+
+#Get the unstandardized residuals of the model
+residmodel2=resid(lm.theo)
+residmodel2
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residmodel2)
+
+#Get predicted values from the multiregression model
+predictmultreg2=predict(lm.theo)
+predictmultreg2
+
+#Plot residuals vs the predicted response
+plot(predictmultreg2,residmodel2, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+
+#Create partial regression for age and weight
+lm.lnageweight=lm(lnCrecclear~Altage+lnWeight)
+lm.lnageweight
+#Get residuals for age weight model
+resid4=resid(lm.lnageweight)
+resid4
+#Create partial regression for Crecon as ith
+lm.lnCreconasith=lm(lnCrecon~Altage+lnWeight)
+lm.lnCreconasith
+#Get residuals for Crecon as ith
+residlnCreconasith=resid(lm.lnCreconasith)
+residlnCreconasith
+#Plot partial regression models
+plot(resid4,residlnCreconasith,main="Partial Regression Plot for Ln Creatinine Concentration as ith", xlab= "Residuals for lnCreclear=ln(140-Age)+lnWeight", ylab= "Residuals for lnCrecon=ln(140-Age)+lnWeight")
+
+#Create partial regression for crecon and weight
+lm.lncreconweight=lm(lnCrecclear~lnCrecon+lnWeight)
+lm.lncreconweight
+#Get residuals for crecon weight model
+resid5=resid(lm.lncreconweight)
+resid5
+#Create partial regression for age as ith
+lm.lnageasith=lm(Altage~lnCrecon+lnWeight)
+lm.lnageasith
+#Get residuals for age as ith
+residlnageasith=resid(lm.lnageasith)
+residlnageasith
+#Plot partial regression models
+plot(resid5,residlnageasith,main="Partial Regression Plot for ln(140-Age) as ith", xlab= "Residuals for lnCrecclear=lnCrecon+lnWeight", ylab= "Residuals for ln(140-Age)=lnCrecon+lnWeight")
+
+#Create partial regression for crecon and age
+lm.lncreconage=lm(lnCrecclear~lnCrecon+Altage)
+lm.lncreconage
+#Get residuals for crecon age model
+resid6=resid(lm.lncreconage)
+resid6
+#Create partial regression for weight as ith
+lm.lnweightasith=lm(lnWeight~lnCrecon+Altage)
+lm.lnweightasith
+#Get residuals for weight as ith
+residlnweightasith=resid(lm.lnweightasith)
+residlnweightasith
+#Plot partial regression models
+plot(resid6,residlnweightasith,main="Partial Regression Plot for lnWeight as ith", xlab= "Residuals for lnCrecclear=lnCrecon+ln(140-Age)", ylab= "Residuals for lnWeight=lnCrecon+ln(140-Age)")
