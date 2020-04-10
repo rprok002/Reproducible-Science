@@ -21,3 +21,17 @@ lm.cre
 
 #VIF
 vif(lm.cre)
+
+#Get the unstandardized residuals of the model
+residmodel=resid(lm.cre)
+residmodel
+
+#Create a normal probability plot of the unstandardized residuals
+qqnorm(residmodel)
+
+#Get predicted values from the multiregression model
+predictmultreg=predict(lm.cre)
+predictmultreg
+
+#Plot residuals vs the predicted response
+plot(predictmultreg,residmodel, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
