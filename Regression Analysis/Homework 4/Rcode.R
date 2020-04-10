@@ -50,3 +50,33 @@ residCreconasith=resid(lm.Creconasith)
 residCreconasith
 #Plot partial regression models
 plot(resid1,residCreconasith,main="Partial Regression Plot for Creatinine Concentration as ith", xlab= "Residuals for Creclear=Age+Weight", ylab= "Residuals for Crecon=Age+Weight")
+
+#Create partial regression for crecon and weight
+lm.creconweight=lm(Creclear~Crecon+Weight)
+lm.creconweight
+#Get residuals for crecon weight model
+resid2=resid(lm.creconweight)
+resid2
+#Create partial regression for age as ith
+lm.ageasith=lm(Age~Crecon+Weight)
+lm.ageasith
+#Get residuals for Crecon as ith
+residageasith=resid(lm.ageasith)
+residageasith
+#Plot partial regression models
+plot(resid2,residageasith,main="Partial Regression Plot for Age as ith", xlab= "Residuals for Creclear=Crecon+Weight", ylab= "Residuals for Age=Crecon+Weight")
+
+#Create partial regression for crecon and age
+lm.creconage=lm(Creclear~Crecon+Age)
+lm.creconage
+#Get residuals for crecon age model
+resid3=resid(lm.creconage)
+resid3
+#Create partial regression for weight as ith
+lm.weightasith=lm(Weight~Crecon+Age)
+lm.weightasith
+#Get residuals for Crecon as ith
+residweightasith=resid(lm.weightasith)
+residweightasith
+#Plot partial regression models
+plot(resid3,residweightasith,main="Partial Regression Plot for Weight as ith", xlab= "Residuals for Creclear=Crecon+Age", ylab= "Residuals for Weight=Crecon+Age")
