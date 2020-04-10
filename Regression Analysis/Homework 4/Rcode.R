@@ -35,3 +35,18 @@ predictmultreg
 
 #Plot residuals vs the predicted response
 plot(predictmultreg,residmodel, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
+#Create partial regression for age and weight
+lm.ageweight=lm(Creclear~Age+Weight)
+lm.ageweight
+#Get residuals for age weight model
+resid1=resid(lm.ageweight)
+resid1
+#Create partial regression for Crecon as ith
+lm.Creconasith=lm(Crecon~Age+Weight)
+lm.Creconasith
+#Get residuals for Crecon as ith
+residCreconasith=resid(lm.Creconasith)
+residCreconasith
+#Plot partial regression models
+plot(resid1,residCreconasith,main="Partial Regression Plot for Creatinine Concentration as ith", xlab= "Residuals for Creclear=Age+Weight", ylab= "Residuals for Crecon=Age+Weight")
