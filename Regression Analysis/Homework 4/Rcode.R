@@ -7,7 +7,7 @@ Crecon=Hmwk4[,1]
 Age=Hmwk4[,2]
 Weight=Hmwk4[,3]
 
-#Plot residuals vs the predicted response
+#Scatter plots
 plot(Crecon,Creclear, main= "Creatinine Clearance vs. Creatinine Concentration", xlab ="Creatinine Concentration", ylab="Creatinine Clearance ($1000's)")
 plot(Age,Creclear, main= "Creatinine Clearance vs. Age", xlab ="Age", ylab="Creatinine Clearance ($1000's)")
 plot(Weight,Creclear, main= "Creatinine Clearance vs. Weight", xlab ="Weight", ylab="Creatinine Clearance ($1000's)")
@@ -80,3 +80,25 @@ residweightasith=resid(lm.weightasith)
 residweightasith
 #Plot partial regression models
 plot(resid3,residweightasith,main="Partial Regression Plot for Weight as ith", xlab= "Residuals for Creclear=Crecon+Age", ylab= "Residuals for Weight=Crecon+Age")
+
+#Theoretical Model
+lm.theo=lm(log(Creclear)~(log(Crecon)+(log(140-Age))+(log(Weight))))
+lm.theo
+
+#Theoretical scatter plots
+lnCrecclear=log(Creclear)
+lnCrecclear
+lnCrecon=log(Crecon)
+lnCrecon
+Altage=(140-Age)
+Altage
+lnWeight=log(Weight)
+lnWeight
+
+#Scatter plots
+plot(lnCrecon,lnCrecclear, main= "Ln Creatinine Clearance vs. Ln Creatinine Concentration", xlab ="Ln Creatinine Concentration", ylab="Ln Creatinine Clearance ($1000's)")
+plot(Altage,lnCrecclear, main= "Ln Creatinine Clearance vs. (140-Age)", xlab ="(140-Age)", ylab="Ln Creatinine Clearance ($1000's)")
+plot(lnWeight,lnCrecclear, main= "Ln Creatinine Clearance vs. Ln Weight", xlab ="Ln Weight", ylab="Ln Creatinine Clearance ($1000's)")
+
+#Matrix plot
+pairs(~lnCrecon+Altage+lnWeight,data=Hmwk4, main = "Correlation Matrix")
