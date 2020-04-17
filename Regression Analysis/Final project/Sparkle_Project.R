@@ -368,3 +368,58 @@ predictlnHydroalcohollength=predict(lnHydroalcohollengthmodel)
 predictlnHydroalcohollength
 plot(predictlnHydroalcohollength,residlnHydroalcohollength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 qqnorm(residlnHydroalcohollength)
+
+#Ln model ice Trichoptera
+lnTriice=lm(lnTriicemass~lnTriiceSA)
+lnTriice
+anova(lnTriice)
+summary(lnTriice)
+plot(lnTriiceSA, lnTriicemass, main= "Ln Trichoptera Ice Mass vs. Surface Area", xlab="Ln Trichoptera Ice Surface Area (sq mm)", ylab="Ln Trichoptera Ice Mass (mg)")
+lines(lnTriiceSA, fitted(lnTriice), col="green")
+residlnTriice=resid(lnTriice)
+residlnTriice
+predictlnTriice=predict(lnTriice)
+predictlnTriice
+plot(predictlnTriice,residlnTriice, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTriice)
+
+
+lnTriicelengthmodel=lm(lnTriicemass~lnTriicelength)
+lnTriicelengthmodel
+anova(lnTriicelengthmodel)
+summary(lnTriicelengthmodel)
+plot(lnTriicelength, lnTriicemass, main= "Ln Trichoptera Ice Mass vs. Length", xlab="Ln Trichoptera Ice Length (mm)", ylab="Ln Trichoptera Ice Mass (mg)")
+lines(lnTriicelength, fitted(lnTriicelengthmodel), col="green")
+residlnTriicelengthmodel=resid(lnTriicelengthmodel)
+residlnTriicelengthmodel
+predictlnTriicelengthmodel=predict(lnTriicelengthmodel)
+predictlnTriicelengthmodel
+plot(predictlnTriicelengthmodel,residlnTriicelengthmodel, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTriicelengthmodel)
+
+#ln model ice Hydro
+lnHydroice=lm(lnHydroicemass~lnHydroiceSA)
+lnHydroice
+anova(lnHydroice)
+summary(lnHydroice)
+plot(lnHydroiceSA, lnHydroicemass, main= "Ln Hydropsychidae Ice Mass vs. Surface Area", xlab="Ln Hydropsychidae Ice Surface Area (sq mm)", ylab="Ln Hydropsychidae Ice Mass (mg)")
+lines(lnHydroiceSA, fitted(lnHydroice), col="green")
+residlnHydroice=resid(lnHydroice)
+residlnHydroice
+predictlnHydroice=predict(lnHydroice)
+predictlnHydroice
+plot(predictlnHydroice,residlnHydroice, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydroice)
+
+lnHydroicelengthmodel=lm(lnHydroicemass~lnHydroicelength)
+lnHydroicelengthmodel
+anova(lnHydroicelengthmodel)
+summary(lnHydroicelengthmodel)
+plot(lnHydroicelength, lnHydroicemass, main= "Ln Hydropsychidae Ice Mass vs. Length", xlab="Ln Hydropsychidae Ice Length (mm)", ylab="Ln Hydropsychidae Ice Mass (mg)")
+lines(lnHydroicelength, fitted(lnHydroicelengthmodel), col="green")
+residlnHydroicelength=resid(lnHydroicelengthmodel)
+residlnHydroicelength
+predictlnHydroicelength=predict(lnHydroicelengthmodel)
+predictlnHydroicelength
+plot(predictlnHydroicelength,residlnHydroicelength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydroicelength)
