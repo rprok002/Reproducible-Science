@@ -85,21 +85,30 @@ Rhyaicemass=Tri.ice.Rhya[,8]
 Rhyaicefamily=Tri.ice.Rhya[,11]
 
 #Linear model fresh Trichoptera
+
 lm.Trifresh=lm(Trifreshmass~TrifreshSA)
 lm.Trifresh
 anova(lm.Trifresh)
 summary(lm.Trifresh)
 plot(TrifreshSA, Trifreshmass, main= "Trichoptera Fresh Mass vs. Surface Area", xlab="Trichoptera Fresh Surface Area (sq mm)", ylab="Trichoptera Fresh Mass (mg)") 
 lines(Tri.fresh$SA.after..mm2., fitted(lm.Trifresh), col="blue")
-plot(lm.Trifresh)
+residTrifresh=resid(lm.Trifresh)
+residTrifresh
+predictTrifresh=predict(lm.Trifresh)
+predictTrifresh
+plot(predictTrifresh,residTrifresh, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 lm.Trifreshlength=lm(Trifreshmass~Trifreshlength)
 lm.Trifreshlength
 anova(lm.Trifreshlength)
 summary(lm.Trifreshlength)
-plot(lm.Trifreshlength)
 plot(Trifreshlength, Trifreshmass, main= "Trichoptera Fresh Mass vs. Length", xlab="Trichoptera Fresh Length (mm)", ylab="Trichoptera Fresh Mass (mg)")
 lines(Tri.fresh$length.after..mm., fitted(lm.Trifreshlength), col="blue")
+residTrifreshlength=resid(lm.Trifreshlength)
+residTrifreshlength
+predictTrifreshlength=predict(lm.Trifreshlength)
+predictTrifreshlength
+plot(predictTrifreshlength,residTrifreshlength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Linear model Hydro
 lm.Hydrofresh=lm(Hydrofreshmass~HydrofreshSA)
@@ -108,7 +117,11 @@ anova(lm.Hydrofresh)
 summary(lm.Hydrofresh)
 plot(HydrofreshSA, Hydrofreshmass, main= "Hydropsychidae Fresh Mass vs. Surface Area", xlab="Hydropsychidae Fresh Surface Area (sq mm)", ylab="Hydropsychidae Fresh Mass (mg)") 
 lines(Tri.fresh.Hydro$SA.after..mm2., fitted(lm.Hydrofresh), col="blue")
-plot(lm.Hydrofresh)
+residHydrofresh=resid(lm.Hydrofresh)
+residHydrofresh
+predictHydrofresh=predict(lm.Hydrofresh)
+predictHydrofresh
+plot(predictHydrofresh,residHydrofresh, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 lm.Hydrofreshlength=lm(Hydrofreshmass~Hydrofreshlength)
 lm.Hydrofreshlength
@@ -116,58 +129,11 @@ anova(lm.Hydrofreshlength)
 summary(lm.Hydrofreshlength)
 plot(Hydrofreshlength, Hydrofreshmass, main= "Hydropsychidae Fresh Mass vs. Length", xlab="Hydropsychidae Fresh Length (mm)", ylab="Hydropsychidae Fresh Mass (mg)") 
 lines(Tri.fresh.Hydro$length.after..mm., fitted(lm.Hydrofreshlength), col="blue")
-plot(lm.Hydrofreshlength)
-
-#Linear model Phry
-lm.Phryfresh=lm(Phryfreshmass~PhryfreshSA)
-lm.Phryfresh
-anova(lm.Phryfresh)
-summary(lm.Phryfresh)
-plot(PhryfreshSA, Phryfreshmass, main= "Phryganeidae Fresh Mass vs. Surface Area", xlab="Phryganeidae Fresh Surface Area (sq mm)", ylab="Phryganeidae Fresh Mass (mg)") 
-lines(Tri.fresh.Phry$SA.after..mm2., fitted(lm.Phryfresh), col="blue")
-plot(lm.Phryfresh)
-
-lm.Phryfreshlength=lm(Phryfreshmass~Phryfreshlength)
-lm.Phryfreshlength
-anova(lm.Phryfreshlength)
-summary(lm.Phryfreshlength)
-plot(Phryfreshlength, Phryfreshmass, main= "Phryganeidae Fresh Mass vs. Length", xlab="Phryganeidae Fresh Length (mm)", ylab="Phryganeidae Fresh Mass (mg)") 
-lines(Tri.fresh.Phry$length.after..mm., fitted(lm.Phryfreshlength), col="blue")
-plot(lm.Phryfreshlength)
-
-#Linear model Poly
-lm.Polyfresh=lm(Polyfreshmass~PolyfreshSA)
-lm.Polyfresh
-anova(lm.Polyfresh)
-summary(lm.Polyfresh)
-plot(PolyfreshSA, Polyfreshmass, main= "Polycentropodidae Fresh Mass vs. Surface Area", xlab="Polycentropodidae Fresh Surface Area (sq mm)", ylab="Polycentropodidae Fresh Mass (mg)") 
-lines(Tri.fresh.Poly$SA.after..mm2., fitted(lm.Polyfresh), col="blue")
-plot(lm.Polyfresh)
-
-lm.Polyfreshlength=lm(Polyfreshmass~Polyfreshlength)
-lm.Polyfreshlength
-anova(lm.Polyfreshlength)
-summary(lm.Polyfreshlength)
-plot(Polyfreshlength, Polyfreshmass, main= "Polycentropodidae Fresh Mass vs. Length", xlab="Polycentropodidae Fresh Length (mm)", ylab="Polycentropodidae Fresh Mass (mg)") 
-lines(Tri.fresh.Poly$length.after..mm., fitted(lm.Polyfreshlength), col="blue")
-plot(lm.Polyfreshlength)
-
-#Linear model Rhya
-lm.Rhyafresh=lm(Rhyafreshmass~RhyafreshSA)
-lm.Rhyafresh
-anova(lm.Rhyafresh)
-summary(lm.Rhyafresh)
-plot(RhyafreshSA, Rhyafreshmass, main= "Rhyacophilidae Fresh Mass vs. Surface Area", xlab="Rhyacophilidae Fresh Surface Area (sq mm)", ylab="Rhyacophilidae Fresh Mass (mg)") 
-lines(Tri.fresh.Rhya$SA.after..mm2., fitted(lm.Rhyafresh), col="blue")
-plot(lm.Rhyafresh)
-
-lm.Rhyafreshlength=lm(Rhyafreshmass~Rhyafreshlength)
-lm.Rhyafreshlength
-anova(lm.Rhyafreshlength)
-summary(lm.Rhyafreshlength)
-plot(Rhyafreshlength, Rhyafreshmass, main= "Rhyacophilidae Fresh Mass vs. Length", xlab="Rhyacophilidae Fresh Length (mm)", ylab="Rhyacophilidae Fresh Mass (mg)") 
-lines(Tri.fresh.Rhya$length.after..mm., fitted(lm.Rhyafreshlength), col="blue")
-plot(lm.Rhyafreshlength)
+residHydrofreshlength=resid(lm.Hydrofreshlength)
+residHydrofreshlength
+predictHydrofreshlength=predict(lm.Hydrofreshlength)
+predictHydrofreshlength
+plot(predictHydrofreshlength,residHydrofreshlength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Linear model alcohol Trichoptera
 lm.Trialcohol=lm(Trialcoholmass~TrialcoholSA)
@@ -176,7 +142,11 @@ anova(lm.Trialcohol)
 summary(lm.Trialcohol)
 plot(TrialcoholSA, Trialcoholmass, main= "Trichoptera Alcohol Mass vs. Surface Area", xlab="Trichoptera Alcohol Surface Area (sq mm)", ylab="Trichoptera Alcohol Mass (mg)")
 lines(Tri.alcohol$SA.after..mm2., fitted(lm.Trialcohol), col="red")
-plot(lm.Trialcohol)
+residTrialcohol=resid(lm.Trialcohol)
+residTrialcohol
+predictTrialcohol=predict(lm.Trialcohol)
+predictTrialcohol
+plot(predictTrialcohol,residTrialcohol, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 lm.Trialcohollength=lm(Trialcoholmass~Trialcohollength)
 lm.Trialcohollength
@@ -184,7 +154,11 @@ anova(lm.Trialcohollength)
 summary(lm.Trialcohollength)
 plot(Trialcohollength, Trialcoholmass,main= "Trichoptera Alcohol Mass vs. Length", xlab="Trichoptera Alcohol Length (mm)", ylab="Trichoptera Alcohol Mass (mg)")
 lines(Tri.alcohol$length.after..mm., fitted(lm.Trialcohollength), col="red")
-plot(lm.Trialcohollength)
+residTrialcohollength=resid(lm.Trialcohollength)
+residTrialcohollength
+predictTrialcohollength=predict(lm.Trialcohollength)
+predictTrialcohollength
+plot(predictTrialcohollength,residTrialcohollength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Linear model Hydro
 lm.Hydroalcohol=lm(Hydroalcoholmass~HydroalcoholSA)
@@ -193,7 +167,11 @@ anova(lm.Hydroalcohol)
 summary(lm.Hydroalcohol)
 plot(HydroalcoholSA, Hydroalcoholmass, main= "Hydropsychidae Alcohol Mass vs. Surface Area", xlab="Hydropsychidae Alcohol Surface Area (sq mm)", ylab="Hydropsychidae Alcohol Mass (mg)") 
 lines(Tri.alcohol.Hydro$SA.after..mm2., fitted(lm.Hydroalcohol), col="red")
-plot(lm.Hydroalcohol)
+residHydroalcohol=resid(lm.Hydroalcohol)
+residHydroalcohol
+predictHydroalcohol=predict(lm.Hydroalcohol)
+predictHydroalcohol
+plot(predictHydroalcohol,residHydroalcohol, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 lm.Hydroalcohollength=lm(Hydroalcoholmass~Hydroalcohollength)
 lm.Hydroalcohollength
@@ -201,75 +179,13 @@ anova(lm.Hydroalcohollength)
 summary(lm.Hydroalcohollength)
 plot(Hydroalcohollength, Hydroalcoholmass, main= "Hydropsychidae Alcohol Mass vs. Length", xlab="Hydropsychidae Alcohol Length (mm)", ylab="Hydropsychidae Alcohol Mass (mg)") 
 lines(Tri.alcohol.Hydro$length.after..mm., fitted(lm.Hydroalcohollength), col="red")
-plot(lm.Hydroalcohollength)
+residHydroalcohollength=resid(lm.Hydroalcohollength)
+residHydroalcohollength
+predictHydroalcohollength=predict(lm.Hydroalcohollength)
+predictHydroalcohollength
+plot(predictHydroalcohollength,residHydroalcohollength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
-#Linear model Phry
-lm.Phryalcohol=lm(Phryalcoholmass~PhryalcoholSA)
-lm.Phryalcohol
-anova(lm.Phryalcohol)
-summary(lm.Phryalcohol)
-plot(PhryalcoholSA, Phryalcoholmass, main= "Phryganeidae Alcohol Mass vs. Surface Area", xlab="Phryganeidae Alcohol Surface Area (sq mm)", ylab="Phryganeidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Phry$SA.after..mm2., fitted(lm.Phryalcohol), col="red")
-plot(lm.Phryalcohol)
 
-lm.Phryalcohollength=lm(Phryalcoholmass~Phryalcohollength)
-lm.Phryalcohollength
-anova(lm.Phryalcohollength)
-summary(lm.Phryalcohollength)
-plot(Phryalcohollength, Phryalcoholmass, main= "Phryganeidae Alcohol Mass vs. Length", xlab="Phryganeidae Alcohol Length (mm)", ylab="Phryganeidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Phry$length.after..mm., fitted(lm.Phryalcohollength), col="red")
-plot(lm.Phryalcohollength)
-
-#Linear model Poly
-lm.Polyalcohol=lm(Polyalcoholmass~PolyalcoholSA)
-lm.Polyalcohol
-anova(lm.Polyalcohol)
-summary(lm.Polyalcohol)
-plot(PolyalcoholSA, Polyalcoholmass, main= "Polycentropodidae Alcohol Mass vs. Surface Area", xlab="Polycentropodidae Alcohol Surface Area (sq mm)", ylab="Polycentropodidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Poly$SA.after..mm2., fitted(lm.Polyalcohol), col="red")
-plot(lm.Polyalcohol)
-
-lm.Polyalcohollength=lm(Polyalcoholmass~Polyalcohollength)
-lm.Polyalcohollength
-anova(lm.Polyalcohollength)
-summary(lm.Polyalcohollength)
-plot(Polyalcohollength, Polyalcoholmass, main= "Polycentropodidae Alcohol Mass vs. Length", xlab="Polycentropodidae Alcohol Length (mm)", ylab="Polycentropodidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Poly$length.after..mm., fitted(lm.Polyalcohollength), col="red")
-plot(lm.Polyalcohollength)
-
-#Linear model Rhya
-lm.Rhyaalcohol=lm(Rhyaalcoholmass~RhyaalcoholSA)
-lm.Rhyaalcohol
-anova(lm.Rhyaalcohol)
-summary(lm.Rhyaalcohol)
-plot(RhyaalcoholSA, Rhyaalcoholmass, main= "Rhyacophilidae Alcohol Mass vs. Surface Area", xlab="Rhyacophilidae Alcohol Surface Area (sq mm)", ylab="Rhyacophilidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Rhya$SA.after..mm2., fitted(lm.Rhyaalcohol), col="red")
-plot(lm.Rhyaalcohol)
-
-lm.Rhyaalcohollength=lm(Rhyaalcoholmass~Rhyaalcohollength)
-lm.Rhyaalcohollength
-anova(lm.Rhyaalcohollength)
-summary(lm.Rhyaalcohollength)
-plot(Rhyaalcohollength, Rhyaalcoholmass, main= "Rhyacophilidae Alcohol Mass vs. Length", xlab="Rhyacophilidae Alcohol Length (mm)", ylab="Rhyacophilidae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Rhya$length.after..mm., fitted(lm.Rhyaalcohollength), col="red")
-plot(lm.Rhyaalcohollength)
-
-#Linear model Bra
-lm.Braalcohol=lm(Braalcoholmass~BraalcoholSA)
-lm.Braalcohol
-anova(lm.Braalcohol)
-summary(lm.Braalcohol)
-plot(BraalcoholSA, Braalcoholmass, main= "Bracgycentridae Alcohol Mass vs. Surface Area", xlab="Bracgycentridae Alcohol Surface Area (sq mm)", ylab="Bracgycentridae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Bra$SA.after..mm2., fitted(lm.Braalcohol), col="red")
-plot(lm.Braalcohol)
-
-lm.Braalcohollength=lm(Braalcoholmass~Braalcohollength)
-lm.Braalcohollength
-anova(lm.Braalcohollength)
-summary(lm.Braalcohollength)
-plot(Braalcohollength, Braalcoholmass, main= "Bracgycentridae Alcohol Mass vs. Length", xlab="Bracgycentridae Alcohol Length (mm)", ylab="Bracgycentridae Alcohol Mass (mg)") 
-lines(Tri.alcohol.Bra$length.after..mm., fitted(lm.Braalcohollength), col="red")
-plot(lm.Braalcohollength)
 
 #Linear model ice Trichoptera
 lm.Triice=lm(Triicemass~TriiceSA)
@@ -278,15 +194,24 @@ anova(lm.Triice)
 summary(lm.Triice)
 plot(TriiceSA, Triicemass, main= "Trichoptera Ice Mass vs. Surface Area", xlab="Trichoptera Ice Surface Area (sq mm)", ylab="Trichoptera Ice Mass (mg)")
 lines(Tri.ice$SA.after..mm2., fitted(lm.Triice), col="green")
-plot(lm.Triice)
+residTriice=resid(lm.Triice)
+residTriice
+predictTriice=predict(lm.Triice)
+predictTriice
+plot(predictTriice,residTriice, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
 
 lm.Triicelength=lm(Triicemass~Triicelength)
 lm.Triicelength
 anova(lm.Triicelength)
 summary(lm.Triicelength)
-plot(lm.Triicelength)
 plot(Triicelength, Triicemass, main= "Trichoptera Ice Mass vs. Length", xlab="Trichoptera Ice Length (mm)", ylab="Trichoptera Ice Mass (mg)")
 lines(Tri.ice$length.after..mm., fitted(lm.Triicelength), col="green")
+residTriicelength=resid(lm.Triicelength)
+residTriicelength
+predictTriicelength=predict(lm.Triicelength)
+predictTriicelength
+plot(predictTriicelength,residTriicelength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
 #Linear model ice Hydro
 lm.Hydroice=lm(Hydroicemass~HydroiceSA)
@@ -295,161 +220,151 @@ anova(lm.Hydroice)
 summary(lm.Hydroice)
 plot(HydroiceSA, Hydroicemass, main= "Hydropsychidae Ice Mass vs. Surface Area", xlab="Hydropsychidae Ice Surface Area (sq mm)", ylab="Hydropsychidae Ice Mass (mg)")
 lines(Tri.ice.Hydro$SA.after..mm2., fitted(lm.Hydroice), col="green")
-plot(lm.Hydroice)
+residHydroice=resid(lm.Hydroice)
+residHydroice
+predictHydroice=predict(lm.Hydroice)
+predictHydroice
+plot(predictHydroice,residHydroice, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+
 
 lm.Hydroicelength=lm(Hydroicemass~Hydroicelength)
 lm.Hydroicelength
 anova(lm.Hydroicelength)
 summary(lm.Hydroicelength)
-plot(lm.Hydroicelength)
 plot(Hydroicelength, Hydroicemass, main= "Hydropsychidae Ice Mass vs. Length", xlab="Hydropsychidae Ice Length (mm)", ylab="Hydropsychidae Ice Mass (mg)")
 lines(Tri.ice.Hydro$length.after..mm., fitted(lm.Hydroicelength), col="green")
+residHydroicelength=resid(lm.Hydroicelength)
+residHydroicelength
+predictresidHydroicelength=predict(lm.Hydroicelength)
+predictresidHydroicelength
+plot(predictresidHydroicelength,residHydroicelength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
 
-#Linear model ice Poly
-lm.Polyice=lm(Polyicemass~PolyiceSA)
-lm.Polyice
-anova(lm.Polyice)
-summary(lm.Polyice)
-plot(PolyiceSA, Polyicemass, main= "Polycentropodidae Ice Mass vs. Surface Area", xlab="Polycentropodidae Ice Surface Area (sq mm)", ylab="Polycentropodidae Ice Mass (mg)")
-lines(Tri.ice.Poly$SA.after..mm2., fitted(lm.Polyice), col="green")
-plot(lm.Polyice)
+#Transform
+lnTrifreshSA=log(TrifreshSA)
+lnTrifreshlength=log(Trifreshlength)
+lnTrifreshmass=log(Trifreshmass)
+lnTrialcoholSA=log(TrialcoholSA)
+lnTrialcohollength=log(Trialcohollength)
+lnTrialcoholmass=log(Trialcoholmass)
+lnTriiceSA=log(TriiceSA)
+lnTriicelength=log(Triicelength)
+lnTriicemass=log(Triicemass)
+lnHydrofreshSA=log(HydrofreshSA)
+lnHydrofreshlength=log(Hydrofreshlength)
+lnHydrofreshmass=log(Hydrofreshmass)
+lnHydroalcoholSA=log(HydroalcoholSA)
+lnHydroalcoholmass=log(Hydroalcoholmass)
+lnHydroalcohollength=log(Hydroalcohollength)
+lnHydroiceSA=log(HydroiceSA)
+lnHydroicelength=log(Hydroicelength)
+lnHydroicemass=log(Hydroicemass)
 
-lm.Polyicelength=lm(Polyicemass~Polyicelength)
-lm.Polyicelength
-anova(lm.Polyicelength)
-summary(lm.Polyicelength)
-plot(lm.Polyicelength)
-plot(Polyicelength, Polyicemass, main= "Polycentropodidae Ice Mass vs. Length", xlab="Polycentropodidae Ice Length (mm)", ylab="Polycentropodidae Ice Mass (mg)")
-lines(Tri.ice.Poly$length.after..mm., fitted(lm.Polyicelength), col="green")
+#ln model fresh Trichoptera
 
-#Linear model ice Rhya
-lm.Rhyaice=lm(Rhyaicemass~RhyaiceSA)
-lm.Rhyaice
-anova(lm.Rhyaice)
-summary(lm.Rhyaice)
-plot(RhyaiceSA, Rhyaicemass, main= "Rhyacophilidae Ice Mass vs. Surface Area", xlab="Rhyacophilidae Ice Surface Area (sq mm)", ylab="Rhyacophilidae Ice Mass (mg)")
-lines(Tri.ice.Rhya$SA.after..mm2., fitted(lm.Rhyaice), col="green")
-plot(lm.Rhyaice)
+lnTrifresh=lm(lnTrifreshmass~lnTrifreshSA)
+lnTrifresh
+anova(lnTrifresh)
+summary(lnTrifresh)
+plot(lnTrifreshSA, lnTrifreshmass, main= "Ln Trichoptera Fresh Mass vs. Ln Surface Area", xlab="Ln Trichoptera Fresh Surface Area (sq mm)", ylab="Ln Trichoptera Fresh Mass (mg)") 
+lines(lnTrifreshSA, fitted(lnTrifresh), col="blue")
+residlnTrifresh=resid(lnTrifresh)
+residlnTrifresh
+predictlnTrifresh=predict(lnTrifresh)
+predictlnTrifresh
+plot(predictlnTrifresh,residlnTrifresh, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTrifresh)
 
-lm.Rhyaicelength=lm(Rhyaicemass~Rhyaicelength)
-lm.Rhyaicelength
-anova(lm.Rhyaicelength)
-summary(lm.Rhyaicelength)
-plot(lm.Rhyaicelength)
-plot(Rhyaicelength, Rhyaicemass, main= "Rhyacophilidae Ice Mass vs. Length", xlab="Rhyacophilidae Ice Length (mm)", ylab="Rhyacophilidae Ice Mass (mg)")
-lines(Tri.ice.Rhya$length.after..mm., fitted(lm.Rhyaicelength), col="green")
+lnTrifreshlengthmodel=lm(lnTrifreshmass~lnTrifreshlength)
+lnTrifreshlengthmodel
+anova(lnTrifreshlengthmodel)
+summary(lnTrifreshlengthmodel)
+plot(lnTrifreshlength, lnTrifreshmass, main= "Ln Trichoptera Fresh Mass vs. Ln Length", xlab="Ln Trichoptera Fresh length (mm)", ylab="Ln Trichoptera Fresh Mass (mg)") 
+lines(lnTrifreshlength, fitted(lnTrifreshlengthmodel), col="blue")
+residlnTrifreshlength=resid(lnTrifreshlengthmodel)
+residlnTrifreshlength
+predictlnTrifreshlength=predict(lnTrifreshlengthmodel)
+predictlnTrifreshlength
+plot(predictlnTrifreshlength,residlnTrifreshlength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTrifreshlength)
 
-library(nlstools)
-library(nls2)
+#Ln model Hydro
+lnHydrofresh=lm(lnHydrofreshmass~lnHydrofreshSA)
+lnHydrofresh
+anova(lnHydrofresh)
+summary(lnHydrofresh)
+plot(lnHydrofreshSA, lnHydrofreshmass, main= "Ln Hydropsychidae Fresh Mass vs. Ln Surface Area", xlab="Ln Hydropsychidae Fresh Surface Area (sq mm)", ylab="Ln Hydropsychidae Fresh Mass (mg)") 
+lines(lnHydrofreshSA, fitted(lnHydrofresh), col="blue")
+residlnHydrofresh=resid(lnHydrofresh)
+residlnHydrofresh
+predictlnHydrofresh=predict(lnHydrofresh)
+predictlnHydrofresh
+plot(predictlnHydrofresh,residlnHydrofresh, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydrofresh)
 
-Hydroalcoholfirst= nls2(Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Hydro, start=list(a= 0.5 , b= 0.0001))
+lnHydrofreshlengthmodel=lm(lnHydrofreshmass~lnHydrofreshlength)
+lnHydrofreshlengthmodel
+anova(lnHydrofreshlengthmodel)
+summary(lnHydrofreshlengthmodel)
+plot(lnHydrofreshlength, lnHydrofreshmass, main= "Ln Hydropsychidae Fresh Mass vs. Length", xlab="Ln Hydropsychidae Fresh Length (mm)", ylab="Ln Hydropsychidae Fresh Mass (mg)") 
+lines(lnHydrofreshlength, fitted(lnHydrofreshlengthmodel), col="blue")
+residlnHydrofreshlength=resid(lnHydrofreshlengthmodel)
+residlnHydrofreshlength
+predictlnHydrofreshlength=predict(lnHydrofreshlengthmodel)
+predictlnHydrofreshlength
+plot(predictlnHydrofreshlength,residlnHydrofreshlength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydrofreshlength)
 
-summary(Hydroalcoholfirst)
-Hydroalcohol= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Hydro,
-                                         start=list(a= 1 , b= 0.00006107),
-                                         na.action=na.exclude, trace=F,
-                                         control=nls.control(warnOnly=T))
+#ln model alcohol Trichoptera
 
-plot(Tri.alcohol.Hydro$SA.after..mm2.,Tri.alcohol.Hydro$Mass.mg., main= "Hydropsychidae Alcohol Mass vs. Surface Area", xlab="Hydropsychidae Alcohol Surface Area (sq mm)", ylab="Hydropsychidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Hydro$SA.after..mm2., fitted(Hydroalcohol), col="purple")
-summary(Hydroalcohol)
+lnTrialcohol=lm(lnTrialcoholmass~lnTrialcoholSA)
+lnTrialcohol
+anova(lnTrialcohol)
+summary(lnTrialcohol)
+plot(lnTrialcoholSA, lnTrialcoholmass, main= "Ln Trichoptera Alcohol Mass vs. Ln Surface Area", xlab="Ln Trichoptera Alcohol Surface Area (sq mm)", ylab="Ln Trichoptera Alcohol Mass (mg)") 
+lines(lnTrialcoholSA, fitted(lnTrialcohol), col="red")
+residlnTrialcohol=resid(lnTrialcohol)
+residlnTrialcohol
+predictlnTrialcohol=predict(lnTrialcohol)
+predictlnTrialcohol
+plot(predictlnTrialcohol,residlnTrialcohol, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTrialcohol)
 
+lnTrialcohollengthmodel=lm(lnTrialcoholmass~lnTrialcohollength)
+lnTrialcohollengthmodel
+anova(lnTrialcohollengthmodel)
+summary(lnTrialcohollengthmodel)
+plot(lnTrialcohollength, lnTrialcoholmass, main= "Ln Trichoptera Alcohol Mass vs. Ln Length", xlab="Ln Trichoptera Alcohol length (mm)", ylab="Ln Trichoptera Alcohol Mass (mg)") 
+lines(lnTrialcohollength, fitted(lnTrialcohollengthmodel), col="red")
+residlnTrialcohollength=resid(lnTrialcohollengthmodel)
+residlnTrialcohollength
+predictlnTrialcohollength=predict(lnTrialcohollengthmodel)
+predictlnTrialcohollength
+plot(predictlnTrialcohollength,residlnTrialcohollength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnTrialcohollength)
 
-Hydroalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Hydro,
-                   start=list(a= 1 , b= 0.00006107),
-                   na.action=na.exclude, trace=F,
-                   control=nls.control(warnOnly=T))
+#Ln model Hydro
+lnHydroalcohol=lm(lnHydroalcoholmass~lnHydroalcoholSA)
+lnHydroalcohol
+anova(lnHydroalcohol)
+summary(lnHydroalcohol)
+plot(lnHydroalcoholSA, lnHydroalcoholmass, main= "Ln Hydropsychidae Alcohol Mass vs. Ln Surface Area", xlab="Ln Hydropsychidae Alcohol Surface Area (sq mm)", ylab="Ln Hydropsychidae Alcohol Mass (mg)") 
+lines(lnHydroalcoholSA, fitted(lnHydroalcohol), col="red")
+residlnHydroalcohol=resid(lnHydroalcohol)
+residlnHydroalcohol
+predictlnHydroalcohol=predict(lnHydroalcohol)
+predictlnHydroalcohol
+plot(predictlnHydroalcohol,residlnHydroalcohol, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydroalcohol)
 
-plot(Tri.alcohol.Hydro$length.after..mm.,Tri.alcohol.Hydro$Mass.mg., main= "Hydropsychidae Alcohol Mass vs. Length", xlab="Hydropsychidae Alcohol Length (mm)", ylab="Hydropsychidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Hydro$length.after..mm., fitted(Hydroalcohollength), col="purple")
-summary(Hydroalcohollength)
-
-TrialcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol,
-                         start=list(a= 1 , b= 0.00006107),
-                         na.action=na.exclude, trace=F,
-                         control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol$SA.after..mm2.,Tri.alcohol$Mass.mg., main= "Trichoptera Alcohol Mass vs. Surface Area", xlab="Trichoptera Alcohol Surface Area (sq mm)", ylab="Trichoptera Alcohol Mass (mg)")
-lines(Tri.alcohol$SA.after..mm2., fitted(TrialcoholSA), col="purple")
-summary(TrialcoholSA)
-
-Trialcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol,
-                   start=list(a= 1 , b= 0.00006107),
-                   na.action=na.exclude, trace=F,
-                   control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol$length.after..mm.,Tri.alcohol$Mass.mg., main= "Trichoptera Alcohol Mass vs. Length", xlab="Trichoptera Alcohol Length (mm)", ylab="Trichoptera Alcohol Mass (mg)")
-lines(Tri.alcohol$length.after..mm., fitted(Trialcohollength), col="purple")
-summary(Trialcohollength)
-
-PhryalcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Phry,
-                       start=list(a= 1 , b= 0.00006107),
-                       na.action=na.exclude, trace=F,
-                       control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Phry$SA.after..mm2.,Tri.alcohol.Phry$Mass.mg., main= "Phryganeidae Alcohol Mass vs. Surface Area", xlab="Phryganeidae Alcohol Surface Area (sq mm)", ylab="Phryganeidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Phry$SA.after..mm2., fitted(PhryalcoholSA), col="purple")
-summary(PhryalcoholSA)
-
-Phryalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Phry,
-                    start=list(a= 1 , b= 0.00006107),
-                    na.action=na.exclude, trace=F,
-                    control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Phry$length.after..mm.,Tri.alcohol.Phry$Mass.mg., main= "Phryganeidae Alcohol Mass vs. Length", xlab="Phryganeidae Alcohol Length (mm)", ylab="Phryganeidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Phry$length.after..mm., fitted(Phryalcohollength), col="purple")
-summary(Phryalcohollength)
-
-PolylcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Poly,
-                        start=list(a= 1 , b= 0.00006107),
-                        na.action=na.exclude, trace=F,
-                        control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Poly$SA.after..mm2.,Tri.alcohol.Poly$Mass.mg., main= "	Polycentropodidae Alcohol Mass vs. Surface Area", xlab="	Polycentropodidae Alcohol Surface Area (sq mm)", ylab="Polycentropodidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Poly$SA.after..mm2., fitted(PolylcoholSA), col="purple")
-summary(PolylcoholSA)
-
-Polyalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Poly,
-                        start=list(a= 1 , b= 0.00006107),
-                        na.action=na.exclude, trace=F,
-                        control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Poly$length.after..mm.,Tri.alcohol.Poly$Mass.mg., main= "Polycentropodidae Alcohol Mass vs. Length", xlab="Polycentropodidae Alcohol Length (mm)", ylab="Polycentropodidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Poly$length.after..mm., fitted(Polyalcohollength), col="purple")
-summary(Polyalcohollength)
-
-RhyalcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Rhya,
-                   start=list(a= 1 , b= 0.00006107),
-                   na.action=na.exclude, trace=F,
-                   control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Rhya$SA.after..mm2.,Tri.alcohol.Rhya$Mass.mg., main= "	Rhyacophilidae Alcohol Mass vs. Surface Area", xlab="	Rhyacophilidae Alcohol Surface Area (sq mm)", ylab="Rhyacophilidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Rhya$SA.after..mm2., fitted(RhyalcoholSA), col="purple")
-summary(RhyalcoholSA)
-
-Rhyaalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Rhya,
-                        start=list(a= 1 , b= 0.00006107),
-                        na.action=na.exclude, trace=F,
-                        control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Rhya$length.after..mm.,Tri.alcohol.Rhya$Mass.mg., main= "Rhyacophilidae Alcohol Mass vs. Length", xlab="Rhyacophilidae Alcohol Length (mm)", ylab="Rhyacophilidae Alcohol Mass (mg)")
-lines(Tri.alcohol.Rhya$length.after..mm., fitted(Rhyaalcohollength), col="purple")
-summary(Rhyaalcohollength)
-
-BralcoholSA= nls( Mass.mg. ~ a * exp(b*SA.after..mm2.), data=Tri.alcohol.Bra,
-                   start=list(a= 1 , b= 0.00006107),
-                   na.action=na.exclude, trace=F,
-                   control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Bra$SA.after..mm2.,Tri.alcohol.Bra$Mass.mg., main= "	Bracgycentridae Alcohol Mass vs. Surface Area", xlab="	Bracgycentridae Alcohol Surface Area (sq mm)", ylab="Bracgycentridae Alcohol Mass (mg)")
-lines(Tri.alcohol.Bra$SA.after..mm2., fitted(BralcoholSA), col="purple")
-summary(BralcoholSA)
-
-Braalcohollength= nls( Mass.mg. ~ a * exp(b*length.after..mm.), data=Tri.alcohol.Bra,
-                        start=list(a= 1 , b= 0.00006107),
-                        na.action=na.exclude, trace=F,
-                        control=nls.control(warnOnly=T))
-
-plot(Tri.alcohol.Bra$length.after..mm.,Tri.alcohol.Bra$Mass.mg., main= "Bracgycentridae Alcohol Mass vs. Length", xlab="Bracgycentridae Alcohol Length (mm)", ylab="Bracgycentridae Alcohol Mass (mg)")
-lines(Tri.alcohol.Bra$length.after..mm., fitted(Braalcohollength), col="purple")
-summary(Braalcohollength)
+lnHydroalcohollengthmodel=lm(lnHydroalcoholmass~lnHydroalcohollength)
+lnHydroalcohollengthmodel
+anova(lnHydroalcohollengthmodel)
+summary(lnHydroalcohollengthmodel)
+plot(lnHydroalcohollength, lnHydroalcoholmass, main= "Ln Hydropsychidae Alcohol Mass vs. Length", xlab="Ln Hydropsychidae Alcohol Length (mm)", ylab="Ln Hydropsychidae Alcohol Mass (mg)") 
+lines(lnHydroalcohollength, fitted(lnHydroalcohollengthmodel), col="red")
+residlnHydroalcohollength=resid(lnHydroalcohollengthmodel)
+residlnHydroalcohollength
+predictlnHydroalcohollength=predict(lnHydroalcohollengthmodel)
+predictlnHydroalcohollength
+plot(predictlnHydroalcohollength,residlnHydroalcohollength, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residlnHydroalcohollength)
