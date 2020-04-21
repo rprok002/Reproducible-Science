@@ -151,24 +151,24 @@ vif(lm.x4)
 PRESS(lm.x4)
 
 #Partial x5 ith
-lm.x4=lm(y~x1+x2+x3+x5+x6+x7+x8+x9)
-lm.x4
-lm.x4ith=lm(x4~x1+x2+x3+x5+x6+x7+x8+x9)
-lm.x4ith
-resid.x4=resid(lm.x4)
-resid.x4
-resid.x4ith=resid(lm.x4ith)
-resid.x4ith
-plot(resid.x4,resid.x4ith,main="Partial Regression Plot for x4 as ith", xlab= "Residuals for y=x1+x2+x3+x5+x6+x7+x8+x9", ylab= "Residuals for x4=x1+x2+x3+x5+x6+x7+x8+x9")
-qqnorm(resid.x4)
+lm.x5=lm(y~x1+x2+x3+x4+x6+x7+x8+x9)
+lm.x5
+lm.x5ith=lm(x5~x1+x2+x3+x4+x6+x7+x8+x9)
+lm.x5ith
+resid.x5=resid(lm.x5)
+resid.x5
+resid.x5ith=resid(lm.x5ith)
+resid.x5ith
+plot(resid.x5,resid.x5ith,main="Partial Regression Plot for x5 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x6+x7+x8+x9", ylab= "Residuals for x5=x1+x2+x3+x4+x6+x7+x8+x9")
+qqnorm(resid.x5)
 
-summary(lm.x4)
-predictlm.x4=predict(lm.x4)
-predictlm.x4
-plot(predictlm.x4,resid.x4, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
-standx4=rstandard(lm.x4)
-standx4
-studentx4=rstudent(lm.x4)
-studentx4
-vif(lm.x4)
-PRESS(lm.x4)
+summary(lm.x5)
+predictlm.x5=predict(lm.x5)
+predictlm.x5
+plot(predictlm.x5,resid.x5, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+standx5=rstandard(lm.x5)
+standx5
+studentx5=rstudent(lm.x5)
+studentx5
+vif(lm.x5)
+PRESS(lm.x5)
