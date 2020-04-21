@@ -1,3 +1,5 @@
+library(car)
+library(qpcR)
 #Add Data
 Data=read.csv(file.choose())
 
@@ -35,3 +37,22 @@ plot(x6, y, main = "Pounds of Steam used Monthly vs Days below 32F", xlab= "Days
 plot(x7, y, main = "Pounds of Steam used Monthly vs Average Atmospheric Temp", xlab= "Average Atmospheric Temp (F)", ylab = "Steam (lbs/month)")
 plot(x8, y, main = "Pounds of Steam used Monthly vs Average Wind Velocity Squared", xlab= "Average Wind Velocity Squared (mph2)", ylab = "Steam (lbs/month)")
 plot(x9, y, main = "Pounds of Steam used Monthly vs Number of Startups", xlab= "Number of Startups (#)", ylab = "Steam (lbs/month)")
+
+#Question 3: Linear Model
+lm.full=lm(y~x1+x2+x3+x4+x5+x6+x7+x8+x9)
+lm.full
+summary(lm.full)
+
+residfull=resid(lm.full)
+residfull
+
+predictlmfull=predict(lm.full)
+predictlmfull
+plot(predictlmfull,residfull, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+qqnorm(residfull)
+
+standfull=rstandard(lm.full)
+standfull
+studentfull=rstudent(lm.full)
+studentfull
+vif(lm.full)
