@@ -56,3 +56,50 @@ standfull
 studentfull=rstudent(lm.full)
 studentfull
 vif(lm.full)
+PRESS(lm.full)
+
+#Partial x1 ith
+lm.x1=lm(y~x2+x3+x4+x5+x6+x7+x8+x9)
+lm.x1
+lm.x1ith=lm(x1~x2+x3+x4+x5+x6+x7+x8+x9)
+lm.x1ith
+resid.x1=resid(lm.x1)
+resid.x1
+resid.x1ith=resid(lm.x1ith)
+resid.x1ith
+plot(resid.x1,resid.x1ith,main="Partial Regression Plot for x1 as ith", xlab= "Residuals for y=x2+x3+x4+x5+x6+x7+x8+x9", ylab= "Residuals for x1=x2+x3+x4+x5+x6+x7+x8+x9")
+qqnorm(resid.x1)
+
+summary(lm.x1)
+predictlm.x1=predict(lm.x1)
+predictlm.x1
+plot(predictlm.x1,resid.x1, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+standx1=rstandard(lm.x1)
+standx1
+studentx1=rstudent(lm.x1)
+studentx1
+vif(lm.x1)
+PRESS(lm.x1)
+
+#Partial x2 ith
+lm.x2=lm(y~x1+x3+x4+x5+x6+x7+x8+x9)
+lm.x2
+lm.x2ith=lm(x2~x1+x3+x4+x5+x6+x7+x8+x9)
+lm.x2ith
+resid.x2=resid(lm.x2)
+resid.x2
+resid.x2ith=resid(lm.x2ith)
+resid.x2ith
+plot(resid.x2,resid.x2ith,main="Partial Regression Plot for x2 as ith", xlab= "Residuals for y=x1+x3+x4+x5+x6+x7+x8+x9", ylab= "Residuals for x2=x1+x3+x4+x5+x6+x7+x8+x9")
+qqnorm(resid.x2)
+
+summary(lm.x2)
+predictlm.x2=predict(lm.x2)
+predictlm.x2
+plot(predictlm.x2,resid.x2, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+standx1=rstandard(lm.x1)
+standx1
+studentx1=rstudent(lm.x1)
+studentx1
+vif(lm.x1)
+PRESS(lm.x1)
