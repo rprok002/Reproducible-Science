@@ -73,7 +73,7 @@ qqnorm(resid.x1)
 summary(lm.x1)
 predictlm.x1=predict(lm.x1)
 predictlm.x1
-plot(predictlm.x1,resid.x1, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x1,resid.x1, main= "Residuals vs. Predicted Response for x1 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx1=rstandard(lm.x1)
 standx1
 studentx1=rstudent(lm.x1)
@@ -96,7 +96,7 @@ qqnorm(resid.x2)
 summary(lm.x2)
 predictlm.x2=predict(lm.x2)
 predictlm.x2
-plot(predictlm.x2,resid.x2, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x2,resid.x2, main= "Residuals vs. Predicted Response for x2 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx2=rstandard(lm.x2)
 standx2
 studentx2=rstudent(lm.x2)
@@ -119,7 +119,7 @@ qqnorm(resid.x3)
 summary(lm.x3)
 predictlm.x3=predict(lm.x3)
 predictlm.x3
-plot(predictlm.x3,resid.x3, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x3,resid.x3, main= "Residuals vs. Predicted Response for x3 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx3=rstandard(lm.x3)
 standx3
 studentx3=rstudent(lm.x3)
@@ -142,7 +142,7 @@ qqnorm(resid.x4)
 summary(lm.x4)
 predictlm.x4=predict(lm.x4)
 predictlm.x4
-plot(predictlm.x4,resid.x4, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x4,resid.x4, main= "Residuals vs. Predicted Response for x4 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx4=rstandard(lm.x4)
 standx4
 studentx4=rstudent(lm.x4)
@@ -165,7 +165,7 @@ qqnorm(resid.x5)
 summary(lm.x5)
 predictlm.x5=predict(lm.x5)
 predictlm.x5
-plot(predictlm.x5,resid.x5, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x5,resid.x5, main= "Residuals vs. Predicted Response for x5 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx5=rstandard(lm.x5)
 standx5
 studentx5=rstudent(lm.x5)
@@ -188,7 +188,7 @@ qqnorm(resid.x6)
 summary(lm.x6)
 predictlm.x6=predict(lm.x6)
 predictlm.x6
-plot(predictlm.x6,resid.x6, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x6,resid.x6, main= "Residuals vs. Predicted Response for x6 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx6=rstandard(lm.x6)
 standx6
 studentx6=rstudent(lm.x6)
@@ -211,7 +211,7 @@ qqnorm(resid.x7)
 summary(lm.x7)
 predictlm.x7=predict(lm.x7)
 predictlm.x7
-plot(predictlm.x7,resid.x7, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x7,resid.x7, main= "Residuals vs. Predicted Response for x7 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx7=rstandard(lm.x7)
 standx7
 studentx7=rstudent(lm.x7)
@@ -234,7 +234,7 @@ qqnorm(resid.x8)
 summary(lm.x8)
 predictlm.x8=predict(lm.x8)
 predictlm.x8
-plot(predictlm.x8,resid.x8, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x8,resid.x8, main= "Residuals vs. Predicted Response for x8 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx8=rstandard(lm.x8)
 standx8
 studentx8=rstudent(lm.x8)
@@ -257,7 +257,7 @@ qqnorm(resid.x9)
 summary(lm.x9)
 predictlm.x9=predict(lm.x9)
 predictlm.x9
-plot(predictlm.x9,resid.x9, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+plot(predictlm.x9,resid.x9, main= "Residuals vs. Predicted Response for x9 as ith", xlab ="Predicted Response", ylab="Residuals")
 standx9=rstandard(lm.x9)
 standx9
 studentx9=rstudent(lm.x9)
