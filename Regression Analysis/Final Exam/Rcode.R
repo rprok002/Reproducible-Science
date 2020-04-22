@@ -323,3 +323,16 @@ lm.sqx
 lm.sqx2x3x8sqrtx6=lm(y~x1+sqx2+sqx3+x4+x5+sqrtx6+x7+sqx8+x9)
 summary(lm.sqx2x3x8sqrtx6)
 lm.sqx2x3x8sqrtx6
+
+#Question 5: Stepwise
+library(olsrr)
+Stepwise=ols_step_both_p(lm.sqx2x3x8sqrtx6)
+Stepwise
+
+lm.stepwise=lm(y~x1+x5+x7)
+lm.stepwise
+summary(lm.stepwise)
+residste=resid(lm.stepwise)
+qqnorm(residste)
+predictste=predict(lm.stepwise)
+plot(predictste,residste, main= "Residuals vs. Predicted Response for Stepwise Chosen Model", xlab ="Predicted Response", ylab="Residuals")
