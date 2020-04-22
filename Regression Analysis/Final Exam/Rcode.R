@@ -292,3 +292,34 @@ standnox8x2=rstandard(lm.nox8x2)
 standnox8x2
 vif(lm.nox8x2)
 #Conclusion: don't remove based on multicollinearity
+
+#Transformed model attempts
+sqx3=x3^2
+sqx8=x8^2
+lm.sqx3x8=lm(y~x1+x2+sqx3+x4+x5+x6+x7+sqx8+x9)
+summary(lm.sqx3x8)
+plot(sqx3,y)
+plot(sqx8,y)
+residsqx3x8=resid(lm.sqx3x8)
+predictsqx3x8=predict(lm.sqx3x8)
+plot(predictsqx3x8,residsqx3x8, main= "Residuals vs. Predicted Response for x9 as ith", xlab ="Predicted Response", ylab="Residuals")
+
+sqx2=x2^2
+sqx9=x9^2
+lm.sqx2x3x8=lm(y~x1+sqx2+sqx3+x4+x5+x6+x7+sqx8+x9)
+summary(lm.sqx2x3x8)
+plot(sqx2,y)
+lm.sqx2x3x8x9=lm(y~x1+sqx2+sqx3+x4+x5+x6+x7+sqx8+sqx9)
+summary(lm.sqx2x3x8x9)
+sqrtx6=sqrt(x6)
+lm.sqx2x3x8sqrtx6=lm(y~x1+sqx2+sqx3+x4+x5+sqrtx6+x7+sqx8+x9)
+summary(lm.sqx2x3x8sqrtx6)
+plot(sqrtx6,y)
+lm.sqx2x3x8x9sqrtx6=lm(y~x1+sqx2+sqx3+x4+x5+sqrtx6+x7+sqx8+sqx9)
+summary(lm.sqx2x3x8x9sqrtx6)
+lm.sqx
+
+#Chosen transformed model
+lm.sqx2x3x8sqrtx6=lm(y~x1+sqx2+sqx3+x4+x5+sqrtx6+x7+sqx8+x9)
+summary(lm.sqx2x3x8sqrtx6)
+lm.sqx2x3x8sqrtx6
