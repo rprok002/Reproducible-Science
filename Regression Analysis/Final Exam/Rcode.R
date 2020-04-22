@@ -241,3 +241,26 @@ studentx8=rstudent(lm.x8)
 studentx8
 vif(lm.x8)
 PRESS(lm.x8)
+
+#Partial x9 ith
+lm.x9=lm(y~x1+x2+x3+x4+x5+x6+x7+x8)
+lm.x9
+lm.x9ith=lm(x9~x1+x2+x3+x4+x5+x6+x7+x8)
+lm.x9ith
+resid.x9=resid(lm.x9)
+resid.x9
+resid.x9ith=resid(lm.x9ith)
+resid.x9ith
+plot(resid.x9,resid.x9ith,main="Partial Regression Plot for x9 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x5+x6+x7+x8", ylab= "Residuals for x9=x1+x2+x3+x4+x5+x6+x7+x8")
+qqnorm(resid.x9)
+
+summary(lm.x9)
+predictlm.x9=predict(lm.x9)
+predictlm.x9
+plot(predictlm.x9,resid.x9, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
+standx9=rstandard(lm.x9)
+standx9
+studentx9=rstudent(lm.x9)
+studentx9
+vif(lm.x9)
+PRESS(lm.x9)
