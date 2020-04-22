@@ -49,7 +49,7 @@ residfull
 predictlmfull=predict(lm.full)
 predictlmfull
 plot(predictlmfull,residfull, main= "Residuals vs. Predicted Response", xlab ="Predicted Response", ylab="Residuals")
-qqnorm(residfull)
+qqnorm(residfull, main = "Normality Plot for Full model")
 
 standfull=rstandard(lm.full)
 standfull
@@ -68,7 +68,7 @@ resid.x1
 resid.x1ith=resid(lm.x1ith)
 resid.x1ith
 plot(resid.x1,resid.x1ith,main="Partial Regression Plot for x1 as ith", xlab= "Residuals for y=x2+x3+x4+x5+x6+x7+x8+x9", ylab= "Residuals for x1=x2+x3+x4+x5+x6+x7+x8+x9")
-qqnorm(resid.x1)
+qqnorm(resid.x1, main = "Normality Plot for model with x1 as ith")
 
 summary(lm.x1)
 predictlm.x1=predict(lm.x1)
@@ -91,7 +91,7 @@ resid.x2
 resid.x2ith=resid(lm.x2ith)
 resid.x2ith
 plot(resid.x2,resid.x2ith,main="Partial Regression Plot for x2 as ith", xlab= "Residuals for y=x1+x3+x4+x5+x6+x7+x8+x9", ylab= "Residuals for x2=x1+x3+x4+x5+x6+x7+x8+x9")
-qqnorm(resid.x2)
+qqnorm(resid.x2, main = "Normality Plot for model with x2 as ith")
 
 summary(lm.x2)
 predictlm.x2=predict(lm.x2)
@@ -114,7 +114,7 @@ resid.x3
 resid.x3ith=resid(lm.x3ith)
 resid.x3
 plot(resid.x3,resid.x3,main="Partial Regression Plot for x3 as ith", xlab= "Residuals for y=x1+x2+x4+x5+x6+x7+x8+x9", ylab= "Residuals for x3=x1+x2+x4+x5+x6+x7+x8+x9")
-qqnorm(resid.x3)
+qqnorm(resid.x3, main = "Normality Plot for model with x3 as ith")
 
 summary(lm.x3)
 predictlm.x3=predict(lm.x3)
@@ -137,7 +137,7 @@ resid.x4
 resid.x4ith=resid(lm.x4ith)
 resid.x4ith
 plot(resid.x4,resid.x4ith,main="Partial Regression Plot for x4 as ith", xlab= "Residuals for y=x1+x2+x3+x5+x6+x7+x8+x9", ylab= "Residuals for x4=x1+x2+x3+x5+x6+x7+x8+x9")
-qqnorm(resid.x4)
+qqnorm(resid.x4, main = "Normality Plot for model with x4 as ith")
 
 summary(lm.x4)
 predictlm.x4=predict(lm.x4)
@@ -160,7 +160,7 @@ resid.x5
 resid.x5ith=resid(lm.x5ith)
 resid.x5ith
 plot(resid.x5,resid.x5ith,main="Partial Regression Plot for x5 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x6+x7+x8+x9", ylab= "Residuals for x5=x1+x2+x3+x4+x6+x7+x8+x9")
-qqnorm(resid.x5)
+qqnorm(resid.x5, main = "Normality Plot for model with x5 as ith")
 
 summary(lm.x5)
 predictlm.x5=predict(lm.x5)
@@ -183,7 +183,7 @@ resid.x6
 resid.x6ith=resid(lm.x6ith)
 resid.x6ith
 plot(resid.x6,resid.x6ith,main="Partial Regression Plot for x6 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x5+x7+x8+x9", ylab= "Residuals for x6=x1+x2+x3+x4+x5+x7+x8+x9")
-qqnorm(resid.x6)
+qqnorm(resid.x6, main = "Normality Plot for model with x6 as ith")
 
 summary(lm.x6)
 predictlm.x6=predict(lm.x6)
@@ -206,7 +206,7 @@ resid.x7
 resid.x7ith=resid(lm.x7ith)
 resid.x7ith
 plot(resid.x7,resid.x7ith,main="Partial Regression Plot for x7 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x5+x6+x8+x9", ylab= "Residuals for x7=x1+x2+x3+x4+x5+x6+x8+x9")
-qqnorm(resid.x7)
+qqnorm(resid.x7, main = "Normality Plot for model with x7 as ith")
 
 summary(lm.x7)
 predictlm.x7=predict(lm.x7)
@@ -229,7 +229,7 @@ resid.x8
 resid.x8ith=resid(lm.x8ith)
 resid.x8ith
 plot(resid.x8,resid.x8ith,main="Partial Regression Plot for x8 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x5+x6+x7+x9", ylab= "Residuals for x8=x1+x2+x3+x4+x5+x6+x7+x9")
-qqnorm(resid.x8)
+qqnorm(resid.x8, main = "Normality Plot for model with x8 as ith")
 
 summary(lm.x8)
 predictlm.x8=predict(lm.x8)
@@ -252,7 +252,7 @@ resid.x9
 resid.x9ith=resid(lm.x9ith)
 resid.x9ith
 plot(resid.x9,resid.x9ith,main="Partial Regression Plot for x9 as ith", xlab= "Residuals for y=x1+x2+x3+x4+x5+x6+x7+x8", ylab= "Residuals for x9=x1+x2+x3+x4+x5+x6+x7+x8")
-qqnorm(resid.x9)
+qqnorm(resid.x9, main = "Normality Plot for model with x9 as ith")
 
 summary(lm.x9)
 predictlm.x9=predict(lm.x9)
