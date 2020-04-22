@@ -264,3 +264,31 @@ studentx9=rstudent(lm.x9)
 studentx9
 vif(lm.x9)
 PRESS(lm.x9)
+
+#Partial x8 and x1 removed
+lm.nox8x1=lm(y~x2+x3+x4+x5+x6+x7+x9)
+lm.nox8x1
+summary(lm.nox8x1)
+resid.nox8x1=resid(lm.nox8x1)
+resid.nox8x1
+qqnorm(resid.nox8x1, main = "Normality Plot for model without x1 and x8")
+predictlm.nox8x1=predict(lm.nox8x1)
+plot(predictlm.nox8x1,resid.nox8x1, main= "Residuals vs. Predicted Response for x9 as ith", xlab ="Predicted Response", ylab="Residuals")
+PRESS(lm.nox8x1)
+standnox8x1=rstandard(lm.nox8x1)
+standnox8x1
+vif(lm.nox8x1)
+
+lm.nox8x2=lm(y~x1+x3+x4+x5+x6+x7+x9)
+lm.nox8x2
+summary(lm.nox8x2)
+resid.nox8x2=resid(lm.nox8x2)
+resid.nox8x2
+qqnorm(resid.nox8x2, main = "Normality Plot for model without x1 and x8")
+predictlm.nox8x2=predict(lm.nox8x2)
+plot(predictlm.nox8x2,resid.nox8x2, main= "Residuals vs. Predicted Response for x9 as ith", xlab ="Predicted Response", ylab="Residuals")
+PRESS(lm.nox8x2)
+standnox8x2=rstandard(lm.nox8x2)
+standnox8x2
+vif(lm.nox8x2)
+#Conclusion: don't remove based on multicollinearity
