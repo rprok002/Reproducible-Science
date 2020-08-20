@@ -1,0 +1,19 @@
+---
+title: "R Cheatsheet"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Functions
+cat() ## prints output to console
+c()## put into vector
+rnorm() ## generate random variables that follow normal distribution
+
+## Operators
+>= ##greater than or equal to
+<= ## less than or equal to
+== ## equal to
+
