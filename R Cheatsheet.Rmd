@@ -8,12 +8,22 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Functions
-cat() ## prints output to console
-c()## put into vector
-rnorm() ## generate random variables that follow normal distribution
+cat()  prints output to console
+c() put into vector
+list() makes a list
+    ## get to element within a list, can use dollar sign or double brackets
+rnorm()  generate random variables that follow normal distribution
 
 ## Operators
->= ##greater than or equal to
-<= ## less than or equal to
-== ## equal to
+>= #greater than or equal to
+<= # less than or equal to
+== # equal to
+!= # not equal to
+= # make identical to
+| # or
+& # and
+
+## Getting help 
+help()
+?functionwantdefinition of
 
