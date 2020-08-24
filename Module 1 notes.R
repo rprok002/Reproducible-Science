@@ -120,3 +120,39 @@ myList$moreStuff[1]
 myList$moreStuff[[1]] ## not standard for a list, but in this case still works
 myList[['moreStuff']][1]
 myList[[3]][1]
+
+## Basic Questions
+
+##1) Create a variable called 'x' that contains the mean life expectancy.
+gap <- read.csv("R Bootcamp 2020/r-bootcamp-fall-2020-master/data/gapminder-FiveYearData.csv")                
+x <- mean(gap$lifeExp)
+##2) Use functions in R to round 'x' to two decimal places and to two significant digits.
+round(x, digits=2)
+##3) Create a vector of GDP per capita in units of Euros rather than dollars. Put first of each into a vector.
+Eurosperdollar <- 0.85
+Eurostodollar <- gap$gdpPercap*Eurosperdollar
+c(Eurostodollar[1], gap$gdpPercap [1])
+##4) Create a boolean (TRUE/FALSE) vector indicating whether total country GDP is greater than 1 trillion dollars. When entering 1 trillion, use R's scientific notation.
+gdpbool <- gap$gdpPercap * gap$pop > 1e12
+gdpbool
+head(gdpbool)
+
+##5) Use the boolean vector from problem 4 to produce a new vector containing the per capita GDP only from the biggest economies.
+gdplargest <- gap$gdpPercap[gdpbool]
+gdplargest
+gdplargestcountry <- gap$country[gdpbool]
+gdplargestcountry
+##6) Plot life expectancy against gdpPercap with gdpPercap values greater than 40000 set to 40000.
+gdp_sub <- gap$gdpPercap
+cens_value <- 4000
+gdp_sub[gdp_sub > cens_value] <- cens_value
+plot(gap$lifeExp ~ gdp_sub)
+##7) Make a histogram of the life expectancy values for the year 2007.  Explore the effect of changing the number of bins in the histogram using the 'breaks' argument.
+lifeexp_2007 <- gap$lifeExp[gap$year == 2007]
+hist(lifeexp_2007)
+hist(lifeexp_2007, breaks = 3)
+hist(lifeexp_2007, breaks = 12)
+hist(lifeexp_2007, breaks = 20)
+##8) Subset the data to those for the year 2007 (there is a way to do this all at once, but using what we've seen already, you can pull out and subset the individual columns you need). Plot life expectancy against GDP per capita. Add a title to the plot. Now plot so that data for Asia are in one color and those for all other countries are in another color and those for all other continents are in another, using the 'col' argument. Hint: 'col' can take a vector of colors such as "black","red","black", ...
+gdp_2007 <- gap$gdpPercap[gap$year == 2007]
+plot(lifeexp_2007~ gdp_2007, main = "Life Expextancy vs. GDP", col())

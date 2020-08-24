@@ -16,6 +16,7 @@ list() makes a list
     ## get to element within a list, can use dollar sign or double brackets
 plot() scatterplot
 rnorm()  generate random variables that follow normal distribution
+round() round to certain number of digits
 
 ## Operators
 >= #greater than or equal to
