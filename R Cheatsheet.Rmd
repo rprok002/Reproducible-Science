@@ -8,10 +8,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Functions
+as()
 cat()  prints output to console
 c() put into vector
+hist() histogram
 list() makes a list
     ## get to element within a list, can use dollar sign or double brackets
+plot() scatterplot
 rnorm()  generate random variables that follow normal distribution
 
 ## Operators
