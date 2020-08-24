@@ -154,5 +154,20 @@ hist(lifeexp_2007, breaks = 3)
 hist(lifeexp_2007, breaks = 12)
 hist(lifeexp_2007, breaks = 20)
 ##8) Subset the data to those for the year 2007 (there is a way to do this all at once, but using what we've seen already, you can pull out and subset the individual columns you need). Plot life expectancy against GDP per capita. Add a title to the plot. Now plot so that data for Asia are in one color and those for all other countries are in another color and those for all other continents are in another, using the 'col' argument. Hint: 'col' can take a vector of colors such as "black","red","black", ...
-gdp_2007 <- gap$gdpPercap[gap$year == 2007]
-plot(lifeexp_2007~ gdp_2007, main = "Life Expextancy vs. GDP", col())
+gap2007 <- gap[gap$year == 2007,]
+plot(gap2007$lifeExp~ gap2007$gdpPercap, main = "Life Expextancy vs. GDP")
+gap2007$color <- "blue" ## added a color colomn to the whole thing
+gap2007$color[gap2007$continent == "Asia"] <- "red"
+plot(gap2007$lifeExp ~ gap2007$gdpPercap, main = "Life Expectancy vs. GDP", col = gap2007$color)
+##9) Consider the following regression model.  Figure out how to extract the $R^2$ and residual standard error and store in new R variables. 
+mod <- lm(lifeExp ~ log(gdpPercap), data = gap)
+summ <- summary(mod)
+R2 <- summ$r.squared
+RSE <- summ$sigma
+##10) Take your plot from problem 8. Now modify the size of the points. Add a legend. Rotate the numbers on the y-axis so they are printed horizontally. Recall that `help(par)` will provide a lot of information.
+help(par)
+plot(gap2007$lifeExp ~ gap2007$gdpPercap, main = "Life Expectancy vs. GDP", col = gap2007$color, cex = 0.75, las = 1)
+legend("bottomright",
+       legend = c('Asia', 'All other'),
+       col = c('red', 'blue'),
+       cex = 0.7)
