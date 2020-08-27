@@ -53,7 +53,7 @@ getwd()
 setwd('C:\\Users\rprokopi\\AppData\\Local\\Programs\\Git\\bin\\Reproducible-Science')
 
 ## get file if don't know the extension
-gap <- read_csv("r-bootcamp-fall-2020-master/data/gapminder-FiveYearData.csv")                
+gap <- read.csv("R Bootcamp 2020/r-bootcamp-fall-2020-master/data/gapminder-FiveYearData.csv")                
 
 ## Take out specific column
 gdp <- gap$gdpPercap

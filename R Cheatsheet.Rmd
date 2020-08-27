@@ -7,21 +7,33 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
 ## Functions
 as()
-cat()  prints output to console
 c() put into vector
+cat()  prints output to console
+class() kind of data in the variable (ex. interer, matrix, numeric, etc)
 help(par) gives parameters for graphical representation
 hist() histogram
+is.list() is it a list, true or false
+is.vector() is it a vector, true or false
+length() get number of obs. in variable
 list() makes a list
-    ## get to element within a list, can use dollar sign or double brackets
+    -get to element within a list, can use dollar sign or double brackets
+ls()   search the user workspace (global environment)
+ls.str() list and describe variables
 plot() scatterplot
     -cex followed by number is different sized points
     -legend()adds legend to graph
     -pch followed by number is a different shaped point
 rep() replicates values in x
+rm() delete a variable
 rnorm()  generate random variables that follow normal distribution
 round() round to certain number of digits
+save.image('name') saves R objects to a specific file
+str() displays first line of numbers in a variable
+typeof() how R is storing the data
 
 ## Operators
 >= #greater than or equal to
