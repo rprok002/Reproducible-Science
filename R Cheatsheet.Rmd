@@ -46,6 +46,10 @@ unlist()take values out of a list and writes them out
 | # or
 & # and
 
+## Calculations
+mean() mean of values
+var() sample variance
+
 ## Getting help 
 help()
 ?functionwantdefinition of
