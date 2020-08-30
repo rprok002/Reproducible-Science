@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Functions
+array() make an array
 as()
 c() put into vector
 cat()  prints output to console
