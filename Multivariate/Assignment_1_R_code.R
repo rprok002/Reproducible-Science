@@ -50,3 +50,4 @@ disfromorigin2 <- sqrt((a11*(x1d^2))+(2*a12*x1d*x2d)+(a22*(x2d^2)))
 disfromorigin2
 
 ##Problem 1.16
+
