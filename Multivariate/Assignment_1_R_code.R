@@ -152,3 +152,5 @@ RU64 <- cor(U,H)
 RU65 <- cor(U,DU)
 RU66 <- cor(U,U)
 Ucorvector <- c(RU61,RU62,RU63,RU64,RU65,RU66)
+Rarray <- array(c(DRcorvector,Rcorvector,DHcorvector,Hcorvector,DUcorvector,Ucorvector), dim = c(6,6))
+Rarray
