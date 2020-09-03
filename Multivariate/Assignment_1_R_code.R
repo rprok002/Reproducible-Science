@@ -154,3 +154,28 @@ RU66 <- cor(U,U)
 Ucorvector <- c(RU61,RU62,RU63,RU64,RU65,RU66)
 Rarray <- array(c(DRcorvector,Rcorvector,DHcorvector,Hcorvector,DUcorvector,Ucorvector), dim = c(6,6))
 Rarray
+
+##Problem 1.27
+table6 <- read.csv(file.choose())
+x27 <- table6[,1]
+y27 <- table6[,2]
+plot(x27,y27)
+cor(x27,y27)
+
+##Problem 2.3
+A2.3 <- matrix(c(2,1,1,3), nrow = 2, ncol = 2)
+A2.3
+transposeA2.3 <- t(A2.3)
+transposeA2.3
+transposetransposeA2.3 <- t(transposeA2.3)
+transposetransposeA2.3
+C2.3 <- matrix(c(1,3,4,2), nrow = 2, ncol = 2)
+C2.3
+transposeC2.3 <- t(C2.3)
+transposeC2.3
+inversetransposeC2.3 <- inv(transposeC2.3)
+inverseC2.3 <- inv(C2.3)
+inverseC2.3
+transposeinverseC2.3 <- t(inverseC2.3)
+inversetransposeC2.3
+transposeinverseC2.3
