@@ -163,6 +163,7 @@ plot(x27,y27)
 cor(x27,y27)
 
 ##Problem 2.3
+library(matlib)
 A2.3 <- matrix(c(2,1,1,3), nrow = 2, ncol = 2)
 A2.3
 transposeA2.3 <- t(A2.3)
@@ -179,3 +180,12 @@ inverseC2.3
 transposeinverseC2.3 <- t(inverseC2.3)
 inversetransposeC2.3
 transposeinverseC2.3
+B2.3 <- matrix(c(1,5,4,0,2,3), nrow = 2, ncol = 3)
+B2.3
+AB2.3 <- A2.3 %*% B2.3
+AB2.3
+transposeAB2.3 <- t(AB2.3)
+transposeB2.3 <- t(B2.3)
+multiplytransposeBandA <- transposeB2.3 %*% transposeA2.3
+transposeAB2.3
+multiplytransposeBandA
