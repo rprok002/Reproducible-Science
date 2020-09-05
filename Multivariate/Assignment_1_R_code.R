@@ -189,3 +189,8 @@ transposeB2.3 <- t(B2.3)
 multiplytransposeBandA <- transposeB2.3 %*% transposeA2.3
 transposeAB2.3
 multiplytransposeBandA
+
+##Problem 2.6
+matrix2.6 <- matrix(c(9,-2,-2,6), nrow = 2, ncol = 2)
+matrix2.6
+det(matrix2.6)
