@@ -48,6 +48,7 @@ unlist()take values out of a list and writes them out
 & # and
 
 ## Calculations
+eigen() eigenvalues and eigenvectors
 inv() inverse matrix
 mean() mean of values
 t() transpose matrix

@@ -194,3 +194,63 @@ multiplytransposeBandA
 matrix2.6 <- matrix(c(9,-2,-2,6), nrow = 2, ncol = 2)
 matrix2.6
 det(matrix2.6)
+eigen(matrix2.6)
+
+##Problem 2.8
+matrix2.8 <- matrix(c(1,2,2,-2), nrow = 2, ncol = 2)
+matrix2.8
+eigen(matrix2.8)
+
+##Problem 2.22
+library(matlib)
+matrix2.22 <- matrix(c(4,3,8,6,8,-9), nrow = 2, ncol = 3)
+matrix2.22
+transposematrix2.22 <- t(matrix2.22)
+transposematrix2.22
+matrix2.22Xtranspose <- matrix2.22 %*% transposematrix2.22
+matrix2.22Xtranspose
+eigenmatrix2.22Xtranspose <- eigen(matrix2.22Xtranspose)
+eigenmatrix2.22Xtranspose
+transposeXmatrix2.22 <- transposematrix2.22 %*% matrix2.22
+transposeXmatrix2.22
+eigentransposeXmatrix2.22 <- eigen(transposeXmatrix2.22)
+eigentransposeXmatrix2.22
+
+##Problem 2.25
+matrix2.25 <- matrix(c(25,-2,4,-2,4,1,4,1,9), nrow = 3, ncol = 3)
+matrix2.25
+a11 <- 25
+a12 <- -2
+a13 <- 4
+a21 <- -2
+a22 <- 4
+a23 <- 1
+a31 <- 4
+a32 <- 1
+a33 <- 9
+sqrta11 <- sqrt(a11)
+p11 <- a11/(sqrta11*sqrta11)
+sqrta22 <- sqrt(a22)
+sqrta33 <- sqrt(a33)
+p12 <- a12/(sqrta11*sqrta22)
+p13 <- a13/(sqrta11*sqrta33)
+col1 <- c(p11,p12,p13)
+p21 <- a21/(sqrta22*sqrta11)
+p22 <- a22/(sqrta22*sqrta22)
+p23 <- a23/(sqrta22*sqrta33)
+col2 <- c(p21,p22,p23)
+p31 <- a31/(sqrta33*sqrta11)
+p32 <- a32/(sqrta33*sqrta22)
+p33 <- a33/(sqrta33*sqrta33)
+col3 <- c(p31,p32,p33)
+pdata <- c(col1, col2, col3)
+pmatrix2.25 <- matrix(data = pdata, nrow = 3, ncol = 3)
+pmatrix2.25
+sdcol1 <- c(sqrta11, 0, 0)
+sdcol2 <- c(0, sqrta22, 0)
+sdcol3 <- c(0,0,sqrta33)
+sdp2.25 <- c(sdcol1,sdcol2,sdcol3)
+sdpmatrix2.25 <- matrix(data = sdp2.25, nrow = 3, ncol = 3)
+sdpmatrix2.25
+sdppsdp <- sdpmatrix2.25 %*% pmatrix2.25 %*% sdpmatrix2.25
+sdppsdp
