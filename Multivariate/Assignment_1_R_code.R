@@ -254,3 +254,37 @@ sdpmatrix2.25 <- matrix(data = sdp2.25, nrow = 3, ncol = 3)
 sdpmatrix2.25
 sdppsdp <- sdpmatrix2.25 %*% pmatrix2.25 %*% sdpmatrix2.25
 sdppsdp
+
+##Problem 2.30
+X1 <- matrix(c(4,3), nrow = 2, ncol = 1)
+X1
+Cor1 <- matrix(c(3,0,0,1,2,1,2,0), nrow = 2, ncol = 4)
+Cor1
+X2 <- matrix(c(2,1), nrow = 2, ncol = 1)
+X2
+Cor2 <- matrix(c(2,2,1,0,9,-2,-2,4), nrow = 2, ncol = 4)
+Cor2
+A2.30 <- matrix(c(1,2), nrow = 1, ncol = 2)
+A2.30
+B2.30 <- matrix(c(1,2,-2,-1), nrow = 2, ncol = 2)
+B2.30
+A2.30X1 <- A2.30 %*% X1
+A2.30X1
+B2.30X2 <- B2.30 %*% X2
+B2.30X2
+X1
+A2.30X1
+CovX1 <- Cor1
+CovX1
+CovAx1 <- A2.30 %*% CovX1
+CovAx1
+X2
+B2.30X2
+Covx2 <- Cor2
+Covx2
+CovBx2 <- B2.30 %*% Covx2
+CovBx2
+CovX1X2 <- c(CovX1,Covx2)
+CovX1X2
+Covx1x2matrix <- matrix(data = CovX1X2, nrow = 4, ncol = 4)
+Covx1x2matrix
