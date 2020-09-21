@@ -17,3 +17,9 @@ corrcoeff3.2 = matrix(c(1,-0.86,-0.86,1), nrow = 2, ncol = 2)
 corrcoeff3.2
 
 ## Problem 2: 
+meanmatrix = matrix(c(12,14,10), nrow = 3, ncol = 1)
+meanmatrix
+mean(meanmatrix)
+cormatrix = matrix(c(20,-80,140,-80,40,60,140,60,100), nrow = 3, ncol = 3)
+cormatrix
+cormatrix*(1/3)
