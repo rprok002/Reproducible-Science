@@ -50,3 +50,59 @@ eigvector= matrix(c(1,1,-1), nrow = 3, ncol = 1)
 eigvector
 Sa = covmatrix3.9 %*% eigvector
 Sa
+addcol = meancorcol1 + meancorcol2
+addcol
+meancorcol3
+
+## Problem 3.14
+data3.14 = read.csv(file.choose())
+data3.14col1 = data3.14[,1]
+data3.14col2 = data3.14[,2]
+newcol1 = data3.14col1 * -1
+newcol2 = data3.14col2 *2
+lincombo1 = newcol1 + newcol2
+lincombo1
+mean3.14c = mean(lincombo1) 
+mean3.14c
+var3.14c = var(lincombo1)
+newcol1b = data3.14col1 * 2
+newcol2b = data3.14col2 * 3
+lincombo2 = newcol1b + newcol2b
+mean3.14b = mean(lincombo2)
+mean3.14b
+var3.14b = var(lincombo2)
+cov3.14 = cov(lincombo1,lincombo2)
+mean3.14c
+mean3.14b
+var3.14c
+var3.14b
+cov3.14
+meancol1 = mean(data3.14col1)
+meancol2 = mean(data3.14col2)
+meancol1
+meancol2
+meanmatrix = matrix(c(5,2), nrow = 2, ncol = 1)
+meanmatrix
+cinverse = matrix(c(-1, 2), nrow = 1, ncol = 2)
+samplemean = cinverse %*% meanmatrix
+samplemean
+binverse = matrix(c(2,3), nrow = 1, ncol = 2)
+samplemean2 = binverse %*% meanmatrix
+samplemean2
+matrixoriginal = matrix(c(data3.14col1, data3.14col2), nrow = 3, ncol = 2)
+matrixoriginal
+covoriginal = cov(matrixoriginal)
+covoriginal
+coriginal = matrix(c(-1,2), nrow = 2, ncol = 1)
+boriginal = matrix(c(2,3), nrow = 2, ncol = 1)
+cvar2 = cinverse %*% covoriginal %*% coriginal
+cvar2
+bvar2 = binverse %*% covoriginal %*% boriginal
+bvar2
+cov2 = binverse %*% covoriginal %*% coriginal
+cov2
+samplemean
+samplemean2
+cvar2
+bvar2
+cov2
