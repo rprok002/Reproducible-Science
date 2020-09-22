@@ -106,3 +106,30 @@ samplemean2
 cvar2
 bvar2
 cov2
+
+##Problem 7
+data7 = read.csv(file.choose())
+data7col1 = data7[,1]
+data7col2 = data7[,2]
+data7col3 = data7[,3]
+matrix7 = matrix(c(data7col1,data7col2,data7col3), nrow = 5, ncol = 3)
+matrix7
+covmatrix7 = cov(matrix7)
+covmatrix7
+cormatrix7 = cor(matrix7)
+cormatrix7
+s117 = 13.3
+s227 = 100.20
+s337 = 212.20
+D7 = diag(c(s117, s227, s337), nrow = 3, ncol = 3)
+D7
+D7half = D7^(1/2)
+D7half
+D7neghalf = D7^(-1/2)
+D7neghalf
+D7neghalf = diag(c(0.2742, 0.0999, 0.0686), nrow = 3, ncol = 3)
+D7neghalf
+Cor7 = D7neghalf %*% covmatrix7 %*% D7neghalf
+Cor7
+Cov7 = D7half %*% cormatrix7 %*% D7half
+Cov7
