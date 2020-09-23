@@ -133,3 +133,23 @@ Cor7 = D7neghalf %*% covmatrix7 %*% D7neghalf
 Cor7
 Cov7 = D7half %*% cormatrix7 %*% D7half
 Cov7
+
+##Problem 8
+inversemeanmatrix8 = matrix(c(2,3,-4,5), nrow = 4, ncol = 1)
+inversemeanmatrix8
+linearmatrixa = matrix(c(1,2,-1,2), nrow = 1, ncol = 4)
+linearmatrixa
+meandistr8 = linearmatrixa %*% inversemeanmatrix8
+meandistr8
+inverselinearmatrixa = matrix(c(1,2,-1,2), nrow = 4, ncol = 1)
+inverselinearmatrixa
+covmatrix8 = matrix(c(4,5,0,0,5,7,2,3,0,2,4,0,0,3,0,4), nrow = 4, ncol = 4)
+covmatrix8
+covdistr8 = linearmatrixa %*% covmatrix8 %*% inverselinearmatrixa
+covdistr8
+a = exp(-(((13-22)/sqrt(88))^2)/2)
+a
+b = 1/(sqrt(2*3.14159*88))
+b
+prob = a*b
+prob
