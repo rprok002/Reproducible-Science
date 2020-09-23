@@ -153,3 +153,63 @@ b = 1/(sqrt(2*3.14159*88))
 b
 prob = a*b
 prob
+
+## Problem 13
+data213 = read.csv(file.choose())
+data213col1 = data213[,1]
+data213col1
+qqnorm(data213col1)
+qqline(data213col1)
+x = data213col1[order(data213col1)]
+n = seq(1:9)
+q = qnorm ((n-.5)/length(x))
+cor(q,x)
+
+## Problem 14: Exercise 4.26
+matrix4.26 = matrix(c(1,2,3,4,5,6,7,8,9,10, 18.95,19.00,17.95,15.54,14.00,12.95,8.94,7.49,6.00,3.99), nrow = 10, ncol = 2)
+matrix4.26
+cov4.26 = cov(matrix4.26)
+cov4.26
+inversecov4.26 = Ginv(cov4.26)
+inversecov4.26
+?solve
+??inv
+library(matlib)
+matrix4.26col1 = matrix4.26[,1]
+matrix4.26col1
+mean4.26col1 = mean(matrix4.26col1)
+mean4.26col1
+x1minusxbar = matrix4.26col1 - mean4.26col1
+x1minusxbar
+matrix4.26col2 = matrix4.26[,2]
+matrix4.26col2
+mean4.26col2 = mean(matrix4.26col2)
+mean4.26col2
+x2minusxbar = matrix4.26col2 - mean4.26col2
+x2minusxbar
+newmatrix4.26 = matrix(c(x1minusxbar, x2minusxbar), nrow = 10, ncol = 2)
+newmatrix4.26
+transposenew = t(newmatrix4.26)
+dis1 = transposenew[,1] %*% inversecov4.26 %*% newmatrix4.26[1,]
+dis1
+dis2 = transposenew[,2] %*% inversecov4.26 %*% newmatrix4.26[2,]
+dis3 = transposenew[,3] %*% inversecov4.26 %*% newmatrix4.26[3,]
+dis4= transposenew[,4] %*% inversecov4.26 %*% newmatrix4.26[4,]
+dis5 = transposenew[,5] %*% inversecov4.26 %*% newmatrix4.26[5,]
+dis6 = transposenew[,6] %*% inversecov4.26 %*% newmatrix4.26[6,]
+dis7 = transposenew[,7] %*% inversecov4.26 %*% newmatrix4.26[7,]
+dis8 = transposenew[,8] %*% inversecov4.26 %*% newmatrix4.26[8,]
+dis9 = transposenew[,9] %*% inversecov4.26 %*% newmatrix4.26[9,]
+dis10 = transposenew[,10] %*% inversecov4.26 %*% newmatrix4.26[10,]
+distances = data.frame(c(dis1, dis2, dis3, dis4, dis5, dis6, dis7, dis8, dis9,dis10))
+distances
+J = seq(1:10)
+qcp = qchisq((10-J+.5)/10, 2)
+qcp
+distancescol1 = distances[,1]
+distanceorder = distancescol1[order(distancescol1)]
+distanceorder
+qcporder = qcp[order(qcp)]
+qcporder
+plot(qcporder,distanceorder)
+line = abline(0,1)
