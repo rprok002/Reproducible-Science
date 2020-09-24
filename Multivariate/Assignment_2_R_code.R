@@ -183,6 +183,10 @@ condmeanb = meanb1 + (covb12 %*% inversecovb22 %*% xminusmean)
 condmeanb
 condcovb = covb11 - (covb12 %*% inversecovb22 %*% covb21)
 condcovb
+
+## Problem 12
+
+
 ## Problem 13
 data213 = read.csv(file.choose())
 data213col1 = data213[,1]
@@ -241,4 +245,80 @@ distanceorder
 qcporder = qcp[order(qcp)]
 qcporder
 plot(qcporder,distanceorder)
+line = abline(0,1)
+
+## Problem 4.29
+data4.29 = read.csv(file.choose())
+data4.29col1 = data4.29[,1]
+data4.29col2 = data4.29[,2]
+matrix4.29 = matrix(c(data4.29col1,data4.29col2), nrow = 42, ncol = 2)
+matrix4.29
+cov4.29 = cov(matrix4.29)
+cov4.29
+inversecov4.29 = Ginv(cov4.29)
+matrix4.29col1 = matrix4.29[,1]
+matrix4.29col2 = matrix4.29[,2]
+meanmatrix4.29col1 = mean(matrix4.29col1)
+meanmatrix4.29col1
+meanmatrix4.29col2 = mean(matrix4.29col2)
+meanmatrix4.29col2
+col1minusmean = matrix4.29col1 - meanmatrix4.29col2
+col1minusmean
+col2minusmean = matrix4.29col2 - meanmatrix4.29col2
+col2minusmean
+newmatrix4.29 = matrix(c(col1minusmean,col2minusmean), nrow = 42, ncol = 2)
+newmatrix4.29
+transposenew4.29 = t(newmatrix4.29)
+transposenew4.29
+dis14.29 = transposenew4.29[,1] %*% inversecov4.29 %*% newmatrix4.29[1,]
+dis24.29 = transposenew4.29[,2] %*% inversecov4.29 %*% newmatrix4.29[2,]
+dis34.29 = transposenew4.29[,3] %*% inversecov4.29 %*% newmatrix4.29[3,]
+dis44.29 = transposenew4.29[,4] %*% inversecov4.29 %*% newmatrix4.29[4,]
+dis54.29 = transposenew4.29[,5] %*% inversecov4.29 %*% newmatrix4.29[5,]
+dis64.29 = transposenew4.29[,6] %*% inversecov4.29 %*% newmatrix4.29[6,]
+dis74.29 = transposenew4.29[,7] %*% inversecov4.29 %*% newmatrix4.29[7,]
+dis84.29 = transposenew4.29[,8] %*% inversecov4.29 %*% newmatrix4.29[8,]
+dis94.29 = transposenew4.29[,9] %*% inversecov4.29 %*% newmatrix4.29[9,]
+dis104.29 = transposenew4.29[,10] %*% inversecov4.29 %*% newmatrix4.29[10,]
+dis114.29 = transposenew4.29[,11] %*% inversecov4.29 %*% newmatrix4.29[11,]
+dis124.29 = transposenew4.29[,12] %*% inversecov4.29 %*% newmatrix4.29[12,]
+dis134.29 = transposenew4.29[,13] %*% inversecov4.29 %*% newmatrix4.29[13,]
+dis144.29 = transposenew4.29[,14] %*% inversecov4.29 %*% newmatrix4.29[14,]
+dis154.29 = transposenew4.29[,15] %*% inversecov4.29 %*% newmatrix4.29[15,]
+dis164.29 = transposenew4.29[,16] %*% inversecov4.29 %*% newmatrix4.29[16,]
+dis174.29 = transposenew4.29[,17] %*% inversecov4.29 %*% newmatrix4.29[17,]
+dis184.29 = transposenew4.29[,18] %*% inversecov4.29 %*% newmatrix4.29[18,]
+dis194.29 = transposenew4.29[,19] %*% inversecov4.29 %*% newmatrix4.29[19,]
+dis204.29 = transposenew4.29[,20] %*% inversecov4.29 %*% newmatrix4.29[20,]
+dis214.29 = transposenew4.29[,21] %*% inversecov4.29 %*% newmatrix4.29[21,]
+dis224.29 = transposenew4.29[,22] %*% inversecov4.29 %*% newmatrix4.29[22,]
+dis234.29 = transposenew4.29[,23] %*% inversecov4.29 %*% newmatrix4.29[23,]
+dis244.29 = transposenew4.29[,24] %*% inversecov4.29 %*% newmatrix4.29[24,]
+dis254.29 = transposenew4.29[,25] %*% inversecov4.29 %*% newmatrix4.29[25,]
+dis264.29 = transposenew4.29[,26] %*% inversecov4.29 %*% newmatrix4.29[26,]
+dis274.29 = transposenew4.29[,27] %*% inversecov4.29 %*% newmatrix4.29[27,]
+dis284.29 = transposenew4.29[,28] %*% inversecov4.29 %*% newmatrix4.29[28,]
+dis294.29 = transposenew4.29[,29] %*% inversecov4.29 %*% newmatrix4.29[29,]
+dis304.29 = transposenew4.29[,30] %*% inversecov4.29 %*% newmatrix4.29[30,]
+dis314.29 = transposenew4.29[,31] %*% inversecov4.29 %*% newmatrix4.29[31,]
+dis324.29 = transposenew4.29[,32] %*% inversecov4.29 %*% newmatrix4.29[32,]
+dis334.29 = transposenew4.29[,33] %*% inversecov4.29 %*% newmatrix4.29[33,]
+dis344.29 = transposenew4.29[,34] %*% inversecov4.29 %*% newmatrix4.29[34,]
+dis354.29 = transposenew4.29[,35] %*% inversecov4.29 %*% newmatrix4.29[35,]
+dis364.29 = transposenew4.29[,36] %*% inversecov4.29 %*% newmatrix4.29[36,]
+dis374.29 = transposenew4.29[,37] %*% inversecov4.29 %*% newmatrix4.29[37,]
+dis384.29 = transposenew4.29[,38] %*% inversecov4.29 %*% newmatrix4.29[38,]
+dis394.29 = transposenew4.29[,39] %*% inversecov4.29 %*% newmatrix4.29[39,]
+dis404.29 = transposenew4.29[,40] %*% inversecov4.29 %*% newmatrix4.29[40,]
+dis414.29 = transposenew4.29[,41] %*% inversecov4.29 %*% newmatrix4.29[41,]
+dis424.29 = transposenew4.29[,42] %*% inversecov4.29 %*% newmatrix4.29[42,]
+distances4.29 = matrix(c(dis14.29,dis24.29,dis34.29,dis44.29,dis54.29,dis64.29,dis74.29,dis84.29,dis94.29,dis104.29,dis114.29,dis124.29,dis134.29,dis144.29,dis154.29,dis164.29,dis174.29,dis184.29,dis194.29,dis204.29,dis214.29,dis224.29,dis234.29,dis244.29,dis254.29,dis264.29,dis274.29,dis284.29,dis294.29,dis304.29,dis314.29,dis324.29,dis334.29,dis344.29,dis354.29,dis364.29,dis374.29,dis384.29,dis394.29,dis404.29,dis414.29,dis424.29), nrow = 42, ncol = 1)
+distances4.29
+J4.29 = seq(1:42)
+qcp4.29 = qchisq((42-J4.29+.5)/42, 2)
+length(qcp4.29[qcp4.29<1.39])
+distances4.29b = distances4.29[,1]
+distance4.29order = distances4.29b[order(distances4.29b)]
+qcp4.29order = qcp4.29[order(qcp4.29)]
+plot(qcp4.29order,distance4.29order)
 line = abline(0,1)
