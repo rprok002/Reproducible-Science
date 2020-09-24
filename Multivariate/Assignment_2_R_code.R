@@ -147,11 +147,7 @@ covmatrix8 = matrix(c(4,5,0,0,5,7,2,3,0,2,4,0,0,3,0,4), nrow = 4, ncol = 4)
 covmatrix8
 covdistr8 = linearmatrixa %*% covmatrix8 %*% inverselinearmatrixa
 covdistr8
-a = exp(-(((13-22)/sqrt(88))^2)/2)
-a
-b = 1/(sqrt(2*3.14159*88))
-b
-prob = a*b
+prob = pnorm(13, mean = 22, sd = 9.38, lower.tail = TRUE)
 prob
 
 ## Problem 9
