@@ -185,8 +185,19 @@ condcovb = covb11 - (covb12 %*% inversecovb22 %*% covb21)
 condcovb
 
 ## Problem 12
-
-
+data4.18 = read.csv(file.choose())
+matrix4.18 = matrix(c(3,4,5,4,6,4,7,7), nrow = 4, ncol = 2)
+matrix4.18
+col14.18 = matrix4.18[,1]
+col24.18 = matrix4.18[,2]
+xbarcol1 = mean(col14.18)
+xbarcol2 = mean(col24.18)
+xbarmatrix = matrix(c(xbarcol1, xbarcol2), nrow = 1, ncol = 2)
+xbarmatrix
+cov4.18 = cov(matrix4.18)
+cov4.18
+cov4.18estimate = (1-(1/4)) * cov4.18
+cov4.18estimate
 ## Problem 13
 data213 = read.csv(file.choose())
 data213col1 = data213[,1]
