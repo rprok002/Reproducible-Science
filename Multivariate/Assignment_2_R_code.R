@@ -259,6 +259,7 @@ plot(qcporder,distanceorder)
 line = abline(0,1)
 
 ## Problem 4.29
+library(matlib)
 data4.29 = read.csv(file.choose())
 data4.29col1 = data4.29[,1]
 data4.29col2 = data4.29[,2]
