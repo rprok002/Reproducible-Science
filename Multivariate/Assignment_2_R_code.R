@@ -159,10 +159,9 @@ cova = matrix(c(2624,210.30,210.30,177.36), nrow = 2, ncol = 2)
 cova
 inverscova = Ginv(cova)
 inverscova
-cov12inv22 = 210.30 * 0.00623031
+cov12inv22 = 210.30 * 0.00563825
 cov12inv22
-meana
-cova9 = 2624-(210.30*0.00623031*210.30)
+cova9 = 2624-(210.30*0.00563825*210.30)
 cova9
 covb11 = matrix(c(1037.21), nrow = 1, ncol = 1)
 covb11
@@ -178,6 +177,9 @@ condcovb = covb11 - (covb12 %*% inversecovb22 %*% covb21)
 condcovb
 bcov12inv22 = covb12 %*% inversecovb22
 bcov12inv22
+-104.6 * -0.2158
+104.0 * 0.4852
+93.8 * 0.8437
 ## Problem 12
 data4.18 = read.csv(file.choose())
 matrix4.18 = matrix(c(3,4,5,4,6,4,7,7), nrow = 4, ncol = 2)
