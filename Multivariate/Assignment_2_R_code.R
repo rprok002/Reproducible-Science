@@ -152,20 +152,18 @@ prob = pnorm(13, mean = 22, sd = 9.38, lower.tail = TRUE)
 prob
 
 ## Problem 9
+library(matlib)
 meana3 = 104.0
 meana4 = 93.8
 cova = matrix(c(2624,210.30,210.30,177.36), nrow = 2, ncol = 2)
 cova
 inverscova = Ginv(cova)
 inverscova
-meana = meana3 + (210.30*0.00623031*(meana4-meana4))
+cov12inv22 = 210.30 * 0.00623031
+cov12inv22
 meana
 cova9 = 2624-(210.30*0.00623031*210.30)
 cova9
-meanb1 = matrix(c(172.7), nrow = 1, ncol = 1)
-meanb1
-meanb234 = matrix(c(104.6,104.0,93.8), nrow = 3, ncol = 1)
-meanb234
 covb11 = matrix(c(1037.21), nrow = 1, ncol = 1)
 covb11
 covb12 = matrix(c(-80.02,1430.70,271.44),nrow = 1, ncol = 3)
@@ -174,17 +172,12 @@ covb21 = matrix(c(-80.02, 1430.70, 271.44), nrow = 3, ncol = 1)
 covb21
 covb22 = matrix(c(219.84, 92.10, -91.58, 92.10, 2624.00, 210.30, -91.58, 210.30, 177.36), nrow = 3, ncol = 3)
 covb22
-meanb2 = mean(meanb234)
-meanb2
-xminusmean = meanb234 - meanb2
-xminusmean
 inversecovb22 = Ginv(covb22)
 inversecovb22
-condmeanb = meanb1 + (covb12 %*% inversecovb22 %*% xminusmean)
-condmeanb
 condcovb = covb11 - (covb12 %*% inversecovb22 %*% covb21)
 condcovb
-
+bcov12inv22 = covb12 %*% inversecovb22
+bcov12inv22
 ## Problem 12
 data4.18 = read.csv(file.choose())
 matrix4.18 = matrix(c(3,4,5,4,6,4,7,7), nrow = 4, ncol = 2)
