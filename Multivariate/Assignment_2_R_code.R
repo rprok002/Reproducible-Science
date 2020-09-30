@@ -19,10 +19,9 @@ corrcoeff3.2
 ## Problem 2: 
 meanmatrix = matrix(c(12,14,10), nrow = 3, ncol = 1)
 meanmatrix
-mean(meanmatrix)
 cormatrix = matrix(c(20,-80,140,-80,40,60,140,60,100), nrow = 3, ncol = 3)
 cormatrix
-cormatrix*(1/3)
+cormatrix*(1/30)
 
 ## Problem 4: Exercise 3.9
 matrix3.9 = matrix(c(12,18,14,20,16,17,20,16,18,19,29,38,30,38,35), nrow = 5, ncol = 3)
@@ -50,9 +49,11 @@ eigvector= matrix(c(1,1,-1), nrow = 3, ncol = 1)
 eigvector
 Sa = covmatrix3.9 %*% eigvector
 Sa
-addcol = meancorcol1 + meancorcol2
+matrix3.9col1
+matrix3.9col2
+addcol = matrix3.9col1 + matrix3.9col2
 addcol
-meancorcol3
+matrix3.9col3
 
 ## Problem 3.14
 data3.14 = read.csv(file.choose())
@@ -210,7 +211,7 @@ q = qnorm ((n-.5)/length(x))
 cor(q,x)
 
 ## Problem 14: Exercise 4.26
-matrix4.26 = matrix(c(1,2,3,4,5,6,7,8,9,10, 18.95,19.00,17.95,15.54,14.00,12.95,8.94,7.49,6.00,3.99), nrow = 10, ncol = 2)
+matrix4.26 = matrix(c(1,2,3,3,4,5,6,8,9,11, 18.95,19.00,17.95,15.54,14.00,12.95,8.94,7.49,6.00,3.99), nrow = 10, ncol = 2)
 matrix4.26
 cov4.26 = cov(matrix4.26)
 cov4.26
@@ -256,6 +257,33 @@ distanceorder
 qcporder = qcp[order(qcp)]
 qcporder
 plot(qcporder,distanceorder)
+line = abline(0,1)
+
+## Problem 14 alternate code
+matrix4.26 = matrix(c(1,2,3,3,4,5,6,8,9,11, 18.95,19.00,17.95,15.54,14.00,12.95,8.94,7.49,6.00,3.99), nrow = 10, ncol = 2)
+matrix4.26
+variance4.26 = var(matrix4.26)
+variance4.26
+x1 = c(1,2,3,3,4,5,6,8,9,11)
+x2 = c(18.95,19.00,17.95,15.54,14.00,12.95,8.94,7.49,6.00,3.99)
+XX4.26 = cbind(x1-mean(x1), x2- mean(x2))
+XX4.26
+KK4.26 = (as.matrix(XX4.26) %*% solve(variance4.26) %*% t(as.matrix(XX4.26)))
+KK4.26
+mKK4.26 = round(diag(KK4.26), 4)
+mKK4.26
+qchisq(0.50,2)
+length(mKK4.26[mKK4.26>1.39])
+J = seq(1:10)
+qcp = qchisq((10-J+.5)/10, 2)
+qcp
+qcporder = sort(qcp)
+qcporder
+distances4.26 = mKK4.26
+distance4.26order = sort(distances4.26)
+distance4.26order
+
+plot(qcporder,distance4.26order)
 line = abline(0,1)
 
 ## Problem 4.29
@@ -334,3 +362,39 @@ distance4.29order = distances4.29b[order(distances4.29b)]
 qcp4.29order = qcp4.29[order(qcp4.29)]
 plot(qcp4.29order,distance4.29order)
 line = abline(0,1)
+
+## Problem 4.29 alternate
+data4.29 = read.csv(file.choose())
+data4.29col1 = data4.29[,1]
+data4.29col2 = data4.29[,2]
+matrix4.29 = matrix(c(data4.29col1,data4.29col2), nrow = 42, ncol = 2)
+matrix4.29
+variance4.29 = var(matrix4.29)
+variance4.29
+x14.29 = data4.29col1
+x24.29 = data4.29col2
+XX4.29 = cbind(x14.29-mean(x14.29), x24.29-mean(x24.29))
+XX4.29
+KK4.29 = (as.matrix(XX4.29) %*% solve(variance4.29) %*% t(as.matrix(XX4.29)))
+KK4.29
+mKK4.29 = round(diag(KK4.29), 4)
+mKK4.29
+qchisq(0.50,2)
+length(mKK4.29[mKK4.29>1.39])
+J = seq(1:42)
+qcp4.29 = qchisq((42-J+.5)/42, 2)
+qcp4.29
+qcporder4.29 = sort(qcp4.29)
+qcporder4.29
+distances4.29 = mKK4.29
+distance4.29order = sort(distances4.29)
+distance4.29order
+
+plot(qcporder4.29,distance4.29order)
+line = abline(0,1)
+## Code check
+matrix = matrix(c(-2,1,-1,2,0,-1,2,0,-2,1,-3,3,-1,0,1), nrow = 5, ncol = 3)
+matrix
+cov(matrix)
+library(r2glmm)
+calc_sgv(nblocks=1, blksizes = 3, cov(matrix))
