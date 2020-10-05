@@ -48,11 +48,27 @@ unlist()take values out of a list and writes them out
 & # and
 
 ## Calculations
+## need matlib library
+cov(x1,x2) sample covariance
+cov(matrix) variance-covariance matrix produced 
 eigen() eigenvalues and eigenvectors
-inv() inverse matrix
+Ginv() inverse matrix
 mean() mean of values
+sqrt() square root
 t() transpose matrix
+qchisq() q values for chisquare
 var() sample variance
+ 
+## How to set up matrices
+matrixname = matrix(data = , nrow = , ncol =)
+## How to multiply matrices
+matrix1 %*% matrix2
+## Chisqure needs
+## need matlib library
+J: seq(1:total number of obs)
+q values: qchisq((total number of obs - J+0.5)/total number of obs, p)
+where p is number of variables (also number of columns)
+where n is number of samples (also number of rows)
 
 
 ## Getting help 
