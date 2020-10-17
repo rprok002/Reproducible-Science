@@ -86,3 +86,24 @@ bonmu3upper = 9.965 + (tcrit0.05 * sqrtss3n)
 bonmu3upper
 ## 8.834 less than/equal to mu3 less than equal to 11.096
 ##Bonferonni intervals are smaller slightly than other ones
+
+## Problem 3: Exercise 5.9 
+sample5.9 = matrix(c(95.52,164.38,55.69,93.39,17.98,31.13), nrow = 6, ncol = 1)
+sample5.9
+cov5.9 = matrix(c(3266.46,1343.97,731.54,1175.50,162.68,238.37,1343.97,721.91,324.25,537.35,80.17,117.73,731.54,324.25,179.28,281.17,39.15,56.80,1175.50,537.35,281.17,474.98,63.73,94.85,162.68,80.17,39.15,63.73,9.95,13.88,
+                  238.37,117.73,56.80,94.85,13.88,21.26), nrow = 6, ncol = 6)
+cov5.9
+sqrtchisquare5.9 = sqrt(qchisq(0.95,6))
+sqrtchisquare5.9
+sqrts11n = sqrt(3266.46/61)
+sqrts22n = sqrt(721.91/61)
+sqrts33n = sqrt(179.28/61)
+sqrts44n = sqrt(474.98/61)
+sqrts55n = sqrt(9.95/61)
+sqrts66n = sqrt(21.26/61)
+simmatrix5.9 = matrix(c(sqrtchisquare5.9*sqrts11n,sqrtchisquare5.9*sqrts22n,sqrtchisquare5.9*sqrts33n,sqrtchisquare5.9*sqrts44n,sqrtchisquare5.9*sqrts55n,sqrtchisquare5.9*sqrts66n), nrow = 6, ncol = 1)
+simmatrix5.9
+lower5.9 = sample5.9 - simmatrix5.9
+lower5.9
+upper5.9 = sample5.9 + simmatrix5.9
+upper5.9
