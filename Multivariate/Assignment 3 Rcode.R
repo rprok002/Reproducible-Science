@@ -85,4 +85,4 @@ bonmu3lower
 bonmu3upper = 9.965 + (tcrit0.05 * sqrtss3n)
 bonmu3upper
 ## 8.834 less than/equal to mu3 less than equal to 11.096
-
+##Bonferonni intervals are smaller slightly than other ones
