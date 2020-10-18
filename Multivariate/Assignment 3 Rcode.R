@@ -135,3 +135,34 @@ lower5.9e
 upper5.9e = widthminuslength + coninterval5.9e
 upper5.9e
 ## interval is 12.488 is less than/equal to width minus length is less than/equal to 13.812
+
+## Problem 4: Exerrcise 5.18
+## part a
+table4 = read.csv(file.choose())
+table4
+sciencehistory = table4[,2]
+verbal = table4[,3]
+science = table4[,4]
+matrix5.18 = matrix(c(sciencehistory, verbal, science), nrow = 87, ncol = 3)
+matrix5.18
+meansciencehistory = mean(sciencehistory)
+meanverbal = mean(verbal)
+meanscience = mean(science)
+mean5.18 = matrix(c(meansciencehistory, meanverbal, meanscience), nrow = 3, ncol = 1)
+mean5.18
+cov5.18 = cov(matrix5.18)
+cov5.18
+invcov5.18 = solve(cov5.18)
+invcov5.18
+dev5.18 = c(meansciencehistory-500, meanverbal-50, meanscience-30)
+dev5.18
+dev5.18transpose = t(dev5.18)
+ttest5.18 = 87*dev5.18transpose %*% invcov5.18 %*% dev5.18 
+ttest5.18
+library(robustbase)
+library(pcaPP)
+library(rrcov)
+T2.test(matrix5.18, mu = c(500,50,30), conf.level = 0.95, test = "f")
+## Yes, the t-test results show that mu is not equal to these numbers,
+## so the students in the table are scoring differently than the average
+## college students over the past 10 years
