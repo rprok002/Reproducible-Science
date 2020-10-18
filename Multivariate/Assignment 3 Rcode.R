@@ -88,6 +88,7 @@ bonmu3upper
 ##Bonferonni intervals are smaller slightly than other ones
 
 ## Problem 3: Exercise 5.9 
+## part a
 sample5.9 = matrix(c(95.52,164.38,55.69,93.39,17.98,31.13), nrow = 6, ncol = 1)
 sample5.9
 cov5.9 = matrix(c(3266.46,1343.97,731.54,1175.50,162.68,238.37,1343.97,721.91,324.25,537.35,80.17,117.73,731.54,324.25,179.28,281.17,39.15,56.80,1175.50,537.35,281.17,474.98,63.73,94.85,162.68,80.17,39.15,63.73,9.95,13.88,
@@ -107,3 +108,30 @@ lower5.9 = sample5.9 - simmatrix5.9
 lower5.9
 upper5.9 = sample5.9 + simmatrix5.9
 upper5.9
+## parb b don't know yet
+ellipse(sample5.9b,cov5.9b, alpha = 0.05, newplot = TRUE, xlab = "Weight", ylab = "Girth")
+## part c
+tcrit5.9internal = (0.05/(2*6))
+tcrit5.9internal
+tcrit5.9 = qt(1-tcrit5.9internal, 55)
+tcrit5.9
+bonmatrix5.9 = matrix(c(tcrit5.9*sqrts11n,tcrit5.9*sqrts22n,tcrit5.9*sqrts33n,tcrit5.9*sqrts44n,tcrit5.9*sqrts55n,tcrit5.9*sqrts66n), nrow = 6, ncol = 1)
+bonmatrix5.9
+bonlower5.9 = sample5.9 - bonmatrix5.9
+bonlower5.9
+bonupper5.9 = sample5.9 + bonmatrix5.9
+bonupper5.9
+## part d don't know yet
+## part e
+widthminuslength = 31.13 - 17.98
+tcrit5.9einternal = (0.05/(2*7))
+tcrit5.9e = qt(1-tcrit5.9einternal, 60 )
+tcrit5.9e
+sqrt12n = sqrt((9.95-13.88-13.88+21.26)/61)
+sqrt12n
+coninterval5.9e = tcrit5.9e * sqrt12n
+lower5.9e = widthminuslength - coninterval5.9e
+lower5.9e
+upper5.9e = widthminuslength + coninterval5.9e
+upper5.9e
+## interval is 12.488 is less than/equal to width minus length is less than/equal to 13.812
