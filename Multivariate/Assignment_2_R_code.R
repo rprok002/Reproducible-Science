@@ -393,3 +393,4 @@ matrix
 cov(matrix)
 library(r2glmm)
 calc_sgv(nblocks=1, blksizes = 3, cov(matrix))
+?qchisq

@@ -234,3 +234,62 @@ QQ5.20x2 = qqnorm(table5[,2])
 qqline(table5[,2])
 plot(table5[,1], table5[,2])
 line=abline(0,1)
+
+##Problem 6: Exercise 5.23
+## part a
+table6 = read.csv(file.choose())
+maxbreath = table6[,1]
+basheight = table6[,2]
+baslength = table6[,3]
+nasheight = table6[,4]
+qqmaxbreath = qqnorm(table6[,1])
+qqline(table6[,1])
+qqbasheight = qqnorm(table6[,2])
+qqline(table6[,2])
+qqbaslength = qqnorm(table6[,3])
+qqline(table6[,3])
+qqnasheight = qqnorm(table6[,4])
+qqline(table6[,4])
+J5.23 = seq(1:30)
+qcp5.23 = qchisq((30-J5.23+.5)/30,4)
+qcp5.23order = sort(qcp5.23)
+maxbreathorder = sort(maxbreath)
+basheightorder = sort(basheight)
+baslengthorder = sort(baslength)
+nasheightorder = sort(nasheight)
+plot(qcp5.23order,maxbreathorder)
+plot(qcp5.23order,basheightorder)
+plot(qcp5.23order,baslengthorder)
+plot(qcp5.23order,nasheightorder)
+## part b
+mean5.23 = matrix(c(mean(maxbreath), mean(basheight), mean(baslength), mean(nasheight)), nrow = 4, ncol = 1)
+mean5.23
+matrix5.23 = matrix(c(maxbreath,basheight,baslength,nasheight), nrow = 30, ncol = 4)
+cov5.23 = cov(matrix5.23)
+cov5.23
+bontcritinternal5.23 = (0.05/(2*4))
+tcrit0.055.23 = qt(1-bontcritinternal5.23, 29)
+bons11n5.23 = sqrt(26.309195/30)
+bons22n5.23 = sqrt(19.9724138/30)
+bons33n5.23 = sqrt(34.6264368/30)
+bons44n5.23 = sqrt(7.6367816/30)
+bonmatrix5.23 = matrix(c(tcrit0.055.23*bons11n5.23, tcrit0.055.23*bons22n5.23, tcrit0.055.23*bons33n5.23, tcrit0.055.23*bons44n5.23), nrow = 4, ncol = 1)
+bonlower5.23 = mean5.23 - bonmatrix5.23
+bonlower5.23
+bonupper5.23 = mean5.23 + bonmatrix5.23
+bonupper5.23
+tcrit6 = qf(0.95, 4, 26) * (2*29)/26
+sqrttcrit6 = sqrt(tcrit6)
+tmatrix5.23 = matrix(c(sqrttcrit6*bons11n5.23, sqrttcrit6*bons22n5.23, sqrttcrit6*bons33n5.23, sqrttcrit6*bons44n5.23), nrow = 4, ncol = 1)
+tlower5.23 = mean5.23 - tmatrix5.23
+tupper5.23 = mean5.23 + tmatrix5.23
+bonlower5.23
+bonupper5.23
+tlower5.23
+tupper5.23
+
+## Problem 7: Exercise 5.30
+mean5.30 = matrix(c(0.766,0.508,0.438,0.161), nrow = 4, ncol = 1)
+mean5.30
+cov5.30 = matrix(c(0.856,0.635,0.173,0.096,0.635,0.568,0.127,0.067,0.173,0.128,0.171,0.039,0.096,0.067,0.039,0.043), nrow = 4, ncol = 4)
+cov5.30
