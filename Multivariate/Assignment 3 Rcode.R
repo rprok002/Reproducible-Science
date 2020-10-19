@@ -69,22 +69,22 @@ mu3upper = 9.965 + (sqrttcrit * sqrtss3n)
 mu3upper
 ## 8.571 less than/equal to mu3 less than equal to 11.359
 tcritinternal = (0.05/(2*3))
-tcrit0.05 = qt(1-tcritinternal, 17)
+tcrit0.05 = qt(1-tcritinternal, 19)
 bonmu1lower = 4.640 - (tcrit0.05 * sqrtss1n)
 bonmu1lower
 bonmu1upper = 4.640 + (tcrit0.05 * sqrtss1n)
 bonmu1upper
-## 3.633 less than/equal to mu1 less than equal to 5.647
+## 3.644 less than/equal to mu1 less than equal to 5.636
 bonmu2lower = 45.400 - (tcrit0.05 * sqrtss2n)
 bonmu2lower
 bonmu2upper = 45.400 + (tcrit0.05 * sqrtss2n)
 bonmu2upper
-## 37.009 less than/equal to mu2 less than equal to 53.791
+## 37.103 less than/equal to mu2 less than equal to 53.697
 bonmu3lower = 9.965 - (tcrit0.05 * sqrtss3n)
 bonmu3lower
 bonmu3upper = 9.965 + (tcrit0.05 * sqrtss3n)
 bonmu3upper
-## 8.834 less than/equal to mu3 less than equal to 11.096
+## 8.847 less than/equal to mu3 less than equal to 11.083
 ##Bonferonni intervals are smaller slightly than other ones
 
 ## Problem 3: Exercise 5.9 
@@ -113,7 +113,7 @@ ellipse(sample5.9b,cov5.9b, alpha = 0.05, newplot = TRUE, xlab = "Weight", ylab 
 ## part c
 tcrit5.9internal = (0.05/(2*6))
 tcrit5.9internal
-tcrit5.9 = qt(1-tcrit5.9internal, 55)
+tcrit5.9 = qt(1-tcrit5.9internal, 60)
 tcrit5.9
 bonmatrix5.9 = matrix(c(tcrit5.9*sqrts11n,tcrit5.9*sqrts22n,tcrit5.9*sqrts33n,tcrit5.9*sqrts44n,tcrit5.9*sqrts55n,tcrit5.9*sqrts66n), nrow = 6, ncol = 1)
 bonmatrix5.9
@@ -166,3 +166,71 @@ T2.test(matrix5.18, mu = c(500,50,30), conf.level = 0.95, test = "f")
 ## Yes, the t-test results show that mu is not equal to these numbers,
 ## so the students in the table are scoring differently than the average
 ## college students over the past 10 years
+## part b no fucking clue
+eigen5.18 = eigen(cov5.18)
+eigen5.18
+sqrtscihiseigen = sqrt(5879.56342)
+sqrtvereigen = sqrt(64.37503)
+sqrtscieigen = sqrt(14.59216)
+
+S = matrix(c(0.0144,0.0117,0.0117,0.0146), nrow = 2, ncol = 2)
+eigen(S)
+## part c tbd
+
+##Problem 5: Exercise 5.20
+table5 = read.csv(file.choose())
+meantaillength = mean(table5[,1])
+meantaillength
+meanwinglength = mean(table5[,2])
+meanwinglength
+mean5.20 = c(meantaillength,meanwinglength)
+mean5.20
+matrix5.20 = matrix(c(table5[,1],table5[,2]), nrow = 45, ncol = 2)
+cov5.20 = cov(matrix5.20)
+cov5.20
+value5.20 = c(190,275)
+dev5.20 = mean5.20 - value5.20
+dev5.20
+matrixdev5.20 = matrix(dev5.20, nrow = 2, ncol = 1)
+matrixdev5.20
+transposematrixdev5.20 = t(matrixdev5.20)
+invcov5.20 = solve(cov5.20)
+tsquared5.20 = 45*transposematrixdev5.20 %*% invcov5.20 %*% matrixdev5.20
+tsquared5.20
+tcritinternal5.20 = qf(0.95, 2, 43)
+tcritinternal5.20
+(2*44)/43
+tcrit5.20 = 2.046512 * tcritinternal5.20
+tcrit5.20
+tsquared5.20 < tcrit5.20
+## Fail to reject null hypothesis. So, statistically male and female values
+## are not different and male values are plausible for female values
+## part b
+tcrit5 = qf(0.95, 2, 43) * (2*44)/43
+tcrit5
+sqrttcrit5 = sqrt(tcrit5)
+s11n5.20 = sqrt(120.6949/45)
+s22n5.20 = sqrt(208.5404/45)
+tcritmatrix5.20 = matrix(c(sqrttcrit5*s11n5.20,sqrttcrit5*s22n5.20), nrow = 2, ncol = 1)
+tcritmatrix5.20
+meanmatrix5.20 = matrix(c(meantaillength,meanwinglength), nrow = 2, ncol = 1)
+mu5.20lower = meanmatrix5.20 - tcritmatrix5.20
+mu5.20lower
+mu5.20upper = meanmatrix5.20 + tcritmatrix5.20
+mu5.20upper
+bontcritinternal5.20 = (0.05/(2*2))
+tcrit0.055.20 = qt(1-bontcritinternal5.20, 44)
+bonmatrix5.20 = matrix(c(tcrit0.055.20*s11n5.20, tcrit0.055.20*s22n5.20), nrow = 2, ncol = 1)
+bonlower5.20 = meanmatrix5.20 - bonmatrix5.20
+bonlower5.20
+bonupper5.20 = meanmatrix5.20 + bonmatrix5.20
+bonupper5.20
+## Tsquared interval is wider than Bonferroni, so is less conservative
+## part c
+library(matlib)
+QQ5.20x1 = qqnorm(table5[,1])
+qqline(table5[,1])
+QQ5.20x2 = qqnorm(table5[,2])
+qqline(table5[,2])
+plot(table5[,1], table5[,2])
+line=abline(0,1)
