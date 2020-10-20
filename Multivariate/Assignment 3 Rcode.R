@@ -25,7 +25,7 @@ tsquared1 < tcrit1
 abline(v = 0.56, h = 0.62)
 ## Fail to reject null in favor of the alternative. 0.56,0.62 is a likely value 
 ## for set of numbers in dataset. Found within the confidence region from part a
-?ellipse
+
 
 ## Problem 2: Exercise 5.7
 table5.7 = read.csv(file.choose())
@@ -53,39 +53,42 @@ mu1lower = 4.640 - (sqrttcrit * sqrtss1n)
 mu1lower
 mu1upper = 4.640 + (sqrttcrit * sqrtss1n)
 mu1upper
-## 3.398 less than/equal to mu1 less than equal to 5.882
+
 sqrtss2n = sqrt(199.7884/20) 
 sqrtss2n
 mu2lower = 45.400 - (sqrttcrit * sqrtss2n)
 mu2lower
 mu2upper = 45.400 + (sqrttcrit * sqrtss2n)
 mu2upper
-## 35.052 less than/equal to mu2 less than equal to 55.748
+
 sqrtss3n = sqrt(3.627658/20) 
 sqrtss3n
 mu3lower = 9.965 - (sqrttcrit * sqrtss3n)
 mu3lower
 mu3upper = 9.965 + (sqrttcrit * sqrtss3n)
 mu3upper
-## 8.571 less than/equal to mu3 less than equal to 11.359
-tcritinternal = (0.05/(2*3))
-tcrit0.05 = qt(1-tcritinternal, 19)
+
+conmatrix5.7lower = matrix(c(3.398,35.052,8.571), nrow = 3, ncol = 1)
+conmatrix5.7lower
+conmatrix5.7upper = matrix(c(5.882,55.748,11.359), nrow = 3, ncol = 1)
+conmatrix5.7upper
+
+tcrit0.05 = qt((1-0.05/2*3),19)
 bonmu1lower = 4.640 - (tcrit0.05 * sqrtss1n)
 bonmu1lower
 bonmu1upper = 4.640 + (tcrit0.05 * sqrtss1n)
 bonmu1upper
-## 3.644 less than/equal to mu1 less than equal to 5.636
+
 bonmu2lower = 45.400 - (tcrit0.05 * sqrtss2n)
 bonmu2lower
 bonmu2upper = 45.400 + (tcrit0.05 * sqrtss2n)
 bonmu2upper
-## 37.103 less than/equal to mu2 less than equal to 53.697
+
 bonmu3lower = 9.965 - (tcrit0.05 * sqrtss3n)
 bonmu3lower
 bonmu3upper = 9.965 + (tcrit0.05 * sqrtss3n)
 bonmu3upper
-## 8.847 less than/equal to mu3 less than equal to 11.083
-##Bonferonni intervals are smaller slightly than other ones
+
 
 ## Problem 3: Exercise 5.9 
 ## part a
@@ -108,35 +111,39 @@ lower5.9 = sample5.9 - simmatrix5.9
 lower5.9
 upper5.9 = sample5.9 + simmatrix5.9
 upper5.9
-## parb b don't know yet
-ellipse(sample5.9b,cov5.9b, alpha = 0.05, newplot = TRUE, xlab = "Weight", ylab = "Girth")
+## parb b 
+sample5.9b = c(95.52,93.39)
+cov5.9b = matrix(c(3266.46,1175.50,1175.50,474.98), nrow = 2, ncol = 2)
+ellipse(sample5.9b,cov5.9b, alpha = 0.95, newplot = TRUE, xlab = "Weight", ylab = "Girth")
 ## part c
-tcrit5.9internal = (0.05/(2*6))
-tcrit5.9internal
-tcrit5.9 = qt(1-tcrit5.9internal, 60)
-tcrit5.9
-bonmatrix5.9 = matrix(c(tcrit5.9*sqrts11n,tcrit5.9*sqrts22n,tcrit5.9*sqrts33n,tcrit5.9*sqrts44n,tcrit5.9*sqrts55n,tcrit5.9*sqrts66n), nrow = 6, ncol = 1)
+qnorm((1-0.95)/12)
+zscorecrit5.9 = 2.64
+zscorecrit5.9
+bonmatrix5.9 = matrix(c(zscorecrit5.9*sqrts11n,zscorecrit5.9*sqrts22n,zscorecrit5.9*sqrts33n,zscorecrit5.9*sqrts44n,zscorecrit5.9*sqrts55n,zscorecrit5.9*sqrts66n), nrow = 6, ncol = 1)
 bonmatrix5.9
 bonlower5.9 = sample5.9 - bonmatrix5.9
 bonlower5.9
 bonupper5.9 = sample5.9 + bonmatrix5.9
 bonupper5.9
-## part d don't know yet
+qnorm((1-0.95)/12)
+## part d 
+sample5.9b = c(95.52,93.39)
+cov5.9b = matrix(c(3266.46,1175.50,1175.50,474.98), nrow = 2, ncol = 2)
+ellipse(sample5.9b,cov5.9b, alpha = 0.95, newplot = TRUE, xlab = "Weight", ylab = "Girth", xlim = c(70,120), ylim = c(80,106))
+abline(v = 76.201,  h = 86.023)
+abline( v = 114.839,  h = 100.757)
 ## part e
 widthminuslength = 31.13 - 17.98
-tcrit5.9einternal = (0.05/(2*7))
-tcrit5.9e = qt(1-tcrit5.9einternal, 60 )
-tcrit5.9e
+zscore5.9e = -qnorm((1-0.95)/12)
 sqrt12n = sqrt((9.95-13.88-13.88+21.26)/61)
 sqrt12n
-coninterval5.9e = tcrit5.9e * sqrt12n
+coninterval5.9e = zscore5.9e * sqrt12n
 lower5.9e = widthminuslength - coninterval5.9e
 lower5.9e
 upper5.9e = widthminuslength + coninterval5.9e
 upper5.9e
-## interval is 12.488 is less than/equal to width minus length is less than/equal to 13.812
 
-## Problem 4: Exerrcise 5.18
+## Problem 4: Exercise 5.18
 ## part a
 table4 = read.csv(file.choose())
 table4
@@ -157,25 +164,46 @@ invcov5.18
 dev5.18 = c(meansciencehistory-500, meanverbal-50, meanscience-30)
 dev5.18
 dev5.18transpose = t(dev5.18)
-ttest5.18 = 87*dev5.18transpose %*% invcov5.18 %*% dev5.18 
+ttest5.18 = 87*dev5.18transpose %*% solve(cov5.18) %*% dev5.18 
 ttest5.18
 library(robustbase)
 library(pcaPP)
 library(rrcov)
+qf(0.95, 3, 84)
+(86*3)/84
+tcrit15.18 = (86*3)/84 * qf(0.95, 3, 84)
+tcrit15.18
 T2.test(matrix5.18, mu = c(500,50,30), conf.level = 0.95, test = "f")
 ## Yes, the t-test results show that mu is not equal to these numbers,
 ## so the students in the table are scoring differently than the average
 ## college students over the past 10 years
-## part b no fucking clue
+## part b no f
 eigen5.18 = eigen(cov5.18)
 eigen5.18
 sqrtscihiseigen = sqrt(5879.56342)
 sqrtvereigen = sqrt(64.37503)
 sqrtscieigen = sqrt(14.59216)
-
-S = matrix(c(0.0144,0.0117,0.0117,0.0146), nrow = 2, ncol = 2)
-eigen(S)
-## part c tbd
+pthing = (3*(87-1))/(87*(87-84))
+fstat5.18 = qf(0.95,3,84)
+sqrt5.18 = sqrt(pthing*fstat5.18)
+lengths5.18 = matrix(c(sqrtscihiseigen*sqrt5.18,sqrtvereigen*sqrt5.18,sqrtscieigen*sqrt5.18), nrow = 3, ncol = 1)
+lengths5.18
+eigenscihis = eigen5.18$vectors[,1]
+eigenscihis
+eigenver = eigen5.18$vectors[,2]
+eigenver
+eigensci = eigen5.18$vectors[,3]
+eigensci
+## part c 
+scihistoryQQ = qqnorm(sciencehistory)
+qqline(sciencehistory)
+verQQ = qqnorm(verbal)
+qqline(verbal)
+sciQQ = qqnorm(science)
+qqline(science)
+plot(sciencehistory,verbal, xlab = "Social Science/History", ylab = "Verbal")
+plot(sciencehistory,science, xlab = "Social Science/History", ylab = "Science")
+plot(verbal,science, xlab = "Verbal", ylab = "Science")
 
 ##Problem 5: Exercise 5.20
 table5 = read.csv(file.choose())
@@ -188,6 +216,7 @@ mean5.20
 matrix5.20 = matrix(c(table5[,1],table5[,2]), nrow = 45, ncol = 2)
 cov5.20 = cov(matrix5.20)
 cov5.20
+ellipse(mean5.20,cov5.20, alpha = 0.95, newplot = TRUE, xlab = "Tail Length", ylab = "Wing Length")
 value5.20 = c(190,275)
 dev5.20 = mean5.20 - value5.20
 dev5.20
@@ -206,21 +235,20 @@ tsquared5.20 < tcrit5.20
 ## Fail to reject null hypothesis. So, statistically male and female values
 ## are not different and male values are plausible for female values
 ## part b
-tcrit5 = qf(0.95, 2, 43) * (2*44)/43
-tcrit5
-sqrttcrit5 = sqrt(tcrit5)
+sqrtchisq5.20 = sqrt(qchisq(0.95,2))
+sqrtchisq5.20
 s11n5.20 = sqrt(120.6949/45)
 s22n5.20 = sqrt(208.5404/45)
-tcritmatrix5.20 = matrix(c(sqrttcrit5*s11n5.20,sqrttcrit5*s22n5.20), nrow = 2, ncol = 1)
+tcritmatrix5.20 = matrix(c(sqrtchisq5.20*s11n5.20,sqrtchisq5.20*s22n5.20), nrow = 2, ncol = 1)
 tcritmatrix5.20
 meanmatrix5.20 = matrix(c(meantaillength,meanwinglength), nrow = 2, ncol = 1)
 mu5.20lower = meanmatrix5.20 - tcritmatrix5.20
 mu5.20lower
 mu5.20upper = meanmatrix5.20 + tcritmatrix5.20
 mu5.20upper
-bontcritinternal5.20 = (0.05/(2*2))
-tcrit0.055.20 = qt(1-bontcritinternal5.20, 44)
-bonmatrix5.20 = matrix(c(tcrit0.055.20*s11n5.20, tcrit0.055.20*s22n5.20), nrow = 2, ncol = 1)
+zscore5.20 = -qnorm((1-0.95)/4)
+zscore5.20
+bonmatrix5.20 = matrix(c(zscore5.20*s11n5.20, zscore5.20*s22n5.20), nrow = 2, ncol = 1)
 bonlower5.20 = meanmatrix5.20 - bonmatrix5.20
 bonlower5.20
 bonupper5.20 = meanmatrix5.20 + bonmatrix5.20
@@ -232,7 +260,7 @@ QQ5.20x1 = qqnorm(table5[,1])
 qqline(table5[,1])
 QQ5.20x2 = qqnorm(table5[,2])
 qqline(table5[,2])
-plot(table5[,1], table5[,2])
+plot(table5[,1], table5[,2], xlab = "Tail Length", ylab = "Wing Length")
 line=abline(0,1)
 
 ##Problem 6: Exercise 5.23
@@ -242,6 +270,7 @@ maxbreath = table6[,1]
 basheight = table6[,2]
 baslength = table6[,3]
 nasheight = table6[,4]
+matrix5.23 = matrix(c(maxbreath,basheight,baslength,nasheight), nrow = 30, ncol = 4)
 qqmaxbreath = qqnorm(table6[,1])
 qqline(table6[,1])
 qqbasheight = qqnorm(table6[,2])
@@ -250,25 +279,24 @@ qqbaslength = qqnorm(table6[,3])
 qqline(table6[,3])
 qqnasheight = qqnorm(table6[,4])
 qqline(table6[,4])
+XX5.23 = cbind(maxbreath - mean(maxbreath), basheight - mean(basheight), baslength-mean(baslength), nasheight-mean(nasheight))
+KK5.23 = (as.matrix(XX5.23) %*% solve(cov(matrix5.23)) %*% t(as.matrix(XX5.23)))
+mKK5.23 = round(diag(KK5.23),4)
+mKK5.23
 J5.23 = seq(1:30)
 qcp5.23 = qchisq((30-J5.23+.5)/30,4)
 qcp5.23order = sort(qcp5.23)
-maxbreathorder = sort(maxbreath)
-basheightorder = sort(basheight)
-baslengthorder = sort(baslength)
-nasheightorder = sort(nasheight)
-plot(qcp5.23order,maxbreathorder)
-plot(qcp5.23order,basheightorder)
-plot(qcp5.23order,baslengthorder)
-plot(qcp5.23order,nasheightorder)
+distances5.23order = sort(mKK5.23)
+distances5.23order
+plot(qcp5.23order,distances5.23order)
+line = abline(0,1)
 ## part b
 mean5.23 = matrix(c(mean(maxbreath), mean(basheight), mean(baslength), mean(nasheight)), nrow = 4, ncol = 1)
 mean5.23
 matrix5.23 = matrix(c(maxbreath,basheight,baslength,nasheight), nrow = 30, ncol = 4)
 cov5.23 = cov(matrix5.23)
 cov5.23
-bontcritinternal5.23 = (0.05/(2*4))
-tcrit0.055.23 = qt(1-bontcritinternal5.23, 29)
+tcrit0.055.23 = qt((1-0.05/8), 29)
 bons11n5.23 = sqrt(26.309195/30)
 bons22n5.23 = sqrt(19.9724138/30)
 bons33n5.23 = sqrt(34.6264368/30)
@@ -278,8 +306,9 @@ bonlower5.23 = mean5.23 - bonmatrix5.23
 bonlower5.23
 bonupper5.23 = mean5.23 + bonmatrix5.23
 bonupper5.23
-tcrit6 = qf(0.95, 4, 26) * (2*29)/26
+tcrit6 = qf(0.95, 4, 26) * (4*29)/26
 sqrttcrit6 = sqrt(tcrit6)
+sqrttcrit6
 tmatrix5.23 = matrix(c(sqrttcrit6*bons11n5.23, sqrttcrit6*bons22n5.23, sqrttcrit6*bons33n5.23, sqrttcrit6*bons44n5.23), nrow = 4, ncol = 1)
 tlower5.23 = mean5.23 - tmatrix5.23
 tupper5.23 = mean5.23 + tmatrix5.23
@@ -289,7 +318,78 @@ tlower5.23
 tupper5.23
 
 ## Problem 7: Exercise 5.30
+## part a mean for each
 mean5.30 = matrix(c(0.766,0.508,0.438,0.161), nrow = 4, ncol = 1)
 mean5.30
 cov5.30 = matrix(c(0.856,0.635,0.173,0.096,0.635,0.568,0.127,0.067,0.173,0.128,0.171,0.039,0.096,0.067,0.039,0.043), nrow = 4, ncol = 4)
 cov5.30
+s11n5.30 = sqrt(0.856/50)
+s22n5.30 = sqrt(0.568/50)
+s33n5.30 = sqrt(0.171/50)
+s44n5.30 = sqrt(0.043/50)
+innerzscore5.30 = (1-(0.05/(2*4)) )
+innerzscore5.30
+## zscore for 0.9938
+zscore5.30 = 2.50
+simmatrix5.30 = matrix(c(zscore5.30*s11n5.30, zscore5.30*s22n5.30,zscore5.30*s33n5.30,zscore5.30*s44n5.30), nrow = 4, ncol = 1)
+simmatrix5.30
+bonlower5.30 = mean5.30 - simmatrix5.30
+bonlower5.30
+bonupper5.30 = mean5.30 +simmatrix5.30
+bonupper5.30
+## part a total
+totalmean5.30 = matrix(0.766+0.508+0.438+0.161)
+covlist5.30 = c(cov5.30)
+covlist5.30
+sumcovlist5.30 = sum(covlist5.30)
+sumcovlist5.30
+stotaln5.30 = sqrt(sumcovlist5.30/50)
+simmatrixtotal5.30 = matrix(c(zscore5.30*stotaln5.30), nrow = 1, ncol = 1)
+bontotallower5.30 = totalmean5.30 - simmatrixtotal5.30
+bontotallower5.30
+bontotalupper5.30 = totalmean5.30 + simmatrixtotal5.30
+bontotalupper5.30
+## part a difference
+pertroleumminusnatural = 0.766 - 0.508
+zscore5.30 = 2.50
+sqrt12n5.30 = sqrt((0.856-0.635-0.635+0.568)/50)
+sqrt12n5.30
+coninterval5.30a = zscore5.30 * sqrt12n5.30
+bonlower5.30a = pertroleumminusnatural - coninterval5.30a
+bonlower5.30a
+bonupper5.930a = pertroleumminusnatural + coninterval5.30a
+bonupper5.930a
+## part b mean for each
+chsquare5.30 = qchisq(0.95,4)
+chsquare5.30
+sqrtchisq5.30 = sqrt(chsquare5.30)
+sinmatrix5.30b = matrix(c(sqrtchisq5.30*s11n5.30, sqrtchisq5.30*s22n5.30,sqrtchisq5.30*s33n5.30,sqrtchisq5.30*s44n5.30), nrow = 4, ncol = 1)
+sinmatrix5.30b
+mulower5.30 = mean5.30 - sinmatrix5.30b
+mulower5.30
+muupper5.30 = mean5.30 + sinmatrix5.30b
+muupper5.30
+## parb b total
+totalmean5.30 = matrix(0.766+0.508+0.438+0.161)
+covlist5.30 = c(cov5.30)
+covlist5.30
+sumcovlist5.30 = sum(covlist5.30)
+sumcovlist5.30
+stotaln5.30 = sqrt(sumcovlist5.30/50)
+simmatrixtotal5.30b = matrix(c(sqrtchisq5.30*stotaln5.30), nrow = 1, ncol = 1)
+mutotallower5.30 = totalmean5.30 - simmatrixtotal5.30b
+mutotallower5.30
+mutotalupper5.30 = totalmean5.30 + simmatrixtotal5.30b
+mutotalupper5.30
+## part b difference
+pertroleumminusnatural = 0.766 - 0.508
+chsquare5.30 = qchisq(0.95,4)
+chsquare5.30
+sqrt12n5.30 = sqrt((0.856-0.635-0.635+0.568)/50)
+sqrt12n5.30
+coninterval5.30b = sqrtchisq5.30 * sqrt12n5.30
+lower5.30b = pertroleumminusnatural - coninterval5.30b
+lower5.30b
+upper5.930b = pertroleumminusnatural + coninterval5.30b
+upper5.930b
+
