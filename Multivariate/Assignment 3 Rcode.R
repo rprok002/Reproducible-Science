@@ -183,10 +183,9 @@ eigen5.18
 sqrtscihiseigen = sqrt(5879.56342)
 sqrtvereigen = sqrt(64.37503)
 sqrtscieigen = sqrt(14.59216)
-pthing = (3*(87-1))/(87*(87-84))
-fstat5.18 = qf(0.95,3,84)
-sqrt5.18 = sqrt(pthing*fstat5.18)
-lengths5.18 = matrix(c(sqrtscihiseigen*sqrt5.18,sqrtvereigen*sqrt5.18,sqrtscieigen*sqrt5.18), nrow = 3, ncol = 1)
+fstat5.18 = ((qf(0.95,3,84))*(3*(87-1)))/(87*(87-3))
+sqrt5.18 = sqrt(fstat5.18)
+lengths5.18 = matrix(c(2*sqrtscihiseigen*sqrt5.18,2*sqrtvereigen*sqrt5.18,2*sqrtscieigen*sqrt5.18), nrow = 3, ncol = 1)
 lengths5.18
 eigenscihis = eigen5.18$vectors[,1]
 eigenscihis
@@ -204,7 +203,6 @@ qqline(science)
 plot(sciencehistory,verbal, xlab = "Social Science/History", ylab = "Verbal")
 plot(sciencehistory,science, xlab = "Social Science/History", ylab = "Science")
 plot(verbal,science, xlab = "Verbal", ylab = "Science")
-
 ##Problem 5: Exercise 5.20
 table5 = read.csv(file.choose())
 meantaillength = mean(table5[,1])
@@ -392,4 +390,61 @@ lower5.30b = pertroleumminusnatural - coninterval5.30b
 lower5.30b
 upper5.930b = pertroleumminusnatural + coninterval5.30b
 upper5.930b
+
+##Problem 8
+##part a
+x18 = c(.48,40.43,2.19,.55,.74,.66,.93,.37,.22 )
+x28 = c(12.57,73.68,11.12,20.03,20.29,.78,4.64,.43,1.08)
+meanmatrix8 = matrix(c(mean(x18),mean(x28)), nrow = 2, ncol = 1)
+meanmatrix8
+mean8 = c(5.174444, 16.068889)
+matrix8 = matrix(c(x18,x28), nrow = 9, ncol = 2)
+matrix8
+cov8 = cov(matrix8)
+cov8
+ellipse(mean8,cov8, alpha = 0.90, newplot = TRUE, xlab = "Cr", ylab = "St")
+##partb
+sqrtfstat8 = sqrt(((2*8)/7)*qf(0.90,2,7))
+sqrtfstat8
+s11n8 = sqrt(175.1217/9)
+s22n8 = sqrt(527.8617/9)
+simmatrix8 = matrix(c(sqrtfstat8*s11n8,sqrtfstat8*s22n8), nrow = 2, ncol = 1)
+simmatrix8
+mulower8 = meanmatrix8 - simmatrix8
+mulower8
+muupper8 = meanmatrix8 + simmatrix8
+muupper8
+tcrit8 = ((2*8)/7) * qf(0.90,2,7)
+tcrit8
+value8 = matrix(c(.30,10), nrow = 2, ncol = 1)
+dev8 = meanmatrix8-value8
+dev8
+tsquared8 = 9 * t(dev8) %*% solve(cov8) %*% dev8
+tsquared8
+tsquared8 < tcrit8
+## can't reject normality
+## part c
+qqnorm(x18)
+qqline(x18)
+qqnorm(x28)
+qqline(x28)
+plot(x18,x28, xlab = "Cr", ylab = "St")
+table8 = cbind(x18,x28)
+table8
+## part d
+library(mvnormtest)
+mshapiro.test(t(table8))
+## do reject hypothesis of normality
+## part e
+x18remove = c(.48,2.19,.55,.74,.66,.93,.37,.22 )
+x28remove = c(12.57,11.12,20.03,20.29,.78,4.64,.43,1.08)
+table8remove = cbind(x18remove,x28remove)
+mshapiro.test(t(table8remove))
+## remove outlier, still have rejection of normality
+##Notes
+##Do ellipse and add the lines (a and b)
+##How do you do tcrit for Bonferroni? Is it n-p or n-1? More than 30 is large sample size, so do zscore
+##Assume data from normal and solve, so use smaller and it’s not normal, so actually don’t have a solution
+##Remove outlier after plotting and finding it (can do generalized distance), should just do shapiro again
+##Lrg sample is chi, small is p(n-1)/n-p, use small size all the time if know it is normally distributed
 
