@@ -53,3 +53,5 @@ tcrit6.5
 ## Tsquared greater than tcrit, so reject null hypothesis that
 ## Cu = 0, that there are no treatment effects. Accept alternative 
 ## that Cu does not equal 0, so there are treatment effects
+
+## part b
