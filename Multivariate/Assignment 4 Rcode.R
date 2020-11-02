@@ -55,3 +55,46 @@ tcrit6.5
 ## that Cu does not equal 0, so there are treatment effects
 
 ## part b
+
+## Problem 3: 
+## part a: Ho is that there is no difference between electric
+## use in July with homeowners with and without air conditioning
+## Ha is that there is a difference between electric use in July
+## with homeowners with and without air conditioning
+xbar13 = matrix(c(204.4,556.6), nrow = 2, ncol = 1)
+xbar13
+xbar23 = matrix(c(130.0,355.0), nrow = 2, ncol = 1)
+xbar23
+cov13 = matrix(c(13825.3,23823.4,23823.4,73107.4), nrow = 2, ncol = 2)
+cov13
+cov23 = matrix(c(8632,19616.7,19616.7,55964.5), nrow = 2, ncol = 2)
+cov23
+difxbar3 = xbar13 - xbar23
+difxbar3
+tdifxbar3 = t(difxbar3)
+pooledcov3 = ((1/45)*(cov13)) + ((1/55)*(cov23))
+pooledcov3
+invpooledcov3 = solve(pooledcov3)
+tsquareds3 = tdifxbar3 %*% invpooledcov3 %*% difxbar3
+tsquareds3
+chicrit3 = qchisq(0.99,2)
+chicrit3
+
+## tsquared greater than tcrit, so reject null and accept alt
+a13 = matrix(c(1,0), nrow = 2, ncol = 1)
+sqrtchicrit3 = sqrt(chicrit3)
+sqrtpooledcov13 = sqrt(t(a13) %*% pooledcov3 %*% a13)
+sqrtpooledcov13
+interval13 = sqrtchicrit3 * sqrtpooledcov13
+interval13
+intervallow13 = 74.4 - 65.385
+intervalup13 = 74.4 - 65.385
+intervalup13
+a23 = matrix(c(0,1), nrow = 2, ncol = 1)
+sqrtpooledcov23 = sqrt(t(a23) %*% pooledcov3 %*% a23)
+interval23 = sqrtchicrit3 * sqrtpooledcov23
+interval23
+intervallow23 = 201.6 - 155.997
+intervallow23
+intervalup23 = 201.6 + 155.997
+intervalup23
