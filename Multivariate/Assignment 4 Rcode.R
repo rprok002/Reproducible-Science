@@ -174,3 +174,16 @@ interval26.6low
 interval26.6up = -1 + interval26.6
 interval26.6up
 ## both intervals cover 0, which supports failing to reject null
+
+## Problem 5: Exercise 6.13
+## part d
+Y16.13 = c(6,4,8,4,3,-3,4,-4,-3,-4,3,-4)
+Y26.13 = c(8,6,12,6,8,2,3,3,2,-5,-3,-6)
+Treat6.13 = c(rep("A",4), rep("B",4), rep("C",4))
+Exam6.13 = data.frame(cbind(Y16.13,Y26.13),Treat6.13)
+Exam6.13
+x6.13manova = manova(cbind(Y16.13,Y26.13)~Treat6.13, data=Exam6.13)
+x6.13manova
+summary.aov(x6.13manova)
+## Treatments effects for both at 0.05 alpha level
+## Problem 9 n = 2
