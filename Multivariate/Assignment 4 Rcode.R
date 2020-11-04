@@ -118,27 +118,26 @@ ellipse(munew, snew, alpha=0.99,npoints=200, type='l', newplot=TRUE, lwd=2, xlab
 
 ## Problem 4: Exercise 6.6
 ## part a
-treatment2 = matrix(c(3,3,1,6,2,3), nrow = 2, ncol = 3)
-treatment3 = matrix(c(2,3,5,1,3,1,2,3), nrow = 2, ncol = 4)
-treatment2
-treatment3
 x21 = c(3,1,2)
 x22 = c(3,6,3)
 x2 = cbind(x21,x22)
 x2
-cov6.62 = cov(treatment2)
-cov6.63 = cov(treatment3)
+x31 = c(2,5,3,2)
+x32 = c(3,1,1,3)
+x3 = cbind(x31,x32)
+cov6.62 = cov(x2)
+cov6.63 = cov(x3)
 cov6.62
 cov6.63
 Sp6.6a = (((3-1)*cov6.62)+((4-1)*cov6.63))/(3+4-2)
 Sp6.6a
 tstatS = ((1/3)+(1/4))*Sp6.6a
 invtstatS = solve(tstatS)
-meantreatment2.1= mean(treatment2[,1])
+meantreatment2.1= mean(x2[,1])
 meantreatment2.1
-meantreatment2.2 = mean(treatment2[,2])
-meantreatment3.1 = mean(treatment3[,1])
-meantreatment3.2 = mean(treatment3[,2])
+meantreatment2.2 = mean(x2[,2])
+meantreatment3.1 = mean(x3[,1])
+meantreatment3.2 = mean(x3[,2])
 meantreatment2 = matrix(c(meantreatment2.1,meantreatment2.2), nrow = 2, ncol = 1)
 meantreatment2
 meantreatment3 = matrix(c(meantreatment3.1, meantreatment3.2), nrow = 2, ncol = 1)
@@ -156,17 +155,17 @@ tcrit6.6 = x*u
 tcrit6.6
 ## fail to reject null
 ## part c
-relate1S = sqrt(((1/3)*(1/4))*2)
+relate1S = sqrt(((1/3)*(1/4))*1.6)
 interval16.6 = sqrt(tcrit6.6)*relate1S
-interval16.6low = 2 - interval16.6
+interval16.6low = -1 - interval16.6
 interval16.6low
-interval16.6up = 2 + interval16.6
+interval16.6up = -1 + interval16.6
 interval16.6up
-relate2S = sqrt(((1/3)*(1/4))*1.6)
+relate2S = sqrt(((1/3)*(1/4))*2)
 interval26.6 = sqrt(tcrit6.6)*relate2S
-interval26.6low = -1 - interval26.6
+interval26.6low = 2 - interval26.6
 interval26.6low
-interval26.6up = -1 + interval26.6
+interval26.6up = 2 + interval26.6
 interval26.6up
 ## both intervals cover 0, which supports failing to reject null
 
@@ -324,7 +323,7 @@ contrastmeanb6.26 = contrastmean6.26 * b6.26
 contrastmeanb6.26
 tsquared6.26 = t(contrastmeanb6.26) %*% solve(CSPC6.26) %*% contrastmean6.26
 tsquared6.26
-qf6.26 = qf(0.95, 3,28+58-4+1)
+qf6.26 = qf(0.95, 3,28+58-4)
 qf6.26
 m6.26 = ((28+58-1)*(4-1)/(28+58-4+1))
 tcrit6.26 = m6.26 * qf6.26
