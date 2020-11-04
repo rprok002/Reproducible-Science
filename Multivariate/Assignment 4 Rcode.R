@@ -55,6 +55,22 @@ tcrit6.5
 ## that Cu does not equal 0, so there are treatment effects
 
 ## part b
+sqrt6.5b = sqrt(m6.5*qf6.5)
+contrast12 = matrix(c(1,-1,0), nrow = 1, ncol = 3)
+lower12 = (contrast12 %*% mean6.5) - ((sqrt6.5b)*sqrt((contrast12 %*% cov6.5 %*% t(contrast12)/40)))
+lower12
+upper12 = (contrast12 %*% mean6.5) + ((sqrt6.5b)*sqrt((contrast12 %*% cov6.5 %*% t(contrast12)/40)))
+upper12
+contrast23 = matrix(c(0,1,-1), nrow = 1, ncol = 3)
+lower23 = (contrast23 %*% mean6.5) - ((sqrt6.5b)*sqrt((contrast23 %*% cov6.5 %*% t(contrast23)/40)))
+lower23
+upper23 = (contrast23 %*% mean6.5) + ((sqrt6.5b)*sqrt((contrast23 %*% cov6.5 %*% t(contrast23)/40)))
+upper23
+contrast13 = matrix(c(1,0,-1), nrow = 1, ncol = 3)
+lower13 = (contrast13 %*% mean6.5) - ((sqrt6.5b)*sqrt((contrast13 %*% cov6.5 %*% t(contrast13)/40)))
+lower13
+upper13 = (contrast13 %*% mean6.5) + ((sqrt6.5b)*sqrt((contrast13 %*% cov6.5 %*% t(contrast13)/40)))
+upper13
 
 ## Problem 3: 
 ## part a: Ho is that there is no difference between electric
@@ -186,4 +202,195 @@ x6.13manova = manova(cbind(Y16.13,Y26.13)~Treat6.13, data=Exam6.13)
 x6.13manova
 summary.aov(x6.13manova)
 ## Treatments effects for both at 0.05 alpha level
-## Problem 9 n = 2
+
+## Problem 6: Exercise 6.16
+data6.16 = read.csv(file.choose())
+matrix6.16 = matrix(c(data6.16[,1],data6.16[,2],data6.16[,3],data6.16[,4]), nrow = 30, ncol = 4)
+matrix6.16
+mean6.16 = matrix(c(mean(data6.16[,1]),mean(data6.16[,2]),mean(data6.16[,3]),mean(data6.16[,4])), nrow = 4, ncol = 1)
+mean6.16
+cov6.16 = cov(matrix6.16)
+cov6.16
+contrast6.16 = matrix(c(1,0,0,-1,1,0,0,-1,1,0,0,-1), nrow = 3, ncol = 4)
+contrast6.16
+contrastmean6.16 = contrast6.16 %*% mean6.16
+contrastmean6.16
+tcontrastmean6.16 = t(contrastmean6.16)
+tcontrast6.16 = t(contrast6.16)
+CSC6.16 = solve(contrast6.16 %*% cov6.16 %*% tcontrast6.16)
+CSC6.16
+tsquared6.15 = 30 * tcontrastmean6.16 %*% CSC6.16 %*% contrastmean6.16
+tsquared6.15
+qf6.16 = qf(0.95, 3,27)
+m6.16 = ((30-1)*(4-1)/(30-4+1))
+tcrit6.16 = m6.16 * qf6.16
+tcrit6.16
+sqrt6.16 = sqrt(m6.16*qf6.16)
+contrast1234 = matrix(c(1,1,-1,-1), nrow = 1, ncol = 4)
+contrast1234
+lower1234 = (contrast1234 %*% mean6.16) - ((sqrt6.16)*sqrt((contrast1234 %*% cov6.16 %*% t(contrast1234)/30)))
+lower1234
+upper1234 = (contrast1234 %*% mean6.16) + ((sqrt6.16)*sqrt((contrast1234 %*% cov6.16 %*% t(contrast1234)/30)))
+upper1234
+
+## Problem 7: Exercise 6.19
+## part a
+data6.19 = read.csv(file.choose())
+gas6.19 = matrix(c(data6.19[,1],data6.19[,2],data6.19[,3]), nrow = 36, ncol = 3)
+gas6.19
+dx1 = data6.19[1:23,4]
+dx2 = data6.19[1:23,5]
+dx3 = data6.19[1:23,6]
+diesel6.19 = matrix(c(dx1,dx2,dx3), nrow = 23, ncol = 3)
+diesel6.19
+gascov6.19 = cov(gas6.19)
+gascov6.19
+dieselcov6.19 = cov(diesel6.19)
+dieselcov6.19
+meangas6.19 = matrix(c(mean(data6.19[,1]),mean(data6.19[,2]), mean(data6.19[,3])), nrow = 3, ncol = 1)
+meangas6.19
+meandiesel6.19 = matrix(c(mean(dx1), mean(dx2), mean(dx3)), nrow = 3, ncol = 1)
+meandiesel6.19
+difmean6.19 = meangas6.19 - meandiesel6.19
+difmean6.19
+Sp6.19 = ((((36-1)*gascov6.19)+ ((23-1)*dieselcov6.19)))/(36+23-2)
+invSp6.19 = solve(((1/36)+(1/23))*Sp6.19)
+tsquared6.19 = t(difmean6.19) %*% invSp6.19 %*% difmean6.19
+tsquared6.19
+qf6.19 = qf(0.99, 3,36+23-1)
+qf6.19
+m6.19 = (((36+23-2)*(3))/(36+23-3-1))
+tcrit6.19 = m6.19 * qf6.19
+tcrit6.19
+chsquare6.19 = qchisq(0.99,3)
+## Can we assume this is small because one of the sample sizes is less than 30?
+## Either way, reject null that there is no difference between means of pops
+## part b
+a16.19 = matrix(c(1,0,0), nrow = 3, ncol = 1)
+a26.19 = matrix(c(0,1,0), nrow = 3, ncol = 1)
+a36.19 = matrix(c(0,0,1), nrow = 3, ncol = 1)
+linear16.19 = ((t(a16.19) %*% difmean6.19)^2)/(t(a16.19) %*% (((1/36)+(1/23))*Sp6.19) %*% a16.19)
+linear16.19
+linear26.19 = ((t(a26.19) %*% difmean6.19)^2)/(t(a26.19) %*% (((1/36)+(1/23))*Sp6.19) %*% a26.19)
+linear26.19
+linear36.19 = ((t(a36.19) %*% difmean6.19)^2)/(t(a36.19) %*% (((1/36)+(1/23))*Sp6.19) %*% a36.19)
+linear36.19
+tcrit6.19
+## reject Ho only found with capital
+## part c
+lowerx16.19 = (t(a16.19) %*% difmean6.19) - sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a16.19)%*%Sp6.19%*%a16.19)
+lowerx16.19
+upperx16.19 = (t(a16.19) %*% difmean6.19) + sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a16.19)%*%Sp6.19%*%a16.19)
+upperx16.19
+lowerx26.19 = (t(a26.19) %*% difmean6.19) - sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a26.19)%*%Sp6.19%*%a26.19)
+lowerx26.19
+upperx26.19 = (t(a26.19) %*% difmean6.19) + sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a26.19)%*%Sp6.19%*%a26.19)
+upperx26.19
+lowerx36.19 = (t(a36.19) %*% difmean6.19) - sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a36.19)%*%Sp6.19%*%a36.19)
+lowerx36.19
+upperx36.19 = (t(a36.19) %*% difmean6.19) + sqrt(tcrit6.19) * sqrt(((1/36)+(1/23))*t(a36.19)%*%Sp6.19%*%a36.19)
+upperx36.19
+## appears to be capital
+## part d
+## assume random samples of each population, pops indep of each other
+## both pops are normally distributed and have equal covariance matrices
+data6.19d = read.csv(file.choose())
+gx1d = data6.19d[,1]
+gx2d = data6.19d[,2]
+gx3d = data6.19d[,3]
+gas6.19d = matrix(c(gx1d,gx2d,gx3d), nrow = 34, ncol = 3)
+gas6.19d
+diesel6.19d = diesel6.19
+gascov6.19d = cov(gas6.19d)
+gascov6.19d
+dieselcov6.19d = dieselcov6.19
+meangas6.19d = matrix(c(mean(data6.19d[,1]),mean(data6.19d[,2]), mean(data6.19d[,3])), nrow = 3, ncol = 1)
+meangas6.19d
+meandiesel6.19d = meandiesel6.19
+difmean6.19d = meangas6.19d - meandiesel6.19d
+difmean6.19d
+Sp6.19d = ((((34-1)*gascov6.19d)+ ((23-1)*dieselcov6.19d)))/(36+23-2)
+Sp6.19d
+invSp6.19d = solve(((1/34)+(1/23))*Sp6.19d)
+tsquared6.19d = t(difmean6.19d) %*% invSp6.19d %*% difmean6.19d
+tsquared6.19d
+qf6.19d = qf(0.99, 3,34+23-1)
+qf6.19d
+m6.19d = (((34+23-2)*(3))/(34+23-3-1))
+tcrit6.19d = m6.19d * qf6.19d
+tcrit6.19d
+chsquare6.19 = qchisq(0.99,3)
+chsquare6.19
+## still reject null 
+## part e
+testCov(gas6.19,diesel6.19, alpha = 0.05)
+## not sure how to do e
+## have no idea if I'm doing this correctly, need to ask prof
+## Problem 8: Exercise 6.26
+meantest6.26 = matrix(c(0.153,-.231,-.322,-.339), nrow = 4, ncol = 1)
+meantest6.26
+meancontrol6.26 = matrix(c(0.151,0.180,0.256,0.257), nrow = 4, ncol = 1)
+meancontrol6.26
+Sp6.26 = matrix(c(.804,.355,.228,.232,.355,.722,.233,.199,.228,.233,.592,.239,.232,.199,.239,.479), nrow = 4, ncol = 4)
+Sp6.26
+contrast6.26 = matrix(c(-1,0,0,1,-1,0,0,1,-1,0,0,1), nrow = 3, ncol = 4)
+contrast6.26
+CSPC6.26 = contrast6.26 %*% Sp6.26 %*% t(contrast6.26)
+CSPC6.26
+difmean6.26 = meantest6.26 - meancontrol6.26
+difmean6.26
+contrastmean6.26 = contrast6.26 %*% difmean6.26
+b6.26 = ((1/28)+(1/58))^-1
+contrastmeanb6.26 = contrastmean6.26 * b6.26
+contrastmeanb6.26
+tsquared6.26 = t(contrastmeanb6.26) %*% solve(CSPC6.26) %*% contrastmean6.26
+tsquared6.26
+qf6.26 = qf(0.95, 3,28+58-4+1)
+qf6.26
+m6.26 = ((28+58-1)*(4-1)/(28+58-4+1))
+tcrit6.26 = m6.26 * qf6.26
+tcrit6.26
+## are there other steps for 8 when reject null?
+
+## Problem 9: Exercise 6.32
+X16.32 = c(10.35,13.41,7.78,10.40,17.78,10.40)
+X26.32 = c(25.93,38.63,25.15,24.25,41.45,29.20)
+species6.32 = c("SS", "JL", "LP", "SS", "JL", "LP")
+nutrient6.32 = c(rep("+",3),rep("-",3))
+Exam6.32 <- data.frame(X16.32,X26.32,species6.32,nutrient6.32)
+Exam6.32
+Ex16.32 <- aov(X16.32~species6.32+nutrient6.32, data = Exam6.32)
+summary(Ex16.32)
+Ex26.32 = aov(X26.32~species6.32+nutrient6.32, data = Exam6.32)
+summary(Ex26.32)
+Extotal6.32 = manova(cbind(X16.32,X26.32)~species6.32+nutrient6.32, data = Exam6.32)
+summary(Extotal6.32)
+## MANOVA isn't significant but when break down, find species is 
+## significant but nutrient isn't
+
+## Problem 10 portions
+SSint6.32 = matrix(c(32,0,0,44), nrow = 2, ncol = 2)
+SSint6.32
+SSresabs6.32 = matrix(c(324,96,96,436), nrow = 2, ncol = 2)
+SSresabs6.32
+SSfac26.32 = matrix(c(24,36,36,0), nrow = 2, ncol = 2)
+SSfac26.32
+SSfac16.32 = matrix(c(496,184,184,208), nrow = 2, ncol = 2)
+SSfac16.32
+lambda16.32 = SSresabs6.32/(SSfac16.32+SSresabs6.32)
+lambda26.32 = SSresabs6.32/(SSfac26.32+SSresabs6.32)
+## Problem 10 n = 2, but need p
+## part c
+## assume random sample and normal distribute numbers.
+## Each dep variable normal distribute in each indep variable
+## samples are independent of one another
+## all pops have common covariance matrix
+
+##Questions
+## How do we decide large/small sample and equal cov matrices
+## Prob 3: Use lrg data assumption b/c told us to, use chi square
+## Prob 3 ellipse doesn't seem to be working
+## Prob 4 small sample and different cov matrices, so which do we use?
+## Prob 7 big or small?
+## Prob 8 what do we do with profile analysis when reject?
+## Prob 10 what is p?
