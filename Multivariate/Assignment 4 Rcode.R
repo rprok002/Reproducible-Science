@@ -17,7 +17,7 @@ sd16.2 = 199.25455
 sd26.2 = 418.61818
 sqrtsd16.2n = sqrt(sd16.2/11)
 sqrtsd26.2n = sqrt(sd26.2/11)
-qt6.2 = -qt(((1-.05)/4),10)
+qt6.2 = qt((1-(.05/4)),10)
 qt6.2
 sdcrit1 = sqrtsd16.2n * qt6.2
 sdcrit2 = sqrtsd26.2n * qt6.2
@@ -97,56 +97,35 @@ chicrit3 = qchisq(0.99,2)
 chicrit3
 
 ## tsquared greater than tcrit, so reject null and accept alt
-a13 = matrix(c(1,0), nrow = 2, ncol = 1)
-sqrtchicrit3 = sqrt(chicrit3)
-sqrtpooledcov13 = sqrt(t(a13) %*% pooledcov3 %*% a13)
-sqrtpooledcov13
-interval13 = sqrtchicrit3 * sqrtpooledcov13
-interval13
-intervallow13 = 74.4 - 65.385
-intervalup13 = 74.4 - 65.385
-intervalup13
-a23 = matrix(c(0,1), nrow = 2, ncol = 1)
-sqrtpooledcov23 = sqrt(t(a23) %*% pooledcov3 %*% a23)
-interval23 = sqrtchicrit3 * sqrtpooledcov23
-interval23
-intervallow23 = 201.6 - 155.997
-intervallow23
-intervalup23 = 201.6 + 155.997
-intervalup23
+linearcombo3 = invpooledcov3 %*% difxbar3
+linearcombo3 
+## off-peak contributes more 
+## Need assumptions of independent pops and random samples
+## When covariances are unequal, need large sample size 
 
 ## part b
-ctr<-c(74.4, 201.6)
-library(mixtools)
-s1=matrix(c(13825.3, 23823.4, 23823.4,73107.4),2)
-s2=matrix(c(8632, 19616.7, 19616.7,55964.5),2)
-Sp=((45-1)/(45+55-2))*s1+((55-1)/(45+55-2))*s2
-Sp
-A <-Sp # covariance matrix -> cov(dataMatrix)
-RR <- chol(A) # Cholesky decomposition
-angles <- seq(0, 2*pi, length.out=200) # angles for ellipse
-ell <- 1 * cbind(cos(angles), sin(angles)) %*% RR # ellipse scaled with factor 1
-ellCtr <- sweep(ell, 2, ctr, "+") # center ellipse to the data centroid
-plot(ellCtr, type="l", lwd=2, xlab="mu11-mu21",ylab="mu12-m22", asp=1)# plot ellipse
-points(ctr[1], ctr[2], xlab="m11-mu21", pch=4, lwd=2) # plot data centroid
-library(car) # verify with car's ellipse() function
-ellipse(ctr, shape=A, radius=0.98, col="red", lty=2) 
-eigVal <- eigen(A)$values
-eigVec <- eigen(A)$vectors
-eigScl <- eigVec %*% diag(sqrt(eigVal)) # scale eigenvectors to length = square-root
-xMat <- rbind(ctr[1] + eigScl[1, ], ctr[1] - eigScl[1, ])
-yMat <- rbind(ctr[2] + eigScl[2, ], ctr[2] - eigScl[2, ])
-ellBase <- cbind(sqrt(eigVal[1])*cos(angles), sqrt(eigVal[2])*sin(angles)) # normal ellipse
-ellRot <- eigVec %*% t(ellBase) # rotated ellipse
-matlines(xMat, yMat, lty=1, lwd=2, col="green")
-points(ctr[1], ctr[2], pch=4, col="red", lwd=3)
-#abline(h=0, untf=FALSE, lty=1)
-#abline(v=0, untf=FALSE, lty=1)
+mu1=matrix(c(204.4,556.6),ncol=1)
+mu2=matrix(c(130.0, 355.0),ncol=1)
+s1=matrix(c(13825.3, 23823.4, 23823.4, 73107.4),ncol=2)
+s2=matrix(c(8632, 19616.7, 19616.7, 55964.5),ncol=2)
+snew=(1/45)*s1+(1/55)*s2
+munew=c(mu1[1,]-mu2[1,], mu1[2,]-mu2[2,])
+tsqr=t(munew)%*%solve(snew)%*%munew
+tsqr
+qchisq(0.9,2)
+library (mixtools)
+ellipse(munew, snew, alpha=0.99,npoints=200, type='l', newplot=TRUE, lwd=2, xlab='x11-x12', ylab='x21-x22')
 
 ## Problem 4: Exercise 6.6
 ## part a
-treatment2 = matrix(c(3,6,3,3,1,2), nrow = 3, ncol = 2)
-treatment3 = matrix(c(3,1,1,3,2,5,3,2), nrow = 4, ncol = 2)
+treatment2 = matrix(c(3,3,1,6,2,3), nrow = 2, ncol = 3)
+treatment3 = matrix(c(2,3,5,1,3,1,2,3), nrow = 2, ncol = 4)
+treatment2
+treatment3
+x21 = c(3,1,2)
+x22 = c(3,6,3)
+x2 = cbind(x21,x22)
+x2
 cov6.62 = cov(treatment2)
 cov6.63 = cov(treatment3)
 cov6.62
@@ -350,7 +329,7 @@ qf6.26
 m6.26 = ((28+58-1)*(4-1)/(28+58-4+1))
 tcrit6.26 = m6.26 * qf6.26
 tcrit6.26
-## are there other steps for 8 when reject null?
+## are there other steps for 8 when reject null? No reason to check it
 
 ## Problem 9: Exercise 6.32
 X16.32 = c(10.35,13.41,7.78,10.40,17.78,10.40)
@@ -364,7 +343,7 @@ summary(Ex16.32)
 Ex26.32 = aov(X26.32~species6.32+nutrient6.32, data = Exam6.32)
 summary(Ex26.32)
 Extotal6.32 = manova(cbind(X16.32,X26.32)~species6.32+nutrient6.32, data = Exam6.32)
-summary(Extotal6.32)
+summary(Extotal6.32, test = "Wilks")
 ## MANOVA isn't significant but when break down, find species is 
 ## significant but nutrient isn't
 
@@ -379,18 +358,20 @@ SSfac16.32 = matrix(c(496,184,184,208), nrow = 2, ncol = 2)
 SSfac16.32
 lambda16.32 = SSresabs6.32/(SSfac16.32+SSresabs6.32)
 lambda26.32 = SSresabs6.32/(SSfac26.32+SSresabs6.32)
-## Problem 10 n = 2, but need p
+## Problem 10 n = 2, but need p = 2
 ## part c
 ## assume random sample and normal distribute numbers.
 ## Each dep variable normal distribute in each indep variable
 ## samples are independent of one another
 ## all pops have common covariance matrix
+## pg 315, under equation 6.59
 
 ##Questions
-## How do we decide large/small sample and equal cov matrices
-## Prob 3: Use lrg data assumption b/c told us to, use chi square
-## Prob 3 ellipse doesn't seem to be working
-## Prob 4 small sample and different cov matrices, so which do we use?
-## Prob 7 big or small?
-## Prob 8 what do we do with profile analysis when reject?
-## Prob 10 what is p?
+
+## n-p less than 30, then small sample size
+
+## Prob 7 e
+
+
+## N 1 + N2 -2
+## N3-1
