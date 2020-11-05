@@ -235,14 +235,12 @@ Sp6.19 = ((((36-1)*gascov6.19)+ ((23-1)*dieselcov6.19)))/(36+23-2)
 invSp6.19 = solve(((1/36)+(1/23))*Sp6.19)
 tsquared6.19 = t(difmean6.19) %*% invSp6.19 %*% difmean6.19
 tsquared6.19
-qf6.19 = qf(0.99, 3,36+23-1)
+qf6.19 = qf(0.99, 3,36+23-3-1)
 qf6.19
 m6.19 = (((36+23-2)*(3))/(36+23-3-1))
 tcrit6.19 = m6.19 * qf6.19
 tcrit6.19
-chsquare6.19 = qchisq(0.99,3)
-## Can we assume this is small because one of the sample sizes is less than 30?
-## Either way, reject null that there is no difference between means of pops
+##reject null that there is no difference between means of pops
 ## part b
 a16.19 = matrix(c(1,0,0), nrow = 3, ncol = 1)
 a26.19 = matrix(c(0,1,0), nrow = 3, ncol = 1)
@@ -292,18 +290,27 @@ Sp6.19d
 invSp6.19d = solve(((1/34)+(1/23))*Sp6.19d)
 tsquared6.19d = t(difmean6.19d) %*% invSp6.19d %*% difmean6.19d
 tsquared6.19d
-qf6.19d = qf(0.99, 3,34+23-1)
+qf6.19d = qf(0.99, 3,34+23-3-1)
 qf6.19d
 m6.19d = (((34+23-2)*(3))/(34+23-3-1))
 tcrit6.19d = m6.19d * qf6.19d
 tcrit6.19d
-chsquare6.19 = qchisq(0.99,3)
-chsquare6.19
 ## still reject null 
 ## part e
-testCov(gas6.19,diesel6.19, alpha = 0.05)
-## not sure how to do e
-## have no idea if I'm doing this correctly, need to ask prof
+ae = (1/36)+(1/23)- (1/(36+23))
+be= ((2*3*3)+((3*3)-1))/(6*(3+1)*(2-1))
+u=ae*be
+u
+ce = (36+23)*log(det(Sp6.19))
+de = (36*log(det(gascov6.19)))+(23*log(det(dieselcov6.19)))
+M= ce-de
+M
+Ce = (1-u)*M
+Ce
+v = 0.5*3*(3+1)*(2-1)
+v
+chi6.19e = qchisq(0.99,6)
+chi6.19e
 ## Problem 8: Exercise 6.26
 meantest6.26 = matrix(c(0.153,-.231,-.322,-.339), nrow = 4, ncol = 1)
 meantest6.26
