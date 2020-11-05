@@ -97,8 +97,17 @@ chicrit3 = qchisq(0.99,2)
 chicrit3
 
 ## tsquared greater than tcrit, so reject null and accept alt
-linearcombo3 = invpooledcov3 %*% difxbar3
-linearcombo3 
+a13 = matrix(c(1,0), nrow = 2, ncol = 1)
+a23 = matrix(c(0,1), nrow = 2, ncol = 1)
+linear13 = ((t(a13) %*% difxbar3)^2)/(t(a13) %*% (((1/45)+(1/55))*pooledcov3) %*% a13)
+linear13
+linear23 = ((t(a23) %*% difxbar3)^2)/(t(a23) %*% (((1/45)+(1/55))*pooledcov3) %*% a23)
+linear23
+qf3 = qf(0.99, 2,45+55-2-1)
+qf3
+m3 = (((45+55-2)*(2))/(45+55-2-1))
+tcrit3 = m3 * qf3 
+tcrit3
 ## off-peak contributes more 
 ## Need assumptions of independent pops and random samples
 ## When covariances are unequal, need large sample size 
@@ -155,13 +164,13 @@ tcrit6.6 = x*u
 tcrit6.6
 ## fail to reject null
 ## part c
-relate1S = sqrt(((1/3)*(1/4))*1.6)
+relate1S = sqrt(((1/3)+(1/4))*1.6)
 interval16.6 = sqrt(tcrit6.6)*relate1S
 interval16.6low = -1 - interval16.6
 interval16.6low
 interval16.6up = -1 + interval16.6
 interval16.6up
-relate2S = sqrt(((1/3)*(1/4))*2)
+relate2S = sqrt(((1/3)+(1/4))*2)
 interval26.6 = sqrt(tcrit6.6)*relate2S
 interval26.6low = 2 - interval26.6
 interval26.6low
@@ -332,7 +341,8 @@ tsquared6.26 = t(contrastmeanb6.26) %*% solve(CSPC6.26) %*% contrastmean6.26
 tsquared6.26
 qf6.26 = qf(0.95, 3,28+58-4)
 qf6.26
-m6.26 = ((28+58-1)*(4-1)/(28+58-4+1))
+m6.26 = ((28+58-2)*(4-1)/(28+58-4))
+m6.26
 tcrit6.26 = m6.26 * qf6.26
 tcrit6.26
 ## are there other steps for 8 when reject null? No reason to check it
@@ -356,14 +366,32 @@ summary(Extotal6.32, test = "Wilks")
 ## Problem 10 portions
 SSint6.32 = matrix(c(32,0,0,44), nrow = 2, ncol = 2)
 SSint6.32
-SSresabs6.32 = matrix(c(324,96,96,436), nrow = 2, ncol = 2)
-SSresabs6.32
+SSres6.32 = matrix(c(324,-96,-96,436), nrow = 2, ncol = 2)
+SSres6.32
 SSfac26.32 = matrix(c(24,36,36,0), nrow = 2, ncol = 2)
 SSfac26.32
 SSfac16.32 = matrix(c(496,184,184,208), nrow = 2, ncol = 2)
 SSfac16.32
-lambda16.32 = SSresabs6.32/(SSfac16.32+SSresabs6.32)
-lambda26.32 = SSresabs6.32/(SSfac26.32+SSresabs6.32)
+lambda6.32 = det(SSres6.32)/(det(SSint6.32)+det(SSres6.32))
+lambda16.32 = det(SSres6.32)/(det(SSfac16.32)+det(SSres6.32))
+lambda26.32 = det(SSres6.32)/(det(SSfac26.32)+det(SSres6.32))
+lambda6.32
+lambda16.32
+lambda26.32
+interact6.32 = -(3*4*(2-1))-(((2+1)-((4-1)*(3-1))/2))*log(lambda6.32)
+interact6.32
+dfinteract6.32 = 2*(4-1)*(3-1)
+dfinteract6.32
+chilambda6.32 = qchisq(0.99,12)
+chilambda6.32
+factor16.32 = -(3*4*(2-1))-(((2+1)-(3-1))/2)*log(lambda16.32)
+factor16.32
+chifactor16.32 = qchisq(0.99,4)
+chifactor16.32
+factor26.32 = -(3*4*(2-1))-(((2+1)-(4-1))/2)*log(lambda26.32)
+factor26.32
+chifactor26.32 = qchisq(0.99,6)
+chifactor26.32
 ## Problem 10 n = 2, but need p = 2
 ## part c
 ## assume random sample and normal distribute numbers.
@@ -372,12 +400,8 @@ lambda26.32 = SSresabs6.32/(SSfac26.32+SSresabs6.32)
 ## all pops have common covariance matrix
 ## pg 315, under equation 6.59
 
-##Questions
 
 ## n-p less than 30, then small sample size
 
-## Prob 7 e
 
 
-## N 1 + N2 -2
-## N3-1
