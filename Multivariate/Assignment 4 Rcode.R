@@ -180,14 +180,24 @@ interval26.6up
 
 ## Problem 5: Exercise 6.13
 ## part d
-Y16.13 = c(6,4,8,4,3,-3,4,-4,-3,-4,3,-4)
-Y26.13 = c(8,6,12,6,8,2,3,3,2,-5,-3,-6)
-Treat6.13 = c(rep("A",4), rep("B",4), rep("C",4))
-Exam6.13 = data.frame(cbind(Y16.13,Y26.13),Treat6.13)
-Exam6.13
-x6.13manova = manova(cbind(Y16.13,Y26.13)~Treat6.13, data=Exam6.13)
-x6.13manova
-summary.aov(x6.13manova)
+SSres6.13 = matrix(c(14,-8,-8,30), nrow = 2, ncol = 2)
+SSres6.13
+SSfac16.13 = matrix(c(104,148,148,248), nrow = 2, ncol = 2)
+SSfac16.13
+SSfac26.13 = matrix(c(90,51,51,54), nrow = 2, ncol = 2)
+SSfac26.13
+lambda16.13 = det(SSres6.13)/(det(SSfac16.13+SSres6.13))
+lambda26.13 = det(SSres6.13)/(det(SSfac26.13+SSres6.13))
+lambda16.13
+lambda26.13
+factor16.13 = -(6-((2+1-2)/2))*log(lambda16.13)
+factor16.13
+chifactor16.32 = qchisq(0.95,4)
+chifactor16.32
+factor26.13 = -6*log(lambda26.13)
+factor26.13
+chifactor26.32 = qchisq(0.95,6)
+chifactor26.32
 ## Treatments effects for both at 0.05 alpha level
 
 ## Problem 6: Exercise 6.16
@@ -372,23 +382,23 @@ SSfac26.32 = matrix(c(24,36,36,0), nrow = 2, ncol = 2)
 SSfac26.32
 SSfac16.32 = matrix(c(496,184,184,208), nrow = 2, ncol = 2)
 SSfac16.32
-lambda6.32 = det(SSres6.32)/(det(SSint6.32)+det(SSres6.32))
-lambda16.32 = det(SSres6.32)/(det(SSfac16.32)+det(SSres6.32))
-lambda26.32 = det(SSres6.32)/(det(SSfac26.32)+det(SSres6.32))
+lambda6.32 = det(SSres6.32)/(det(SSint6.32+SSres6.32))
+lambda16.32 = det(SSres6.32)/(det(SSfac16.32+SSres6.32))
+lambda26.32 = det(SSres6.32)/(det(SSfac26.32+SSres6.32))
 lambda6.32
 lambda16.32
 lambda26.32
-interact6.32 = -(3*4*(2-1))-(((2+1)-((4-1)*(3-1))/2))*log(lambda6.32)
+interact6.32 = -((3*4*(2-1))-(((2+1)-((4-1)*(3-1)))/2))*log(lambda6.32)
 interact6.32
 dfinteract6.32 = 2*(4-1)*(3-1)
 dfinteract6.32
 chilambda6.32 = qchisq(0.99,12)
 chilambda6.32
-factor16.32 = -(3*4*(2-1))-(((2+1)-(3-1))/2)*log(lambda16.32)
+factor16.32 = -((3*4*(2-1))-(((2+1)-(3-1))/2))*log(lambda16.32)
 factor16.32
 chifactor16.32 = qchisq(0.99,4)
 chifactor16.32
-factor26.32 = -(3*4*(2-1))-(((2+1)-(4-1))/2)*log(lambda26.32)
+factor26.32 = -((3*4*(2-1))-(((2+1)-(4-1))/2))*log(lambda26.32)
 factor26.32
 chifactor26.32 = qchisq(0.99,6)
 chifactor26.32
