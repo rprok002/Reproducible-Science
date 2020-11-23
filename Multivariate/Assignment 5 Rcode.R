@@ -11,3 +11,9 @@ propfirst8.1 = 6/7
 propfirst8.1
 ## first component accounts for 85.7% of variance
 ##Exercise 8.2
+cor8.2 = cov2cor(cov8.1)
+cor8.2
+eigen8.2 = eigen(cor8.2)
+eigen8.2
+## Y1 = 0.7071(X1-mu1) + 0.7071(X2-mu2)
+## Y2 = -0.7071(X1-mu1) + 0.7071(X2-mu2)
