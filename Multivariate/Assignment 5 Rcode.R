@@ -1,4 +1,4 @@
-## Problme 1: Exercise 8.1 amd 8.2
+## Problem 1: Exercise 8.1 amd 8.2
 ## Exercise 8.1
 cov8.1 = matrix(c(5,2,2,2), nrow = 2, ncol = 2)
 cov8.1
@@ -33,3 +33,26 @@ pY1z2 = 0.7071/sqrteigen28.2
 pY1z2
 pY2z1 = -0.7071/sqrteigen18.2
 pY2z1
+
+## Problem 2: Exercise 8.6
+## part a
+xbar8.6 = matrix(c(155.60,14.70), nrow = 2, ncol = 1)
+xbar8.6
+cov8.6 = matrix(c(7476.45,303.62,303.62,26.19), nrow = 2, ncol = 2)
+cov8.6
+eigen8.6 = eigen(cov8.6)
+eigen8.6
+Y18.6values = matrix(c(eigen8.6$values[1],eigen8.6$values[2]), nrow = 2, ncol = 1)
+Y18.6values
+Y18.6vectors = matrix(c(eigen8.6$vectors[1,1],eigen8.6$vectors[2,1]), nrow = 2, ncol = 1)
+Y18.6vectors
+Y28.6vectors = matrix(c(eigen8.6$vectors[1,2],eigen8.6$vectors[2,2]), nrow = 2, ncol = 1)
+Y28.6vectors
+Y18.6 = t(xbar8.6) %*% Y18.6vectors
+Y18.6
+Y28.6 = t(xbar8.6) %*% Y28.6vectors
+Y28.6
+Y18.6var = eigen8.6$values[1]
+Y18.6var
+Y28.6var = eigen8.6$values[2]
+Y28.6var
