@@ -17,3 +17,19 @@ eigen8.2 = eigen(cor8.2)
 eigen8.2
 ## Y1 = 0.7071(X1-mu1) + 0.7071(X2-mu2)
 ## Y2 = -0.7071(X1-mu1) + 0.7071(X2-mu2)
+totalvar8.2 = eigen8.2$values[1]+eigen8.2$values[2]
+totalvar8.2
+propfirst8.2 = eigen8.2$values[1]/totalvar8.2
+propfirst8.2
+## first component accounts for 81.6% of variance
+## standardized shows equivalent eigenvectors, but X1
+## still accounts for over 80% of variance, but changed from
+## 85% to about 82%
+sqrteigen18.2 = sqrt(eigen8.2$values[1])
+sqrteigen28.2 = sqrt(eigen8.2$values[2])
+pY1z1 = 0.7071/sqrteigen18.2
+pY1z1
+pY1z2 = 0.7071/sqrteigen28.2
+pY1z2
+pY2z1 = -0.7071/sqrteigen18.2
+pY2z1
