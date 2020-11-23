@@ -27,11 +27,11 @@ propfirst8.2
 ## 85% to about 82%
 sqrteigen18.2 = sqrt(eigen8.2$values[1])
 sqrteigen28.2 = sqrt(eigen8.2$values[2])
-pY1z1 = 0.7071/sqrteigen18.2
+pY1z1 = 0.7071*sqrteigen18.2
 pY1z1
-pY1z2 = 0.7071/sqrteigen28.2
+pY1z2 = 0.7071*sqrteigen28.2
 pY1z2
-pY2z1 = -0.7071/sqrteigen18.2
+pY2z1 = -0.7071*sqrteigen18.2
 pY2z1
 
 ## Problem 2: Exercise 8.6
@@ -52,7 +52,29 @@ Y18.6 = t(xbar8.6) %*% Y18.6vectors
 Y18.6
 Y28.6 = t(xbar8.6) %*% Y28.6vectors
 Y28.6
+## part b
 Y18.6var = eigen8.6$values[1]
 Y18.6var
 Y28.6var = eigen8.6$values[2]
 Y28.6var
+totvar8.6 = eigen8.6$values[1] + eigen8.6$values[2]
+totvar8.6
+propY1var8.6 = eigen8.6$values[1]/totvar8.6
+propY1var8.6
+## part d
+cor8.6 = cov2cor(cov8.6)
+cor8.6
+eigen8.6cor = eigen(cor8.6)
+eigen8.6cor
+eigen8.6cor$values[1]
+sqrteigencor18.6 = sqrt(eigen8.6cor$values[1])
+sqrteigencor18.6
+pY1z18.6 = eigen8.6cor$values[1]*sqrteigencor18.6
+pY1z18.6
+pY1z28.6 = eigen8.6cor$values[2]*sqrteigencor18.6
+pY1z28.6
+propY1varcor8.6 = eigen8.6cor$values[1]/(eigen8.6cor$values[1]+eigen8.6cor$values[2])
+propY1varcor8.6
+## Sales dominates the first principal component.
+## Variance went down whens standardized from 99.8% to 84.3%.
+## Still, first component accounts for most of variance
