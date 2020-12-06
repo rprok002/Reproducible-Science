@@ -260,3 +260,28 @@ matrix8.13d
 ## pc1, variables contribute equally. pc2, skin contributes most
 ## pc3, sleep,skin and activity contribute the most.
 ## pc4, number of symptoms, sleep and food contribute the most
+
+## Problem 6: Exercise 8.15
+sd18.15 = 32.9909
+sd28.15 = 33.5918
+sd38.15 = 36.5534
+sd48.15 = 37.3517
+cor8.15 = matrix(c(1,0.7501,0.6329,0.6363,0.7501,1,0.6925,0.7386,0.6329,0.6925,1,0.6625,0.6363,0.7386,0.6625,1), nrow = 4, ncol = 4)
+cor8.15
+sd8.15 = c(sd18.15,sd28.15,sd38.15,sd48.15)
+sd8.15
+sd8.15diag = diag(sd8.15)
+sd8.15diag
+S8.15 = sd8.15diag %*% cor8.15 %*% sd8.15diag
+S8.15
+eigencor8.15 = eigen(S8.15)
+eigencor8.15
+data8.12 = read.csv(file.choose())
+cov8.12 = cov(data8.12)
+cov8.12
+cor8.12 = cor(data8.12)
+cor8.12
+eigencov8.12 =  eigen(cov8.12)
+eigencov8.12
+eigencor8.12 = eigen(cor8.12)
+eigencor8.12
