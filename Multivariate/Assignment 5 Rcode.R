@@ -285,3 +285,90 @@ eigencov8.12 =  eigen(cov8.12)
 eigencov8.12
 eigencor8.12 = eigen(cor8.12)
 eigencor8.12
+
+## Problem 7: Exercise 8.20
+## part a
+data8.20 = read.csv(file.choose())
+data8.20rev = data.frame("100 m (s)" = data8.20[,2], "200 m (s)" = data8.20[,3], "400 m (s)" = data8.20[,4], "800 m (min)" = data8.20[,5], "1500 m (min)" = data8.20[,6], "5000 m (min)" = data8.20[,7], "10,000 m (min)" = data8.20[,8], "marathon" = data8.20[,9])
+data8.20rev
+cov8.20 = cov(data8.20rev)
+cov8.20
+cor8.20 = cor(data8.20rev)
+cor8.20
+eigencov8.20 = eigen(cov8.20)
+eigencov8.20
+eigencor8.20 = eigen(cor8.20)
+eigencor8.20
+princomp8.20 = princomp(data8.20rev, cor=T)
+princomp8.20
+summary(data8.20rev)
+## part b
+## Y1 = -0.3324z1 -0.3461z2 -0.3391z3 -0.3531z4 - 0.3660z5 - 0.3698z6 - 0.3659z7 - 0.3543z8
+## repeat process for second component
+corvector18.20 = eigencor8.20$vectors[,1]
+corvector18.20
+sqrtcorval1 = sqrt(eigencor8.20$values[1])
+sqrtcorval1
+Y1cor8.20 = -corvector18.20 * sqrtcorval1
+Y1cor8.20
+corvector28.20 = eigencor8.20$vectors[,2]
+corvector28.20
+sqrtcorval2 = sqrt(eigencor8.20$values[2])
+sqrtcorval2
+Y2cor8.20 = -corvector28.20 * sqrtcorval2
+Y2cor8.20
+sampvar18.20b = eigencor8.20$values[1]/sum(eigencor8.20$values)
+sampvar18.20b
+sampvar28.20b = eigencor8.20$values[2]/sum(eigencor8.20$values)
+sampvar28.20b
+cumsampvar8.20b = sampvar18.20b + sampvar28.20b
+cumsampvar8.20b
+## part c
+## athletic excellence based on nation accounts for 84% of sample variance.
+## rel. strength of nation at various running distances only accounts for 7%
+## of the total variance, so it explains much less of the data than
+## the component based purely on the nation. Based on the component, 
+## all events contributed relatively equally to the first component. 
+
+## part d
+z18.20d = (data8.20rev[,1]-mean(data8.20rev[,1]))/sqrt(var(data8.20rev[,1]))
+z28.20d = (data8.20rev[,2]-mean(data8.20rev[,2]))/sqrt(var(data8.20rev[,2]))
+z38.20d = (data8.20rev[,3]-mean(data8.20rev[,3]))/sqrt(var(data8.20rev[,3]))
+z48.20d = (data8.20rev[,4]-mean(data8.20rev[,4]))/sqrt(var(data8.20rev[,4]))
+z58.20d = (data8.20rev[,5]-mean(data8.20rev[,5]))/sqrt(var(data8.20rev[,5]))
+z68.20d = (data8.20rev[,6]-mean(data8.20rev[,6]))/sqrt(var(data8.20rev[,6]))
+z78.20d = (data8.20rev[,7]-mean(data8.20rev[,7]))/sqrt(var(data8.20rev[,7]))
+z88.20d = (data8.20rev[,8]-mean(data8.20rev[,8]))/sqrt(var(data8.20rev[,8]))
+zz8.20d = cbind(z18.20d,z28.20d,z38.20d,z48.20d,z58.20d,z68.20d,z78.20d,z88.20d)
+corvec18.20matrix = matrix(eigencor8.20$vectors[,1], nrow = 8, ncol = 1)
+corvec18.20matrix
+Y1hat8.20b = zz8.20d %*% corvec18.20matrix
+rank(Y1hat8.20b)
+rank(princomp8.20$scores[1:54,1])
+## list is: USA, GB, Kenya, France, Australia, Italy, Brazil, Germany, Portugal,
+## Canada. Differs from female rankings
+
+## Problem 8 :Exercise 8.23
+mean8.23 = matrix(c(95.52,164.38,55.69,93.39,17.98,31.13), nrow = 6, ncol = 1)
+mean8.23
+cov8.23 = matrix(c(3266.46,1343.97,731.54,1175.50,162.68,238.37,1343.97,721.91,324.25,537.35,80.17,117.73,731.54,324.25,179.28,281.17,39.15,56.80,
+                   1175.50,537.35,281.17,474.98,63.73,94.85,162.68,80.17,39.15,63.73,9.95,13.88,238.37,117.73,56.80,94.85,13.88,21.26), nrow = 6, ncol = 6)
+cov8.23
+eigencov8.23 = eigen(cov8.23)
+eigencov8.23
+sampvar18.23 = eigencov8.23$values[1]/sum(eigencov8.23$values)
+sampvar18.23
+sampvar28.23 = eigencov8.23$values[2]/sum(eigencov8.23$values)
+sampvar28.23
+sampvar38.23 = eigencov8.23$values[3]/sum(eigencov8.23$values)
+sampvar38.23
+sqrtval8.23 = sqrt(eigencov8.23$values)
+sqrtval8.23
+covvec18.23 = eigencov8.23$vectors[,1]
+var8.23 = c(3266.36,721.91,179.28,474.98,9.95,21.26)
+sqrtvar8.23 = sqrt(var8.23)
+sqrtval8.23
+coeff8.23 = (sqrtval8.23 * covvec18.23)/sqrtval8.23
+coeff8.23
+## Component 1 accounts for 96% of variation and coefficient is much higher for
+## first component than any other, so can be summarized using first component only.
