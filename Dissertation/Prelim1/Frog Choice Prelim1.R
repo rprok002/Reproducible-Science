@@ -49,11 +49,10 @@ prelim1pwc
 prelim1comparisons <- list(c("locaA", "locaB"), c("locaA", "locaC"), c("locaB", "locaC"))
 ## Graph
 library(ggpubr)
-ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"))+
+ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1comparisons)+
   stat_compare_means(method = "anova", label.y = 1.0)
-library(ggpubr)
-ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"))+
+ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1comparisons)+
   stat_compare_means(method = "kruskal.test", label.y = 1.0)
 ## T-test for corners
@@ -71,7 +70,6 @@ bartlett.test(Weight ~ Group, data = prelim1_Ttest)
 var.test(Weight~Group, data = prelim1_Ttest, alternative = "two.sided")
 ##Not sure if test of equal variance for paired ttest is needed but ran in case
 ## Paired wilcox test because nonparametric
-## No corner
 prelim1no <- prelim1$No_proportion
 prelim1yes <- prelim1$Yes_proportion
 prelim1wilcox <- wilcox.test(prelim1no, prelim1yes, paired = TRUE)
@@ -80,6 +78,6 @@ prelim1wilcox
 prelim1pwcttest <- compare_means(Weight~Group, data = prelim1_Ttest)
 prelim1pwcttest
 prelim1ttestcomparisons <- list(c("Yescorners", "Nocorners"))
-ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", col = c("darkorange", "darkred"))+
+ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", col = c("darkorange", "darkred"), xlab = "Not in Corner vs in Corner", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1ttestcomparisons)+
-  stat_compare_means(method = "wilcox.test", label.y = 1.0)
+  stat_compare_means(method = "wilcox.test", label.y = 1.1)
