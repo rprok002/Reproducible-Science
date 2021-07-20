@@ -1,5 +1,4 @@
 ## Preliminary Trial 2
-## Preliminary Trial 1
 ## Remember for this that groups are not independent, so will never 
 ## meet assumptions for ttest and ANOVA, need to use nonparametric tests instead
 ## One-way ANOVA
