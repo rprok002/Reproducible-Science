@@ -47,7 +47,9 @@ ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3",
   stat_compare_means(method = "kruskal.test", label.y = 1.2)
 ## T-test for corners
 ## Boxplot for normality
-boxplot(prelim2$Yes_proportion, prelim2$No_proportion)
+boxplot(prelim2$Yes_proportion, prelim2$No_proportion,  
+        main = "Preliminary 2 Corners", xlab = "In Corner vs Not", ylab = "Proportion of Time",
+        names = c("Yes", "No"), border = c("darkorange", "darkred"), col = c("white", "white"))
 ## Shapiro-Wilk test for normality with paired data
 shapiro.test(prelim2$Yes_proportion)
 shapiro.test(prelim2$No_proportion)
@@ -59,21 +61,29 @@ library(car)
 bartlett.test(Weight ~ Group, data = prelim2_Ttest)
 var.test(Weight~Group, data = prelim2_Ttest, alternative = "two.sided")
 ##Not sure if test of equal variance for paired ttest is needed but ran in case
-## Paired wilcox test because nonparametric
+## Paired t-test for parametric
 prelim2no <- prelim2$No_proportion
 prelim2yes <- prelim2$Yes_proportion
+## Paired t-test for parametric
+prelim2ttestcorners <- t.test(prelim2no, prelim2yes, paired = TRUE)
+prelim2ttestcorners
+## Paired wilcox test because nonparametric
 prelim2wilcox <- wilcox.test(prelim2no, prelim2yes, paired = TRUE)
 prelim2wilcox
 ## Graph
-prelim2pwcttest <- compare_means(Weight~Group, data = prelim2_Ttest)
-prelim2pwcttest
-prelim2ttestcomparisons <- list(c("Yescorners", "Nocorners"))
-ggboxplot(prelim2_Ttest, x = "Group", y = "Weight", col = c("darkorange", "darkred"), xlab = "Not in Corner vs in Corner", ylab = "Proportion of Time")+
-  stat_compare_means(comparisons = prelim2ttestcomparisons)+
+ggboxplot(prelim2_Ttest, x = "Group", y = "Weight", 
+          main = "Preliminary 2 Corners", col = c("darkorange", "darkred"), 
+          xlab = "In Corner vs Not", ylab = "Proportion of Time")+
+  stat_compare_means(method = "t.test", label.y = 1.1)
+ggboxplot(prelim2_Ttest, x = "Group", y = "Weight", 
+          main = "Preliminary 2 Corners", col = c("darkorange", "darkred"), 
+          xlab = "In Corner vs Not", ylab = "Proportion of Time")+
   stat_compare_means(method = "wilcox.test", label.y = 1.1)
 ## T-test for hide vs not
 ## Boxplot for normality
-boxplot(prelim2$No_Hide_proportion, prelim2$Hide_proportion)
+boxplot(prelim2$Hide_proportion, prelim2$No_Hide_proportion, 
+        main = "Preliminary 2 Hide", xlab = "Hide vs Not", ylab = "Proportion of Time",
+        names = c("Yes", "No"), border = c("deeppink", "deeppink4"), col = c("white", "white"))
 ## Shapiro-Wilk test for normality with paired data
 shapiro.test(prelim2$No_Hide_proportion)
 shapiro.test(prelim2$Hide_proportion)
@@ -85,17 +95,19 @@ library(car)
 bartlett.test(Weight ~ Group, data = prelim2_Hide)
 var.test(Weight~Group, data = prelim2_Hide, alternative = "two.sided")
 ##Not sure if test of equal variance for paired ttest is needed but ran in case
-## Paired wilcox test because nonparametric
 prelim2nohide <- prelim2$No_Hide_proportion
 prelim2yeshide <- prelim2$Hide_proportion
-prelim2hidewilcox <- wilcox.test(prelim2no, prelim2yes, paired = TRUE)
+## Paired t-test for parametric
+prelim2ttesthide <- t.test(prelim2nohide, prelim2yeshide, paired = TRUE)
+prelim2ttesthide
+## Paired wilcox test because nonparametric
+prelim2hidewilcox <- wilcox.test(prelim2nohide, prelim2yeshide, paired = TRUE)
 prelim2hidewilcox
 ## Significant difference between hide and no hide when don't consider neutral area
 ## Graph
-## Graph
-prelim2pwchide <- compare_means(Weight~Group, data = prelim2_Hide)
-prelim2pwchide
-prelim2hidecomparisons <- list(c("Nohide", "Yeshide"))
-ggboxplot(prelim2_Hide, x = "Group", y = "Weight", col = c("deeppink", "deeppink4"), xlab = "Not by Hide vs by Hide", ylab = "Proportion of Time")+
-  stat_compare_means(comparisons = prelim2hidecomparisons)+
+ggboxplot(prelim2_Hide, x = "Group", y = "Weight", col = c("deeppink", "deeppink4"), main = "Preliminary 2 Hide", 
+          xlab = "Hide vs No Hide", ylab = "Proportion of Time")+
+  stat_compare_means(method = "t.test", label.y = 1.1)
+ggboxplot(prelim2_Hide, x = "Group", y = "Weight", col = c("deeppink", "deeppink4"), main = "Preliminary 2 Hide", 
+          xlab = "Hide vs No Hide", ylab = "Proportion of Time")+
   stat_compare_means(method = "wilcox.test", label.y = 1.1)
