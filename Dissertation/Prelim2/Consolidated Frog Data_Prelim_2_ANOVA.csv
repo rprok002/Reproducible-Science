@@ -1,43 +1,43 @@
 Weight,Group
-0.30125,locaA
-0.569583333,locaA
-0.4225,locaA
-0.552301255,locaA
-0.204166667,locaA
-0.595456531,locaA
-0.420138889,locaA
-0.1925,locaA
-0.456369983,locaA
-0.15625,locaA
-0.251886002,locaA
-0.380416667,locaA
-0.424166667,locaA
-0.232916667,locaA
-0.15125,locaB
-0.27375,locaB
-0.19625,locaB
-0.106694561,locaB
-0.0775,locaB
-0.252512014,locaB
-0.098958333,locaB
-0.393333333,locaB
-0.264834206,locaB
-0.019583333,locaB
-0.45473596,locaB
-0.280416667,locaB
-0.082083333,locaB
-0.267916667,locaB
-0.5475,locaC
-0.156666667,locaC
-0.38125,locaC
-0.341004184,locaC
-0.718333333,locaC
-0.152031455,locaC
-0.480902778,locaC
-0.414166667,locaC
-0.278795812,locaC
-0.824166667,locaC
-0.293378039,locaC
-0.339166667,locaC
-0.49375,locaC
-0.499166667,locaC
+0.30125,Treatment 1 (A)
+0.569583333,Treatment 1 (A)
+0.4225,Treatment 1 (A)
+0.552301255,Treatment 1 (A)
+0.204166667,Treatment 1 (A)
+0.595456531,Treatment 1 (A)
+0.420138889,Treatment 1 (A)
+0.1925,Treatment 1 (A)
+0.456369983,Treatment 1 (A)
+0.15625,Treatment 1 (A)
+0.251886002,Treatment 1 (A)
+0.380416667,Treatment 1 (A)
+0.424166667,Treatment 1 (A)
+0.232916667,Treatment 1 (A)
+0.15125,Neutral (B)
+0.27375,Neutral (B)
+0.19625,Neutral (B)
+0.106694561,Neutral (B)
+0.0775,Neutral (B)
+0.252512014,Neutral (B)
+0.098958333,Neutral (B)
+0.393333333,Neutral (B)
+0.264834206,Neutral (B)
+0.019583333,Neutral (B)
+0.45473596,Neutral (B)
+0.280416667,Neutral (B)
+0.082083333,Neutral (B)
+0.267916667,Neutral (B)
+0.5475,Treatment 2 (C)
+0.156666667,Treatment 2 (C)
+0.38125,Treatment 2 (C)
+0.341004184,Treatment 2 (C)
+0.718333333,Treatment 2 (C)
+0.152031455,Treatment 2 (C)
+0.480902778,Treatment 2 (C)
+0.414166667,Treatment 2 (C)
+0.278795812,Treatment 2 (C)
+0.824166667,Treatment 2 (C)
+0.293378039,Treatment 2 (C)
+0.339166667,Treatment 2 (C)
+0.49375,Treatment 2 (C)
+0.499166667,Treatment 2 (C)

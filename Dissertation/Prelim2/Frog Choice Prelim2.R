@@ -4,7 +4,11 @@
 ## One-way ANOVA
 prelim2 <- read.csv(file.choose())
 # Boxplot for normality
-boxplot(prelim2$Location_A_Proportion, prelim2$Location_B_Proportion, prelim2$Location_C_Proportion)
+boxplot(prelim2$Location_A_Proportion, prelim2$Location_B_Proportion, prelim2$Location_C_Proportion,  
+        main = "Preliminary 1 Locations", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
+        names = c("A", "B", "C"), border = c("darkblue", "cyan3", "mediumorchid3"), col = c("white", "white", "white"))
+legend("topleft", legend = c("Treatment 1", "Neutral", "Treatment 2"), text.col = c("darkblue", "cyan3", "mediumorchid3"),
+       cex = 0.8)
 ## Shapiro-Wilk test for normality
 shapiro.test(prelim2$Location_A_Proportion)
 shapiro.test(prelim2$Location_B_Proportion)
@@ -32,13 +36,13 @@ pairwise.wilcox.test(prelim2_ANOVA$Weight, prelim2_ANOVA$Group,
 ## Pairwise comparisons (anova and t-test)
 prelim2pwc <- compare_means(Weight~Group, data = prelim2_ANOVA)
 prelim2pwc
-prelim2comparisons <- list(c("locaA", "locaB"), c("locaA", "locaC"), c("locaB", "locaC"))
+prelim2comparisons <- list(c("Treatment 1 (A)", "Neutral (B)"), c("Treatment 1 (A)", "Treatment 2 (C)"), c("Neutral (B)", "Treatment 2 (C)"))
 ## Graph
 library(ggpubr)
-ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), xlab = "Location", ylab = "Proportion of Time")+
+ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Preliminary 2 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim2comparisons)+
   stat_compare_means(method = "anova", label.y = 1.2)
-ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), xlab = "Location", ylab = "Proportion of Time")+
+ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Preliminary 2 Kruskal", xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim2comparisons)+
   stat_compare_means(method = "kruskal.test", label.y = 1.2)
 ## T-test for corners
