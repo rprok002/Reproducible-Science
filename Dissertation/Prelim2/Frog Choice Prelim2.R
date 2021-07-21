@@ -5,7 +5,7 @@
 prelim2 <- read.csv(file.choose())
 # Boxplot for normality
 boxplot(prelim2$Location_A_Proportion, prelim2$Location_B_Proportion, prelim2$Location_C_Proportion,  
-        main = "Preliminary 1 Locations", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
+        main = "Preliminary 2 Locations", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
         names = c("A", "B", "C"), border = c("darkblue", "cyan3", "mediumorchid3"), col = c("white", "white", "white"))
 legend("topleft", legend = c("Treatment 1", "Neutral", "Treatment 2"), text.col = c("darkblue", "cyan3", "mediumorchid3"),
        cex = 0.8)
@@ -107,7 +107,7 @@ prelim2hidewilcox
 ## Graph
 ggboxplot(prelim2_Hide, x = "Group", y = "Weight", col = c("deeppink", "deeppink4"), main = "Preliminary 2 Hide", 
           xlab = "Hide vs No Hide", ylab = "Proportion of Time")+
-  stat_compare_means(method = "t.test", label.y = 1.1)
+  stat_compare_means(method = "t.test", label.y = 1.0)
 ggboxplot(prelim2_Hide, x = "Group", y = "Weight", col = c("deeppink", "deeppink4"), main = "Preliminary 2 Hide", 
           xlab = "Hide vs No Hide", ylab = "Proportion of Time")+
-  stat_compare_means(method = "wilcox.test", label.y = 1.1)
+  stat_compare_means(method = "wilcox.test", label.y = 1.0)
