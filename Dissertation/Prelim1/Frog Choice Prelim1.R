@@ -1,6 +1,8 @@
 ## Preliminary Trial 1
 ## Remember for this that groups are not independent, so will never 
 ## meet assumptions for ttest and ANOVA, need to use nonparametric tests instead
+install.packages("ggplot2")
+install.packages("ggrepel")
 ## One-way ANOVA
 prelim1 <- read.csv(file.choose())
 ## Boxplot for normality
@@ -30,10 +32,11 @@ shapiro.test(sqrtC)
 prelim1noMV3 <- prelim1[-c(5),]
 ## Boxplot for normality 
 boxplot(prelim1noMV3$Location_A_Proportion, prelim1noMV3$Location_B_Proportion, prelim1noMV3$Location_C_Proportion, 
-        main = "Preliminary 1 Locations", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
-        names = c("A", "B", "C"), border = c("darkblue", "cyan3", "mediumorchid3"), col = c("white", "white", "white"))
+        main = "Space Use Choice Trial 1", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
+        names = c("A", "B", "C"), border = c("darkblue", "cyan3", "mediumorchid3"), col = c("white", "white", "white")) 
 legend("topright", legend = c("Treatment 1", "Neutral", "Treatment 2"), text.col = c("darkblue", "cyan3", "mediumorchid3"),
        cex = 0.8)
+text(x=2, y=0.6, labels="n=10")
 ## Shapiro-Wilk test for normality
 shapiro.test(prelim1noMV3$Location_A_Proportion)
 shapiro.test(prelim1noMV3$Location_B_Proportion)
@@ -60,12 +63,14 @@ prelim1pwc
 prelim1comparisons <- list(c("Treatment 1 (A)", "Neutral (B)"), c("Treatment 1 (A)", "Treatment 2 (C)"), c("Neutral (B)", "Treatment 2 (C)"))
 ## Graph
 library(ggpubr)
-ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Preliminary 1 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
+ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 1 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1comparisons)+
-  stat_compare_means(method = "anova", label.y = 1.0)
-ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Preliminary 1 Kruskal", xlab = "Location", ylab = "Proportion of Time")+
+  stat_compare_means(method = "anova", label.y = 1.0)+
+  geom_text(x=3, y=1.0, label= "n=10")
+ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 1 Kruskal", xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1comparisons)+
-  stat_compare_means(method = "kruskal.test", label.y = 1.0)
+  stat_compare_means(method = "kruskal.test", label.y = 1.0)+
+  geom_text(x=3, y=1.0, label= "n=10")
 ## T-test for corners
 ## Boxplot for normality
 boxplot(prelim1noMV3$Yes_proportion, prelim1noMV3$No_proportion, 
@@ -88,5 +93,10 @@ prelim1yes <- prelim1noMV3$Yes_proportion
 prelim1wilcox <- wilcox.test(prelim1no, prelim1yes, paired = TRUE)
 prelim1wilcox
 ## Graph
-ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", main = "Preliminary 1 Corners", col = c("darkorange", "darkred"), xlab = "In Corner vs Not", ylab = "Proportion of Time")+
-  stat_compare_means(method = "wilcox.test", label.y = 1.1)
+ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", main = "Space Use Choice Trial 1 Corners", col = c("darkorange", "darkred"), xlab = "In Corner vs Not", ylab = "Proportion of Time")+
+  stat_compare_means(method = "wilcox.test", label.y = 1.1)+
+  geom_text(x=1, y=1.0, label= "n=10")
+ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", main = "Space Use Choice Trial 1 Corners", col = c("darkorange", "darkred"), xlab = "In Corner vs Not", ylab = "Proportion of Time")+
+  stat_compare_means(method = "t.test", label.y = 1.1)+
+  geom_text(x=1, y=1.0, label= "n=10")
+
