@@ -1,6 +1,6 @@
 ## Preliminary Trial 2
-## Remember for this that groups are not independent, so will never 
-## meet assumptions for ttest and ANOVA, need to use nonparametric tests instead
+## Remember for this that groups are not independent, but if meets normality and
+## equal variance assumptions for ttest and ANOVA, can argue for use
 ## One-way ANOVA
 prelim2 <- read.csv(file.choose())
 # Boxplot for normality

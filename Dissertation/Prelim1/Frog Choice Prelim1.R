@@ -1,6 +1,6 @@
 ## Preliminary Trial 1
-## Remember for this that groups are not independent, so will never 
-## meet assumptions for ttest and ANOVA, need to use nonparametric tests instead
+## Remember for this that groups are not independent, but if meets normality and
+## equal variance assumptions for ttest and ANOVA, can argue for use
 install.packages("ggplot2")
 install.packages("ggrepel")
 ## One-way ANOVA
