@@ -53,20 +53,22 @@ summary(prelim1aov)
 library(dplyr)
 kruskal.test(Weight~Group, data = prelim1_ANOVA)
 ## Tukey test and pairwise wilcox
-TukeyHSD(prelim1aov)
+tukeyprelim1 <- tukey_hsd(prelim1aov)
+tukeyprelim1
 pairwise.wilcox.test(prelim1_ANOVA$Weight, prelim1_ANOVA$Group,
                      p.adjust.method = "BH")
 ## Only sig diff is between A and B
-## Pairwise comparisons (anova and t-test)
+## Pairwise comparisons (anova and t-test) NOTE THAT THESE AREN'T THE SAME AS THE TUKEY AND WILCOXON FROM ABOVE,
+## SO NOT THE BEST TO USE ESPECIALLY IF THE SIG VALUES ARE THIS CLOSE 0.05
 prelim1pwc <- compare_means(Weight~Group, data = prelim1_ANOVA)
 prelim1pwc
 prelim1comparisons <- list(c("Treatment 1 (A)", "Neutral (B)"), c("Treatment 1 (A)", "Treatment 2 (C)"), c("Neutral (B)", "Treatment 2 (C)"))
 ## Graph
 library(ggpubr)
 ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 1 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
-  stat_compare_means(comparisons = prelim1comparisons)+
-  stat_compare_means(method = "anova", label.y = 1.0)+
-  geom_text(x=3, y=1.0, label= "n=10")
+  stat_pvalue_manual(tukeyprelim1, label = "p.adj", y.position = c(0.8,0.9,1.0))+
+  stat_compare_means(method = "anova", label.y = 1.1)+
+  geom_text(x=3, y=1.1, label= "n=10")
 ggboxplot(prelim1_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 1 Kruskal", xlab = "Location", ylab = "Proportion of Time")+
   stat_compare_means(comparisons = prelim1comparisons)+
   stat_compare_means(method = "kruskal.test", label.y = 1.0)+

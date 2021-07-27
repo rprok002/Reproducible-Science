@@ -4,16 +4,14 @@
 ## One-way ANOVA
 prelim2 <- read.csv(file.choose())
 # Boxplot for normality
-boxplot(prelim2$Location_A_Proportion, prelim2$Location_B_Proportion, prelim2$Location_C_Proportion,  
-        main = "Space Use Choice Trial 2", xlab = "Location (A,B,C)", ylab = "Proportion of Time",
-        names = c("A", "B", "C"), border = c("darkblue", "cyan3", "mediumorchid3"), col = c("white", "white", "white"))
-legend("topleft", legend = c("Treatment 1", "Neutral", "Treatment 2"), text.col = c("darkblue", "cyan3", "mediumorchid3"),
-       cex = 0.8)
+boxplot(prelim2$Hide_Proportion_ANOVA, prelim2$Location_B_Proportion, prelim2$No_Hide_Proportion_ANOVA,  
+        main = "Space Use Choice Trial 2", xlab = "Location", ylab = "Proportion of Time",
+        names = c("Hide", "Neutral(B)", "No Hide"), border = c("deeppink", "cyan3", "deeppink4"), col = c("white", "white", "white"))
 text(x=2, y=0.6, labels="n=14")
 ## Shapiro-Wilk test for normality
-shapiro.test(prelim2$Location_A_Proportion)
+shapiro.test(prelim2$Hide_Proportion_ANOVA)
 shapiro.test(prelim2$Location_B_Proportion)
-shapiro.test(prelim2$Location_C_Proportion)
+shapiro.test(prelim2$No_Hide_Proportion_ANOVA)
 ## All normal according to Shapiro-Wilks
 ## load data in form for test of variances and ANOVA
 prelim2_ANOVA <- read.csv(file.choose())
@@ -27,21 +25,26 @@ prelim2aov <- aov(Weight ~ Group, data = prelim2_ANOVA)
 summary(prelim2aov)
 library(dplyr)
 kruskal.test(Weight~Group, data = prelim2_ANOVA)
-## Tukey test and pairwise wilcox
-TukeyHSD(prelim2aov)
+## Tukey test and Mann-Whitney
+library(rstatix)
+tukeyprelim2 <- tukey_hsd(prelim2aov)
+tukeyprelim2
 pairwise.wilcox.test(prelim2_ANOVA$Weight, prelim2_ANOVA$Group,
                      p.adjust.method = "BH")
 ## Sig difference in time between treatment areas (A and C) and null area (B)
 ## Spent sig less time in null area than treatment areas, good for comparing treatments
 ## and verifying that null area isn't really preferred
-## Pairwise comparisons (anova and t-test)
-prelim2pwc <- compare_means(Weight~Group, data = prelim2_ANOVA)
-prelim2pwc
-prelim2comparisons <- list(c("Treatment 1 (A)", "Neutral (B)"), c("Treatment 1 (A)", "Treatment 2 (C)"), c("Neutral (B)", "Treatment 2 (C)"))
+## Pairwise comparisons (anova and t-test) NOTE THAT THESE AREN'T THE SAME AS THE TUKEY AND WILCOXON FROM ABOVE,
+## SO NOT THE BEST TO USE ESPECIALLY IF THE SIG VALUES ARE THIS CLOSE 0.05
+prelim2pwcwilcoxon <- compare_means(Weight~Group, data = prelim2_ANOVA)
+prelim2pwcwilcoxon
+prelim2pwcttest <- compare_means(Weight~Group, data = prelim2_ANOVA, method = "t.test")
+prelim2pwcttest
+prelim2comparisons <- list(c("Hide", "Neutral (B)"), c("Hide", "No Hide"), c("Neutral (B)", "No Hide"))
 ## Graph
 library(ggpubr)
-ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 2 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
-  stat_compare_means(comparisons = prelim2comparisons)+
+ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("deeppink", "cyan3", "deeppink4"), main = "Space Use Choice Trial 2 ANOVA", xlab = "Location", ylab = "Proportion of Time")+
+  stat_pvalue_manual(tukeyprelim2, label = "p.adj", y.position = c(0.8,1,1.1))+
   stat_compare_means(method = "anova", label.y = 1.2)+
   geom_text(x=3, y=1.2, label= "n=14")
 ggboxplot(prelim2_ANOVA, x = "Group", y = "Weight", col = c("darkblue", "cyan3", "mediumorchid3"), main = "Space Use Choice Trial 2 Kruskal", xlab = "Location", ylab = "Proportion of Time")+

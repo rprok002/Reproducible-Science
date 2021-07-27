@@ -1,18 +1,18 @@
 Weight,Group
-0.30125,Treatment 1 (A)
-0.569583333,Treatment 1 (A)
-0.4225,Treatment 1 (A)
-0.552301255,Treatment 1 (A)
-0.204166667,Treatment 1 (A)
-0.595456531,Treatment 1 (A)
-0.420138889,Treatment 1 (A)
-0.1925,Treatment 1 (A)
-0.456369983,Treatment 1 (A)
-0.15625,Treatment 1 (A)
-0.251886002,Treatment 1 (A)
-0.380416667,Treatment 1 (A)
-0.424166667,Treatment 1 (A)
-0.232916667,Treatment 1 (A)
+0.5475,Hide
+0.156666667,Hide
+0.4225,Hide
+0.341004184,Hide
+0.718333333,Hide
+0.595456531,Hide
+0.420138889,Hide
+0.414166667,Hide
+0.456369983,Hide
+0.824166667,Hide
+0.293378039,Hide
+0.339166667,Hide
+0.424166667,Hide
+0.499166667,Hide
 0.15125,Neutral (B)
 0.27375,Neutral (B)
 0.19625,Neutral (B)
@@ -27,17 +27,17 @@ Weight,Group
 0.280416667,Neutral (B)
 0.082083333,Neutral (B)
 0.267916667,Neutral (B)
-0.5475,Treatment 2 (C)
-0.156666667,Treatment 2 (C)
-0.38125,Treatment 2 (C)
-0.341004184,Treatment 2 (C)
-0.718333333,Treatment 2 (C)
-0.152031455,Treatment 2 (C)
-0.480902778,Treatment 2 (C)
-0.414166667,Treatment 2 (C)
-0.278795812,Treatment 2 (C)
-0.824166667,Treatment 2 (C)
-0.293378039,Treatment 2 (C)
-0.339166667,Treatment 2 (C)
-0.49375,Treatment 2 (C)
-0.499166667,Treatment 2 (C)
+0.30125,No Hide
+0.569583333,No Hide
+0.38125,No Hide
+0.552301255,No Hide
+0.204166667,No Hide
+0.152031455,No Hide
+0.480902778,No Hide
+0.1925,No Hide
+0.278795812,No Hide
+0.15625,No Hide
+0.251886002,No Hide
+0.380416667,No Hide
+0.49375,No Hide
+0.232916667,No Hide
