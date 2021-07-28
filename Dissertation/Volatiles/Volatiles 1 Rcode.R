@@ -58,8 +58,34 @@ ggboxplot(volatilescontrol, x = "Location", y = "Weight", col = c("darkolivegree
 ggboxplot(volatilesexperiment, x = "Location", y = "Weight", col = c("darkolivegreen", "cyan3", "lightgreen"), main = "Volatiles 1 Experiment ANOVA", xlab = "Location", ylab = "Proportion of Time")+
   stat_pvalue_manual(tukeyvolatiles1experiment, label = "p.adj", y.position = c(1.0,1.15,1.25))+
   stat_compare_means(method = "anova", label.y = 1.4)+
-  geom_text(x=3, y=1.4, label= "n=2")
+  geom_text(x=3, y=1.4, label= "n=8")
 ## GLM
-volatiles1GLM <- glm(Weight~Location*Group, family = gaussian, data = volatiles1)
-volatiles1GLM
-summary(volatiles1GLM)
+volatiles1GLMgaussian <- glm(Weight~Location*Group, family = gaussian, data = volatiles1)
+volatiles1GLMgaussian
+summary(volatiles1GLMgaussian)
+## summary of the gaussian states that where the significance lies in the model is comparing
+## chytrid to neutral area (p for t values is 0.0557). Neutral is more positive than chytrid, so
+## indicates spending more time in neutral than in chytrid and there is a significant difference there
+anova(volatiles1GLMgaussian)
+anova1 = aov(Weight~Location*Group, data = volatiles1)
+anova(anova1)
+summary(anova1)
+
+lm1 = lm(Weight~Location*Group, data = volatiles1)
+anova(lm1)
+## Shows that group doesn't matter and the interaction between group and location (ie neutral in Experiment
+## group vs neutral in Control group) doesn't matter either. Location matters
+summary(lm1)
+summ(lm1)
+library(jtools)
+effect_plot(lm1, pred = Location, interval = TRUE, plot.points = TRUE)
+library(ggstance)
+plot_summs(lm1, scale = TRUE, plot.distributions = TRUE, inner_ci_level = 0.9, colors = c("purple"),
+           coefs = c("Chytrid on Neutral/GroupE Interaction" = "LocationNeutral:GroupE", 
+                     "Chytrid on Control/GroupE Interaction" = "LocationControl:GroupE",
+                     "Chytrid on GroupE" = "GroupE", "Chytrid on Neutral Location" = "LocationNeutral",
+                     "Chytrid on Control Location" = "LocationControl"))
+library(huxtable)
+export_summs(lm1, scale = TRUE)
+
+
