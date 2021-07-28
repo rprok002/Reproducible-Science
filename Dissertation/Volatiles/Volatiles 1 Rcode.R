@@ -80,11 +80,16 @@ summ(lm1)
 library(jtools)
 effect_plot(lm1, pred = Location, interval = TRUE, plot.points = TRUE)
 library(ggstance)
-plot_summs(lm1, scale = TRUE, plot.distributions = TRUE, inner_ci_level = 0.9, colors = c("purple"),
+plot_summs(lm1, scale = TRUE, plot.distributions = TRUE, inner_ci_level = 0.9, colors = c("lightgreen"),
            coefs = c("Chytrid on Neutral/GroupE Interaction" = "LocationNeutral:GroupE", 
                      "Chytrid on Control/GroupE Interaction" = "LocationControl:GroupE",
                      "Chytrid on GroupE" = "GroupE", "Chytrid on Neutral Location" = "LocationNeutral",
-                     "Chytrid on Control Location" = "LocationControl"))
+                     "Chytrid on Control Location" = "LocationControl")) + ggtitle("Volatiles Linear Model Coefficients") +
+  annotate(geom="text", x = 0.3441, y = 4.7, label = "p=0.0557", color = "black")+
+  annotate(geom="text", x = -0.1856, y = 5.6, label = "p=0.2887", color = "black")+
+  annotate(geom="text", x = -0.1369, y = 3.8, label = "p=0.3218", color = "black")+
+  annotate(geom="text", x = 0.2787, y = 2.6, label = "p=0.1581", color = "black")+
+  annotate(geom="text", x = 0.1319, y = 1.6, label = "p=0.4973", color = "black")
 library(huxtable)
 export_summs(lm1, scale = TRUE)
 
