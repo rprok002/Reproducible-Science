@@ -85,7 +85,7 @@ plot_summs(lm1, scale = TRUE, plot.distributions = TRUE, inner_ci_level = 0.9, c
                      "Chytrid on Control/GroupE Interaction" = "LocationControl:GroupE",
                      "Chytrid on GroupE" = "GroupE", "Chytrid on Neutral Location" = "LocationNeutral",
                      "Chytrid on Control Location" = "LocationControl")) + ggtitle("Volatiles Linear Model Coefficients") +
-  annotate(geom="text", x = 0.3441, y = 4.7, label = "p=0.0557", color = "black")+
+  annotate(geom="text", x = 0.3441, y = 4.7, label = "p=0.0557", color = "black", fontface = 2)+
   annotate(geom="text", x = -0.1856, y = 5.6, label = "p=0.2887", color = "black")+
   annotate(geom="text", x = -0.1369, y = 3.8, label = "p=0.3218", color = "black")+
   annotate(geom="text", x = 0.2787, y = 2.6, label = "p=0.1581", color = "black")+
