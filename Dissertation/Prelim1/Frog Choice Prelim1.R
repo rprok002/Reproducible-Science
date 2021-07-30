@@ -79,9 +79,9 @@ boxplot(prelim1noMV3$Yes_proportion, prelim1noMV3$No_proportion,
         main = "Preliminary 1 Corners", xlab = "In Corner vs Not", ylab = "Proportion of Time",
         names = c("Yes", "No"), border = c("darkorange", "darkred"), col = c("white", "white"))
 ## Shapiro-Wilk test for normality with paired data
-shapiro.test(prelim1$Yes_proportion)
-shapiro.test(prelim1$No_proportion)
-## Both normally distributed 
+dfprelim1 <- prelim1noMV3$Yes_proportion-prelim1noMV3$No_proportion
+shapiro.test(dfprelim1)
+## Very close to being normally distributed
 ## load data in form for test of variances and Ttest
 prelim1_Ttest <- read.csv(file.choose())
 ## test of equal variance
@@ -101,4 +101,5 @@ ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", main = "Space Use Choice Tri
 ggboxplot(prelim1_Ttest, x = "Group", y = "Weight", main = "Space Use Choice Trial 1 Corners", col = c("darkorange", "darkred"), xlab = "In Corner vs Not", ylab = "Proportion of Time")+
   stat_compare_means(method = "t.test", label.y = 1.1)+
   geom_text(x=1, y=1.0, label= "n=10")
+
 

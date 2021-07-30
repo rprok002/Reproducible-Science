@@ -58,8 +58,8 @@ boxplot(prelim2$Yes_proportion, prelim2$No_proportion,
         names = c("Yes", "No"), border = c("darkorange", "darkred"), col = c("white", "white"))
 text(x=1, y=0.8, labels="n=14")
 ## Shapiro-Wilk test for normality with paired data
-shapiro.test(prelim2$Yes_proportion)
-shapiro.test(prelim2$No_proportion)
+dfprelim2 <- prelim2$Yes_proportion-prelim2$No_proportion
+shapiro.test(dfprelim2)
 ## Both normally distributed
 ## load data in form for test of variances and Ttest
 prelim2_Ttest <- read.csv(file.choose())
