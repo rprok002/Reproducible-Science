@@ -60,13 +60,18 @@ ggboxplot(volatilesexperiment, x = "Location", y = "Weight", col = c("darkoliveg
   stat_compare_means(method = "anova", label.y = 1.4)+
   geom_text(x=3, y=1.4, label= "n=8")
 ## GLM
-volatiles1GLMgaussian <- glm(Weight~Location*Group, family = gaussian, data = volatiles1)
-volatiles1GLMgaussian
-summary(volatiles1GLMgaussian)
-## summary of the gaussian states that where the significance lies in the model is comparing
+volatiles1GLMbinomial <- glm(Weight~Location*Group, family = binomial, data = volatiles1)
+volatiles1GLMbinomial
+summary(volatiles1GLMbinomial)
+## summary of the binomial states that where the significance lies in the model is comparing
 ## chytrid to neutral area (p for t values is 0.0557). Neutral is more positive than chytrid, so
 ## indicates spending more time in neutral than in chytrid and there is a significant difference there
-anova(volatiles1GLMgaussian)
+volatiles1glmanova = anova(volatiles1GLMbinomial)
+volatiles1glmanova
+summary(volatiles1glmanova)
+summary(anova(volatiles1GLMbinomial))
+
+
 anova1 = aov(Weight~Location*Group, data = volatiles1)
 anova(anova1)
 summary(anova1)
@@ -74,7 +79,8 @@ summary(anova1)
 lm1 = lm(Weight~Location*Group, data = volatiles1)
 anova(lm1)
 ## Shows that group doesn't matter and the interaction between group and location (ie neutral in Experiment
-## group vs neutral in Control group) doesn't matter either. Location matters
+## group vs neutral in Control group) doesn't matter either. Location matters but doesn't fit with the other,
+## Anne said she never did that
 summary(lm1)
 summ(lm1)
 library(jtools)
