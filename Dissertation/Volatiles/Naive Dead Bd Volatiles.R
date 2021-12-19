@@ -97,7 +97,7 @@ sd(frog14bd)
 naivedeadbdvolatilesmeansd <- read.csv(file.choose())
 sp <- c(0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 
         0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0)
-par(mar = c(6, 6.5, 2, 0.5), mgp = c(4.5, 1, 0))
+par(mar = c(6, 6.5, 2, 0.75), mgp = c(2.5, 0.75, 0))
 barplot <- barplot(height = naivedeadbdvolatilesmeansd$Mean, 
         names.arg = naivedeadbdvolatilesmeansd$Frog_Number, space = sp, 
         main = "Dead Bd Chemosensory", ylab = "Mean Proportion of Time", 
