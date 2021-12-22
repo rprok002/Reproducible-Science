@@ -5,10 +5,11 @@ library(ggpubr)
 ggdensity(naivedeadbdvolatiles$Weight)
 ggqqplot(naivedeadbdvolatiles$Weight)
 ks.test(naivedeadbdvolatiles$Weight)
+
 naivedeadbdvolatiles <- read.csv(file.choose())
 library(lmerTest)
 library(car)
-naivedeadbdvolatilesglm = glmer(Weight~ Location*Group +(1|Trial_Number) +(1|Frog_Number) , 
+naivedeadbdvolatilesglm = glmer(Weight~ Location*Group +(1|Trial_Number) + Frog_Number , 
                                 data = naivedeadbdvolatiles, family = binomial)
 anova(naivedeadbdvolatilesglm, type=3)
 car::Anova(naivedeadbdvolatilesglm, type=3)
@@ -41,10 +42,10 @@ sd(frog3br)
 frog3bd <- c(0.598265896,0.413284133,0.283811475)
 mean(frog3bd)
 sd(frog3bd)
-frog4br <- c(0.751824818, 0.513089005)
+frog4br <- c(0.751824818, 0.513089005,0.528795812)
 mean(frog4br)
 sd(frog4br)
-frog4bd <- c(0.248175182,0.486910995)
+frog4bd <- c(0.248175182,0.486910995,0.471204188)
 mean(frog4bd)
 sd(frog4bd)
 frog5br <- c(0, 0.652406417,0.471319312)
@@ -105,14 +106,14 @@ sd(frog14bd)
 ## Barplot
 naivedeadbdvolatilesmeansd <- read.csv(file.choose())
 sp <- c(0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 
-        0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0, 0.6, 0)
+        0.6, 0, 0.6, 0, 0.6, 0)
 par(mar = c(6, 6.5, 2, 0.75), mgp = c(2.5, 0.75, 0))
 barplot <- barplot(height = naivedeadbdvolatilesmeansd$Mean, 
         names.arg = naivedeadbdvolatilesmeansd$Frog_Number, space = sp, 
         main = "Dead Bd Chemosensory", ylab = "Mean Proportion of Time", 
         xlab = "Frog Number", col = naivedeadbdvolatilesmeansd$Color_Name, 
-        ylim = c(-0.5,2), las=1, cex.lab = 1.0, cex.axis = 1, 
+        ylim = c(0,1.5), las=1, cex.lab = 1.0, cex.axis = 1, 
         cex.names = 1, font.lab = 2)
-legend(4 ,2 , legend = c( "Control","Bd"), col = c("blue","red"), pch = 15, cex = 0.75, text.font = 0.75)
+legend(6 ,1.2 , legend = c( "Control","Bd"), col = c("dodgerblue2","red"), pch = 15, cex = 0.75, text.font = 0.75)
 segments(barplot,naivedeadbdvolatilesmeansd$Mean- naivedeadbdvolatilesmeansd$SD*2,
          barplot,naivedeadbdvolatilesmeansd$Mean+naivedeadbdvolatilesmeansd$SD*2, lwd = 1.5)
