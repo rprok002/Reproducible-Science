@@ -1,18 +1,27 @@
 ## Naive Dead Bd Chemosensory Trials 1 through 3 frogs 1-7, 9-14
 
+shapiro.test(naivedeadbdvolatiles$Weight)
+library(ggpubr)
+ggdensity(naivedeadbdvolatiles$Weight)
+ggqqplot(naivedeadbdvolatiles$Weight)
+ks.test(naivedeadbdvolatiles$Weight)
 naivedeadbdvolatiles <- read.csv(file.choose())
 library(lmerTest)
 library(car)
-naivedeadbdvolatilesglm <-glmer(Weight~ Location*Group +(1|Trial_Number) +(1|Frog_Number) , 
+naivedeadbdvolatilesglm = glmer(Weight~ Location*Group +(1|Trial_Number) +(1|Frog_Number) , 
                                 data = naivedeadbdvolatiles, family = binomial)
 anova(naivedeadbdvolatilesglm, type=3)
 car::Anova(naivedeadbdvolatilesglm, type=3)
 summary(naivedeadbdvolatilesglm)
 
-naivedeadbdvolatilesglmwtrial <-glmer(Weight~ Location*Group + (1|Trial_Number) + Frog_Number, 
+naivedeadbdvolatilesglmwtrial <-glmer(Weight~ Location*Group + (1|Frog_Number) + Trial_Number, 
                                 data = naivedeadbdvolatiles, family = binomial)
 summary(naivedeadbdvolatilesglmwtrial)
 anova(naivedeadbdvolatilesglmwtrial)
+library(multcomp)
+G = glht(naivedeadbdvolatilesglm, mcp(Location = "Tukey"))
+confint(G)
+summary(G)
 ## Mean and SD for each frog
 frog1br <- c(0.33266129, 0.25155556,0.517241379)
 mean(frog1br)
@@ -50,10 +59,10 @@ sd(frog6br)
 frog6bd <- c(0.799516908,0.203647416)
 mean(frog6bd)
 sd(frog6bd)
-frog7br1 <- c(0.295511222, 0.613712375,0.419624217)
+frog7br1 <- c(0.295511222, 0.613712375,0.407294833)
 mean(frog7br1)
 sd(frog7br1)
-frog7br2 <- c(0.704488778,0.386287625,0.580375783)
+frog7br2 <- c(0.704488778,0.386287625,0.592705167)
 mean(frog7br2)
 sd(frog7br2)
 frog9br <- c(0.729468599,0.364130435,0.580375783)
