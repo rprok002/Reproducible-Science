@@ -23,6 +23,26 @@ library(multcomp)
 G = glht(naivedeadbdvolatilesglm, mcp(Location = "Tukey"))
 confint(G)
 summary(G)
+## When considering towards and away, location is significant with
+## more time spent in broth than Bd
+
+## Naive Dead Bd Chemosensory Trials 1 through 3 frogs 1-7, 9-14 (all)
+naivedeadbdvolatilesall <- read.csv(file.choose())
+library(lmerTest)
+library(car)
+naivedeadbdvolatilesglmall = glmer(Weight~ Location*Group +(1|Trial_Number) + Frog_Number , 
+                                data = naivedeadbdvolatilesall, family = binomial)
+anova(naivedeadbdvolatilesglmall, type=3)
+car::Anova(naivedeadbdvolatilesglmall, type=3)
+summary(naivedeadbdvolatilesglmall)
+
+naivedeadbdvolatilesglmallwtrial <-glmer(Weight~ Location*Group + (1|Frog_Number) + Trial_Number, 
+                                      data = naivedeadbdvolatilesall, family = binomial)
+summary(naivedeadbdvolatilesglmallwtrial)
+anova(naivedeadbdvolatilesglmallwtrial)
+## When considering just sitting in locations (with more time considered)
+## there is no significance anywhere
+
 ## Mean and SD for each frog
 frog1br <- c(0.33266129, 0.25155556,0.517241379)
 mean(frog1br)
