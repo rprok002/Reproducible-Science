@@ -32,17 +32,18 @@ CP <- c(7,0,4,2,308,4,0,0,3,1,9,0,2,1,3,0,2,0,3,8,1,0)
 TP <- c(38,0,29,17,1201,26,31,0,159,1,50,0,74,27,9,12,7,9,26,117,6,3)
 
 pubtable
-pubdataframe <- data.frame(ID, TFS, CP, TP, percentTFS, percentCP) 
+pubdataframe <- data.frame(ID, TFS, CP, TP) 
 pubdataframe
 percentTFS <- trunc((pubdataframe[,2]/pubdataframe[,4])*100)
 percentTFS
 percentCP <- trunc((pubdataframe[,3]/pubdataframe[,4])*100)
 percentCP
+pubdataframe <- data.frame(ID, TFS, CP, TP, percentTFS, percentCP) 
 pubdataframe[is.na(pubdataframe)] = 0
 pubdataframe
 
 library(tidyr)
-pubdataframeTFSCP <- gather(pubdataframe, event, total , TFS:CP)
+pubdataframeTFSCP <- gather(pubdataframe, event, total , TFS:CP:TP)
 pubdataframepercentTFSCP <- gather(pubdataframe, event, total , percentTFS:percentCP)
 pubdataframeTFSCP
 pubdataframepercentTFSCP
@@ -76,3 +77,14 @@ plot2 <- plot2 + geom_bar(stat = "identity", position = position_dodge(width=0.8
   theme(plot.title = element_text(hjust = 0.5))+
   theme(plot.margin = margin(0.5,1,1,1, "cm"))
 plot2
+plot3 <- ggplot(pubdataframe, aes(ID, TP))
+plot3 <- plot3 + geom_bar(stat = "identity", fill = "green4") + theme_bw() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  geom_text(aes(label=TP), position=position_dodge(width=0.95), vjust=-0.25, size = 3)+
+  xlab("Institution")+ ylab(" Total Publications")+ 
+  ggtitle("Total Conservation and Florida Threatened Species Publications \n by Institution")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(plot.margin = margin(0.5,1,1,1, "cm"))
+plot3
+
