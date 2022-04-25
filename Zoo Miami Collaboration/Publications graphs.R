@@ -27,7 +27,7 @@ ID <- c("Zoo Miami", "Lion Safari", "Palm Beach Zoo", "Naples Zoo",
         "Lubee Bat", "Jacksonville Zoo + Gardens", 
         "White Oak", "Lemur Conservation Foundation", 
         "Natural Encounters Inc.")
-TFSonly <- c(3,0,1,0,65,2,5,3,0,10,0,2,15,5,3,0,0,2,6,0,0)
+TFSonly <- c(3,0,1,0,65,2,5,3,0,1,0,2,15,5,3,0,0,2,6,0,0)
 CPonly <- c(7,0,3,2,176,1,0,2,1,7,0,1,0,0,0,0,0,3,7,1,0)
 Both <- c(0,0,1,0,132,3,0,1,0,12,0,1,1,3,0,2,0,0,1,0,0)
 Neither <- c(28,0,24,15,828,20,26,153,0,30,0,70,11,1,9,5,9,21,103,5,3)
@@ -35,13 +35,14 @@ TP <- c(38,0,29,17,1201,26,31,159,1,50,0,74,27,9,12,7,9,26,117,6,3)
 
 pubdataframe <- data.frame(ID, TFSonly, CPonly, Both, Neither, TP) 
 pubdataframe
-percentTFSonly <- trunc((pubdataframe[,2]/pubdataframe[,6])*100)
+percentTFSonly <- (pubdataframe[,2]/pubdataframe[,6])*100
 percentTFSonly
-percentCPonly <- trunc((pubdataframe[,3]/pubdataframe[,6])*100)
+percentCPonly <- (pubdataframe[,3]/pubdataframe[,6])*100
 percentCPonly
-percentboth <- trunc((pubdataframe[,4]/pubdataframe[,6])*100)
+percentboth <- (pubdataframe[,4]/pubdataframe[,6])*100
 percentboth
-percentneither <- trunc((pubdataframe[,5]/pubdataframe[,6])*100)
+percentneither <- (pubdataframe[,5]/pubdataframe[,6])*100
+percentneither
 
 pubdataframe <- data.frame(ID, TFSonly, CPonly, Both, Neither,
                            TP, percentTFSonly, percentCPonly, percentboth, 
@@ -50,7 +51,7 @@ pubdataframe[is.na(pubdataframe)] = 0
 pubdataframe
 
 value <-c(pubdataframe$TFSonly, pubdataframe$CPonly, pubdataframe$Both)
-type <- c(rep("TFSonly",21),rep("CPonly",21),rep("Both",21))
+type <- c(rep("bTFSonly",21),rep("aCPonly",21),rep("cBoth",21))
 IDorder <- rep(ID,3)
 totalsdata <- data.frame(IDorder, value, type)
 totalsdata
@@ -58,8 +59,8 @@ totalsdata
 percentvalue <-c(pubdataframe$percentTFSonly, pubdataframe$percentCPonly, 
                  pubdataframe$percentboth,pubdataframe$percentneither)
 percentvalue
-percenttype <-c(rep("PercentTFSonly",21),rep("PercentCPonly",21),
-                rep("Percentboth",21),rep("Percentneither",21))
+percenttype <-c(rep("bPercentTFSonly",21),rep("aPercentCPonly",21),
+                rep("cPercentboth",21),rep("dPercentneither",21))
 percenttype
 IDorderpercent <- rep(ID,4)
 IDorderpercent
@@ -75,28 +76,32 @@ plot <- plot + geom_bar(stat = "identity", position = position_dodge(width=0.8),
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   geom_text(aes(label=value), position=position_dodge(width=0.7), vjust=-0.5, size = 2.5, fontface = "bold")+
   xlab("Institution")+ ylab("Number of Publications")+ 
-  scale_fill_manual(values = c("mediumorchid", "magenta1", "plum1"), 
-                    labels=c("Conservation and Florida Threatened Species", "Conservation Only", "Florida Threatened Species Only"))+
+  scale_fill_manual(values = c("magenta1", "plum1", "mediumorchid"), 
+                    labels=c("Conservation Only", "Florida Threatened Species Only",
+                             "Conservation and\nFlorida Threatened Species"))+
   theme(legend.title = element_blank(),
         legend.text = element_text(color = "black", size = 8),
-        legend.position = c(0.25,0.85))+
+        legend.position = "top")+
   theme(plot.margin = margin(0.5,0.5,0.5,0.5, "cm"))
 plot 
 
 
-plot2 <- ggplot(pubdataframepercentTFSCP, aes(ID, total, fill=event))
-plot2 <- plot2 + geom_bar(stat = "identity", position = position_dodge(width=0.8)) + theme_bw() +
+plot2 <- ggplot(percentsdata, aes(IDorderpercent, percentvalue, fill=percenttype))
+plot2 <- plot2 + geom_bar(stat = "identity", position = "stack") + theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-  geom_text(aes(label=total), position=position_dodge(width=0.95), vjust=-0.25, size = )+
   xlab("Institution")+ ylab("Percent of Total Publications")+ 
-  scale_fill_manual(values = c("chartreuse3", "maroon2"), name = "Legend", labels=c("Conservation", "Florida Threatened Species"))+
-  theme(legend.title = element_text(color = "black", size = 9), 
-        legend.text = element_text(color = "black", size = 8))+
-  ggtitle("Percent of Conservation and Florida Threatened Species Publications \n by Institution")+
+  scale_fill_manual(values = c("magenta1", "plum1", "mediumorchid","red4"), 
+                    labels=c("Conservation\nOnly", "Florida Threatened\nSpecies Only",
+                             "Conservation and\nFlorida Threatened\nSpecies",
+                             "Neither"))+
+  theme(legend.title = element_blank(), 
+        legend.text = element_text(color = "black", size = 8),
+        legend.position = "top")+
   theme(plot.title = element_text(hjust = 0.5))+
-  theme(plot.margin = margin(0.5,1,1,1, "cm"))
+  theme(plot.margin = margin(0.5,0.5,0.5,0.5, "cm"))
 plot2
+
 plot3 <- ggplot(pubdataframe, aes(ID, TP))
 plot3 <- plot3 + geom_bar(stat = "identity", fill = "darkmagenta") + theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
