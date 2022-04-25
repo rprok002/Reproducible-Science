@@ -3,72 +3,93 @@ library(data.table)
 pubtable = data.table(
     ID = c("Zoo Miami", "Lion County Safari", "Palm Beach Zoo", "Naples Zoo", 
            "Mote Marine Laboratory and Zoo", "Brevard Zoo", "Seaworld Orlando",
-           "The Seas", "Disney World", "Discovery Cove", "Florida Aquarium", 
+           "Disney World", "Discovery Cove", "Florida Aquarium", 
            "Sea Life Orlando Aquarium", "Busch Gardens Tampa Bay", "Zoo Tampa", 
            "Central Florida Zoo and Botanical Gardens", 
            "St. Augustine Alligator Farm", "Santa Fe College Teaching Zoo", 
            "Lubee Bat Conservancy", "Jacksonville Zoo and Gardens", 
            "White Oak Conservation Center", "Lemur Conservation Foundation", 
            "Natural Encounters Inc."),
-    Threatend_Florida_Species = c(3,0,2,0,197,5,5,0,4,0,13,0,3,16,8,3,2,0,2,7,0,0),
-    Conservation_Publications = c(7,0,4,2,308,4,0,0,3,1,9,0,2,1,3,0,2,0,3,8,1,0),
-    Total_Publications = c(38,0,29,17,1201,26,31,0,159,1,50,0,74,27,9,12,7,9,26,117,6,3),
-    Percent_Florida_Species = percentTFS,
-    Percent_Conservation = percentCP
+    Threatend_Florida_Species_only = c(3,0,1,0,65,2,5,3,0,10,0,2,15,5,3,0,0,2,6,0,0),
+    Conservation_Publications_only = c(7,0,3,2,176,1,0,2,1,7,0,1,0,0,0,0,0,3,7,1,0),
+    Both = c(0,0,1,0,132,3,0,1,0,12,0,1,1,3,0,2,0,0,1,0,0),
+    Neither = c(28,0,24,15,828,20,26,153,0,30,0,70,11,1,9,5,9,21,103,5,3),
+    Total_Publications = c(38,0,29,17,1201,26,31,159,1,50,0,74,27,9,12,7,9,26,117,6,3)
 )
 pubtable[is.na(pubtable)] = 0
 pubtable
 ID <- c("Zoo Miami", "Lion Safari", "Palm Beach Zoo", "Naples Zoo", 
         "Mote Marine", "Brevard Zoo", "Seaworld Orlando",
-        "The Seas", "Disney World", "Discovery Cove", "Florida Aquarium", 
+        "Disney World", "Discovery Cove", "Florida Aquarium", 
         "Sea Life Orlando Aquarium", "Busch Gardens", "Zoo Tampa", 
         "Central Florida Zoo + Gardens", 
         "St. Augustine Alligator Farm", "Santa Fe  Teaching Zoo", 
         "Lubee Bat", "Jacksonville Zoo + Gardens", 
         "White Oak", "Lemur Conservation Foundation", 
         "Natural Encounters Inc.")
-TFS <- c(3,0,2,0,197,5,5,0,4,0,13,0,3,16,8,3,2,0,2,7,0,0)
-CP <- c(7,0,4,2,308,4,0,0,3,1,9,0,2,1,3,0,2,0,3,8,1,0)
-TP <- c(38,0,29,17,1201,26,31,0,159,1,50,0,74,27,9,12,7,9,26,117,6,3)
+TFSonly <- c(3,0,1,0,65,2,5,3,0,10,0,2,15,5,3,0,0,2,6,0,0)
+CPonly <- c(7,0,3,2,176,1,0,2,1,7,0,1,0,0,0,0,0,3,7,1,0)
+Both <- c(0,0,1,0,132,3,0,1,0,12,0,1,1,3,0,2,0,0,1,0,0)
+Neither <- c(28,0,24,15,828,20,26,153,0,30,0,70,11,1,9,5,9,21,103,5,3)
+TP <- c(38,0,29,17,1201,26,31,159,1,50,0,74,27,9,12,7,9,26,117,6,3)
 
-pubtable
-pubdataframe <- data.frame(ID, TFS, CP, TP) 
+pubdataframe <- data.frame(ID, TFSonly, CPonly, Both, Neither, TP) 
 pubdataframe
-percentTFS <- trunc((pubdataframe[,2]/pubdataframe[,4])*100)
-percentTFS
-percentCP <- trunc((pubdataframe[,3]/pubdataframe[,4])*100)
-percentCP
-pubdataframe <- data.frame(ID, TFS, CP, TP, percentTFS, percentCP) 
+percentTFSonly <- trunc((pubdataframe[,2]/pubdataframe[,6])*100)
+percentTFSonly
+percentCPonly <- trunc((pubdataframe[,3]/pubdataframe[,6])*100)
+percentCPonly
+percentboth <- trunc((pubdataframe[,4]/pubdataframe[,6])*100)
+percentboth
+percentneither <- trunc((pubdataframe[,5]/pubdataframe[,6])*100)
+
+pubdataframe <- data.frame(ID, TFSonly, CPonly, Both, Neither,
+                           TP, percentTFSonly, percentCPonly, percentboth, 
+                           percentneither) 
 pubdataframe[is.na(pubdataframe)] = 0
 pubdataframe
 
+value <-c(pubdataframe$TFSonly, pubdataframe$CPonly, pubdataframe$Both)
+type <- c(rep("TFSonly",21),rep("CPonly",21),rep("Both",21))
+IDorder <- rep(ID,3)
+totalsdata <- data.frame(IDorder, value, type)
+totalsdata
+
+percentvalue <-c(pubdataframe$percentTFSonly, pubdataframe$percentCPonly, 
+                 pubdataframe$percentboth,pubdataframe$percentneither)
+percentvalue
+percenttype <-c(rep("PercentTFSonly",21),rep("PercentCPonly",21),
+                rep("Percentboth",21),rep("Percentneither",21))
+percenttype
+IDorderpercent <- rep(ID,4)
+IDorderpercent
+percentsdata <- data.frame(IDorderpercent, percentvalue, percenttype)
+percentsdata
 library(tidyr)
-pubdataframeTFSCP <- gather(pubdataframe, event, total , TFS:CP:TP)
-pubdataframepercentTFSCP <- gather(pubdataframe, event, total , percentTFS:percentCP)
-pubdataframeTFSCP
-pubdataframepercentTFSCP
-pubdataframepercentTFSCP[is.na(pubdataframepercentTFSCP)] = 0
-pubdataframepercentTFSCP
+
 ## making the graphs
 library(ggplot2)
-plot <- ggplot(pubdataframeTFSCP, aes(ID, total, fill=event))
-plot <- plot + geom_bar(stat = "identity", position = position_dodge(width=0.7)) + theme_bw() +
+plot <- ggplot(totalsdata, aes(IDorder, value, fill=type))
+plot <- plot + geom_bar(stat = "identity", position = position_dodge(width=0.8), width = 0.7) + theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-  geom_text(aes(label=total), position=position_dodge(width=0.7), vjust=-0.25, size = 3)+
+  geom_text(aes(label=value), position=position_dodge(width=0.7), vjust=-0.5, size = 2.5, fontface = "bold")+
   xlab("Institution")+ ylab("Number of Publications")+ 
-  scale_fill_manual(values = c("chartreuse3", "maroon2"), name = "Legend", labels=c("Conservation", "Florida Threatened Species"))+
-  theme(legend.title = element_text(color = "black", size = 9), 
-        legend.text = element_text(color = "black", size = 8))+
-  ggtitle("Number of Conservation and Florida Threatened Species Publications \n by Institution")+
+  scale_fill_manual(values = c("darkmagenta", "magenta1", "mediumorchid1"), 
+                    labels=c("Conservation and Florida Threatened Species", "Conservation Only", "Florida Threatened Species Only"))+
+  theme(legend.title = element_blank(),
+        legend.text = element_text(color = "black", size = 8),
+        legend.position = c(0.25,0.85))+
   theme(plot.title = element_text(hjust = 0.5))+
-  theme(plot.margin = margin(0.5,1,1,1, "cm"))
+  theme(plot.margin = margin(0.5,0.5,0.5,0.5, "cm"))
 plot 
+
+
 plot2 <- ggplot(pubdataframepercentTFSCP, aes(ID, total, fill=event))
 plot2 <- plot2 + geom_bar(stat = "identity", position = position_dodge(width=0.8)) + theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-  geom_text(aes(label=total), position=position_dodge(width=0.95), vjust=-0.25, size = 3)+
+  geom_text(aes(label=total), position=position_dodge(width=0.95), vjust=-0.25, size = )+
   xlab("Institution")+ ylab("Percent of Total Publications")+ 
   scale_fill_manual(values = c("chartreuse3", "maroon2"), name = "Legend", labels=c("Conservation", "Florida Threatened Species"))+
   theme(legend.title = element_text(color = "black", size = 9), 
