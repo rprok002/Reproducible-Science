@@ -75,12 +75,11 @@ plot <- plot + geom_bar(stat = "identity", position = position_dodge(width=0.8),
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   geom_text(aes(label=value), position=position_dodge(width=0.7), vjust=-0.5, size = 2.5, fontface = "bold")+
   xlab("Institution")+ ylab("Number of Publications")+ 
-  scale_fill_manual(values = c("darkmagenta", "magenta1", "mediumorchid1"), 
+  scale_fill_manual(values = c("mediumorchid", "magenta1", "plum1"), 
                     labels=c("Conservation and Florida Threatened Species", "Conservation Only", "Florida Threatened Species Only"))+
   theme(legend.title = element_blank(),
         legend.text = element_text(color = "black", size = 8),
         legend.position = c(0.25,0.85))+
-  theme(plot.title = element_text(hjust = 0.5))+
   theme(plot.margin = margin(0.5,0.5,0.5,0.5, "cm"))
 plot 
 
@@ -99,13 +98,11 @@ plot2 <- plot2 + geom_bar(stat = "identity", position = position_dodge(width=0.8
   theme(plot.margin = margin(0.5,1,1,1, "cm"))
 plot2
 plot3 <- ggplot(pubdataframe, aes(ID, TP))
-plot3 <- plot3 + geom_bar(stat = "identity", fill = "green4") + theme_bw() +
+plot3 <- plot3 + geom_bar(stat = "identity", fill = "darkmagenta") + theme_bw() +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   geom_text(aes(label=TP), position=position_dodge(width=0.95), vjust=-0.25, size = 3)+
   xlab("Institution")+ ylab(" Total Publications")+ 
-  ggtitle("Total Conservation and Florida Threatened Species Publications \n by Institution")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  theme(plot.margin = margin(0.5,1,1,1, "cm"))
+  theme(plot.margin = margin(0.5,0.5,0.5,0.5, "cm"))
 plot3
 
