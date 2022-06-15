@@ -31,7 +31,7 @@ Experiment
 
 Frognumber <- c(1,1,1,1)
 Trialtype <- c(1,1,1,1)
-Trialnumber <- c(1,1,2,2)
+Trialnumber <- c(1,2,1,2)
 Location <- c("C", "C", "E", "E")
 Seconds <- c(Control,Experiment)
 Seconds
@@ -40,3 +40,5 @@ F1T1sum
 
 t.test <- t.test(Seconds~Location, data = F1T1sum, paired = TRUE)
 t.test
+
+## If confidence interval includes the true proportions, gives me confidence that the proportion would have come out even with a better study 
