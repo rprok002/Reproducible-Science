@@ -13,3 +13,17 @@ pwr.p.test(h = ES.h(p1 = 0.8, p2 = 0.5), sig.level = 0.05, n =16)
 
 
 ## power = 0.73
+
+##Dep variable = proportion of time spent near frogs
+##Ind variable: healthy or unhealthy frog
+## 25 females, so n=25
+## p1 = 0.8
+## p2 = 0.5
+library(pwr)
+pwr.p.test(h = ES.h(p1 = 0.8, p2 = 0.5), sig.level = 0.05, n =25)
+## power = 0.90
+
+## 2-sided t test with 35 infected, 45 not infected, medium effect size
+## and 0.05 significance
+pwr.2p2n.test(h = 0.6, n1 = 35, n2 = 45, sig.level = 0.05)
+## power is 0.76
