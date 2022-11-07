@@ -22,3 +22,18 @@ ggdensity(DeadBdExp$Proportion.experiment, main = "Density Plot of Average Exper
 ggqqplot(DeadBdExp$Proportion.experiment)
 ggdensity(DeadBdExp$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
 ggqqplot(DeadBdExp$Proportion.neutral)
+
+## Shapiro-Wilks test
+## Null: normal: Alt: not normal
+shapiro.test(DeadBdCon$Proportion.A)
+## normal
+shapiro.test(DeadBdCon$Proportion.C)
+## normal (though p value is only 0.07, so pretty close)
+shapiro.test(DeadBdCon$Proportion.neutral)
+## normal
+shapiro.test(DeadBdExp$Proportion.control)
+## normal
+shapiro.test(DeadBdExp$Proportion.experiment)
+## normal
+shapiro.test(DeadBdExp$Proportion.neutral)
+## normal
