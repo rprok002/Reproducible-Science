@@ -37,3 +37,17 @@ shapiro.test(DeadBdExp$Proportion.experiment)
 ## normal
 shapiro.test(DeadBdExp$Proportion.neutral)
 ## normal
+## Can assume normality for both control and experiment pops
+
+## Levene's test for equal variance
+## Null: all pop var are equal; Alt: at least two are different
+DeadBdConvar = read.csv(file.choose())
+DeadbdExpvar = read.csv(file.choose())
+library(car)
+Controlvar = leveneTest(Weight~Group, DeadBdConvar)
+Controlvar
+## equal variance
+Experimentvar = leveneTest(Weight~Group, DeadbdExpvar)
+Experimentvar
+## equal variance
+##ANOVAs 
