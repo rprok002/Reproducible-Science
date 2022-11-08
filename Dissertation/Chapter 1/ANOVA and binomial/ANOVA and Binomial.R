@@ -50,4 +50,21 @@ Controlvar
 Experimentvar = leveneTest(Weight~Group, DeadbdExpvar)
 Experimentvar
 ## equal variance
-##ANOVAs 
+
+##Normal distribution and equal variance, can proceed with normal ANOVA
+## Groups are already ordered alphabetically, don't need to redo
+## Summary Statistics
+
+library(dplyr)
+group_by(DeadBdConvar, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Weight, na.rm = TRUE),
+    sd = sd(Weight, na.rm = TRUE)
+  )
+group_by(DeadbdExpvar, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Weight, na.rm = TRUE),
+    sd = sd(Weight, na.rm = TRUE)
+  )
