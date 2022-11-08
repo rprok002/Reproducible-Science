@@ -68,3 +68,23 @@ group_by(DeadbdExpvar, Group) %>%
     mean = mean(Weight, na.rm = TRUE),
     sd = sd(Weight, na.rm = TRUE)
   )
+## Box plots
+install.packages("ggpubr")
+library(ggpubr)
+ggboxplot(DeadBdConvar, x = "Group", y = "Weight", 
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("Aprop", "Cprop", "Nprop"),
+          ylab = "Weight", xlab = "Treatment")
+ggboxplot(DeadbdExpvar, x = "Group", y = "Weight", 
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("Conprop", "Expprop", "Nprop"),
+          ylab = "Weight", xlab = "Treatment")
+## Mean plots
+ggline(DeadBdConvar, x = "Group", y = "Weight", 
+       add = c("mean_se", "jitter"), 
+       order = c("Aprop", "Cprop", "Nprop"),
+       ylab = "Weight", xlab = "Treatment")
+ggline(DeadbdExpvar, x = "Group", y = "Weight", 
+       add = c("mean_se", "jitter"), 
+       order = c("Conprop", "Expprop", "Nprop"),
+       ylab = "Weight", xlab = "Treatment")
