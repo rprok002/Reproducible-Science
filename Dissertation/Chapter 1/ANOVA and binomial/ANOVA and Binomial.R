@@ -88,3 +88,19 @@ ggline(DeadbdExpvar, x = "Group", y = "Weight",
        add = c("mean_se", "jitter"), 
        order = c("Conprop", "Expprop", "Nprop"),
        ylab = "Weight", xlab = "Treatment")
+## ANOVAS
+# Compute the analysis of variance
+resCon.aov <- aov(Weight ~ Group, data = DeadBdConvar)
+resExp.aov <- aov(Weight ~ Group, data = DeadbdExpvar)
+# Summary of the analysis
+summary(resCon.aov)
+summary(resExp.aov)
+## Significance in both control and experiment groups
+
+## Multiple pairwise comparisons
+TukeyHSD(resCon.aov)
+TukeyHSD(resExp.aov)
+
+## Both control and exp have significant more time in neutral,
+## but not sig diff between the other two areas: don't care which
+## of the treatment areas they are in
