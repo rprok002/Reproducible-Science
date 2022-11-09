@@ -95,6 +95,23 @@ group_by(DeadBdsidesvar, Group) %>%
     mean = mean(Weight, na.rm = TRUE),
     sd = sd(Weight, na.rm = TRUE)
   )
+
+## ANOVAS
+# Compute the analysis of variance
+resCon.aov <- aov(Weight ~ Group, data = DeadBdConvar)
+resExp.aov <- aov(Weight ~ Group, data = DeadbdExpvar)
+# Summary of the analysis
+summary(resCon.aov)
+summary(resExp.aov)
+## Significance in both control and experiment groups
+
+## Multiple pairwise comparisons
+TukeyHSD(resCon.aov)
+TukeyHSD(resExp.aov)
+
+## Both control and exp have significant more time in neutral,
+## but not sig diff between the other two areas: don't care which
+## of the treatment areas they are in
 ## Box plots
 install.packages("ggpubr")
 install.packages("multcompView")
@@ -108,7 +125,7 @@ control
 controltable <- group_by(DeadBdConvar, Group) %>%
   summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
   arrange(desc(mean))
-# extracting the compact letter display and adding to the Tk table
+# extracting the compact letter display and adding to the control table
 control <- as.data.frame.list(control$Group)
 controltable$control <- control$Letters
 print(controltable)
@@ -126,11 +143,32 @@ ggboxplot(DeadBdConvar, x = "Group", y = "Weight",
                     size = 4, vjust = -1, hjust =-1)+
           geom_boxplot(aes(fill = Group))+
           annotate("text", x=2.5, y=0.7, label = "F(2,6) = [16.61], p=0.003")
-
+## Experiment boxplot
+experiment <- multcompLetters4(resExp.aov, TukeyHSD(resExp.aov))
+experiment
+## table with factors and 3rd quantile
+exptable <- group_by(DeadbdExpvar, Group) %>%
+  summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the exp table
+experiment <- as.data.frame.list(experiment$Group)
+exptable$experiment <- experiment$Letters
+print(exptable)
+## Boxplot
 ggboxplot(DeadbdExpvar, x = "Group", y = "Weight", 
-          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Conprop", "Expprop", "Nprop"),
-          ylab = "Weight", xlab = "Treatment")
+          color = "Group", palette = c("turquoise1", "palegreen", "seagreen"),
+          order = c("Nprop", "Conprop", "Expprop"),
+          ylab = "Proportion of Time", xlab = "Location")+
+          theme(legend.position = "none") +
+          scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"),
+                   labels=c("Control", "Experiment", "Neutral"))+
+  ggtitle("Experiment Frogs: Proportion of Time vs. Location")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  geom_text(data = exptable, aes(x = Group, y = quant, label = experiment), 
+            size = 4, vjust = -1, hjust =-1)+
+  geom_boxplot(aes(fill = Group))+
+  annotate("text", x=2.5, y=0.7, label = "F(2,27) = [163.7], p<0.001")
+
 ggboxplot(DeadBdsidesvar, x = "Group", y = "Weight", 
           color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
           order = c("Side A", "Side C", "Neutral"),
@@ -148,22 +186,6 @@ ggline(DeadBdsidesvar, x = "Group", y = "Weight",
        add = c("mean_se", "jitter"), 
        order = c("Side A", "Side C", "Neutral"),
        ylab = "Weight", xlab = "Treatment")
-## ANOVAS
-# Compute the analysis of variance
-resCon.aov <- aov(Weight ~ Group, data = DeadBdConvar)
-resExp.aov <- aov(Weight ~ Group, data = DeadbdExpvar)
-# Summary of the analysis
-summary(resCon.aov)
-summary(resExp.aov)
-## Significance in both control and experiment groups
-
-## Multiple pairwise comparisons
-TukeyHSD(resCon.aov)
-TukeyHSD(resExp.aov)
-
-## Both control and exp have significant more time in neutral,
-## but not sig diff between the other two areas: don't care which
-## of the treatment areas they are in
 
 ## GLM for sides
 GLM <- glm(Weight~Group*Type, family = gaussian, data = DeadBdsidesvar)
