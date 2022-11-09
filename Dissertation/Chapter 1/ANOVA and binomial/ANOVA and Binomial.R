@@ -1,6 +1,7 @@
 ## Data Analysis Dead Bd Volatiles
 DeadBdCon= read.csv(file.choose())
 DeadBdExp= read.csv(file.choose())
+DeadBdside = read.csv(file.choose())
 
 ##Tests of Normality
 install.packages("ggpubr")
@@ -23,6 +24,14 @@ ggqqplot(DeadBdExp$Proportion.experiment)
 ggdensity(DeadBdExp$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
 ggqqplot(DeadBdExp$Proportion.neutral)
 
+## Sides
+ggdensity(DeadBdside$Proportion.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(DeadBdside$Proportion.A)
+ggdensity(DeadBdside$Proportion.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(DeadBdside$Proportion.C)
+ggdensity(DeadBdside$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(DeadBdside$Proportion.neutral)
+
 ## Shapiro-Wilks test
 ## Null: normal: Alt: not normal
 shapiro.test(DeadBdCon$Proportion.A)
@@ -38,11 +47,19 @@ shapiro.test(DeadBdExp$Proportion.experiment)
 shapiro.test(DeadBdExp$Proportion.neutral)
 ## normal
 ## Can assume normality for both control and experiment pops
+shapiro.test(DeadBdside$Proportion.A)
+## normal
+shapiro.test(DeadBdside$Proportion.C)
+## not normal
+shapiro.test(DeadBdside$Proportion.neutral)
+## normal
+## for sides data, side C isn't normal. Keep in mind for future tests
 
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
 DeadBdConvar = read.csv(file.choose())
 DeadbdExpvar = read.csv(file.choose())
+DeadBdsidesvar = read.csv(file.choose())
 library(car)
 Controlvar = leveneTest(Weight~Group, DeadBdConvar)
 Controlvar
@@ -50,8 +67,12 @@ Controlvar
 Experimentvar = leveneTest(Weight~Group, DeadbdExpvar)
 Experimentvar
 ## equal variance
-
 ##Normal distribution and equal variance, can proceed with normal ANOVA
+Sidesvar = leveneTest(Weight~Group, DeadBdsidesvar)
+Sidesvar
+
+## equal variance
+## Normal distribution except for Side C, equal variance, going to run a binomial GLM
 ## Groups are already ordered alphabetically, don't need to redo
 ## Summary Statistics
 
@@ -68,6 +89,12 @@ group_by(DeadbdExpvar, Group) %>%
     mean = mean(Weight, na.rm = TRUE),
     sd = sd(Weight, na.rm = TRUE)
   )
+group_by(DeadBdsidesvar, Group) %>%
+  summarise(
+    count = n(),
+    mean = mean(Weight, na.rm = TRUE),
+    sd = sd(Weight, na.rm = TRUE)
+  )
 ## Box plots
 install.packages("ggpubr")
 library(ggpubr)
@@ -79,6 +106,10 @@ ggboxplot(DeadbdExpvar, x = "Group", y = "Weight",
           color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
           order = c("Conprop", "Expprop", "Nprop"),
           ylab = "Weight", xlab = "Treatment")
+ggboxplot(DeadBdsidesvar, x = "Group", y = "Weight", 
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("Side A", "Side C", "Neutral"),
+          ylab = "Weight", xlab = "Treatment")
 ## Mean plots
 ggline(DeadBdConvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
@@ -87,6 +118,10 @@ ggline(DeadBdConvar, x = "Group", y = "Weight",
 ggline(DeadbdExpvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
        order = c("Conprop", "Expprop", "Nprop"),
+       ylab = "Weight", xlab = "Treatment")
+ggline(DeadBdsidesvar, x = "Group", y = "Weight", 
+       add = c("mean_se", "jitter"), 
+       order = c("Side A", "Side C", "Neutral"),
        ylab = "Weight", xlab = "Treatment")
 ## ANOVAS
 # Compute the analysis of variance
