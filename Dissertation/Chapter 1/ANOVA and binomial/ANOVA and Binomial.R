@@ -139,3 +139,10 @@ TukeyHSD(resExp.aov)
 ## Both control and exp have significant more time in neutral,
 ## but not sig diff between the other two areas: don't care which
 ## of the treatment areas they are in
+
+## GLM for sides
+GLM <- glm(Weight~Group*Type, family = gaussian, data = DeadBdsidesvar)
+GLM
+summary(GLM)
+## Neutral compared to both sides is significant, Experiment versus Control
+## isn't different. Don't favor one treatment side over another
