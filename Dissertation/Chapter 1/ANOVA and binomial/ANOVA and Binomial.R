@@ -220,3 +220,26 @@ summary(GLM)
 ## Neutral compared to both sides is significant, Experiment versus Control
 ## isn't different. Don't favor one treatment side over another. So, we can
 ## count all the frogs together and not as separate types of frogs
+
+## Stacked bar graphs
+## Control frogs
+install.packages("ggplot2")
+library(ggplot2)
+ggplot(DeadBdConvar, aes(fill = Group, y = Weight, x = Frog_Number))+
+      geom_bar(position = "stack", stat = "identity", color = "black")+
+      facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
+      theme_bw()+
+      theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+            plot.background = element_blank(), 
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.border = element_blank(),
+            strip.background = element_rect(fill = "white", colour = "white"),
+            plot.title = element_text(hjust = 0.7))+
+      xlab("Frog Number") + ylab("Proportion of Time") + 
+      ggtitle("Control Frogs: Proportion of Time per Location")+
+      labs(fill = "Location")+
+      scale_fill_manual(values = c("slateblue4", "purple1", "turquoise1"), 
+                        labels = c("Side A", "Side C", "Neutral"))
+      
+      
