@@ -97,11 +97,35 @@ group_by(DeadBdsidesvar, Group) %>%
   )
 ## Box plots
 install.packages("ggpubr")
+install.packages("multcompView")
 library(ggpubr)
+library(multcompView)
+## Control boxplot
+## compact letter display
+control <- multcompLetters4(resCon.aov, TukeyHSD(resCon.aov))
+control
+## table with factors and 3rd quantile
+controltable <- group_by(DeadBdConvar, Group) %>%
+  summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the Tk table
+control <- as.data.frame.list(control$Group)
+controltable$control <- control$Letters
+print(controltable)
+## Boxplot
 ggboxplot(DeadBdConvar, x = "Group", y = "Weight", 
-          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Aprop", "Cprop", "Nprop"),
-          ylab = "Weight", xlab = "Treatment")
+          color = "Group", palette = c("turquoise1", "slateblue4", "purple1"),
+          order = c("Nprop", "Aprop", "Cprop"),
+          ylab = "Proportion of Time", xlab = "Location")+
+          theme(legend.position = "none") +
+          scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"),
+                   labels=c("Side A", "Side C", "Neutral"))+
+          ggtitle("Control Frogs: Proportion of Time vs. Location")+
+          theme(plot.title = element_text(hjust = 0.5))+
+          geom_text(data = controltable, aes(x = Group, y = quant, label = control), 
+                    size = 4, vjust = -1, hjust =-1)+
+          geom_boxplot(aes(fill = Group))
+
 ggboxplot(DeadbdExpvar, x = "Group", y = "Weight", 
           color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
           order = c("Conprop", "Expprop", "Nprop"),
