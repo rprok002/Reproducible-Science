@@ -124,7 +124,8 @@ ggboxplot(DeadBdConvar, x = "Group", y = "Weight",
           theme(plot.title = element_text(hjust = 0.5))+
           geom_text(data = controltable, aes(x = Group, y = quant, label = control), 
                     size = 4, vjust = -1, hjust =-1)+
-          geom_boxplot(aes(fill = Group))
+          geom_boxplot(aes(fill = Group))+
+          annotate("text", x=2.5, y=0.7, label = "F(2,6) = [16.61], p=0.003")
 
 ggboxplot(DeadbdExpvar, x = "Group", y = "Weight", 
           color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
@@ -169,4 +170,5 @@ GLM <- glm(Weight~Group*Type, family = gaussian, data = DeadBdsidesvar)
 GLM
 summary(GLM)
 ## Neutral compared to both sides is significant, Experiment versus Control
-## isn't different. Don't favor one treatment side over another
+## isn't different. Don't favor one treatment side over another. So, we can
+## count all the frogs together and not as separate types of frogs
