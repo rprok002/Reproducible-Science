@@ -100,14 +100,19 @@ group_by(DeadBdsidesvar, Group) %>%
 # Compute the analysis of variance
 resCon.aov <- aov(Weight ~ Group, data = DeadBdConvar)
 resExp.aov <- aov(Weight ~ Group, data = DeadbdExpvar)
+resside.aov <- aov(Weight ~ Group, data = DeadBdsidesvar)
 # Summary of the analysis
 summary(resCon.aov)
 summary(resExp.aov)
-## Significance in both control and experiment groups
+summary(resside.aov)
+## Significance in both control and experiment groups, and from sides
+## Can run anova because GLM shows that no difference in control and experiment
+## frogs in treatment areas when comparing sides (A as left and C as right)
 
 ## Multiple pairwise comparisons
 TukeyHSD(resCon.aov)
 TukeyHSD(resExp.aov)
+TukeyHSD(resside.aov)
 
 ## Both control and exp have significant more time in neutral,
 ## but not sig diff between the other two areas: don't care which
@@ -162,17 +167,38 @@ ggboxplot(DeadbdExpvar, x = "Group", y = "Weight",
           theme(legend.position = "none") +
           scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"),
                    labels=c("Control", "Experiment", "Neutral"))+
-  ggtitle("Experiment Frogs: Proportion of Time vs. Location")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  geom_text(data = exptable, aes(x = Group, y = quant, label = experiment), 
-            size = 4, vjust = -1, hjust =-1)+
-  geom_boxplot(aes(fill = Group))+
-  annotate("text", x=2.5, y=0.7, label = "F(2,27) = [163.7], p<0.001")
+          ggtitle("Experiment Frogs: Proportion of Time vs. Location")+
+          theme(plot.title = element_text(hjust = 0.5))+
+          geom_text(data = exptable, aes(x = Group, y = quant, label = experiment), 
+                  size = 4, vjust = -1, hjust =-1)+
+          geom_boxplot(aes(fill = Group))+
+          annotate("text", x=2.5, y=0.7, label = "F(2,27) = [163.7], p<0.001")
 
+## Side boxplot
+side <- multcompLetters4(resside.aov, TukeyHSD(resside.aov))
+side
+## table with factors and 3rd quantile
+sidetable <- group_by(DeadBdsidesvar, Group) %>%
+  summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
+  arrange(desc(mean))
+# extracting the compact letter display and adding to the control table
+side <- as.data.frame.list(side$Group)
+sidetable$side <- side$Letters
+print(sidetable)
+## Boxplot
 ggboxplot(DeadBdsidesvar, x = "Group", y = "Weight", 
-          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
-          order = c("Side A", "Side C", "Neutral"),
-          ylab = "Weight", xlab = "Treatment")
+          color = "Group", palette = c("turquoise1", "slateblue4", "purple1"),
+          order = c("Neutral", "Side A", "Side C"),
+          ylab = "Proportion of Time", xlab = "Location") +
+          theme(legend.position = "none") +
+          scale_x_discrete(breaks=c("Neutral","Side A","Side C"),
+                   labels=c("Neutral", "Left Side", "Right Side"))+
+          ggtitle("All Frogs: Proportion of Time vs. Location")+
+          theme(plot.title = element_text(hjust = 0.5))+
+          geom_text(data = sidetable, aes(x = Group, y = quant, label = side), 
+                    size = 4, vjust = -1, hjust =-1)+
+          geom_boxplot(aes(fill = Group))+
+          annotate("text", x=2.5, y=0.7, label = "F(2,36) = [154], p<0.001")
 ## Mean plots
 ggline(DeadBdConvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
