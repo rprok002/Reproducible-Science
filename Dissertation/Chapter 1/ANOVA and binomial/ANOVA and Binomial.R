@@ -192,7 +192,7 @@ ggboxplot(DeadBdsidesvar, x = "Group", y = "Weight",
           ylab = "Proportion of Time", xlab = "Location") +
           theme(legend.position = "none") +
           scale_x_discrete(breaks=c("Neutral","Side A","Side C"),
-                   labels=c("Neutral", "Left Side", "Right Side"))+
+                   labels=c("Neutral", "Side A", "Side C"))+
           ggtitle("All Frogs: Proportion of Time vs. Location")+
           theme(plot.title = element_text(hjust = 0.5))+
           geom_text(data = sidetable, aes(x = Group, y = quant, label = side), 
@@ -252,10 +252,28 @@ ggplot(DeadbdExpvar, aes(fill = Group, y = Weight, x = Frog_Number))+
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         strip.background = element_rect(fill = "white", colour = "white"),
-        plot.title = element_text(hjust = 0.7))+
+        plot.title = element_text(hjust = 0))+
   xlab("Frog Number") + ylab("Proportion of Time") + 
-  ggtitle("Control Frogs: Proportion of Time per Location")+
+  ggtitle("Experiment Frogs: Proportion of Time per Location")+
+  labs(fill = "Location")+
+  scale_fill_manual(values = c("palegreen", "seagreen", "turquoise1"), 
+                    labels = c("Control", "Experiment", "Neutral"))
+
+## Sides plot
+DeadBdsidesvar$Group <- factor(DeadBdsidesvar$Group, levels = c("Side A", "Side C", "Neutral"))
+ggplot(DeadBdsidesvar, aes(fill = Group, y = Weight, x = Frog_Number))+
+  geom_bar(position = "stack", stat = "identity", color = "black")+
+  facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
+  theme_bw()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+        plot.background = element_blank(), 
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "white"),
+        plot.title = element_text(hjust = 0.5))+
+  xlab("Frog Number") + ylab("Proportion of Time") + 
+  ggtitle("All Frogs: Proportion of Time per Location")+
   labs(fill = "Location")+
   scale_fill_manual(values = c("slateblue4", "purple1", "turquoise1"), 
                     labels = c("Side A", "Side C", "Neutral"))
-      
