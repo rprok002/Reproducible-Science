@@ -1,4 +1,4 @@
-## Data Analysis Dead Bd Volatiles
+## Data Analysis Dead Naive Bd Volatiles
 DeadBdCon= read.csv(file.choose())
 DeadBdExp= read.csv(file.choose())
 DeadBdside = read.csv(file.choose())
