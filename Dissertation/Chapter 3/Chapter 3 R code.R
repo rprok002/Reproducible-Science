@@ -81,6 +81,7 @@ shapiro.test(Post$Proportion_Days_Together)
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
 Pre_Variance <- read.csv(file.choose())
+Pre_Days <- read.csv(file.choose())
 Morning_Post_Variance <- read.csv(file.choose())
 Evening_Post_Variance <- read.csv(file.choose())
 Morning_Post_Chytrid <- read.csv(file.choose())
@@ -116,7 +117,11 @@ PostTogether
 ## Pre Side Data
 PreSideTtest <- wilcox.test(Weight~Group, data = Pre_Variance, paired = TRUE)
 PreSideTtest
+
+PreDaySideTtest <- wilcox.test(Weight~Group, data = Pre_Days, paired = TRUE)
+PreDaySideTtest
 # Pre-addition, side doesn't matter
+# Also, days and proportions bring out same data, so should be able to use them interchangeably???
 PostMornSideTtest <- wilcox.test(Weight~Group, data = Morning_Post_Variance, paired = TRUE)
 PostMornSideTtest
 # Post-addition, side in morning doesn't matter
