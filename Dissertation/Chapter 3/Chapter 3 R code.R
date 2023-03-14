@@ -156,3 +156,49 @@ PostTogetherTtest
 # because still haven't properly identified Bd volatile profile so can't properly test
 # To my nose, the gauze smelled
 
+## Graphs
+
+## Side
+ggboxplot(Pre_Variance, x = "Group", y = "Weight", 
+          order = c("Left", "Right"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightgreen", "darkgreen")) + ggtitle("Pre-Addition Side Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 153.5, n = 24, p = 0.3815")
+ggboxplot(Morning_Post_Variance, x = "Group", y = "Weight", 
+          order = c("Left", "Right"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightgreen", "darkgreen")) + ggtitle("Post-Addition Morning Side Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 161, n = 24, p = 0.7613")
+ggboxplot(Evening_Post_Variance, x = "Group", y = "Weight", 
+          order = c("Left", "Right"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightgreen", "darkgreen")) + ggtitle("Post-Addition Evening Side Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 125.5, n = 24, p = 0.7129")
+ggboxplot(Evening_Post_Variance, x = "Group", y = "Weight", 
+          order = c("Left", "Right"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightgreen", "darkgreen")) + ggtitle("Post-Addition Evening Side Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 125.5, n = 24, p = 0.7129")
+ggboxplot(Morning_Post_Chytrid, x = "Group", y = "Weight", 
+          order = c("Chytrid", "Control"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("darkred", "lightpink")) + ggtitle("Post-Addition Morning Scent Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 127, n = 24, p = 0.5151")
+ggboxplot(Evening_Post_Chytrid, x = "Group", y = "Weight", 
+          order = c("Chytrid", "Control"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("darkred", "lightpink")) + ggtitle("Post-Addition Evening Scent Preference") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 128.5, n = 24, p = 0.7826")
+
+
+ggboxplot(Pre_Together_Variance, x = "Group", y = "Weight", 
+          order = c("Days_Apart", "Days_Together"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightblue", "darkblue")) + ggtitle("Pre-Addition Pair Location") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 35.5, n = 12 p = 0.4404")
+
+ggboxplot(Post_Together_Variance, x = "Group", y = "Weight", 
+          order = c("Days_Apart", "Days_Together"), ylab = "Proportion Days", xlab = "Side", fill = "Group", palette = c("lightblue", "darkblue")) + ggtitle("Post-Addition Pair Location") + 
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(legend.position = "none")+
+  annotate("text", y =1.1, x=1, label="V = 12, n = 12 p = 0.03697")
