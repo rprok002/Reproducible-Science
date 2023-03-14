@@ -96,6 +96,15 @@ group_by(LiveBdSidevar, Group) %>%
     sd = sd(Weight, na.rm = TRUE)
   )
 
+## GLM for sides
+GLM <- glm(Weight~Group*Type, family = gaussian, data = LiveBdSidevar)
+GLM
+summary(GLM)
+
+## Neutral compared to both sides is significant, Experiment versus Control
+## isn't different. Don't favor one treatment side over another. So, we can
+## count all the frogs together and not as separate types of frogs
+
 ## ANOVAS
 # Compute the analysis of variance for Control and Experiment
 resCon.aov <- aov(Weight ~ Group, data = LiveBdConvar)
