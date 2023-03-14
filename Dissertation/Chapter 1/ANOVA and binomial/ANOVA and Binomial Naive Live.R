@@ -213,17 +213,17 @@ ggboxplot(LiveBdSidevar, x = "Group", y = "Weight",
   geom_boxplot(aes(fill = Group))+
   annotate("text", x=2.5, y=0.7, label = "F(2,19.758) = [38.407], p<0.001")
 ## Mean plots
-ggline(DeadBdConvar, x = "Group", y = "Weight", 
+ggline(LiveBdConvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
        order = c("Aprop", "Cprop", "Nprop"),
        ylab = "Weight", xlab = "Treatment")
-ggline(DeadbdExpvar, x = "Group", y = "Weight", 
+ggline(LiveBdExpvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
-       order = c("Conprop", "Expprop", "Nprop"),
+       order = c("Cprop", "Eprop", "Nprop"),
        ylab = "Weight", xlab = "Treatment")
-ggline(DeadBdsidesvar, x = "Group", y = "Weight", 
+ggline(LiveBdSidevar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
-       order = c("Side A", "Side C", "Neutral"),
+       order = c("Aprop", "Cprop", "Nprop"),
        ylab = "Weight", xlab = "Treatment")
 
 
