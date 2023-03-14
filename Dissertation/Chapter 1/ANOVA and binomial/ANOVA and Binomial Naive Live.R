@@ -57,39 +57,39 @@ shapiro.test(LiveBdside$Proportion.neutral)
 
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
-DeadBdConvar = read.csv(file.choose())
-DeadbdExpvar = read.csv(file.choose())
-DeadBdsidesvar = read.csv(file.choose())
+LiveBdConvar = read.csv(file.choose())
+LiveBdExpvar = read.csv(file.choose())
+LiveBdSidevar = read.csv(file.choose())
 library(car)
-Controlvar = leveneTest(Weight~Group, DeadBdConvar)
+Controlvar = leveneTest(Weight~Group, LiveBdConvar)
 Controlvar
 ## equal variance
-Experimentvar = leveneTest(Weight~Group, DeadbdExpvar)
+Experimentvar = leveneTest(Weight~Group, LiveBdExpvar)
 Experimentvar
 ## equal variance
 ##Normal distribution and equal variance, can proceed with normal ANOVA
-Sidesvar = leveneTest(Weight~Group, DeadBdsidesvar)
+Sidesvar = leveneTest(Weight~Group, LiveBdSidevar)
 Sidesvar
+## nonequal variance
 
-## equal variance
-## Normal distribution except for Side C, equal variance, going to run a binomial GLM
-## Groups are already ordered alphabetically, don't need to redo
+## Normal distribution for all, equal variance except sides 
+## Control and Exp can use ANOVA, Sides needs Welch's ANOVA because unequal variance
 ## Summary Statistics
 
 library(dplyr)
-group_by(DeadBdConvar, Group) %>%
+group_by(LiveBdConvar, Group) %>%
   summarise(
     count = n(),
     mean = mean(Weight, na.rm = TRUE),
     sd = sd(Weight, na.rm = TRUE)
   )
-group_by(DeadbdExpvar, Group) %>%
+group_by(LiveBdExpvar, Group) %>%
   summarise(
     count = n(),
     mean = mean(Weight, na.rm = TRUE),
     sd = sd(Weight, na.rm = TRUE)
   )
-group_by(DeadBdsidesvar, Group) %>%
+group_by(LiveBdSidevar, Group) %>%
   summarise(
     count = n(),
     mean = mean(Weight, na.rm = TRUE),
@@ -97,26 +97,27 @@ group_by(DeadBdsidesvar, Group) %>%
   )
 
 ## ANOVAS
-# Compute the analysis of variance
-resCon.aov <- aov(Weight ~ Group, data = DeadBdConvar)
-resExp.aov <- aov(Weight ~ Group, data = DeadbdExpvar)
-resside.aov <- aov(Weight ~ Group, data = DeadBdsidesvar)
+# Compute the analysis of variance for Control and Experiment
+resCon.aov <- aov(Weight ~ Group, data = LiveBdConvar)
+resExp.aov <- aov(Weight ~ Group, data = LiveBdExpvar)
+# Compute the analysis of variance for Sides
+resside.aov <- oneway.test(Weight ~ Group, data = LiveBdSidevar, var.equal = FALSE)
 # Summary of the analysis
 summary(resCon.aov)
 summary(resExp.aov)
-summary(resside.aov)
+resside.aov
 ## Significance in both control and experiment groups, and from sides
-## Can run anova because GLM shows that no difference in control and experiment
 ## frogs in treatment areas when comparing sides (A as left and C as right)
 
 ## Multiple pairwise comparisons
 TukeyHSD(resCon.aov)
 TukeyHSD(resExp.aov)
-TukeyHSD(resside.aov)
+library(rstatix)
+games_howell_test(LiveBdSidevar, Weight~Group)
 
-## Both control and exp have significant more time in neutral,
-## but not sig diff between the other two areas: don't care which
-## of the treatment areas they are in
+## In all tests, don't care between areas A and C (or chytrid and control)
+## but spend significantly more time in neutral no matter what
+
 ## Box plots
 install.packages("ggpubr")
 install.packages("multcompView")
