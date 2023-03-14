@@ -122,7 +122,7 @@ resside.aov
 TukeyHSD(resCon.aov)
 TukeyHSD(resExp.aov)
 library(rstatix)
-games_howell_test(LiveBdSidevar, Weight~Group)
+gameshowell <- games_howell_test(LiveBdSidevar, Weight~Group)
 
 ## In all tests, don't care between areas A and C (or chytrid and control)
 ## but spend significantly more time in neutral no matter what
@@ -137,7 +137,7 @@ library(multcompView)
 control <- multcompLetters4(resCon.aov, TukeyHSD(resCon.aov))
 control
 ## table with factors and 3rd quantile
-controltable <- group_by(DeadBdConvar, Group) %>%
+controltable <- group_by(LiveBdConvar, Group) %>%
   summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
   arrange(desc(mean))
 # extracting the compact letter display and adding to the control table
@@ -145,24 +145,24 @@ control <- as.data.frame.list(control$Group)
 controltable$control <- control$Letters
 print(controltable)
 ## Boxplot
-ggboxplot(DeadBdConvar, x = "Group", y = "Weight", 
+ggboxplot(LiveBdConvar, x = "Group", y = "Weight", 
           color = "Group", palette = c("turquoise1", "slateblue4", "purple1"),
           order = c("Nprop", "Aprop", "Cprop"),
           ylab = "Proportion of Time", xlab = "Location")+
   theme(legend.position = "none") +
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"),
                    labels=c("Side A", "Side C", "Neutral"))+
-  ggtitle("Control Frogs: Proportion of Time vs. Location")+
-  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Control Frogs: Proportion of Time vs. Location Live Bd Volatiles")+
+  theme(plot.title = element_text(hjust = 0.9))+
   geom_text(data = controltable, aes(x = Group, y = quant, label = control), 
             size = 4, vjust = -1, hjust =-1)+
   geom_boxplot(aes(fill = Group))+
-  annotate("text", x=2.5, y=0.7, label = "F(2,6) = [16.61], p=0.003")
+  annotate("text", x=2.5, y=0.7, label = "F(2,6) = [7.275], p=0.025")
 ## Experiment boxplot
 experiment <- multcompLetters4(resExp.aov, TukeyHSD(resExp.aov))
 experiment
 ## table with factors and 3rd quantile
-exptable <- group_by(DeadbdExpvar, Group) %>%
+exptable <- group_by(LiveBdExpvar, Group) %>%
   summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
   arrange(desc(mean))
 # extracting the compact letter display and adding to the exp table
@@ -170,45 +170,48 @@ experiment <- as.data.frame.list(experiment$Group)
 exptable$experiment <- experiment$Letters
 print(exptable)
 ## Boxplot
-ggboxplot(DeadbdExpvar, x = "Group", y = "Weight", 
+ggboxplot(LiveBdExpvar, x = "Group", y = "Weight", 
           color = "Group", palette = c("turquoise1", "palegreen", "seagreen"),
-          order = c("Nprop", "Conprop", "Expprop"),
+          order = c("Nprop", "Cprop", "Eprop"),
           ylab = "Proportion of Time", xlab = "Location")+
   theme(legend.position = "none") +
-  scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"),
+  scale_x_discrete(breaks=c("Cprop","Eprop","Nprop"),
                    labels=c("Control", "Experiment", "Neutral"))+
-  ggtitle("Experiment Frogs: Proportion of Time vs. Location")+
-  theme(plot.title = element_text(hjust = 0.5))+
+  ggtitle("Experiment Frogs: Proportion of Time vs. Location Live Bd Volatiles")+
+  theme(plot.title = element_text(hjust = 1))+
   geom_text(data = exptable, aes(x = Group, y = quant, label = experiment), 
             size = 4, vjust = -1, hjust =-1)+
   geom_boxplot(aes(fill = Group))+
-  annotate("text", x=2.5, y=0.7, label = "F(2,27) = [163.7], p<0.001")
+  annotate("text", x=2.5, y=0.7, label = "F(2,24) = [35.27], p<0.001")+
+  font("title", size = 13)
 
 ## Side boxplot
-side <- multcompLetters4(resside.aov, TukeyHSD(resside.aov))
+library(data.table)
+Group <- c("Nprop", "Cprop", "Aprop")
+Letters <- c("a", "b", "b")
+side <- data.table(Group, Letters)
 side
 ## table with factors and 3rd quantile
-sidetable <- group_by(DeadBdsidesvar, Group) %>%
+sidetable <- group_by(LiveBdSidevar, Group) %>%
   summarise(mean=mean(Weight), quant = quantile(Weight, probs = 0.75)) %>%
   arrange(desc(mean))
 # extracting the compact letter display and adding to the control table
-side <- as.data.frame.list(side$Group)
-sidetable$side <- side$Letters
+sidetable$Letters <- side$Letters
 print(sidetable)
 ## Boxplot
-ggboxplot(DeadBdsidesvar, x = "Group", y = "Weight", 
+ggboxplot(LiveBdSidevar, x = "Group", y = "Weight", 
           color = "Group", palette = c("turquoise1", "slateblue4", "purple1"),
-          order = c("Neutral", "Side A", "Side C"),
+          order = c("Nprop", "Aprop", "Cprop"),
           ylab = "Proportion of Time", xlab = "Location") +
   theme(legend.position = "none") +
   scale_x_discrete(breaks=c("Neutral","Side A","Side C"),
                    labels=c("Neutral", "Side A", "Side C"))+
-  ggtitle("All Frogs: Proportion of Time vs. Location")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  geom_text(data = sidetable, aes(x = Group, y = quant, label = side), 
+  ggtitle("All Frogs: Proportion of Time vs. Location Live Bd Volatiles")+
+  theme(plot.title = element_text(hjust = 0.9))+
+  geom_text(data = sidetable, aes(x = Group, y = quant, label = Letters), 
             size = 4, vjust = -1, hjust =-1)+
   geom_boxplot(aes(fill = Group))+
-  annotate("text", x=2.5, y=0.7, label = "F(2,36) = [154], p<0.001")
+  annotate("text", x=2.5, y=0.7, label = "F(2,19.758) = [38.407], p<0.001")
 ## Mean plots
 ggline(DeadBdConvar, x = "Group", y = "Weight", 
        add = c("mean_se", "jitter"), 
@@ -223,13 +226,6 @@ ggline(DeadBdsidesvar, x = "Group", y = "Weight",
        order = c("Side A", "Side C", "Neutral"),
        ylab = "Weight", xlab = "Treatment")
 
-## GLM for sides
-GLM <- glm(Weight~Group*Type, family = gaussian, data = DeadBdsidesvar)
-GLM
-summary(GLM)
-## Neutral compared to both sides is significant, Experiment versus Control
-## isn't different. Don't favor one treatment side over another. So, we can
-## count all the frogs together and not as separate types of frogs
 
 ## Stacked bar graphs
 ## Control frogs
