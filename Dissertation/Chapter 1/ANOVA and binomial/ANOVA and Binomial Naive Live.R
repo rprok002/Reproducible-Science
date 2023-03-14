@@ -34,26 +34,26 @@ ggqqplot(LiveBdside$Proportion.neutral)
 
 ## Shapiro-Wilks test
 ## Null: normal: Alt: not normal
-shapiro.test(DeadBdCon$Proportion.A)
+shapiro.test(LiveBdCon$Proportion.A)
 ## normal
-shapiro.test(DeadBdCon$Proportion.C)
-## normal (though p value is only 0.07, so pretty close)
-shapiro.test(DeadBdCon$Proportion.neutral)
+shapiro.test(LiveBdCon$Proportion.C)
+## normal 
+shapiro.test(LiveBdCon$Proportion.neutral)
 ## normal
-shapiro.test(DeadBdExp$Proportion.control)
+shapiro.test(LiveBdExp$Proportion.Control)
 ## normal
-shapiro.test(DeadBdExp$Proportion.experiment)
+shapiro.test(LiveBdExp$Proportion.Experiment)
 ## normal
-shapiro.test(DeadBdExp$Proportion.neutral)
+shapiro.test(LiveBdExp$Proportion.neutral)
 ## normal
 ## Can assume normality for both control and experiment pops
-shapiro.test(DeadBdside$Proportion.A)
+shapiro.test(LiveBdside$Proportion.A)
 ## normal
-shapiro.test(DeadBdside$Proportion.C)
-## not normal
-shapiro.test(DeadBdside$Proportion.neutral)
+shapiro.test(LiveBdside$Proportion.C)
 ## normal
-## for sides data, side C isn't normal. Keep in mind for future tests
+shapiro.test(LiveBdside$Proportion.neutral)
+## normal
+
 
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
