@@ -1,7 +1,7 @@
 ## Data Analysis Live Naive Bd Volatiles
-DeadBdCon= read.csv(file.choose())
-DeadBdExp= read.csv(file.choose())
-DeadBdside = read.csv(file.choose())
+LiveBdCon= read.csv(file.choose())
+LiveBdExp= read.csv(file.choose())
+LiveBdside = read.csv(file.choose())
 
 ##Tests of Normality
 install.packages("ggpubr")
@@ -9,28 +9,28 @@ library(ggpubr)
 library(dplyr)
 
 ## Control
-ggdensity(DeadBdCon$Proportion.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
-ggqqplot(DeadBdCon$Proportion.A)
-ggdensity(DeadBdCon$Proportion.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
-ggqqplot(DeadBdCon$Proportion.C)
-ggdensity(DeadBdCon$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
-ggqqplot(DeadBdCon$Proportion.neutral)
+ggdensity(LiveBdCon$Proportion.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(LiveBdCon$Proportion.A)
+ggdensity(LiveBdCon$Proportion.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(LiveBdCon$Proportion.C)
+ggdensity(LiveBdCon$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdCon$Proportion.neutral)
 
 ## Experiment
-ggdensity(DeadBdExp$Proportion.control, main = "Density Plot of Average Control", xlab = "Average Control")
-ggqqplot(DeadBdExp$Proportion.control)
-ggdensity(DeadBdExp$Proportion.experiment, main = "Density Plot of Average Experiment", xlab = "Average Experiment")
-ggqqplot(DeadBdExp$Proportion.experiment)
-ggdensity(DeadBdExp$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
-ggqqplot(DeadBdExp$Proportion.neutral)
+ggdensity(LiveBdExp$Proportion.Control, main = "Density Plot of Average Control", xlab = "Average Control")
+ggqqplot(LiveBdExp$Proportion.Control)
+ggdensity(LiveBdExp$Proportion.Experiment, main = "Density Plot of Average Experiment", xlab = "Average Experiment")
+ggqqplot(LiveBdExp$Proportion.Experiment)
+ggdensity(LiveBdExp$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdExp$Proportion.neutral)
 
 ## Sides
-ggdensity(DeadBdside$Proportion.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
-ggqqplot(DeadBdside$Proportion.A)
-ggdensity(DeadBdside$Proportion.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
-ggqqplot(DeadBdside$Proportion.C)
-ggdensity(DeadBdside$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
-ggqqplot(DeadBdside$Proportion.neutral)
+ggdensity(LiveBdside$Proportion.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(LiveBdside$Proportion.A)
+ggdensity(LiveBdside$Proportion.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(LiveBdside$Proportion.C)
+ggdensity(LiveBdside$Proportion.neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdside$Proportion.neutral)
 
 ## Shapiro-Wilks test
 ## Null: normal: Alt: not normal
