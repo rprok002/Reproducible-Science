@@ -231,7 +231,7 @@ ggline(LiveBdSidevar, x = "Group", y = "Weight",
 ## Control frogs
 install.packages("ggplot2")
 library(ggplot2)
-ggplot(DeadBdConvar, aes(fill = Group, y = Weight, x = Frog_Number))+
+ggplot(LiveBdConvar, aes(fill = Group, y = Weight, x = Frog_Number))+
   geom_bar(position = "stack", stat = "identity", color = "black")+
   facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
   theme_bw()+
@@ -241,14 +241,14 @@ ggplot(DeadBdConvar, aes(fill = Group, y = Weight, x = Frog_Number))+
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         strip.background = element_rect(fill = "white", colour = "white"),
-        plot.title = element_text(hjust = 0.7))+
+        plot.title = element_text(hjust = 0.1))+
   xlab("Frog Number") + ylab("Proportion of Time") + 
-  ggtitle("Control Frogs: Proportion of Time per Location")+
+  ggtitle("Control Frogs: Proportion of Time per Location Live Bd Volatiles")+
   labs(fill = "Location")+
   scale_fill_manual(values = c("slateblue4", "purple1", "turquoise1"), 
                     labels = c("Side A", "Side C", "Neutral"))
 ## Experiment plot
-ggplot(DeadbdExpvar, aes(fill = Group, y = Weight, x = Frog_Number))+
+ggplot(LiveBdExpvar, aes(fill = Group, y = Weight, x = Frog_Number))+
   geom_bar(position = "stack", stat = "identity", color = "black")+
   facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
   theme_bw()+
@@ -258,16 +258,15 @@ ggplot(DeadbdExpvar, aes(fill = Group, y = Weight, x = Frog_Number))+
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         strip.background = element_rect(fill = "white", colour = "white"),
-        plot.title = element_text(hjust = 0))+
+        plot.title = element_text(hjust = 0.2))+
   xlab("Frog Number") + ylab("Proportion of Time") + 
-  ggtitle("Experiment Frogs: Proportion of Time per Location")+
+  ggtitle("Experiment Frogs: Proportion of Time per Location Live Bd Volatiles")+
   labs(fill = "Location")+
   scale_fill_manual(values = c("palegreen", "seagreen", "turquoise1"), 
                     labels = c("Control", "Experiment", "Neutral"))
 
 ## Sides plot
-DeadBdsidesvar$Group <- factor(DeadBdsidesvar$Group, levels = c("Side A", "Side C", "Neutral"))
-ggplot(DeadBdsidesvar, aes(fill = Group, y = Weight, x = Frog_Number))+
+ggplot(LiveBdSidevar, aes(fill = Group, y = Weight, x = Frog_Number))+
   geom_bar(position = "stack", stat = "identity", color = "black")+
   facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
   theme_bw()+
@@ -277,9 +276,9 @@ ggplot(DeadBdsidesvar, aes(fill = Group, y = Weight, x = Frog_Number))+
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         strip.background = element_rect(fill = "white", colour = "white"),
-        plot.title = element_text(hjust = 0.5))+
+        plot.title = element_text(hjust = 0.3))+
   xlab("Frog Number") + ylab("Proportion of Time") + 
-  ggtitle("All Frogs: Proportion of Time per Location")+
+  ggtitle("All Frogs: Proportion of Time per Location Live Bd Volatiles")+
   labs(fill = "Location")+
   scale_fill_manual(values = c("slateblue4", "purple1", "turquoise1"), 
                     labels = c("Side A", "Side C", "Neutral"))
