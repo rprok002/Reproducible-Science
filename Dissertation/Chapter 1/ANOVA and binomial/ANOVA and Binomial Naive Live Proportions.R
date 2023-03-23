@@ -282,3 +282,61 @@ ggplot(LiveBdSidevar, aes(fill = Group, y = Weight, x = Frog_Number))+
   labs(fill = "Location")+
   scale_fill_manual(values = c("slateblue4", "purple1", "turquoise1"), 
                     labels = c("Side A", "Side C", "Neutral"))
+
+## GLM for all naive frogs
+install.packages("lme4")
+install.packages("lmerTest")
+library(lme4)
+library(lmerTest)
+
+require(lmerTest)
+require(lme4)
+AllNaiveside <- read.csv(file.choose())
+AllNaiveExp <- read.csv(file.choose())
+AllNaiveCon <- read.csv(file.choose())
+# fit model sides
+AllNaivesidelmer <- lmer(Weight~Group*Type*Trial*Sex + (1|Frog_Number), data = AllNaiveside)
+summary(AllNaivesidelmer)
+
+## GroupNProp is significant, so proportion of time in quadrant A is significantly lower than quadrant N for dead volatiles, control group and females
+## Also interaction between all predictor variables
+install.packages("emmeans")
+library(emmeans)
+emmip(AllNaivesidelmer, Group~Type)
+## not between group and type
+emmip(AllNaivesidelmer, Group~Trial)
+## not between Group and Trial
+emmip(AllNaivesidelmer, Group~Sex)
+## interaction between Group and Sex
+emmip(AllNaivesidelmer, Type~Trial)
+## not between Type and Trial
+emmip(AllNaivesidelmer, Type~Sex)
+## not between Type and Sex
+emmip(AllNaivesidelmer, Trial~Sex)
+## not bewteen Trial and Sex
+
+## only have interaction now between Group and Sex in model for sides
+AllNaivesidelmer <- lmer(Weight~Group*Sex + Trial + Type + (1|Frog_Number), data = AllNaiveside)
+summary(AllNaivesidelmer)
+## difference between Quadrant A and N is higher for males than females for Dead volatiles in control group
+## some custom contrasts
+install.packages("MASS")
+library(MASS)
+myContrasts <- c(0,-1,-1)
+contrasts(Group) <- ginv(myContrasts)
+# fit model control
+AllNaiveConlmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllNaiveCon)
+summary(AllNaiveConlmer)
+## only significance is between Quadrant A and N, so taking out interactions
+AllNaiveConlmer <- lmer(Weight~Group+Trial+Sex + (1|Frog_Number), data = AllNaiveCon)
+summary(AllNaiveConlmer)
+# fit model experiment
+AllNaiveExplmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllNaiveExp)
+summary(AllNaiveExplmer)
+## only significance is between Quadrant A and N, so taking out interactions
+AllNaiveExplmer <- lmer(Weight~Group+Trial+Sex + (1|Frog_Number), data = AllNaiveExp)
+summary(AllNaiveExplmer)
+
+# get coefs from lmer
+coefs <- data.frame(coef(summary(AllNaivelmer)))
+
