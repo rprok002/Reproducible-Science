@@ -83,3 +83,89 @@ Sidesvar
 ## equal variance
 
 ## need to keep nonnormality above in mind for further tests
+
+## Data Analysis Live Naive Bd Volatiles
+LiveBdCon= read.csv(file.choose())
+LiveBdExp= read.csv(file.choose())
+LiveBdside = read.csv(file.choose())
+
+##Tests of Normality
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+
+## Control
+ggdensity(LiveBdCon$Average.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(LiveBdCon$Average.A)
+ggdensity(LiveBdCon$Average.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(LiveBdCon$Average.C)
+ggdensity(LiveBdCon$Average.Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdCon$Average.Neutral)
+ggdensity(LiveBdCon$Total, main = "Density Plot of Total", xlab = "Average Total")
+ggqqplot(LiveBdCon$Total)
+
+## Experiment
+ggdensity(LiveBdExp$Average.Control, main = "Density Plot of Average Control", xlab = "Average Control")
+ggqqplot(LiveBdExp$Average.Control)
+ggdensity(LiveBdExp$Average.Experiment, main = "Density Plot of Average Experiment", xlab = "Average Experiment")
+ggqqplot(LiveBdExp$Average.Experiment)
+ggdensity(LiveBdExp$Average.Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdExp$Average.Neutral)
+ggdensity(LiveBdExp$Total, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(LiveBdExp$Total)
+
+## Sides
+ggdensity(LiveBdside$Average.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(LiveBdside$Average.A)
+ggdensity(LiveBdside$Average.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(LiveBdside$Average.C)
+ggdensity(LiveBdside$Average.Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(LiveBdside$Average.Neutral)
+ggdensity(LiveBdside$Total, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(LiveBdside$Total)
+
+## Shapiro-Wilks test
+## Null: normal: Alt: not normal
+shapiro.test(LiveBdCon$Average.A)
+## normal
+shapiro.test(LiveBdCon$Average.C)
+## normal 
+shapiro.test(LiveBdCon$Average.Neutral)
+## normal
+shapiro.test(LiveBdCon$Total)
+## normal
+shapiro.test(LiveBdExp$Average.Control)
+## normal
+shapiro.test(LiveBdExp$Average.Experiment)
+## normal
+shapiro.test(LiveBdExp$Average.Neutral)
+## normal
+shapiro.test(LiveBdExp$Total)
+## normal
+## Can assume normality for both control and experiment pops
+shapiro.test(LiveBdside$Average.A)
+## normal
+shapiro.test(LiveBdside$Average.C)
+## normal
+shapiro.test(LiveBdside$Average.Neutral)
+## normal
+shapiro.test(LiveBdside$Total)
+## normal
+
+## can assume normality for all of these
+
+## Levene's test for equal variance
+## Null: all pop var are equal; Alt: at least two are different
+LiveBdConvar = read.csv(file.choose())
+LiveBdExpvar = read.csv(file.choose())
+LiveBdSidevar = read.csv(file.choose())
+library(car)
+Controlvar = leveneTest(Weight~Group, LiveBdConvar)
+Controlvar
+## equal variance
+Experimentvar = leveneTest(Weight~Group, LiveBdExpvar)
+Experimentvar
+## equal variance
+##Normal distribution and equal variance, can proceed with normal ANOVA
+Sidesvar = leveneTest(Weight~Group, LiveBdSidevar)
+Sidesvar
