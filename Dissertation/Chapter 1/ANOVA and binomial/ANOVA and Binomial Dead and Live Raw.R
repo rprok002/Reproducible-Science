@@ -183,13 +183,79 @@ AllNaiveExp <- read.csv(file.choose())
 AllNaiveCon <- read.csv(file.choose())
 
 ## Side
-ggdensity(AllNaiveside$Weight, main = "Density Plot of Average Side A", xlab = "Average Side A")
-ggqqplot(AllNaiveside$Weight)
-ggdensity($C.Standardized.Average, main = "Density Plot of Average Side C", xlab = "Average Side C")
-ggqqplot(DeadBdCon$C.Standardized.Average)
-ggdensity(DeadBdCon$Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
-ggqqplot(DeadBdCon$Neutral)
-ggdensity(DeadBdCon$Total, main = "Density Plot of Average Total", xlab = "Average Total")
-ggqqplot(DeadBdCon$Total)
+ggdensity(AllNaiveside$Average.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(AllNaiveside$Average.A)
+ggdensity(AllNaiveside$Average.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(AllNaiveside$Average.C)
+ggdensity(AllNaiveside$Average.Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(AllNaiveside$Average.Neutral)
+ggdensity(AllNaiveside$Average.Total, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(AllNaiveside$Average.Total)
 
+## Control
+ggdensity(AllNaiveCon$Average.A, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(AllNaiveCon$Average.A)
+ggdensity(AllNaiveCon$Average.C, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(AllNaiveCon$Average.C)
+ggdensity(AllNaiveCon$Average.Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(AllNaiveCon$Average.Neutral)
+ggdensity(AllNaiveCon$Average.Total, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(AllNaiveCon$Average.Total)
 
+## Experiment
+ggdensity(AllNaiveExp$Control.Average, main = "Density Plot of Control", xlab = "Average Control")
+ggqqplot(AllNaiveExp$Control.Average)
+ggdensity(AllNaiveExp$Experiment.Average, main = "Density Plot of Experiment", xlab = "Average Experiment")
+ggqqplot(AllNaiveExp$Experiment.Average)
+ggdensity(AllNaiveExp$Neutral.Average, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(AllNaiveExp$Neutral.Average)
+ggdensity(AllNaiveExp$Total.Average, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(AllNaiveExp$Total.Average)
+
+## Shapiro-Wilks test
+## Null: normal: Alt: not normal
+shapiro.test(AllNaiveCon$Average.A)
+## normal
+shapiro.test(AllNaiveCon$Average.C)
+## normal 
+shapiro.test(AllNaiveCon$Average.Neutral)
+## normal
+shapiro.test(AllNaiveCon$Average.Total)
+## normal
+shapiro.test(AllNaiveExp$Control.Average)
+## normal
+shapiro.test(AllNaiveExp$Experiment.Average)
+## normal
+shapiro.test(AllNaiveExp$Neutral.Average)
+## normal
+shapiro.test(AllNaiveExp$Total.Average)
+## normal
+## Can assume normality for both control and experiment pops
+shapiro.test(AllNaiveside$Average.A)
+## normal
+shapiro.test(AllNaiveside$Average.C)
+## not normal
+shapiro.test(AllNaiveside$Average.Neutral)
+## normal
+shapiro.test(AllNaiveside$Average.Total)
+## normal
+
+## combined data only not normal is side C for total sides data, should keep in mind
+
+## Levene's test for equal variance
+## Null: all pop var are equal; Alt: at least two are different
+AllBdConvar = read.csv(file.choose())
+AllBdExpvar = read.csv(file.choose())
+AllBdSidevar = read.csv(file.choose())
+library(car)
+AllControlvar = leveneTest(Weight~Group, AllBdConvar)
+AllControlvar
+## equal variance
+AllExperimentvar = leveneTest(Weight~Group, AllBdExpvar)
+AllExperimentvar
+## equal variance
+##Normal distribution and equal variance, can proceed with normal ANOVA
+AllSidesvar = leveneTest(Weight~Group, AllBdSidevar)
+AllSidesvar
+
+## All equal variance
