@@ -182,3 +182,14 @@ AllNaiveside <- read.csv(file.choose())
 AllNaiveExp <- read.csv(file.choose())
 AllNaiveCon <- read.csv(file.choose())
 
+## Side
+ggdensity(AllNaiveside$Weight, main = "Density Plot of Average Side A", xlab = "Average Side A")
+ggqqplot(AllNaiveside$Weight)
+ggdensity($C.Standardized.Average, main = "Density Plot of Average Side C", xlab = "Average Side C")
+ggqqplot(DeadBdCon$C.Standardized.Average)
+ggdensity(DeadBdCon$Neutral, main = "Density Plot of Average Neutral", xlab = "Average Neutral")
+ggqqplot(DeadBdCon$Neutral)
+ggdensity(DeadBdCon$Total, main = "Density Plot of Average Total", xlab = "Average Total")
+ggqqplot(DeadBdCon$Total)
+
+
