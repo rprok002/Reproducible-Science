@@ -169,3 +169,16 @@ Experimentvar
 ##Normal distribution and equal variance, can proceed with normal ANOVA
 Sidesvar = leveneTest(Weight~Group, LiveBdSidevar)
 Sidesvar
+
+## GLM for all naive frogs
+install.packages("lme4")
+install.packages("lmerTest")
+library(lme4)
+library(lmerTest)
+
+require(lmerTest)
+require(lme4)
+AllNaiveside <- read.csv(file.choose())
+AllNaiveExp <- read.csv(file.choose())
+AllNaiveCon <- read.csv(file.choose())
+
