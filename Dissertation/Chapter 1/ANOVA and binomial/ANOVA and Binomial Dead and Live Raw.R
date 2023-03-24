@@ -259,3 +259,49 @@ AllSidesvar = leveneTest(Weight~Group, AllBdSidevar)
 AllSidesvar
 
 ## All equal variance
+
+
+## GLM 
+# fit model sides
+AllNaivesidelmer <- lmer(Weight~Group*Type*Trial*Sex + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+library(emmeans)
+emmeans(AllNaivesidelmer, list (pairwise~Group), lmer.df = "satterthwaite")
+emmeans(AllNaivesidelmer, list (pairwise~Type), lmer.df = "satterthwaite")
+emmeans(AllNaivesidelmer, list (pairwise~Trial), lmer.df = "satterthwaite")
+emmeans(AllNaivesidelmer, list (pairwise~Sex), lmer.df = "satterthwaite")
+
+## Significance is really driven by group
+## Take away sex interaction
+AllNaivesidelmer <- lmer(Weight~Group*Type*Trial+Sex + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+## Doesn't change significance much, and interactions with other factors no longer significant
+## Take away trial interaction
+AllNaivesidelmer <- lmer(Weight~Group*Type*Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+## significance close to original model, interaction with sex is significant
+## Take away type interaction
+AllNaivesidelmer <- lmer(Weight~Group*Trial*Sex+Type + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+## significance not really changed from original and sex is not significant now
+## Take away group interaction
+AllNaivesidelmer <- lmer(Weight~Type*Trial*Sex+Group + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+## no interactions significant now 
+
+## Final model will have interaction of group and sex, because in original model with all interactions the ones with sex and group were significant
+AllNaivesidelmer <- lmer(Weight~Type+(Group*Sex)+Group+Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmer)
+car::Anova(AllNaivesidelmer, type="3")
+emmeans(AllNaivesidelmer, list (pairwise~Group), lmer.df = "satterthwaite")
+## no significance between A and C, still significance between A and N and C and N, and definitely between total
+
+## GLM with total but not group
+AllNaivesidelmertotal <- lmer(Total~Type+Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
+summary(AllNaivesidelmertotal)
+## No significant difference in total time between males and females, trials or type of frog so perhaps don't need in final model
