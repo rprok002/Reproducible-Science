@@ -282,18 +282,15 @@ car::Anova(AllNaiveExplmertotal, type="3")
 ## Slight significance with sex and total time, consider putting total time into experiment model
 
 # fit model sides
-AllNaivesidelmer <- lmer(Weight~Group*Type*Trial*Sex + (1|Frog_Number), data = AllBdSidevar)
+## care about sex difference and difference between corresponding groups in control and experiment frogs
+AllNaivesidelmer <- lmer(Weight~Group*Type*Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
 summary(AllNaivesidelmer)
-car::Anova(AllNaivesidelmer, type="3")
-library(emmeans)
-emmeans(AllNaivesidelmer, list (pairwise~Group), lmer.df = "satterthwaite")
-emmeans(AllNaivesidelmer, list (pairwise~Type), lmer.df = "satterthwaite")
-emmeans(AllNaivesidelmer, list (pairwise~Trial), lmer.df = "satterthwaite")
-emmeans(AllNaivesidelmer, list (pairwise~Sex), lmer.df = "satterthwaite")
+emmeans(AllNaivesidelmer, list (pairwise~Group*Type*Sex), lmer.df = "satterthwaite")
+## trials are not significantly different
 
 ## Significance is really driven by group
 ## Take away sex interaction
-AllNaivesidelmer <- lmer(Weight~Group*Type*Trial+Sex + (1|Frog_Number), data = AllBdSidevar)
+AllNaivesidelmer <- lmer(Weight~Group+Type+Trial+Sex + (1|Frog_Number), data = AllBdSidevar)
 summary(AllNaivesidelmer)
 car::Anova(AllNaivesidelmer, type="3")
 ## Doesn't change significance much, and interactions with other factors no longer significant
@@ -318,13 +315,16 @@ AllNaivesidelmer <- lmer(Weight~Type+(Group*Sex)+(Group*Type)+Group+Sex+Trial + 
 summary(AllNaivesidelmer)
 car::Anova(AllNaivesidelmer, type="3")
 ## Type and group interaction not significant, so removing
+## Same with interaction of trial and sex, not significant
 
-## Final model will have interaction of group and sex, because in original model with all interactions the ones with sex and group were significant
-AllNaivesidelmer <- lmer(Weight~Type+(Group*Sex)+Group+Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
+## Final model will have interaction of group and sex and type
+AllNaivesidelmer <- lmer(Weight~Trial+(Group*Sex*Type) + (1|Frog_Number), data = AllBdSidevar)
 summary(AllNaivesidelmer)
 car::Anova(AllNaivesidelmer, type="3")
-emmeans(AllNaivesidelmer, list (pairwise~Group*Sex), lmer.df = "satterthwaite")
-## no significance between A and C, still significance between A and N and C and N
+emmeans(AllNaivesidelmer, list (pairwise~Group*Sex*Type), lmer.df = "satterthwaite")
+emmeans(AllNaivesidelmer, list (pairwise~Trial), lmer.df = "satterthwaite")
+## only considering interactions within trials
+## AEM-NEM, CEM-NEM, AEF-NEF
 
 ## fit model control
 AllNaiveConlmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdConvar)
@@ -337,6 +337,10 @@ AllNaiveConlmer <- lmer(Weight~Group*Trial+Sex + (1|Frog_Number), data = AllBdCo
 summary(AllNaiveConlmer)
 car::Anova(AllNaiveConlmer, type="3")
 ## No interactions are significant
+
+## Boxplots
+ggboxplot(LiveBdSidevar, x = "Group", y = "Weight", 
+          color = "Sex")
 
 ## Take away trial interaction
 AllNaiveConlmer <- lmer(Weight~Group*Sex+Trial + (1|Frog_Number), data = AllBdConvar)
@@ -368,3 +372,16 @@ AllNaiveExplmer <- lmer(Weight~Group+Trial+Sex + (1|Frog_Number), data = AllBdEx
 summary(AllNaiveExplmer)
 emmeans(AllNaiveExplmer, list (pairwise~Group), lmer.df = "satterthwaite")
 ## Significant difference between control and and neutral and exp and neutral but not control and exp
+
+## Boxplot
+library(ggplot2)
+library(multcompView)
+library(dplyr)
+library(graphics)
+ggboxplot(AllBdSidevar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
+          palette = c("slateblue4", "purple1")) + facet_wrap(~Type, dir = "h", scales = "fixed") +
+  scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral")) 
+
+
+
+
