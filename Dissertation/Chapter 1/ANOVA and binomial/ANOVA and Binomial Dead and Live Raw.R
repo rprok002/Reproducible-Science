@@ -262,6 +262,7 @@ AllSidesvar
 
 
 ## GLM 
+library(emmeans)
 
 ## GLM side with total but not group
 AllNaivesidelmertotal <- lmer(Total~Type+Sex+Trial + (1|Frog_Number), data = AllBdSidevar)
@@ -327,51 +328,33 @@ emmeans(AllNaivesidelmer, list (pairwise~Trial), lmer.df = "satterthwaite")
 ## AEM-NEM, CEM-NEM, AEF-NEF
 
 ## fit model control
+
+## GLM side with total but not group
+AllNaiveConlmertotal <- lmer(Total~Trial*Sex + (1|Frog_Number), data = AllBdConvar)
+summary(AllNaiveConlmertotal)
+## No significant difference in total time between males and females, trials so perhaps don't need in final model
+
+
 AllNaiveConlmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdConvar)
 summary(AllNaiveConlmer)
-car::Anova(AllNaiveConlmer, type="3")
-## Interaction between all three predictors is significant
+## No significance in any interactions
 
-## Take away sex interaction
-AllNaiveConlmer <- lmer(Weight~Group*Trial+Sex + (1|Frog_Number), data = AllBdConvar)
-summary(AllNaiveConlmer)
-car::Anova(AllNaiveConlmer, type="3")
-## No interactions are significant
-
-## Boxplots
-ggboxplot(LiveBdSidevar, x = "Group", y = "Weight", 
-          color = "Sex")
-
-## Take away trial interaction
-AllNaiveConlmer <- lmer(Weight~Group*Sex+Trial + (1|Frog_Number), data = AllBdConvar)
-summary(AllNaiveConlmer)
-car::Anova(AllNaiveConlmer, type="3")
-## No interactions are significant
-
-## Take away group interaction
-AllNaiveConlmer <- lmer(Weight~Trial*Sex+Group + (1|Frog_Number), data = AllBdConvar)
-summary(AllNaiveConlmer)
-car::Anova(AllNaiveConlmer, type="3")
-## No significant interactions
-
-## Because interaction between all predictors is fairly significant, will keep that model
-AllNaiveConlmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdConvar)
-summary(AllNaiveConlmer)
-Anova(AllNaiveConlmer, type="3")
+## Because want to be able to comment on differences between sex in different trials and such, will keep interactions in model
 emmeans(AllNaiveConlmer, list (pairwise~Group*Trial*Sex), lmer.df = "satterthwaite")
-## Without considering interactions the say nothing is significant, but the interactions
-## say that there is a significant difference between time in side A with dead volatile females and 
-## time in 
 
 ## fit model experiment
+
+## GLM side with total but not group
+AllNaiveExplmertotal <- lmer(Total~Trial*Sex + (1|Frog_Number), data = AllBdExpvar)
+summary(AllNaiveExplmertotal)
+## No significant difference in total time between males and females, trials so perhaps don't need in final model
 AllNaiveExplmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdExpvar)
 summary(AllNaiveExplmer)
-car::Anova(AllNaiveConlmer, type="3")
-## No interaction effects, only significant is in N group, so using model with no interaction
-AllNaiveExplmer <- lmer(Weight~Group+Trial+Sex + (1|Frog_Number), data = AllBdExpvar)
-summary(AllNaiveExplmer)
-emmeans(AllNaiveExplmer, list (pairwise~Group), lmer.df = "satterthwaite")
-## Significant difference between control and and neutral and exp and neutral but not control and exp
+## No significance in any interactions
+
+## Because want to be able to comment on differences between sex in different trials and such, will keep interactions in model
+emmeans(AllNaiveExplmer, list (pairwise~Group*Trial*Sex), lmer.df = "satterthwaite")
+##EDF-NDF, ELF-NLF, CLM-NLM, ELM-NLM
 
 ## Boxplot
 library(ggplot2)
@@ -382,6 +365,11 @@ ggboxplot(AllBdSidevar, x = "Group", y = "Weight", color = "Sex", ylab = "Averag
           palette = c("slateblue4", "purple1")) + facet_wrap(~Type, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral")) 
 
+ggboxplot(AllBdConvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
+          palette = c("slateblue4", "purple1")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
+  scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral"))
 
-
+ggboxplot(AllBdExpvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
+          palette = c("slateblue4", "purple1")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
+  scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"), labels=c("Control","Experiment", "Neutral"))
 
