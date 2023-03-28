@@ -362,14 +362,77 @@ library(multcompView)
 library(dplyr)
 library(graphics)
 ggboxplot(AllBdSidevar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
-          palette = c("slateblue4", "purple1")) + facet_wrap(~Type, dir = "h", scales = "fixed") +
+          palette = c("black", "grey")) + facet_wrap(~Type, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral")) 
 
 ggboxplot(AllBdConvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
-          palette = c("slateblue4", "purple1")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
+          palette = c("black", "grey")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral"))
 
 ggboxplot(AllBdExpvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
-          palette = c("slateblue4", "purple1")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
+          palette = c("black", "grey")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"), labels=c("Control","Experiment", "Neutral"))
 
+## Stacked barplots
+install.packages("ggplot2")
+install.packages("ggpattern")
+library(ggplot2)
+library(ggpattern)
+AllBdConvar[AllBdConvar$Trial=="Dead",]
+AllBdConvar[AllBdConvar$Trial=="Live",]
+AllBdExpvar[AllBdExpvar$Trial=="Dead",]
+AllBdExpvar[AllBdExpvar$Trial=="Live",]
+ggplot(AllBdConvar[AllBdConvar$Trial=="Dead",], aes(fill = Group, y = Weight, x = Frog_Number, label = Sex))+
+  geom_bar(position = "stack", stat = "identity", color = "black")+
+  facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
+  theme_bw()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "white"),
+        plot.title = element_text(hjust = 0.7))+
+  xlab("Frog Number") + ylab("Average Time") + 
+  labs(fill = "Location")+
+  scale_fill_manual(values = c("black", "white", "grey"), 
+                    labels = c("Side A", "Side C", "Neutral"))
+  
+ 
+
+ggplot(AllBdConvar[AllBdConvar$Trial=="Live",], aes(fill = Group, y = Weight, x = Frog_Number))+
+  geom_bar(position = "dodge", stat = "identity")+
+  facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
+  theme_bw()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "white"),
+        plot.title = element_text(hjust = 0.7))+
+  xlab("Frog Number") + ylab("Average Time") + 
+  labs(fill = "Location")+
+  scale_fill_manual(values = c("black", "white", "grey"), 
+                    labels = c("Side A", "Side C", "Neutral"))+
+  geom_bar_pattern(stat = "identity",
+                   aes(pattern = Sex),
+                   pattern_density = 0.3,
+                   pattern_size = 0.2)
+ggplot(AllBdExpvar[AllBdExpvar$Trial=="Dead",], aes(fill = Group, y = Weight, x = Frog_Number))+
+  geom_bar(position = "stack", stat = "identity", color = "black")+
+  facet_grid(.~Frog_Number, scales = "free_x", switch = "x")+
+  theme_bw()+
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(),
+        panel.border = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        strip.background = element_rect(fill = "white", colour = "white"),
+        plot.title = element_text(hjust = 0.7))+
+  xlab("Frog Number") + ylab("Average Time") + 
+  labs(fill = "Location")+
+  scale_fill_manual(values = c("black", "white", "grey"), 
+                    labels = c("Control", "Experiment", "Neutral"))
+  
+  
+library(devtools)
+install_github("coolbutuseless/ggpattern", force = TRUE) ## bypass ggpattern issues and downloading from github
+ 
