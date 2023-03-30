@@ -330,14 +330,15 @@ emmeans(AllNaivesidelmer, list (pairwise~Trial), lmer.df = "satterthwaite")
 ## fit model control
 
 ## GLM side with total but not group
-AllNaiveConlmertotal <- lmer(Total~Trial*Sex + (1|Frog_Number), data = AllBdConvar)
+AllNaiveConlmertotal <- lmer(Total~Trial+Sex + (1|Frog_Number), data = AllBdConvar)
 summary(AllNaiveConlmertotal)
 ## No significant difference in total time between males and females, trials so perhaps don't need in final model
 
 
 AllNaiveConlmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdConvar)
 summary(AllNaiveConlmer)
-## No significance in any interactions
+## No significance in any interactions, so no interactions in final model
+
 
 ## Because want to be able to comment on differences between sex in different trials and such, will keep interactions in model
 emmeans(AllNaiveConlmer, list (pairwise~Group*Trial*Sex), lmer.df = "satterthwaite")
@@ -345,7 +346,7 @@ emmeans(AllNaiveConlmer, list (pairwise~Group*Trial*Sex), lmer.df = "satterthwai
 ## fit model experiment
 
 ## GLM side with total but not group
-AllNaiveExplmertotal <- lmer(Total~Trial*Sex + (1|Frog_Number), data = AllBdExpvar)
+AllNaiveExplmertotal <- lmer(Total~Trial+Sex + (1|Frog_Number), data = AllBdExpvar)
 summary(AllNaiveExplmertotal)
 ## No significant difference in total time between males and females, trials so perhaps don't need in final model
 AllNaiveExplmer <- lmer(Weight~Group*Trial*Sex + (1|Frog_Number), data = AllBdExpvar)
