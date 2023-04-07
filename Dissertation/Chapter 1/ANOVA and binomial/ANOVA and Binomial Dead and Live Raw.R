@@ -363,7 +363,7 @@ library(multcompView)
 library(dplyr)
 library(graphics)
 ggboxplot(AllBdSidevar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
-          palette = c("black", "grey")) + facet_wrap(~Type, dir = "h", scales = "fixed") +
+          palette = c("black", "grey"), ylim = c(0, 50)) + facet_wrap(~Type, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral")) 
 
 ggboxplot(AllBdConvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
@@ -371,7 +371,7 @@ ggboxplot(AllBdConvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average
   scale_x_discrete(breaks=c("Aprop","Cprop","Nprop"), labels=c("Side A","Side C", "Neutral"))
 
 ggboxplot(AllBdExpvar, x = "Group", y = "Weight", color = "Sex", ylab = "Average Time", xlab = "Location",
-          palette = c("black", "grey")) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
+          palette = c("black", "grey"), ylim = c(0,50)) + facet_wrap(~Trial, dir = "h", scales = "fixed") +
   scale_x_discrete(breaks=c("Conprop","Expprop","Nprop"), labels=c("Control","Experiment", "Neutral"))
 
 ## Stacked barplots
