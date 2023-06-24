@@ -166,3 +166,83 @@ LearnedLiveVar
 ## equal variance
 
 ## mostly equal variance across the board, except learned control 
+
+## GLMs
+install.packages("lme4")
+install.packages("lmerTest")
+library(lme4)
+library(lmerTest)
+
+require(lmerTest)
+require(lme4)
+library(emmeans)
+
+
+## Naive Control
+NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (Trial.Order) , data = NaiveControlAnalysis)
+summary(NaiveControlGLM)
+car::Anova(NaiveControlGLM, type="3")
+emmeans(NaiveControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlAnalysis)
+summary(NaiveControlGLM)
+car::Anova(NaiveControlGLM, type="3")
+emmeans(NaiveControlGLM, list (pairwise~(Group)), lmer.df = "satterthwaite")
+
+## no variation in frog number, liquid amount or trial order 
+## sig diff between time spent in A versus C, more time in C I think
+## Naive Dead
+
+NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadAnalysis)
+summary(NaiveDeadGLM)
+car::Anova(NaiveDeadGLM, type="3")
+emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## more in dead than control
+
+## Naive Live
+NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveAnalysis)
+summary(NaiveLiveGLM)
+car::Anova(NaiveLiveGLM, type="3")
+emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Learned Control
+LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedControlAnalysis)
+summary(LearnedControlGLM)
+car::Anova(LearnedControlGLM, type="3")
+emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Learned Dead
+LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedDeadAnalysis)
+summary(LearnedDeadGLM)
+car::Anova(LearnedDeadGLM, type="3")
+emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Learned Live
+LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedLiveAnalysis)
+summary(LearnedLiveGLM)
+car::Anova(LearnedLiveGLM, type="3")
+emmeans(LearnedLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Control
+AllControlAnalysis <- read.csv(file.choose())
+AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllControlAnalysis)
+summary(AllControlGLM)
+car::Anova(AllControlGLM, type="3")
+emmeans(AllControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Dead
+AllDeadAnalysis <- read.csv(file.choose())
+AllDeadGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllDeadAnalysis)
+summary(AllDeadGLM)
+car::Anova(AllDeadGLM, type="3")
+emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
+
+## Time of Learned in Con compared to time of Naive in Dead is sig diff, but not relavent to data
+
+## Live
+AllLiveAnalysis <- read.csv(file.choose())
+AllLiveGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllLiveAnalysis)
+summary(AllLiveGLM)
+car::Anova(AllLiveGLM, type="3")
+emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
