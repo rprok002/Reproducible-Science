@@ -176,65 +176,73 @@ library(lmerTest)
 require(lmerTest)
 require(lme4)
 library(emmeans)
-
+library(multcomp)
 
 ## Naive Control
-NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (Trial.Order) , data = NaiveControlAnalysis)
-summary(NaiveControlGLM)
-car::Anova(NaiveControlGLM, type="3")
-emmeans(NaiveControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
-
 NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlAnalysis)
 summary(NaiveControlGLM)
-car::Anova(NaiveControlGLM, type="3")
-emmeans(NaiveControlGLM, list (pairwise~(Group)), lmer.df = "satterthwaite")
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlGLM)
+## contrasts
+emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 
+## going to stick with emmeans, seems when there are only one comparison possibility then should use fixed
+## effects instead of doing the emmeans, it isn't necessary to go deeper
 ## no variation in frog number, liquid amount or trial order 
-## sig diff between time spent in A versus C, more time in C I think
-## Naive Dead
+## 0.05 for group, so just not significant
 
+## Naive Dead
 NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadAnalysis)
-summary(NaiveDeadGLM)
-car::Anova(NaiveDeadGLM, type="3")
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveDeadGLM)
 emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## more in dead than control
 
 ## Naive Live
 NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveAnalysis)
-summary(NaiveLiveGLM)
-car::Anova(NaiveLiveGLM, type="3")
+anova(NaiveLiveGLM)
 emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Learned Control
 LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedControlAnalysis)
-summary(LearnedControlGLM)
+anova(LearnedControlGLM)
 car::Anova(LearnedControlGLM, type="3")
 emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
+
 ## Learned Dead
 LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedDeadAnalysis)
-summary(LearnedDeadGLM)
+anova(LearnedDeadGLM)
 car::Anova(LearnedDeadGLM, type="3")
 emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Learned Live
 LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedLiveAnalysis)
-summary(LearnedLiveGLM)
+anova(LearnedLiveGLM)
 car::Anova(LearnedLiveGLM, type="3")
 emmeans(LearnedLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Control
 AllControlAnalysis <- read.csv(file.choose())
 AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllControlAnalysis)
-summary(AllControlGLM)
+anova(AllControlGLM)
+
+## Group:Type is 0.05 when rounding and no emmeans are significant to calling it nonsignificant, also emmeans that is the most significant
+## is between two levels that aren't important
 car::Anova(AllControlGLM, type="3")
-emmeans(AllControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
+
+AllControlpost.hoc <- glht(AllControlGLM, linfct = mcp(Group = 'Tukey'))
+# displaying the result table with summary()
+summary(AllControlpost.hoc)
+
 
 ## Dead
 AllDeadAnalysis <- read.csv(file.choose())
 AllDeadGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllDeadAnalysis)
 summary(AllDeadGLM)
+anova(AllDeadGLM)
 car::Anova(AllDeadGLM, type="3")
 emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 
@@ -243,6 +251,82 @@ emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 ## Live
 AllLiveAnalysis <- read.csv(file.choose())
 AllLiveGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllLiveAnalysis)
-summary(AllLiveGLM)
+anova(AllLiveGLM)
 car::Anova(AllLiveGLM, type="3")
 emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
+
+## Boxplot
+library(ggplot2)
+library(multcompView)
+library(dplyr)
+library(graphics)
+library(ggsignif)
+
+ggboxplot(NaiveControlAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 70), title = "Naive Control") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1967.67 ; DF: 2,41 ; p = 0.05")
+
+ggboxplot(NaiveDeadAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "deepskyblue1", ylim = c(0, 70), title = "Naive Dead") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1608.98 ; DF: 2,29 ; p = 0.05")
+
+ggboxplot(NaiveLiveAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "darkviolet", ylim = c(0, 70), title = "Naive Live") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1300.4 ; DF: 2,17 ; p = 0.03")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 55)
+
+ggboxplot(LearnedControlAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 70), title = "Learned Control") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1172.85 ; DF: 2,32 ; p = 0.02")+
+  geom_signif(comparisons = list(c("ConA", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 55)
+
+ggboxplot(LearnedDeadAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "deepskyblue1", ylim = c(0, 70), title = "Learned Dead") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1094.25 ; DF: 2,26 ; p = 0.14")
+
+ggboxplot(LearnedLiveAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "darkviolet", ylim = c(0, 70), title = "Learned Live") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 449.25 ; DF: 2,26 ; p = 0.28")
+
+ggboxplot(AllControlAnalysis, x = "Group", y = "Weight", fill = "grey80", ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 70), title = "All Control") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 1438.33 ; DF: 2,74 ; p = 0.05")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllDeadAnalysis, x = "Group", y = "Weight", fill = "deepskyblue1", ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 70), title = "All Dead") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 2310.96 ; DF: 2,56 ; p = 0.01")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllLiveAnalysis, x = "Group", y = "Weight", fill = "darkviolet", ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 70), title = "All Live") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,70,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=3, y=65, label= "SS: 241.50 ; DF: 2,44 ; p = 0.47")+
+  scale_color_manual(values=c("black", "grey60"))
+  
