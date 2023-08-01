@@ -186,6 +186,18 @@ anova(NaiveControlGLM)
 ## contrasts
 emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount+ Trial.Order, data = NaiveControlAnalysis)
+summary(NaiveControlGLM)
+
+## trial order and liquid amount also don't do anything as predictors, removing from model
+NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveControlAnalysis)
+summary(NaiveControlGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlGLM)
+## contrasts
+emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+
 ## going to stick with emmeans, seems when there are only one comparison possibility then should use fixed
 ## effects instead of doing the emmeans, it isn't necessary to go deeper
 ## no variation in frog number, liquid amount or trial order 
@@ -193,6 +205,18 @@ emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 
 ## Naive Dead
 NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadAnalysis)
+summary(NaiveDeadGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveDeadGLM)
+emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveDeadAnalysis)
+summary(NaiveDeadGLM)
+
+## trial order and liquid amount also don't do anything as predictors, removing from model
+NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = NaiveDeadAnalysis)
+summary(NaiveDeadGLM)
 ## Type III Analysis of Variance with Satterthwaite
 anova(NaiveDeadGLM)
 emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
@@ -201,6 +225,17 @@ emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Naive Live
 NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveAnalysis)
+summary(NaiveLiveGLM)
+anova(NaiveLiveGLM)
+emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = NaiveLiveAnalysis)
+summary(NaiveLiveGLM)
+
+## trial order and liquid amount also don't do anything as predictors, removing from model
+NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveLiveAnalysis)
+summary(NaiveLiveGLM)
 anova(NaiveLiveGLM)
 emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
@@ -216,6 +251,12 @@ LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liqui
 anova(LearnedDeadGLM)
 car::Anova(LearnedDeadGLM, type="3")
 emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = LearnedDeadAnalysis)
+anova(LearnedDeadGLM)
+car::Anova(LearnedDeadGLM, type="3")
+emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+## might have significance in a simple ANOVA, need to run again 
 
 ## Learned Live
 LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedLiveAnalysis)
