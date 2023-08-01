@@ -241,25 +241,54 @@ emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Learned Control
 LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedControlAnalysis)
+summary(LearnedControlGLM)
 anova(LearnedControlGLM)
 car::Anova(LearnedControlGLM, type="3")
 emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedControlAnalysis)
+summary(LearnedControlGLM)
+
+## trial order and liquid affect (ish) as predictors, keeping in model
+LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedControlAnalysis)
+summary(LearnedControlGLM)
+anova(LearnedControlGLM)
+emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Learned Dead
 LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedDeadAnalysis)
+summary(LearnedDeadGLM)
 anova(LearnedDeadGLM)
 car::Anova(LearnedDeadGLM, type="3")
 emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = LearnedDeadAnalysis)
+summary(LearnedDeadGLM)
+
+## trial order and liquid amount also don't do anything as predictors, removing from model
 LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = LearnedDeadAnalysis)
+summary(LearnedDeadGLM)
 anova(LearnedDeadGLM)
 car::Anova(LearnedDeadGLM, type="3")
 emmeans(LearnedDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
-## might have significance in a simple ANOVA, need to run again 
+## no significance
 
 ## Learned Live
 LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedLiveAnalysis)
+summary(LearnedLiveGLM)
+anova(LearnedLiveGLM)
+car::Anova(LearnedLiveGLM, type="3")
+emmeans(LearnedLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedLiveAnalysis)
+summary(LearnedLiveGLM)
+
+## trial order and liquid amount also don't do anything as predictors, removing from model
+LearnedLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = LearnedLiveAnalysis)
+summary(LearnedLiveGLM)
 anova(LearnedLiveGLM)
 car::Anova(LearnedLiveGLM, type="3")
 emmeans(LearnedLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
