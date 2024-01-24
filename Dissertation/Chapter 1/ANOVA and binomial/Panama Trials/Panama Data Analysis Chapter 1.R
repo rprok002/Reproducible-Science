@@ -114,7 +114,7 @@ ggdensity(NaiveDeadFIU$Total_Fraction, main = "Density Plot of Total", xlab = "T
 ggqqplot(NaiveDeadFIU$Total_Fraction)
 
 ## Naive Live FIU
-ggdensity(NaiveLiveFIU$Control_Fraction, main = "Density Plot of Contro,", xlab = "Control")
+ggdensity(NaiveLiveFIU$Control_Fraction, main = "Density Plot of Control,", xlab = "Control")
 ggqqplot(NaiveLiveFIU$Control_Fraction)
 ggdensity(NaiveLiveFIU$Experiment_Fraction, main = "Live", xlab = "Live")
 ggqqplot(NaiveLiveFIU$Experiment_Fraction)
@@ -143,8 +143,8 @@ ggqqplot(NaiveDeadFIUPanama$Neutral_Fraction)
 ggdensity(NaiveDeadFIUPanama$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
 ggqqplot(NaiveDeadFIUPanama$Total_Fraction)
 
-## Naive Live FIU
-ggdensity(NaiveLiveFIUPanama$Control_Fraction, main = "Density Plot of Contro,", xlab = "Control")
+## Naive Live FIU Panama
+ggdensity(NaiveLiveFIUPanama$Control_Fraction, main = "Density Plot of Control,", xlab = "Control")
 ggqqplot(NaiveLiveFIUPanama$Control_Fraction)
 ggdensity(NaiveLiveFIUPanama$Experiment_Fraction, main = "Live", xlab = "Live")
 ggqqplot(NaiveLiveFIUPanama$Experiment_Fraction)
@@ -275,14 +275,22 @@ shapiro.test(NaiveLiveFIUPanama$Neutral_Fraction)
 shapiro.test(NaiveLiveFIUPanama$Total_Fraction)
 ## normal
 
-## Naive Control Panama: not normal
-## Learned Control: slightly not normal
-## Naive Dead: normal
-## Learned Dead: not normal
-## Naive live: not normal
-## Learned live: normal
+## Naive Control Panama: A and C not normal, neutral and total normal
+## Learned Control Panama:  not normal
+## Naive Dead Panama: Con and Dead not noarmal, neutral and total normal
+## Learned Dead Panama: not normal
+## Naive Live Panama: Live not normal, rest normal
+## Learned Live Panama: neutral normal, rest not normal
+## Naive Control FIU Live: A not normal, rest normal
+## Naive Control FIU Dead: A and C not normal, neutral and total normal
+## Naive Dead FIU: normal
+## Naive Live FIU: Con and Total not normal, Live and neutral normal
+## Naive Control FIU Panama: A and C not normal, neutral and total normal
+## Naive Dead FIU Panama: Con and Dead not normal, neutral and total normal
+## Naive Live FIU Panama: Con and Live not normal, neutral and total normal
 
-## Naive seems less normal than learned, but overall not normally distributed. GLM can run on nonnormal data
+## Most are not normal, but GLM can run on nonnormal data so will run. 
+## Combining FIU and Panama doesn't affect Control or Dead, turns Con for Live not normal
 
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
