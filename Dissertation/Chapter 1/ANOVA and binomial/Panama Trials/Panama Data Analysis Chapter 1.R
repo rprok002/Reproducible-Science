@@ -9,6 +9,9 @@ NaiveControlFIUlive= read.csv(file.choose())
 NaiveControlFIUdead= read.csv(file.choose())
 NaiveDeadFIU= read.csv(file.choose())
 NaiveLiveFIU = read.csv(file.choose())
+NaiveControlFIUPanama = read.csv(file.choose())
+NaiveDeadFIUPanama = read.csv(file.choose())
+NaiveLiveFIUPanama = read.csv(file.choose())
 
 ##Tests of Normality
 install.packages("ggpubr")
@@ -60,7 +63,7 @@ ggqqplot(LearnedDeadPanama$Total_Fraction)
 ## not really normal all around
 
 ## Naive Live
-ggdensity(NaiveLivePanama$Control_Fraction, main = "Density Plot of Contro,", xlab = "Control")
+ggdensity(NaiveLivePanama$Control_Fraction, main = "Density Plot of Control,", xlab = "Control")
 ggqqplot(NaiveLivePanama$Control_Fraction)
 ggdensity(NaiveLivePanama$Experiment_Fraction, main = "Live", xlab = "Live")
 ggqqplot(NaiveLivePanama$Experiment_Fraction)
@@ -110,7 +113,7 @@ ggqqplot(NaiveDeadFIU$Neutral_Fraction)
 ggdensity(NaiveDeadFIU$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
 ggqqplot(NaiveDeadFIU$Total_Fraction)
 
-## Naive Live
+## Naive Live FIU
 ggdensity(NaiveLiveFIU$Control_Fraction, main = "Density Plot of Contro,", xlab = "Control")
 ggqqplot(NaiveLiveFIU$Control_Fraction)
 ggdensity(NaiveLiveFIU$Experiment_Fraction, main = "Live", xlab = "Live")
@@ -120,70 +123,166 @@ ggqqplot(NaiveLiveFIU$Neutral_Fraction)
 ggdensity(NaiveLiveFIU$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
 ggqqplot(NaiveLiveFIU$Total_Fraction)
 
+## Naive Control FIU Panama
+ggdensity(NaiveControlFIUPanama$Side_A_Fraction, main = "Density Plot of Side A", xlab = " Side A")
+ggqqplot(NaiveControlFIUPanama$Side_A_Fraction)
+ggdensity(NaiveControlFIUPanama$Side_C_Fraction, main = "Density Plot of Side C", xlab = " Side C")
+ggqqplot(NaiveControlFIUPanama$Side_C_Fraction)
+ggdensity(NaiveControlFIUPanama$Neutral_Fraction, main = "Density Plot of Neutral", xlab = "Neutral")
+ggqqplot(NaiveControlFIUPanama$Neutral_Fraction)
+ggdensity(NaiveControlFIUPanama$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
+ggqqplot(NaiveControlFIUPanama$Total_Fraction)
+
+## Naive Dead FIU Panama
+ggdensity(NaiveDeadFIUPanama$Control_Fraction, main = "Density Plot of Control", xlab = "Control")
+ggqqplot(NaiveDeadFIUPanama$Control_Fraction)
+ggdensity(NaiveDeadFIUPanama$Experiment_Fraction, main = "Density Plot of Dead", xlab = "Dead")
+ggqqplot(NaiveDeadFIUPanama$Experiment_Fraction)
+ggdensity(NaiveDeadFIUPanama$Neutral_Fraction, main = "Density Plot of Neutral", xlab = "Neutral")
+ggqqplot(NaiveDeadFIUPanama$Neutral_Fraction)
+ggdensity(NaiveDeadFIUPanama$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
+ggqqplot(NaiveDeadFIUPanama$Total_Fraction)
+
+## Naive Live FIU
+ggdensity(NaiveLiveFIUPanama$Control_Fraction, main = "Density Plot of Contro,", xlab = "Control")
+ggqqplot(NaiveLiveFIUPanama$Control_Fraction)
+ggdensity(NaiveLiveFIUPanama$Experiment_Fraction, main = "Live", xlab = "Live")
+ggqqplot(NaiveLiveFIUPanama$Experiment_Fraction)
+ggdensity(NaiveLiveFIUPanama$Neutral_Fraction, main = "Density Plot of Neutral", xlab = "Neutral")
+ggqqplot(NaiveLiveFIUPanama$Neutral_Fraction)
+ggdensity(NaiveLiveFIUPanama$Total_Fraction, main = "Density Plot of Total", xlab = "Total")
+ggqqplot(NaiveLiveFIUPanama$Total_Fraction)
+
+
 ## Shapiro-Wilks test
 ## Null: normal: Alt: not normal
-shapiro.test(NaiveControl$Side_A_Fraction)
+shapiro.test(NaiveControlPanama$Side_A_Fraction)
 ## not normal
-shapiro.test(NaiveControl$Side_C_Fraction)
+shapiro.test(NaiveControlPanama$Side_C_Fraction)
 ## not normal
-shapiro.test(NaiveControl$Neutral_Fraction)
+shapiro.test(NaiveControlPanama$Neutral_Fraction)
 ## normal
-shapiro.test(NaiveControl$Total_Fraction)
+shapiro.test(NaiveControlPanama$Total_Fraction)
 ## normal
 
-shapiro.test(LearnedControl$Side_A_Fraction)
+shapiro.test(LearnedControlPanama$Side_A_Fraction)
+## not normal
+shapiro.test(LearnedControlPanama$Side_C_Fraction)
+## not normal
+shapiro.test(LearnedControlPanama$Neutral_Fraction)
+## not normal
+shapiro.test(LearnedControlPanama$Total_Fraction)
+## not normal
+
+shapiro.test(NaiveDeadPanama$Control_Fraction)
+## not normal
+shapiro.test(NaiveDeadPanama$Experiment_Fraction)
+## not normal
+shapiro.test(NaiveDeadPanama$Neutral_Fraction)
 ## normal
-shapiro.test(LearnedControl$Side_C_Fraction)
+shapiro.test(NaiveDeadPanama$Total_Fraction)
+## normal
+
+shapiro.test(LearnedDeadPanama$Control_Fraction)
+## not normal
+shapiro.test(LearnedDeadPanama$Experiment_Fraction)
+## not normal
+shapiro.test(LearnedDeadPanama$Neutral_Fraction)
+## not normal
+shapiro.test(LearnedDeadPanama$Total_Fraction)
+## not normal
+
+shapiro.test(NaiveLivePanama$Control_Fraction)
+## normal
+shapiro.test(NaiveLivePanama$Experiment_Fraction)
+## not normal
+shapiro.test(NaiveLivePanama$Neutral_Fraction)
+## normal
+shapiro.test(NaiveLivePanama$Total_Fraction)
+## normal
+
+shapiro.test(LearnedLivePanama$Control_Fraction)
+## not normal
+shapiro.test(LearnedLivePanama$Experiment_Fraction)
+## not normal
+shapiro.test(LearnedLivePanama$Neutral_Fraction)
+## normal
+shapiro.test(LearnedLivePanama$Total_Fraction)
+## not normal
+
+shapiro.test(NaiveControlFIUlive$Side_A_Fraction)
+## not normal
+shapiro.test(NaiveControlFIUlive$Side_C_Fraction)
+## normal
+shapiro.test(NaiveControlFIUlive$Neutral_Fraction)
+## normal
+shapiro.test(NaiveControlFIUlive$Total_Fraction)
+## normal
+
+shapiro.test(NaiveControlFIUdead$Side_A_Fraction)
 ## slightly not normal
-shapiro.test(LearnedControl$Neutral_Fraction)
-## normal
-shapiro.test(LearnedControl$Total_Fraction)
-## normal
-
-shapiro.test(NaiveDead$Control_Fraction)
-## normal
-shapiro.test(NaiveDead$Experiment_Fraction)
-## normal
-shapiro.test(NaiveDead$Neutral_Fraction)
-## normal
-shapiro.test(NaiveDead$Total_Fraction)
-## normal
-
-shapiro.test(LearnedDead$Control_Fraction)
+shapiro.test(NaiveControlFIUdead$Side_C_Fraction)
 ## not normal
-shapiro.test(LearnedDead$Experiment_Fraction)
+shapiro.test(NaiveControlFIUdead$Neutral_Fraction)
 ## normal
-shapiro.test(LearnedDead$Neutral_Fraction)
-## normal
-shapiro.test(LearnedDead$Total_Fraction)
+shapiro.test(NaiveControlFIUdead$Total_Fraction)
 ## normal
 
-shapiro.test(NaiveLive$Control_Fraction)
+shapiro.test(NaiveDeadFIU$Control_Fraction)
 ## normal
-shapiro.test(NaiveLive$Experiment_Fraction)
+shapiro.test(NaiveDeadFIU$Experiment_Fraction)
+## normal
+shapiro.test(NaiveDeadFIU$Neutral_Fraction)
+## normal
+shapiro.test(NaiveDeadFIU$Total_Fraction)
+## normal
+
+shapiro.test(NaiveLiveFIU$Control_Fraction)
 ## not normal
-shapiro.test(NaiveLive$Neutral_Fraction)
+shapiro.test(NaiveLiveFIU$Experiment_Fraction)
 ## normal
-shapiro.test(NaiveLive$Total_Fraction)
+shapiro.test(NaiveLiveFIU$Neutral_Fraction)
+## normal
+shapiro.test(NaiveLiveFIU$Total_Fraction)
+## not normal
+
+## Combined FIU and Panama Naive
+
+shapiro.test(NaiveControlFIUPanama$Side_A_Fraction)
+## not normal
+shapiro.test(NaiveControlFIUPanama$Side_C_Fraction)
+## not normal
+shapiro.test(NaiveControlFIUPanama$Neutral_Fraction)
+## normal
+shapiro.test(NaiveControlFIUPanama$Total_Fraction)
 ## normal
 
-shapiro.test(LearnedLive$Control_Fraction)
+shapiro.test(NaiveDeadFIUPanama$Control_Fraction)
+## not normal
+shapiro.test(NaiveDeadFIUPanama$Experiment_Fraction)
+## not normal
+shapiro.test(NaiveDeadFIUPanama$Neutral_Fraction)
 ## normal
-shapiro.test(LearnedLive$Experiment_Fraction)
-## slightly normal
-shapiro.test(LearnedLive$Neutral_Fraction)
-## slightly normal
-shapiro.test(LearnedLive$Total_Fraction)
+shapiro.test(NaiveDeadFIUPanama$Total_Fraction)
 ## normal
 
-## Naive Control: not normal
+shapiro.test(NaiveLiveFIUPanama$Control_Fraction)
+## not normal
+shapiro.test(NaiveLiveFIUPanama$Experiment_Fraction)
+## not normal
+shapiro.test(NaiveLiveFIUPanama$Neutral_Fraction)
+## normal
+shapiro.test(NaiveLiveFIUPanama$Total_Fraction)
+## normal
+
+## Naive Control Panama: not normal
 ## Learned Control: slightly not normal
 ## Naive Dead: normal
 ## Learned Dead: not normal
 ## Naive live: not normal
 ## Learned live: normal
 
-## Naive seems less normal than learned, but overall not normally distributed
+## Naive seems less normal than learned, but overall not normally distributed. GLM can run on nonnormal data
 
 ## Levene's test for equal variance
 ## Null: all pop var are equal; Alt: at least two are different
