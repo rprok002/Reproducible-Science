@@ -308,27 +308,88 @@ NaiveLiveFIUAnalysis = read.csv(file.choose())
 NaiveControlFIUPanamaAnalysis = read.csv(file.choose())
 NaiveDeadFIUPanamaAnalysis = read.csv(file.choose())
 NaiveLiveFIUPanamaAnalysis = read.csv(file.choose())
+AllControlPanamaAnalysis = read.csv(file.choose())
+AllDeadFIUPanamaAnalysis = read.csv(file.choose())
+AllLiveFIUPanamaAnalysis = read.csv(file.choose())
+AllControlFIUPanamaAnalysis = read.csv(file.choose())
 
-NaiveControlVar = leveneTest(Weight~Group, NaiveControlAnalysis)
-NaiveControlVar
+NaiveControlPanamaVar = leveneTest(Weight~Group, NaiveControlPanamaAnalysis)
+NaiveControlPanamaVar
 ## equal variance
-NaiveDeadVar = leveneTest(Weight~Group, NaiveDeadAnalysis)
-NaiveDeadVar
+NaiveDeadPanamaVar = leveneTest(Weight~Group, NaiveDeadPanamaAnalysis)
+NaiveDeadPanamaVar
 ## equal variance
-NaiveLiveVar = leveneTest(Weight~Group, NaiveLiveAnalysis)
-NaiveLiveVar
+NaiveLivePanamaVar = leveneTest(Weight~Group, NaiveLivePanamaAnalysis)
+NaiveLivePanamaVar
 ## equal variance
-LearnedControlVar = leveneTest(Weight~Group, LearnedControlAnalysis)
-LearnedControlVar
+LearnedControlPanamaVar = leveneTest(Weight~Group, LearnedControlPanamaAnalysis)
+LearnedControlPanamaVar
+## equal variance
+LearnedDeadPanamaVar = leveneTest(Weight~Group, LearnedDeadPanamaAnalysis)
+LearnedDeadPanamaVar
+## equal variance
+LearnedLivePanamaVar = leveneTest(Weight~Group, LearnedLivePanamaAnalysis)
+LearnedLivePanamaVar
+## equal variance
+NaiveControlFIULiveVar = leveneTest(Weight~Group, NaiveControlFIULiveAnalysis)
+NaiveControlFIULiveVar
+## equal variance
+NaiveControlFIUDeadVar = leveneTest(Weight~Group, NaiveControlFIUDeadAnalysis)
+NaiveControlFIUDeadVar
+## equal variance
+NaiveDeadFIUVar = leveneTest(Weight~Group, NaiveDeadFIUAnalysis)
+NaiveDeadFIUVar
+## equal variance
+NaiveLiveFIUVar = leveneTest(Weight~Group, NaiveLiveFIUAnalysis)
+NaiveLiveFIUVar
+## equal variance
+NaiveControlFIUPanamaVar = leveneTest(Weight~Group, NaiveControlFIUPanamaAnalysis)
+NaiveControlFIUPanamaVar
+##non-equal variance. Naive Control Panama was just barely equal variance and this pushed it over the edge
+NaiveDeadFIUPanamaVar = leveneTest(Weight~Group, NaiveDeadFIUPanamaAnalysis)
+NaiveDeadFIUPanamaVar
+## equal variance
+NaiveLiveFIUPanamaVar = leveneTest(Weight~Group, NaiveLiveFIUPanamaAnalysis)
+NaiveLiveFIUPanamaVar
+## equal variance
+AllControlPanamaVar = leveneTest(Weight~Group, AllControlPanamaAnalysis)
+AllControlPanamaVar
 ## non-equal variance
-LearnedDeadVar = leveneTest(Weight~Group, LearnedDeadAnalysis)
-LearnedDeadVar
+AllDeadFIUPanamaVar = leveneTest(Weight~Group, AllDeadFIUPanamaAnalysis)
+AllDeadFIUPanamaVar
 ## equal variance
-LearnedLiveVar = leveneTest(Weight~Group, LearnedLiveAnalysis)
-LearnedLiveVar
+AllLiveFIUPanamaVar = leveneTest(Weight~Group, AllLiveFIUPanamaAnalysis)
+AllLiveFIUPanamaVar
 ## equal variance
+AllControlFIUPanamaVar = leveneTest(Weight~Group, AllControlFIUPanamaAnalysis)
+AllControlFIUPanamaVar
+## nonequal variance
 
-## mostly equal variance across the board, except learned control 
+## All equal variance except when combine control frogs between FIU and Panama
+## Moving forward with just Panama control frogs
+## seeing if need to use vcovCR for control of naive and learned since heterogeneity of variance
+## http://cran.nexr.com/web/packages/clubSandwich/clubSandwich.pdf
+
+## Total trial time normal, variance and GLMs for trial type
+AllTotalsAnalysis = read.csv(file.choose())
+ggdensity(AllTotalsAnalysis$Total.Trial.Time, main = "Density Plot of Total", xlab = "Total")
+ggqqplot(AllTotalsAnalysis$Total.Trial.Time)
+shapiro.test(AllTotalsAnalysis$Total.Trial.Time)
+## not normal
+AllTotalsSexVar = leveneTest(Total.Trial.Time~Sex, AllTotalsAnalysis)
+AllTotalsSexVar
+## eaual variance
+AllTotalsTrialTypeVar = leveneTest(Total.Trial.Time~Trial, AllTotalsAnalysis)
+AllTotalsTrialTypeVar
+## equal variance
+AllTotalsTrialOrderVar = leveneTest(Total.Trial.Time~Trial.Order, AllTotalsAnalysis)
+AllTotalsTrialOrderVar
+## equal variance
+AllTotalsTypeVar = leveneTest(Total.Trial.Time~Type, AllTotalsAnalysis)
+AllTotalsTypeVar
+## non-equal variance
+
+
 
 ## GLMs
 install.packages("lme4")
@@ -341,83 +402,91 @@ require(lme4)
 library(emmeans)
 library(multcomp)
 
-## Naive Control
-NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlAnalysis)
-summary(NaiveControlGLM)
+## Naive Control Panama
+NaiveControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis)
+summary(NaiveControlPanamaGLM)
 ## Type III Analysis of Variance with Satterthwaite
-anova(NaiveControlGLM)
+anova(NaiveControlPanamaGLM)
 ## contrasts
-emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
-
+emmeans(NaiveControlPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 ## trial order and liquid amount don't do anything as random factors, trying as predictors
-NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount+ Trial.Order, data = NaiveControlAnalysis)
-summary(NaiveControlGLM)
 
-## trial order and liquid amount also don't do anything as predictors, removing from model
-NaiveControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveControlAnalysis)
-summary(NaiveControlGLM)
+NaiveControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount+ Trial.Order, data = NaiveControlPanamaAnalysis)
+summary(NaiveControlPanamaGLM)
 ## Type III Analysis of Variance with Satterthwaite
-anova(NaiveControlGLM)
+anova(NaiveControlPanamaGLM)
 ## contrasts
-emmeans(NaiveControlGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
-
-## going to stick with emmeans, seems when there are only one comparison possibility then should use fixed
-## effects instead of doing the emmeans, it isn't necessary to go deeper
-## no variation in frog number, liquid amount or trial order 
-## 0.05 for group, so just not significant
-
-## Naive Dead
-NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadAnalysis)
-summary(NaiveDeadGLM)
-## Type III Analysis of Variance with Satterthwaite
-anova(NaiveDeadGLM)
-emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
-
-## trial order and liquid amount don't do anything as random factors, trying as predictors
-NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveDeadAnalysis)
-summary(NaiveDeadGLM)
-
+emmeans(NaiveControlPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 ## trial order and liquid amount also don't do anything as predictors, removing from model
-NaiveDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = NaiveDeadAnalysis)
-summary(NaiveDeadGLM)
+## total trial time is significantly different so keeping in model
+
+NaiveControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveControlPanamaAnalysis)
+summary(NaiveControlPanamaGLM)
 ## Type III Analysis of Variance with Satterthwaite
-anova(NaiveDeadGLM)
-emmeans(NaiveDeadGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+anova(NaiveControlPanamaGLM)
+## contrasts
+emmeans(NaiveControlPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
 
-## more in dead than control
+## significant difference between time spent in neutral and C, but not between A and C
+## total trial time is significant so keeping in model
 
-## Naive Live
-NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveAnalysis)
-summary(NaiveLiveGLM)
-anova(NaiveLiveGLM)
-emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
-
+## Naive Dead FIU Panama
+NaiveDeadFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadFIUPanamaAnalysis)
+summary(NaiveDeadFIUPanamaGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveDeadFIUPanamaGLM)
+emmeans(NaiveDeadFIUPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 ## trial order and liquid amount don't do anything as random factors, trying as predictors
-NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = NaiveLiveAnalysis)
-summary(NaiveLiveGLM)
 
+NaiveDeadFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveDeadFIUPanamaAnalysis)
+summary(NaiveDeadFIUPanamaGLM)
 ## trial order and liquid amount also don't do anything as predictors, removing from model
-NaiveLiveGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveLiveAnalysis)
-summary(NaiveLiveGLM)
-anova(NaiveLiveGLM)
-emmeans(NaiveLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
-## Learned Control
-LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedControlAnalysis)
-summary(LearnedControlGLM)
-anova(LearnedControlGLM)
+NaiveDeadFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = NaiveDeadFIUPanamaAnalysis)
+summary(NaiveDeadFIUPanamaGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveDeadFIUPanamaGLM)
+emmeans(NaiveDeadFIUPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## no significance between time spent in any of the areas, total trial time different
+
+## Naive Live FIU Panama
+NaiveLiveFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveFIUPanamaAnalysis)
+summary(NaiveLiveFIUPanamaGLM)
+anova(NaiveLiveFIUPanamaGLM)
+emmeans(NaiveLiveFIUPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+
+NaiveLiveFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = NaiveLiveFIUPanamaAnalysis)
+summary(NaiveLiveFIUPanamaGLM)
+## trial order and liquid amount also don't do anything as predictors, removing from model
+
+NaiveLiveFIUPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number), data = NaiveLiveFIUPanamaAnalysis)
+summary(NaiveLiveFIUPanamaGLM)
+anova(NaiveLiveFIUPanamaGLM)
+emmeans(NaiveLiveFIUPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## spend more time in neutral than either Con or Live but not different between Con and Live
+## total trial time sig diff
+
+## Learned Control Panama
+LearnedControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedControlPanamaAnalysis)
+summary(LearnedControlPanamaGLM)
+anova(LearnedControlPanamaGLM)
 car::Anova(LearnedControlGLM, type="3")
-emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
-
+emmeans(LearnedControlPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 ## trial order and liquid amount don't do anything as random factors, trying as predictors
-LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedControlAnalysis)
-summary(LearnedControlGLM)
 
-## trial order and liquid affect (ish) as predictors, keeping in model
-LearnedControlGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedControlAnalysis)
-summary(LearnedControlGLM)
-anova(LearnedControlGLM)
-emmeans(LearnedControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+LearnedControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedControlPanamaAnalysis)
+summary(LearnedControlPanamaGLM)
+## trial order and liquid amount also don't do anything as predictors, removing from model
+
+LearnedControlPanamaGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) , data = LearnedControlPanamaAnalysis)
+summary(LearnedControlPanamaGLM)
+anova(LearnedControlPanamaGLM)
+emmeans(LearnedControlPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## no significance between any area, significance in total trial time
 
 ## Learned Dead
 LearnedDeadGLM <- lmer(Weight~Group+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedDeadAnalysis)
