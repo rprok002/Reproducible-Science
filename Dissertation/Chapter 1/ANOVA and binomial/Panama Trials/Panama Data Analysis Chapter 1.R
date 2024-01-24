@@ -1,10 +1,14 @@
 ## Data Analysis Panama Chapter 1
-NaiveControl= read.csv(file.choose())
-NaiveDead= read.csv(file.choose())
-NaiveLive = read.csv(file.choose())
-LearnedControl = read.csv(file.choose())
-LearnedDead = read.csv(file.choose())
-LearnedLive = read.csv(file.choose())
+NaiveControlPanama= read.csv(file.choose())
+NaiveDeadPanama= read.csv(file.choose())
+NaiveLivePanama = read.csv(file.choose())
+LearnedControlPanama = read.csv(file.choose())
+LearnedDeadPanama = read.csv(file.choose())
+LearnedLivePanama = read.csv(file.choose())
+NaiveControlFIUlive= read.csv(file.choose())
+NaiveControlFIUdead= read.csv(file.choose())
+NaiveDeadFIU= read.csv(file.choose())
+NaiveLiveFIU = read.csv(file.choose())
 
 ##Tests of Normality
 install.packages("ggpubr")
