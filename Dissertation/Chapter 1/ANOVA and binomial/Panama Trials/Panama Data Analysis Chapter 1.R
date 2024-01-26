@@ -506,7 +506,7 @@ LearnedDeadPanamaGLM <- lmer(Weight~Group+ Sex+(1|Frog_Number) + Liquid.Amount +
 summary(LearnedDeadPanamaGLM)
 ## trial order and liquid amount also don't do anything as predictors, removing from model
 
-LearnedDeadPanamaGLM <- lmer(Weight~Group+Sex(1|Frog_Number) , data = LearnedDeadPanamaAnalysis)
+LearnedDeadPanamaGLM <- lmer(Weight~Group+Sex+(1|Frog_Number) , data = LearnedDeadPanamaAnalysis)
 summary(LearnedDeadPanamaGLM)
 anova(LearnedDeadPanamaGLM)
 car::Anova(LearnedDeadPanamaGLM, type="3")
@@ -637,7 +637,7 @@ AllDeadGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number), data = AllDeadFIUPana
 summary(AllDeadGLM)
 anova(AllDeadGLM)
 emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
-
+## no significance
 
 ## Live
 AllLiveGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllLiveFIUPanamaAnalysis)
@@ -671,72 +671,74 @@ library(dplyr)
 library(graphics)
 library(ggsignif)
 
-ggboxplot(NaiveControlAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "grey80", ylim = c(0, 95), title = "Naive Control") + 
-  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(NaiveControlFIUPanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          ylim = c(0, 115), title = "Naive Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1967.67 ; DF: 2,41 ; p = 0.0479")
+  annotate("text", x=2.85, y=110, label= "SS: 1571.16 ; DF: 2,113 ; p = 0.06")
 
-ggboxplot(NaiveDeadAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "deepskyblue1", ylim = c(0, 95), title = "Naive Dead") + 
-  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(NaiveDeadFIUPanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 115), title = "Naive Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1608.98 ; DF: 2,29 ; p = 0.0515")+
-  geom_signif(comparisons = list(c("Con", "Dead")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 88)
+  annotate("text", x=2.85, y=110, label= "SS: 385.13 ; DF: 2,158 ; p = 0.34")
+  
 
-ggboxplot(NaiveLiveAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "darkviolet", ylim = c(0, 95), title = "Naive Live") + 
-  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(NaiveLiveFIUPanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey40", ylim = c(0, 115), title = "Naive Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1300.4 ; DF: 2,17 ; p = 0.03")+
-  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 88)
+  annotate("text", x=2.85, y=110, label= "SS: 1300.4 ; DF: 2,17 ; p = 0.03")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 90)+
+  geom_signif(comparisons = list(c("Live", "Neutral")), annotations = "***", textsize = 8, map_signif_level = TRUE, y_position = 80)
 
-ggboxplot(LearnedControlAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "grey80", ylim = c(0, 95), title = "Learned Control") + 
-  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(LearnedControlPanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+           ylim = c(0, 115), title = "Learned Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1172.85 ; DF: 2,30 ; p = 0.02")+
-  geom_signif(comparisons = list(c("ConA", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 88)
+  annotate("text", x=2.85, y=110, label= "SS: 1027.20 ; DF: 2,68 ; p = 0.23")
+  
 
-ggboxplot(LearnedDeadAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "deepskyblue1", ylim = c(0, 95), title = "Learned Dead") + 
-  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(LearnedDeadPanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 115), title = "Learned Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1094.25 ; DF: 2,26 ; p = 0.14")
+  annotate("text", x=2.85, y=110, label= "SS: 799.21 ; DF: 2,62 ; p = 0.42")
+  
 
-ggboxplot(LearnedLiveAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
-          fill = "darkviolet", ylim = c(0, 95), title = "Learned Live") + 
-  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(LearnedLivePanamaAnalysis, x = "Group", y = "Weight", ylab = " Time (minutes)", xlab = "Location",
+          fill = "grey40", ylim = c(0, 115), title = "Learned Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 449.25 ; DF: 2,26 ; p = 0.28")
+  annotate("text", x=2.85, y=110, label= "SS: 1911.39 ; DF: 2,62 ; p = 0.03")
 
-ggboxplot(AllControlAnalysis, x = "Group", y = "Weight", fill = "grey80", ylab = " Time (minutes)", xlab = "Location",
-          color = "Type", ylim = c(0, 95), title = "All Control") + 
-  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Side A","Side C", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(AllControlFIUPanamaAnalysis, x = "Group", y = "Weight",  ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 115), title = "All Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 1438.33 ; DF: 2,74 ; p = 0.0453")+
+  annotate("text", x=2.8, y=110, label= "SS: 1039.94 ; DF: 2,182 ; p = 0.18")+
   scale_color_manual(values=c("black", "grey60"))
 
-ggboxplot(AllDeadAnalysis, x = "Group", y = "Weight", fill = "deepskyblue1", ylab = " Time (minutes)", xlab = "Location",
-          color = "Type", ylim = c(0, 95), title = "All Dead") + 
-  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Control","Dead", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(AllDeadFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey80", ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 115), title = "All Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 2310.96 ; DF: 2,56 ; p = 0.01")+
+  annotate("text", x=2.8, y=110, label= "SS: 421.35 ; DF: 2,221 ; p = 0.43")+
   scale_color_manual(values=c("black", "grey60"))
 
-ggboxplot(AllLiveAnalysis, x = "Group", y = "Weight", fill = "darkviolet", ylab = " Time (minutes)", xlab = "Location",
-          color = "Type", ylim = c(0, 95), title = "All Live") + 
-  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,95,by=10))+
+ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", ylab = " Time (minutes)", xlab = "Location",
+          color = "Type", ylim = c(0, 115), title = "All Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=3, y=65, label= "SS: 241.50 ; DF: 2,44 ; p = 0.47")+
+  annotate("text", x=2.8, y=110, label= "SS: 605.7 ; DF: 2,215 ; p = 0.20")+
   scale_color_manual(values=c("black", "grey60"))
   
