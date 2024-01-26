@@ -530,6 +530,76 @@ anova(LearnedLivePanamaGLM)
 car::Anova(LearnedLivePanamaGLM, type="3")
 emmeans(LearnedLivePanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
+## Naive Control FIU
+NaiveControlFIUDeadGLM <- lmer(Weight~Group+Sex+(1|Frog_Number)  + (1|Trial.Order) , data = NaiveControlFIUDeadAnalysis)
+summary(NaiveControlFIUDeadGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUDeadGLM)
+## contrasts
+emmeans(NaiveControlFIUDeadGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order doesn't do anything as random factors, trying as predictors
+
+NaiveControlFIUDeadGLM <- lmer(Weight~Group+Sex+(1|Frog_Number) + Trial.Order, data = NaiveControlFIUDeadAnalysis)
+summary(NaiveControlFIUDeadGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUDeadGLM)
+## contrasts
+emmeans(NaiveControlFIUDeadGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order also doesn't do anything as predictors, removing from model
+
+NaiveControlFIUDeadGLM <- lmer(Weight~Group+Sex+(1|Frog_Number), data = NaiveControlFIUDeadAnalysis)
+summary(NaiveControlFIUDeadGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUDeadGLM)
+## contrasts
+emmeans(NaiveControlFIUDeadGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order also doesn't do anything as predictors, removing from model
+
+## no significance 
+
+NaiveControlFIULiveGLM <- lmer(Weight~Group+Sex+(1|Frog_Number)  + (1|Trial.Order) , data = NaiveControlFIULiveAnalysis)
+summary(NaiveControlFIULiveGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIULiveGLM)
+## contrasts
+emmeans(NaiveControlFIULiveGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order doesn't do anything as random factors, trying as predictors
+
+## significance between ConA and Neutral but not different bewteen two Cons. Adding all control trials together
+
+NaiveControlFIUPanamaGLM <- lmer(Weight~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount)+(1|Trial.Order), data = NaiveControlFIUPanamaAnalysis)
+summary(NaiveControlFIUPanamaGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUPanamaGLM)
+## contrasts
+emmeans(NaiveControlFIUPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order and liquid amount not doing anything as random, redoing as predictors
+
+NaiveControlFIUPanamaGLM <- lmer(Weight~Group+Sex+(1|Frog_Number) + Liquid.Amount+Trial.Order, data = NaiveControlFIUPanamaAnalysis)
+summary(NaiveControlFIUPanamaGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUPanamaGLM)
+## contrasts
+emmeans(NaiveControlFIUPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+## trial order and liquid amount not doing anything as predictors, removing from model
+
+NaiveControlFIUPanamaGLM <- lmer(Weight~Group+Sex+(1|Frog_Number), data = NaiveControlFIUPanamaAnalysis)
+summary(NaiveControlFIUPanamaGLM)
+## Type III Analysis of Variance with Satterthwaite
+anova(NaiveControlFIUPanamaGLM)
+## contrasts
+emmeans(NaiveControlFIUPanamaGLM, pairwise~Group, lmer.df = "satterthwaite")$contrasts
+
+
+## just slightly no significance
+## nonequal variance so adding vocvCR
+install.packages("clubSandwich")
+library(clubSandwich)
+NaiveControlFIUPanamaGLM <- lmer(Weight~Group+Sex+(1|Frog_Number), data = NaiveControlFIUPanamaAnalysis)
+summary(NaiveControlFIUPanamaGLM)
+vcovCR(NaiveControlFIUPanamaGLM, type = "CR2")
+## not sure what to do, asking Christian
+
 ## Control
 AllControlAnalysis <- read.csv(file.choose())
 AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllControlAnalysis)
