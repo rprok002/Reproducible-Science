@@ -601,32 +601,23 @@ vcovCR(NaiveControlFIUPanamaGLM, type = "CR2")
 ## not sure what to do, asking Christian
 
 ## Control
-AllControlAnalysis <- read.csv(file.choose())
-AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllControlAnalysis)
-summary(AllControlGLM)
-anova(AllControlGLM)
-
-## Group:Type is 0.05 when rounding and no emmeans are significant to calling it nonsignificant, also emmeans that is the most significant
-## is between two levels that aren't important
-car::Anova(AllControlGLM, type="3")
-emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
-
-## trial order and liquid amount don't do anything as random factors, trying as predictors
-AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = AllControlAnalysis)
-summary(AllControlGLM)
-
-## trial order and liquid amount also don't do anything as predictors, removing from model
-AllControlGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number), data = AllControlAnalysis)
+AllControlGLM <- lmer(Weight~Group*Type+Sex+(1|Frog_Number)+ (1|Trial.Order)+ (1|Liquid.Amount), data = AllControlFIUPanamaAnalysis)
 summary(AllControlGLM)
 anova(AllControlGLM)
 emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
-emmeans(AllControlGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+## trial order and liquid amount not doing anything as random, redoing as predictors
+AllControlGLM <- lmer(Weight~Group*Type+Sex+(1|Frog_Number)+ Trial.Order+ Liquid.Amount, data = AllControlFIUPanamaAnalysis)
+summary(AllControlGLM)
+anova(AllControlGLM)
+emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
+## trial order and liquid amount not doing anything as predictors, removing from model
+AllControlGLM <- lmer(Weight~Group*Type+Sex+(1|Frog_Number), data = AllControlFIUPanamaAnalysis)
+summary(AllControlGLM)
+anova(AllControlGLM)
+emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 
-
-
-## significance driven by difference between ConA and ConC of naive frogs, no
-## sig diff between groups
-
+## no significance
+## nonequal variance so waiting for Christian answer to see if need to run anything differently
 
 ## Dead
 AllDeadAnalysis <- read.csv(file.choose())
