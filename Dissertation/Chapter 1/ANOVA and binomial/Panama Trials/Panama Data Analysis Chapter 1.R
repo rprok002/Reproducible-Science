@@ -472,6 +472,7 @@ anova(NaiveLiveFIUPanamaGLM)
 emmeans(NaiveLiveFIUPanamaGLM, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## spend more time in neutral than either Con or Live but not different between Con and Live
+## different between Con and neutral is barely significant
 ## total trial time sig diff
 
 ## Learned Control Panama
@@ -620,44 +621,47 @@ emmeans(AllControlGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 ## nonequal variance so waiting for Christian answer to see if need to run anything differently
 
 ## Dead
-AllDeadAnalysis <- read.csv(file.choose())
-AllDeadGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllDeadAnalysis)
+AllDeadGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllDeadFIUPanamaAnalysis)
 summary(AllDeadGLM)
 anova(AllDeadGLM)
-car::Anova(AllDeadGLM, type="3")
 emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
-
-## Time of Learned in Con compared to time of Naive in Dead is sig diff, but not relavent to data
-
 ## trial order and liquid amount don't do anything as random factors, trying as predictors
-AllDeadGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = AllDeadAnalysis)
-summary(AllDeadGLM)
 
+AllDeadGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = AllDeadFIUPanamaAnalysis)
+summary(AllDeadGLM)
+anova(AllDeadGLM)
+emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 ## trial order and liquid amount also don't do anything as predictors, removing from model
-AllDeadGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number), data = AllDeadAnalysis)
+
+AllDeadGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number), data = AllDeadFIUPanamaAnalysis)
 summary(AllDeadGLM)
 anova(AllDeadGLM)
 emmeans(AllDeadGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 
 
 ## Live
-AllLiveAnalysis <- read.csv(file.choose())
-AllLiveGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllLiveAnalysis)
+AllLiveGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order), data = AllLiveFIUPanamaAnalysis)
 summary(AllLiveGLM)
 anova(AllLiveGLM)
-car::Anova(AllLiveGLM, type="3")
 emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 
 ## trial order and liquid amount don't do anything as random factors, trying as predictors
-AllLiveGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = AllLiveAnalysis)
-summary(AllLiveGLM)
-
-## trial order and liquid amount also don't do anything as predictors, removing from model
-AllLiveGLM <- lmer(Weight~Group*Type+Total.Trial.Time+ (1|Frog_Number), data = AllLiveAnalysis)
+AllLiveGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number) + Liquid.Amount + Trial.Order, data = AllLiveFIUPanamaAnalysis)
 summary(AllLiveGLM)
 anova(AllLiveGLM)
 emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
-emmeans(AllLiveGLM, list (pairwise~Group), lmer.df = "satterthwaite")
+## trial order and liquid amount also don't do anything as predictors, removing from model
+
+AllLiveGLM <- lmer(Weight~Group*Type+Sex+ (1|Frog_Number), data = AllLiveFIUPanamaAnalysis)
+summary(AllLiveGLM)
+anova(AllLiveGLM)
+emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
+
+## significance between Con and Neutral learned, which doesn't matter here
+## significance between Con learned and Live naive, doesn't matter here
+## signifiance between Neutral learned and Live naive, doesn't matter here
+## significance between live naive and neutral naive, doesn't matter here
+
 
 
 ## Boxplot
