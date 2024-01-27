@@ -749,6 +749,7 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
 ## Second try: Looking at glm stuff
 
 ## Weight distribution per data set
+## Since using proportions, not considering total trial time anymore
 ## Naive Control Panama
 ggdensity(NaiveControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
 ggdensity(NaiveControlPanamaAnalysis$Proportion, main = "Density Plot of all data", xlab = "All")
@@ -862,5 +863,24 @@ library(multcomp)
 
 ## GLMMs
 ## Naive Control Panama
-NaiveControlPanamaGLMM <- glmer(Weight~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = Gamma)
+## Using type II SS when no interaction, Type III when interaction effect
+NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = binomial)
 summary(NaiveControlPanamaGLMM)
+car::Anova(LearnedLivePanamaGLM, type="2")
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveControlPanamaAnalysis, family = binomial)
+summary(NaiveControlPanamaGLMM)
+## trial order and liquid amount doesn't do anything as predictors, removing from model
+NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) , data = NaiveControlPanamaAnalysis, family = binomial)
+summary(NaiveControlPanamaGLMM)
+car::Anova(NaiveControlPanamaGLMM, type="2")
+emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
+emmeans(NaiveControlPanamaGLMM, pairwise~Sex)$contrasts
+residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysis, aes(x = fitted(NaiveControlPanamaGLMM), y = resid(NaiveControlPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot)
+## mostly normal
