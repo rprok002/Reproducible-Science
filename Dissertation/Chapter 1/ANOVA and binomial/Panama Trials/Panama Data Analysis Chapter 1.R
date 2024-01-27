@@ -884,3 +884,34 @@ residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysi
   theme_minimal()
 print(residuals_plot)
 ## mostly normal
+
+## Naive Control Panama No Outliers, remove 4 trials
+NaiveControlPanamaNoOutliersAnalysis =read.csv(file.choose())
+NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
+summary(NaiveControlPanamaNoOurlitersGLMM)
+car::Anova(NaiveControlPanamaNoOurlitersGLMM, type="2")
+## trial order and liquid amount don't do anything as random factors, trying as predictors
+NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
+summary(NaiveControlPanamaNoOurlitersGLMM)
+## trial order and liquid amount doesn't do anything as predictors, removing from model
+NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
+summary(NaiveControlPanamaNoOurlitersGLMM)
+car::Anova(NaiveControlPanamaNoOurlitersGLMM, type="2")
+emmeans(NaiveControlPanamaNoOurlitersGLMM, pairwise~Group)$contrasts
+emmeans(NaiveControlPanamaNoOurlitersGLMM, pairwise~Sex)$contrasts
+residuals_plot_NaiveControlPanamaNoOurlitersGLMM<- ggplot(data = NaiveControlPanamaNoOutliersAnalysis, aes(x = fitted(NaiveControlPanamaNoOurlitersGLMM), y = resid(NaiveControlPanamaNoOurlitersGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveControlPanamaNoOurlitersGLMM)
+
+## data is no longer homoscedastic, so going back to original above with outliers included
+
+ggboxplot(NaiveControlPanamaNoOutliersAnalysis, x = "Group", y = "Proportion", ylab = " Time (minutes)", xlab = "Location",
+          ylim = c(0, 1), title = "Naive Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=110, label= "SS: 1571.16 ; DF: 2,113 ; p = 0.06")
