@@ -1,4 +1,5 @@
 ## Data Analysis Panama Chapter 1
+## First try with LM
 NaiveControlPanama= read.csv(file.choose())
 NaiveDeadPanama= read.csv(file.choose())
 NaiveLivePanama = read.csv(file.choose())
@@ -741,4 +742,11 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
   theme(plot.title=element_text(hjust=0.5))+
   annotate("text", x=2.8, y=110, label= "SS: 605.7 ; DF: 2,215 ; p = 0.20")+
   scale_color_manual(values=c("black", "grey60"))
-  
+
+## Second try: Looking at glm stuff
+
+## Weight distribution per data set
+## Naive Control Panama
+ggdensity(NaiveControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveControlPanamaAnalysis$Weight)
+## Poisson distribution, skewed left
