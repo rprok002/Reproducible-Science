@@ -13,6 +13,9 @@ NaiveLiveFIU = read.csv(file.choose())
 NaiveControlFIUPanama = read.csv(file.choose())
 NaiveDeadFIUPanama = read.csv(file.choose())
 NaiveLiveFIUPanama = read.csv(file.choose())
+AllControlFIUPanama = read.csv(file.choose())
+AllDeadFIUPanama = read.csv(file.choose())
+AllLiveFIUPanama = read.csv(file.choose())
 
 ##Tests of Normality
 install.packages("ggpubr")
@@ -748,5 +751,116 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
 ## Weight distribution per data set
 ## Naive Control Panama
 ggdensity(NaiveControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggdensity(NaiveControlPanamaAnalysis$Proportion, main = "Density Plot of all data", xlab = "All")
 ggqqplot(NaiveControlPanamaAnalysis$Weight)
-## Poisson distribution, skewed left
+ggqqplot(NaiveControlPanamaAnalysis$Proportion)
+## Poisson distribution, skewed right
+
+## Naive Control Panama Total
+ggdensity(NaiveControlPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveControlPanama$Total_Fraction)
+## Poisson distribution, skewed left, no zeros so can do gamma
+
+## Naive Control FIU Panama
+ggdensity(NaiveControlFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveControlFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Naive Control FIU Panama Total
+ggdensity(NaiveControlFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveControlFIUPanama$Total_Fraction)
+## Pretty normal-looking, use gaussian when making glmer
+
+## Naive Dead FIU Panama
+ggdensity(NaiveDeadFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveDeadFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Naive Dead FIU Panama Total
+ggdensity(NaiveDeadFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveDeadFIUPanama$Total_Fraction)
+## Poisson distribution, skewed a bit right, not as bad as weights
+
+## Naive Live FIU Panama
+ggdensity(NaiveLiveFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveLiveFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Naive Live FIU Panama Total
+ggdensity(NaiveLiveFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(NaiveLiveFIUPanama$Total_Fraction)
+## Poisson distribution, skewed a bit right, not as bad as weights
+
+## Learned Control Panama
+ggdensity(LearnedControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedControlPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Learned Control Panama Total
+ggdensity(LearnedControlPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedControlPanama$Total_Fraction)
+## Poisson distribution, skewed right
+
+## Learned Dead Panama
+ggdensity(LearnedDeadPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedDeadPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Learned Dead Panama Total
+ggdensity(LearnedDeadPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedDeadPanama$Total_Fraction)
+## Poisson distribution, skewed a bit right
+
+## Learned Live Panama
+ggdensity(LearnedLivePanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedLivePanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## Learned Live Panama Total
+ggdensity(LearnedLivePanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(LearnedLivePanama$Total_Fraction)
+## Poisson distribution, skewed right
+
+## All Control FIU Panama
+ggdensity(AllControlFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllControlFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## All Control FIU Panama Total
+ggdensity(AllControlFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllControlFIUPanama$Total_Fraction)
+## Normalish, gaussian
+
+## All Dead FIU Panama
+ggdensity(AllDeadFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllDeadFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## All Dead FIU Panama Total
+ggdensity(AllDeadFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllDeadFIUPanama$Total_Fraction)
+## Poisson distribution, skewed slightly right
+
+## All Live FIU Panama
+ggdensity(AllLiveFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllLiveFIUPanamaAnalysis$Weight)
+## Poisson distribution, skewed right
+
+## All Live FIU Panama Total
+ggdensity(AllLiveFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
+ggqqplot(AllLiveFIUPanama$Total_Fraction)
+## Poisson distribution, skewed slightly right
+
+## Install needed packages
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+
+## GLMMs
+## Naive Control Panama
+NaiveControlPanamaGLMM <- glmer(Weight~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = Gamma)
+summary(NaiveControlPanamaGLMM)
