@@ -861,7 +861,7 @@ library(lmerTest)
 library(emmeans)
 library(multcomp)
 
-## GLMMs
+## GLMMs with seconds
 ## Naive Control Panama
 ## Using type II SS when no interaction, Type III when interaction effect
 NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = binomial)
