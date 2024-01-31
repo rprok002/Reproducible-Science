@@ -1165,3 +1165,61 @@ residuals_plot_AllControlFIUPanamaGLMM<- ggplot(data = AllControlFIUPanamaAnalys
   theme_minimal()
 print(residuals_plot_AllControlFIUPanamaGLMM)
 ## not really hetero
+
+## All Dead FIU Panama Square Root No Outliers
+AllDeadFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllDeadFIUPanamaAnalysisNoOutliers)
+anova(AllDeadFIUPanamaGLMM)
+summary(AllDeadFIUPanamaGLMM)
+## no random effects are a thing, trying as fixed
+AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllDeadFIUPanamaAnalysisNoOutliers)
+anova(AllDeadFIUPanamaGLMM)
+summary(AllDeadFIUPanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadFIUPanamaAnalysisNoOutliers)
+anova(AllDeadFIUPanamaGLMM)
+summary(AllDeadFIUPanamaGLMM)
+emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+## only significance is Dead Naive Neutral Naive which we already knew
+residuals_plot_AllDeadFIUPanamaGLMM<- ggplot(data = AllDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllDeadFIUPanamaGLMM), y = resid(AllDeadFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_AllDeadFIUPanamaGLMM)
+## still hetero
+
+## All Live FIU Panama Square Root No Outliers
+AllLiveFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllLiveFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
+ggdensity(AllLiveFIUPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "All Dead Live Panama Total")
+ggqqplot(AllLiveFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllLiveFIUPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
+
+AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllLiveFIUPanamaAnalysisNoOutliers)
+anova(AllLiveFIUPanamaGLMM)
+summary(AllLiveFIUPanamaGLMM)
+## no random effects are a thing, trying as fixed
+AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllLiveFIUPanamaAnalysisNoOutliers)
+anova(AllLiveFIUPanamaGLMM)
+summary(AllLiveFIUPanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = AllLiveFIUPanamaAnalysisNoOutliers)
+anova(AllLiveFIUPanamaGLMM)
+summary(AllLiveFIUPanamaGLMM)
+emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+## nothing significant between types
+residuals_plot_AllLiveFIUPanamaGLMM<- ggplot(data = AllLiveFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllLiveFIUPanamaGLMM), y = resid(AllLiveFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_AllLiveFIUPanamaGLMM)
+## still hetero
