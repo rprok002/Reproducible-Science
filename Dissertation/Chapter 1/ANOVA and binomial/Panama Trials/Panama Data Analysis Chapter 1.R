@@ -762,6 +762,7 @@ ggdensity(NaiveControlPanamaAnalysis$Seconds_Fixed_SR, main = "Density Plot", xl
 ggdensity(NaiveControlPanamaAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control Panama Total")
 ggqqplot(NaiveControlPanamaAnalysis$Seconds_Fixed_SR)
 ggqqplot(NaiveControlPanamaAnalysis$Total_Seconds_Fixed)
+## moving to Gaussian
 
 ## Naive Control FIU Panama
 ggdensity(NaiveControlFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Control FIU Panama")
@@ -776,6 +777,13 @@ ggdensity(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot",
 ggqqplot(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed)
 ggqqplot(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed)
 ## Poisson distribution, skewed for both
+
+## Naive Dead FIU Panama Square Root
+ggdensity(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dead FIU Panama")
+ggdensity(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dead FIU Panama Total")
+ggqqplot(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed)
+## moving to Gaussian
 
 ## Naive Live FIU Panama
 ggdensity(NaiveLiveFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Live FIU Panama")
@@ -897,4 +905,52 @@ residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysi
 print(residuals_plot_NaiveControlPanamaGLMM)
 ## better but now total trial time as a covariate is significant, see with Christian if that is eventually an issue
 
-
+NaiveDeadFIUPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Total_Seconds_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadFIUPanamaAnalysis, family = poisson)
+residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysis, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveDeadFIUPanamaGLMM)
+## residuals are hetero, going to square root
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadFIUPanamaAnalysis)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+## liquid and trial number don't seem to be amything, try as fixed
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order, data = NaiveDeadFIUPanamaAnalysis)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+## removing liquid and trial number from model
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysis)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysis, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveDeadFIUPanamaGLMM)
+## data still hetero
+boxplot(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed_SR)
+## Removing M3 C and F19 B and F8 B and M6 A 
+NaiveDeadFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysisNoOutliers)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveDeadFIUPanamaGLMM)
+fitted(NaiveDeadFIUPanamaGLMM)
+resid(NaiveDeadFIUPanamaGLMM)
+boxplot(NaiveDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+## boxplot still has outlirs on top and bottom but won't remove just because frog decided not to stay in a quadrant at all during a trial
+## still hetero, can ask for help from Christian
+## Dead and neutral significantly different
