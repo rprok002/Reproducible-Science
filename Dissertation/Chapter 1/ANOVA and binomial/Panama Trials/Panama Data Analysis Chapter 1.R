@@ -749,7 +749,7 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
 ## Second try: Looking at glm stuff
 
 ## Weight distribution per data set
-## Since using proportions, not considering total trial time anymore
+## Using seconds
 ## Naive Control Panama
 ggdensity(NaiveControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
 ggdensity(NaiveControlPanamaAnalysis$Proportion, main = "Density Plot of all data", xlab = "All")
