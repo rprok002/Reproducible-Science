@@ -1019,7 +1019,7 @@ print(residuals_plot_NaiveLiveFIUPanamaGLMM)
 boxplot(NaiveLiveFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
 ## still hetero
 
-## Learned Control Square Root
+## Learned Control Square Root No Outliers
 ## Still not normal and clear outliers, removing M8 C and M5 C and F25 C and M5 B and F25 B and F2 B and M20C
 LearnedControlPanamaAnalysisNoOutliers = read.csv(file.choose())
 ggdensity(LearnedControlPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Control Panama")
@@ -1047,3 +1047,93 @@ residuals_plot_LearnedControlPanamaGLMM <- ggplot(data = LearnedControlPanamaAna
   theme_minimal()
 print(residuals_plot_LearnedControlPanamaGLMM)
 ## no outliers but still hetero
+
+## Learned Dead Panama Square Root No Outliers
+## Removing outliers M20 A and F10 B and F10 C and F2 A and M8 A and F2 C and F25 C
+LearnedDeadPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(LearnedDeadPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Dead Panama")
+ggdensity(LearnedDeadPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Dead Panama Total")
+ggqqplot(LearnedDeadPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(LearnedDeadPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+## no random effects are a thing, trying as fixed
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+emmeans(LearnedDeadPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_LearnedDeadPanamaGLMM <- ggplot(data = LearnedDeadPanamaAnalysisNoOutliers, aes(x = fitted(LearnedDeadPanamaGLMM), y = resid(LearnedDeadPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_LearnedDeadPanamaGLMM)
+boxplot(LearnedDeadPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+## still hetero
+
+## Learned Live Panama Square Root
+## Removing outliers F10 A and F10 C and F25 A and M5 A and M8 B and F25 C 
+LearnedLivePanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(LearnedLivePanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Live Panama")
+ggdensity(LearnedLivePanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Live Panama Total")
+ggqqplot(LearnedLivePanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(LearnedLivePanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+## no random effects are a thing, trying as fixed
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+emmeans(LearnedLivePanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_LearnedLivePanamaGLMM <- ggplot(data = LearnedLivePanamaAnalysisNoOutliers, aes(x = fitted(LearnedLivePanamaGLMM), y = resid(LearnedLivePanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_LearnedLivePanamaGLMM)
+fitted(LearnedLivePanamaGLMM)
+resid(LearnedLivePanamaGLMM)
+## looks like F25 B is an outlier but not frog move around during trial so actually not
+## still hetero
+
+## Naive Control FIU Panama Square Root
+NaiveControlFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(NaiveControlFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(NaiveControlFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(NaiveControlFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(NaiveControlFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlFIUPanamaAnalysisNoOutliers)
+anova(NaiveControlFIUPanamaGLMM)
+summary(NaiveControlFIUPanamaGLMM)
+## no random effects are a thing, trying as fixed
+NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveControlFIUPanamaAnalysisNoOutliers)
+anova(NaiveControlFIUPanamaGLMM)
+summary(NaiveControlFIUPanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = NaiveControlFIUPanamaAnalysisNoOutliers)
+anova(NaiveControlFIUPanamaGLMM)
+summary(NaiveControlFIUPanamaGLMM)
+emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_NaiveControlFIUPanamaGLMM <- ggplot(data = NaiveControlFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveControlFIUPanamaGLMM), y = resid(NaiveControlFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveControlFIUPanamaGLMM)
+## slightly hetero perhaps but not bad
