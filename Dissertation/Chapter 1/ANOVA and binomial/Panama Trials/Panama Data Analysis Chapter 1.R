@@ -1137,3 +1137,31 @@ residuals_plot_NaiveControlFIUPanamaGLMM <- ggplot(data = NaiveControlFIUPanamaA
   theme_minimal()
 print(residuals_plot_NaiveControlFIUPanamaGLMM)
 ## slightly hetero perhaps but not bad
+
+## All Control Square Root No Outliers
+AllControlFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllControlFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(AllControlFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(AllControlFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllControlFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllControlFIUPanamaAnalysisNoOutliers)
+anova(AllControlFIUPanamaGLMM)
+summary(AllControlFIUPanamaGLMM)
+## no random effects are a thing, trying as fixed
+AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllControlFIUPanamaAnalysisNoOutliers)
+anova(AllControlFIUPanamaGLMM)
+summary(AllControlFIUPanamaGLMM)
+## do nothing as fixed either, removing liquid and trial order from model
+AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllControlFIUPanamaAnalysisNoOutliers)
+anova(AllControlFIUPanamaGLMM)
+summary(AllControlFIUPanamaGLMM)
+emmeans(AllControlFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+residuals_plot_AllControlFIUPanamaGLMM<- ggplot(data = AllControlFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllControlFIUPanamaGLMM), y = resid(AllControlFIUPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_AllControlFIUPanamaGLMM)
+## not really hetero
