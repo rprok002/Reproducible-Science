@@ -751,106 +751,80 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
 ## Weight distribution per data set
 ## Using seconds
 ## Naive Control Panama
-ggdensity(NaiveControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggdensity(NaiveControlPanamaAnalysis$Proportion, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveControlPanamaAnalysis$Weight)
-ggqqplot(NaiveControlPanamaAnalysis$Proportion)
-## Poisson distribution, skewed right
+ggdensity(NaiveControlPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Control Panama")
+ggdensity(NaiveControlPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "Naive Control Panama Total")
+ggqqplot(NaiveControlPanamaAnalysis$Seconds_Fixed)
+ggqqplot(NaiveControlPanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed right for seconds and slightly skewed left for total seconds
 
-## Naive Control Panama Total
-ggdensity(NaiveControlPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveControlPanama$Total_Fraction)
-## Poisson distribution, skewed left, no zeros so can do gamma
+## Naive Control Panama Square Root
+ggdensity(NaiveControlPanamaAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control Panama")
+ggdensity(NaiveControlPanamaAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control Panama Total")
+ggqqplot(NaiveControlPanamaAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveControlPanamaAnalysis$Total_Seconds_Fixed)
 
 ## Naive Control FIU Panama
-ggdensity(NaiveControlFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveControlFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Naive Control FIU Panama Total
-ggdensity(NaiveControlFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveControlFIUPanama$Total_Fraction)
-## Pretty normal-looking, use gaussian when making glmer
+ggdensity(NaiveControlFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(NaiveControlFIUPanamaAnalysis$Seconds_Total_Fixed, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(NaiveControlFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(NaiveControlFIUPanamaAnalysis$Seconds_Total_Fixed)
+## Poisson distribution, skewed right for seconds and slightly skewed left for total seconds
 
 ## Naive Dead FIU Panama
-ggdensity(NaiveDeadFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveDeadFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Naive Dead FIU Panama Total
-ggdensity(NaiveDeadFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveDeadFIUPanama$Total_Fraction)
-## Poisson distribution, skewed a bit right, not as bad as weights
+ggdensity(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Dead FIU Panama")
+ggdensity(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "Naive Dead FIU Panama Total")
+ggqqplot(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(NaiveDeadFIUPanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed for both
 
 ## Naive Live FIU Panama
-ggdensity(NaiveLiveFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveLiveFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Naive Live FIU Panama Total
-ggdensity(NaiveLiveFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(NaiveLiveFIUPanama$Total_Fraction)
-## Poisson distribution, skewed a bit right, not as bad as weights
+ggdensity(NaiveLiveFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Naive Live FIU Panama")
+ggdensity(NaiveLiveFIUPanamaAnalysis$Seconds_Total_Fixed, main = "Density Plot", xlab = "Naive Live FIU Panama Total")
+ggqqplot(NaiveLiveFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(NaiveLiveFIUPanamaAnalysis$Seconds_Total_Fixed)
+## Poisson distribution, skewed right for seconds and maybe normal for total
 
 ## Learned Control Panama
-ggdensity(LearnedControlPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedControlPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Learned Control Panama Total
-ggdensity(LearnedControlPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedControlPanama$Total_Fraction)
-## Poisson distribution, skewed right
+ggdensity(LearnedControlPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Learned Control Panama")
+ggdensity(LearnedControlPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "Learned Control Panama Total")
+ggqqplot(LearnedControlPanamaAnalysis$Seconds_Fixed)
+ggqqplot(LearnedControlPanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed right for both
 
 ## Learned Dead Panama
-ggdensity(LearnedDeadPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedDeadPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Learned Dead Panama Total
-ggdensity(LearnedDeadPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedDeadPanama$Total_Fraction)
-## Poisson distribution, skewed a bit right
+ggdensity(LearnedDeadPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Learned Dead Panama")
+ggdensity(LearnedDeadPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "Learned Dead Panama Total")
+ggqqplot(LearnedDeadPanamaAnalysis$Seconds_Fixed)
+ggqqplot(LearnedDeadPanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed right for seconds and looks inverted normal for total
 
 ## Learned Live Panama
-ggdensity(LearnedLivePanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedLivePanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## Learned Live Panama Total
-ggdensity(LearnedLivePanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(LearnedLivePanama$Total_Fraction)
-## Poisson distribution, skewed right
+ggdensity(LearnedLivePanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "Learned Live Panama")
+ggdensity(LearnedLivePanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "Learned Live Panama Total")
+ggqqplot(LearnedLivePanamaAnalysis$Seconds_Fixed)
+ggqqplot(LearnedLivePanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed right for both
 
 ## All Control FIU Panama
-ggdensity(AllControlFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllControlFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## All Control FIU Panama Total
-ggdensity(AllControlFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllControlFIUPanama$Total_Fraction)
-## Normalish, gaussian
+ggdensity(AllControlFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "All Control FIU Panama")
+ggdensity(AllControlFIUPanamaAnalysis$Seconds_Total_Fixed, main = "Density Plot", xlab = "All Control FIU Panama Total")
+ggqqplot(AllControlFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(AllControlFIUPanamaAnalysis$Seconds_Total_Fixed)
+## Poisson distribution, skewed right for seconds but not really for total
 
 ## All Dead FIU Panama
-ggdensity(AllDeadFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllDeadFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## All Dead FIU Panama Total
-ggdensity(AllDeadFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllDeadFIUPanama$Total_Fraction)
-## Poisson distribution, skewed slightly right
+ggdensity(AllDeadFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadFIUPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(AllDeadFIUPanamaAnalysis$Total_Seconds_Fixed)
+## Poisson distribution, skewed right for seconds but not really for total
 
 ## All Live FIU Panama
-ggdensity(AllLiveFIUPanamaAnalysis$Weight, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllLiveFIUPanamaAnalysis$Weight)
-## Poisson distribution, skewed right
-
-## All Live FIU Panama Total
-ggdensity(AllLiveFIUPanama$Total_Fraction, main = "Density Plot of all data", xlab = "All")
-ggqqplot(AllLiveFIUPanama$Total_Fraction)
-## Poisson distribution, skewed slightly right
+ggdensity(AllLiveFIUPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "All Live FIU Panama")
+ggdensity(AllLiveFIUPanamaAnalysis$Seconds_Total_Fixed, main = "Density Plot", xlab = "All Live FIU Panama Total")
+ggqqplot(AllLiveFIUPanamaAnalysis$Seconds_Fixed)
+ggqqplot(AllLiveFIUPanamaAnalysis$Seconds_Total_Fixed)
+## Poisson distribution, skewed right for seconds but normal for total
 
 ## Install needed packages
 install.packages("ggpubr")
@@ -860,18 +834,12 @@ library(lme4)
 library(lmerTest)
 library(emmeans)
 library(multcomp)
+library(nlme)
 
 ## GLMMs with seconds
 ## Naive Control Panama
 ## Using type II SS when no interaction, Type III when interaction effect
-NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = binomial)
-summary(NaiveControlPanamaGLMM)
-car::Anova(LearnedLivePanamaGLM, type="2")
-## trial order and liquid amount don't do anything as random factors, trying as predictors
-NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveControlPanamaAnalysis, family = binomial)
-summary(NaiveControlPanamaGLMM)
-## trial order and liquid amount doesn't do anything as predictors, removing from model
-NaiveControlPanamaGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) , data = NaiveControlPanamaAnalysis, family = binomial)
+NaiveControlPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Total_Seconds_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = poisson)
 summary(NaiveControlPanamaGLMM)
 car::Anova(NaiveControlPanamaGLMM, type="2")
 emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
@@ -883,35 +851,50 @@ residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysi
   ggtitle("Residuals vs Fitted Values") +
   theme_minimal()
 print(residuals_plot)
-## mostly normal
+## most models won't converge, and residuals are hetero so going to square root the count data
 
-## Naive Control Panama No Outliers, remove 4 trials
-NaiveControlPanamaNoOutliersAnalysis =read.csv(file.choose())
-NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
-summary(NaiveControlPanamaNoOurlitersGLMM)
-car::Anova(NaiveControlPanamaNoOurlitersGLMM, type="2")
-## trial order and liquid amount don't do anything as random factors, trying as predictors
-NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
-summary(NaiveControlPanamaNoOurlitersGLMM)
-## trial order and liquid amount doesn't do anything as predictors, removing from model
-NaiveControlPanamaNoOurlitersGLMM <- glmer(Proportion~Group+Sex+(1|Frog_Number) , data = NaiveControlPanamaNoOutliersAnalysis, family = binomial)
-summary(NaiveControlPanamaNoOurlitersGLMM)
-car::Anova(NaiveControlPanamaNoOurlitersGLMM, type="2")
-emmeans(NaiveControlPanamaNoOurlitersGLMM, pairwise~Group)$contrasts
-emmeans(NaiveControlPanamaNoOurlitersGLMM, pairwise~Sex)$contrasts
-residuals_plot_NaiveControlPanamaNoOurlitersGLMM<- ggplot(data = NaiveControlPanamaNoOutliersAnalysis, aes(x = fitted(NaiveControlPanamaNoOurlitersGLMM), y = resid(NaiveControlPanamaNoOurlitersGLMM))) +
+## Naive Control Panama Square Root Seconds
+NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis)
+anova(NaiveControlPanamaGLMM)
+summary(NaiveControlPanamaGLMM)
+car::Anova(NaiveControlPanamaGLMM, type="2")
+emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
+## Liquid amount may need to be a fixed effect
+NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + (1|Trial.Order) , data = NaiveControlPanamaAnalysis)
+anova(NaiveControlPanamaGLMM)
+summary(NaiveControlPanamaGLMM)
+## going to leave liquid amount as fixed but don't need trial order as random
+NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount , data = NaiveControlPanamaAnalysis)
+anova(NaiveControlPanamaGLMM)
+summary(NaiveControlPanamaGLMM)
+emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysis, aes(x = fitted(NaiveControlPanamaGLMM), y = resid(NaiveControlPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
   labs(x = "Fitted Values", y = "Residuals") +
   ggtitle("Residuals vs Fitted Values") +
   theme_minimal()
-print(residuals_plot_NaiveControlPanamaNoOurlitersGLMM)
+print(residuals_plot)
+## one outlier making residuals slightly off
+resid(NaiveControlPanamaGLMM)
+fitted(NaiveControlPanamaGLMM)
+## M3 seems to be an outlier on line 17 of original dataset, removing
+NaiveControlPanamaAnalysisNoOutliers = read.csv(file.choose())
+NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + (1|Trial.Order) , data = NaiveControlPanamaAnalysisNoOutliers)
+anova(NaiveControlPanamaGLMM)
+summary(NaiveControlPanamaGLMM)
+## going to leave liquid amount as fixed but don't need trial order as random
+NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount , data = NaiveControlPanamaAnalysisNoOutliers)
+anova(NaiveControlPanamaGLMM)
+summary(NaiveControlPanamaGLMM)
+emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
+residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysisNoOutliers, aes(x = fitted(NaiveControlPanamaGLMM), y = resid(NaiveControlPanamaGLMM))) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
+  labs(x = "Fitted Values", y = "Residuals") +
+  ggtitle("Residuals vs Fitted Values") +
+  theme_minimal()
+print(residuals_plot_NaiveControlPanamaGLMM)
+## better but now total trial time as a covariate is significant, see with Christian if that is eventually an issue
 
-## data is no longer homoscedastic, so going back to original above with outliers included
 
-ggboxplot(NaiveControlPanamaNoOutliersAnalysis, x = "Group", y = "Proportion", ylab = " Time (minutes)", xlab = "Location",
-          ylim = c(0, 1), title = "Naive Control Scent") + 
-  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
-  scale_y_continuous(breaks=seq(0,80,by=10))+
-  theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=110, label= "SS: 1571.16 ; DF: 2,113 ; p = 0.06")
