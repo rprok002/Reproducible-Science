@@ -951,6 +951,7 @@ print(residuals_plot_NaiveDeadFIUPanamaGLMM)
 fitted(NaiveDeadFIUPanamaGLMM)
 resid(NaiveDeadFIUPanamaGLMM)
 boxplot(NaiveDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+boxplot(NaiveDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
 ## boxplot still has outlirs on top and bottom but won't remove just because frog decided not to stay in a quadrant at all during a trial
 ## still hetero, can ask for help from Christian
 ## Dead and neutral significantly different
