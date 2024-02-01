@@ -908,7 +908,7 @@ summary(NaiveControlPanamaGLMM)
 NaiveControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount , data = NaiveControlPanamaAnalysisNoOutliers)
 anova(NaiveControlPanamaGLMM)
 summary(NaiveControlPanamaGLMM)
-emmeans(NaiveControlPanamaGLMM, pairwise~Group)$contrasts
+emmeans(NaiveControlPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysisNoOutliers, aes(x = fitted(NaiveControlPanamaGLMM), y = resid(NaiveControlPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -953,7 +953,7 @@ NaiveDeadFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
 NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysisNoOutliers)
 anova(NaiveDeadFIUPanamaGLMM)
 summary(NaiveDeadFIUPanamaGLMM)
-emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group)$contrasts
+emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1008,7 +1008,7 @@ NaiveLiveFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
 NaiveLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveLiveFIUPanamaAnalysisNoOutliers)
 anova(NaiveLiveFIUPanamaGLMM)
 summary(NaiveLiveFIUPanamaGLMM)
-emmeans(NaiveLiveFIUPanamaGLMM, pairwise~Group)$contrasts
+emmeans(NaiveLiveFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveLiveFIUPanamaGLMM <- ggplot(data = NaiveLiveFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveLiveFIUPanamaGLMM), y = resid(NaiveLiveFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1038,7 +1038,7 @@ summary(LearnedControlPanamaGLMM)
 LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedControlPanamaAnalysisNoOutliers)
 anova(LearnedControlPanamaGLMM)
 summary(LearnedControlPanamaGLMM)
-emmeans(LearnedControlPanamaGLMM, pairwise~Group)$contrasts
+emmeans(LearnedControlPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_LearnedControlPanamaGLMM <- ggplot(data = LearnedControlPanamaAnalysisNoOutliers, aes(x = fitted(LearnedControlPanamaGLMM), y = resid(LearnedControlPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1067,7 +1067,7 @@ summary(LearnedDeadPanamaGLMM)
 LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedDeadPanamaAnalysisNoOutliers)
 anova(LearnedDeadPanamaGLMM)
 summary(LearnedDeadPanamaGLMM)
-emmeans(LearnedDeadPanamaGLMM, pairwise~Group)$contrasts
+emmeans(LearnedDeadPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_LearnedDeadPanamaGLMM <- ggplot(data = LearnedDeadPanamaAnalysisNoOutliers, aes(x = fitted(LearnedDeadPanamaGLMM), y = resid(LearnedDeadPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1097,7 +1097,7 @@ summary(LearnedLivePanamaGLMM)
 LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
 anova(LearnedLivePanamaGLMM)
 summary(LearnedLivePanamaGLMM)
-emmeans(LearnedLivePanamaGLMM, pairwise~Group)$contrasts
+emmeans(LearnedLivePanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_LearnedLivePanamaGLMM <- ggplot(data = LearnedLivePanamaAnalysisNoOutliers, aes(x = fitted(LearnedLivePanamaGLMM), y = resid(LearnedLivePanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1128,7 +1128,7 @@ summary(NaiveControlFIUPanamaGLMM)
 NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = NaiveControlFIUPanamaAnalysisNoOutliers)
 anova(NaiveControlFIUPanamaGLMM)
 summary(NaiveControlFIUPanamaGLMM)
-emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group)$contrasts
+emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveControlFIUPanamaGLMM <- ggplot(data = NaiveControlFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveControlFIUPanamaGLMM), y = resid(NaiveControlFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1156,7 +1156,7 @@ summary(AllControlFIUPanamaGLMM)
 AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllControlFIUPanamaAnalysisNoOutliers)
 anova(AllControlFIUPanamaGLMM)
 summary(AllControlFIUPanamaGLMM)
-emmeans(AllControlFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+emmeans(AllControlFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 residuals_plot_AllControlFIUPanamaGLMM<- ggplot(data = AllControlFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllControlFIUPanamaGLMM), y = resid(AllControlFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1184,7 +1184,7 @@ summary(AllDeadFIUPanamaGLMM)
 AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadFIUPanamaAnalysisNoOutliers)
 anova(AllDeadFIUPanamaGLMM)
 summary(AllDeadFIUPanamaGLMM)
-emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 ## only significance is Dead Naive Neutral Naive which we already knew
 residuals_plot_AllDeadFIUPanamaGLMM<- ggplot(data = AllDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllDeadFIUPanamaGLMM), y = resid(AllDeadFIUPanamaGLMM))) +
   geom_point() +
@@ -1213,7 +1213,7 @@ summary(AllLiveFIUPanamaGLMM)
 AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = AllLiveFIUPanamaAnalysisNoOutliers)
 anova(AllLiveFIUPanamaGLMM)
 summary(AllLiveFIUPanamaGLMM)
-emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type)$contrasts
+emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 ## nothing significant between types
 residuals_plot_AllLiveFIUPanamaGLMM<- ggplot(data = AllLiveFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllLiveFIUPanamaGLMM), y = resid(AllLiveFIUPanamaGLMM))) +
   geom_point() +
@@ -1223,3 +1223,84 @@ residuals_plot_AllLiveFIUPanamaGLMM<- ggplot(data = AllLiveFIUPanamaAnalysisNoOu
   theme_minimal()
 print(residuals_plot_AllLiveFIUPanamaGLMM)
 ## still hetero
+
+## Boxplots
+ggboxplot(NaiveControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          ylim = c(0, 100), color = "grey60", title = "Naive Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 595.95 ; DF: 2,133 ; p = 0.24")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(NaiveDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey80", color = "grey60", ylim = c(0, 100), title = "Naive Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 1253.19 ; DF: 2,145 ; p < 0.01")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "**", textsize = 8, map_signif_level = TRUE, y_position = 70)+
+  annotate("text", x=2.8, y=100, label= "Location")
+  
+
+ggboxplot(NaiveLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey40", color = "grey60", ylim = c(0, 100), title = "Naive Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 5442.2 ; DF: 2,139 ; p <0.0001")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 80)+
+  geom_signif(comparisons = list(c("Live", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 70)+
+  annotate("text", x=2.8, y=100, label= "Location")
+  
+
+ggboxplot(LearnedControlPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          ylim = c(0, 100), title = "Learned Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 34.097 ; DF: 2,46 ; p = 0.94")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(LearnedDeadPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 100), title = "Learned Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 532.81 ; DF: 2,40 ; p = 0.39")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(LearnedLivePanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey40", ylim = c(0, 100), title = "Learned Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "SS: 591.19 ; DF: 2,43 ; p = 0.29")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(AllControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR",  ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80), title = "All Control Scent") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "SS: 165.96 ; DF: 2,181 ; p = 0.69")+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey80", ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80), title = "All Dead Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "SS: 18.90 ; DF: 2,187 ; p = 0.94")+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey40", ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80), title = "All Live Bd Scent") + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "SS: 480.42 ; DF: 2,184 ; p = 0.19")+
+  scale_color_manual(values=c("black", "grey60"))+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
