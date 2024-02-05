@@ -1339,21 +1339,21 @@ ggboxplot(NaiveControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fix
   annotate("text", x=2.8, y=100, label= "Location")
 
 ggboxplot(NaiveDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          fill = "grey80", color = "grey60", ylim = c(0, 100), title = "Naive Dead Bd Scent") + 
+          fill = "grey80", color = "grey60", ylim = c(0, 100)) + 
   scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 1253.19 ; DF: 2,145 ; p < 0.01")+
+  annotate("text", x=2.85, y=95, label= "F: 5.94 ; DF: 2,145 ; p < 0.01")+
   geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "**", textsize = 8, map_signif_level = TRUE, y_position = 70)+
   annotate("text", x=2.8, y=100, label= "Location")
   
 
 ggboxplot(NaiveLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          fill = "grey40", color = "grey60", ylim = c(0, 100), title = "Naive Live Bd Scent") + 
-  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Control","Live Bd", "Neutral"))+
+          fill = "grey40", color = "grey60", ylim = c(0, 100),) + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 5442.2 ; DF: 2,139 ; p <0.0001")+
+  annotate("text", x=2.85, y=95, label= "F: 22.87 ; DF: 2,139 ; p <0.0001")+
   geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 80)+
   geom_signif(comparisons = list(c("Live", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 70)+
   annotate("text", x=2.8, y=100, label= "Location")
