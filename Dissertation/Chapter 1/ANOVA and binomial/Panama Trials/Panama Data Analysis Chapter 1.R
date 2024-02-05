@@ -856,8 +856,9 @@ library(lmerTest)
 library(emmeans)
 library(multcomp)
 library(nlme)
+library(lmtest)
 
-## GLMMs with seconds
+## LMERs with seconds (mislabeled GLMM)
 ## Naive Control Panama
 ## Using type II SS when no interaction, Type III when interaction effect
 NaiveControlPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Total_Seconds_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveControlPanamaAnalysis, family = poisson)
@@ -938,6 +939,14 @@ summary(NaiveDeadFIUPanamaGLMM)
 NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysis)
 anova(NaiveDeadFIUPanamaGLMM)
 summary(NaiveDeadFIUPanamaGLMM)
+## compare models with and without total trial time as covariate
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysis)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+## removal of total trial time didn't change significance
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysis)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
 emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group)$contrasts
 residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysis, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
   geom_point() +
@@ -960,6 +969,16 @@ NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR
 anova(NaiveDeadFIUPanamaGLMM)
 summary(NaiveDeadFIUPanamaGLMM)
 emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysisNoOutliers)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
+NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUPanamaAnalysisNoOutliers)
+anova(NaiveDeadFIUPanamaGLMM)
+summary(NaiveDeadFIUPanamaGLMM)
+emmeans(NaiveDeadFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -972,8 +991,8 @@ resid(NaiveDeadFIUPanamaGLMM)
 boxplot(NaiveDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
 boxplot(NaiveDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
 ## boxplot still has outlirs on top and bottom but won't remove just because frog decided not to stay in a quadrant at all during a trial
-## still hetero, can ask for help from Christian
 ## Dead and neutral significantly different
+
 
 NaiveLiveFIUPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Seconds_Total_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveLiveFIUPanamaAnalysis, family = poisson)
 residuals_plot_NaiveLiveFIUPanamaGLMM <- ggplot(data = NaiveLiveFIUPanamaAnalysis, aes(x = fitted(NaiveLiveFIUPanamaGLMM), y = resid(NaiveLiveFIUPanamaGLMM))) +
@@ -1015,6 +1034,16 @@ NaiveLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Seconds_Total_Fixed_SR
 anova(NaiveLiveFIUPanamaGLMM)
 summary(NaiveLiveFIUPanamaGLMM)
 emmeans(NaiveLiveFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+NaiveLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number), data = NaiveLiveFIUPanamaAnalysisNoOutliers)
+anova(NaiveLiveFIUPanamaGLMM)
+summary(NaiveLiveFIUPanamaGLMM)
+emmeans(NaiveLiveFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
+NaiveLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveLiveFIUPanamaAnalysisNoOutliers)
+anova(NaiveLiveFIUPanamaGLMM)
+summary(NaiveLiveFIUPanamaGLMM)
+emmeans(NaiveLiveFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveLiveFIUPanamaGLMM <- ggplot(data = NaiveLiveFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveLiveFIUPanamaGLMM), y = resid(NaiveLiveFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1041,6 +1070,16 @@ LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_
 anova(LearnedControlPanamaGLMM)
 summary(LearnedControlPanamaGLMM)
 ## do nothing as fixed either, removing liquid and trial order from model
+LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedControlPanamaAnalysisNoOutliers)
+anova(LearnedControlPanamaGLMM)
+summary(LearnedControlPanamaGLMM)
+emmeans(LearnedControlPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number), data = LearnedControlPanamaAnalysisNoOutliers)
+anova(LearnedControlPanamaGLMM)
+summary(LearnedControlPanamaGLMM)
+emmeans(LearnedControlPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
 LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedControlPanamaAnalysisNoOutliers)
 anova(LearnedControlPanamaGLMM)
 summary(LearnedControlPanamaGLMM)
@@ -1074,6 +1113,16 @@ LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+
 anova(LearnedDeadPanamaGLMM)
 summary(LearnedDeadPanamaGLMM)
 emmeans(LearnedDeadPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number), data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+emmeans(LearnedDeadPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+emmeans(LearnedDeadPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_LearnedDeadPanamaGLMM <- ggplot(data = LearnedDeadPanamaAnalysisNoOutliers, aes(x = fitted(LearnedDeadPanamaGLMM), y = resid(LearnedDeadPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1100,6 +1149,16 @@ LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+
 anova(LearnedLivePanamaGLMM)
 summary(LearnedLivePanamaGLMM)
 ## do nothing as fixed either, removing liquid and trial order from model
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+emmeans(LearnedLivePanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+emmeans(LearnedLivePanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
 LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
 anova(LearnedLivePanamaGLMM)
 summary(LearnedLivePanamaGLMM)
@@ -1135,6 +1194,16 @@ NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed
 anova(NaiveControlFIUPanamaGLMM)
 summary(NaiveControlFIUPanamaGLMM)
 emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+(1|Frog_Number) , data = NaiveControlFIUPanamaAnalysisNoOutliers)
+anova(NaiveControlFIUPanamaGLMM)
+summary(NaiveControlFIUPanamaGLMM)
+emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
+NaiveControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = NaiveControlFIUPanamaAnalysisNoOutliers)
+anova(NaiveControlFIUPanamaGLMM)
+summary(NaiveControlFIUPanamaGLMM)
+emmeans(NaiveControlFIUPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 residuals_plot_NaiveControlFIUPanamaGLMM <- ggplot(data = NaiveControlFIUPanamaAnalysisNoOutliers, aes(x = fitted(NaiveControlFIUPanamaGLMM), y = resid(NaiveControlFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1159,6 +1228,16 @@ AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fi
 anova(AllControlFIUPanamaGLMM)
 summary(AllControlFIUPanamaGLMM)
 ## do nothing as fixed either, removing liquid and trial order from model
+AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllControlFIUPanamaAnalysisNoOutliers)
+anova(AllControlFIUPanamaGLMM)
+summary(AllControlFIUPanamaGLMM)
+emmeans(AllControlFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number), data = AllControlFIUPanamaAnalysisNoOutliers)
+anova(AllControlFIUPanamaGLMM)
+summary(AllControlFIUPanamaGLMM)
+emmeans(AllControlFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
 AllControlFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllControlFIUPanamaAnalysisNoOutliers)
 anova(AllControlFIUPanamaGLMM)
 summary(AllControlFIUPanamaGLMM)
@@ -1192,6 +1271,16 @@ anova(AllDeadFIUPanamaGLMM)
 summary(AllDeadFIUPanamaGLMM)
 emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 ## only significance is Dead Naive Neutral Naive which we already knew
+## compare models with and without total trial time as covariate
+AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number), data = AllDeadFIUPanamaAnalysisNoOutliers)
+anova(AllDeadFIUPanamaGLMM)
+summary(AllDeadFIUPanamaGLMM)
+emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
+AllDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadFIUPanamaAnalysisNoOutliers)
+anova(AllDeadFIUPanamaGLMM)
+summary(AllDeadFIUPanamaGLMM)
+emmeans(AllDeadFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 residuals_plot_AllDeadFIUPanamaGLMM<- ggplot(data = AllDeadFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllDeadFIUPanamaGLMM), y = resid(AllDeadFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
@@ -1220,7 +1309,17 @@ AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed
 anova(AllLiveFIUPanamaGLMM)
 summary(AllLiveFIUPanamaGLMM)
 emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+## compare models with and without total trial time as covariate
+AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number), data = AllLiveFIUPanamaAnalysisNoOutliers)
+anova(AllLiveFIUPanamaGLMM)
+summary(AllLiveFIUPanamaGLMM)
+emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+## removal of total trial time didn't change significance
 ## nothing significant between types
+AllLiveFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = AllLiveFIUPanamaAnalysisNoOutliers)
+anova(AllLiveFIUPanamaGLMM)
+summary(AllLiveFIUPanamaGLMM)
+emmeans(AllLiveFIUPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 residuals_plot_AllLiveFIUPanamaGLMM<- ggplot(data = AllLiveFIUPanamaAnalysisNoOutliers, aes(x = fitted(AllLiveFIUPanamaGLMM), y = resid(AllLiveFIUPanamaGLMM))) +
   geom_point() +
   geom_smooth(method = "loess", se = FALSE, linetype = "dashed") +
