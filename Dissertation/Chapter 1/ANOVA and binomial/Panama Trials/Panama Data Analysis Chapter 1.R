@@ -1331,11 +1331,11 @@ print(residuals_plot_AllLiveFIUPanamaGLMM)
 
 ## Boxplots
 ggboxplot(NaiveControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          ylim = c(0, 100), color = "grey60", title = "Naive Control Scent") + 
+          ylim = c(0, 100), color = "grey60") + 
   scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 595.95 ; DF: 2,133 ; p = 0.24")+
+  annotate("text", x=2.85, y=95, label= "F: 1.43  ; DF: 2,133 ; p = 0.24")+
   annotate("text", x=2.8, y=100, label= "Location")
 
 ggboxplot(NaiveDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
