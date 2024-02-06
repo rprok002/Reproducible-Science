@@ -1409,3 +1409,36 @@ ggboxplot(AllLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR
   annotate("text", x=2.8, y=75, label= "F: 1.67 ; DF: 2,184 ; p = 0.19")+
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
+
+
+## Separate Naive LMER's for FIU and Panama 
+NaiveDeadFIUAnalysis = read.csv(file.choose())
+NaiveDeadFIUlmer <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Liquid.Amount)+(1|Frog_Number)+(1|Trial.Order), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUlmer)
+summary(AllLiveFIUPanamaGLMM)
+install.packages("lme4", type = "source")
+library(lme4)
+library(lmerTest)
+library(emmeans)
+emmeans(NaiveDeadFIUlmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+NaiveDeadPanamaAnalysis = read.csv(file.choose())
+NaiveDeadPanamalmer <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Liquid.Amount)+(1|Frog_Number)+(1|Trial.Order), data = NaiveDeadPanamaAnalysis)
+anova(NaiveDeadPanamalmer)
+summary(NaiveDeadPanamalmer)
+emmeans(NaiveDeadPanamalmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+
+## Comparing FIU and Panama (aka broth versus agar broth), frogs have differences more without agar than with.
+## So, addition of agar shouldn't be a factor that affects time spent in quadrants
+NaiveLiveFIUAnalysis = read.csv(file.choose())
+NaiveLiveFIUlmer <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Liquid.Amount)+(1|Frog_Number)+(1|Trial.Order), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUlmer)
+summary(NaiveLiveFIUlmer)
+emmeans(NaiveLiveFIUlmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+NaiveLivePanamaAnalysis = read.csv(file.choose())
+NaiveLivePanamalmer <- lmer(Seconds_Fixed_SR~Group+Sex+Seconds_Total_Fixed_SR+(1|Liquid.Amount)+(1|Frog_Number)+(1|Trial.Order), data = NaiveLivePanamaAnalysis)
+anova(NaiveLivePanamalmer)
+summary(NaiveLivePanamalmer)
+emmeans(NaiveLivePanamalmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+
+## Once again having agar added doesn't add any significances so going to continue combining FIU and Panama datasets
+## for naive even though FIU was just beoth an d Panama was added agar
