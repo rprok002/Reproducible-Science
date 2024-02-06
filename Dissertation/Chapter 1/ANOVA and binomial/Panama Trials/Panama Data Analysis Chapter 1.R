@@ -1344,7 +1344,7 @@ ggboxplot(NaiveDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
   annotate("text", x=2.85, y=95, label= "F: 5.94 ; DF: 2,145 ; p < 0.01")+
-  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "**", textsize = 8, map_signif_level = TRUE, y_position = 70)+
+  geom_signif(comparisons = list(c("Dead", "Neutral")), annotations = "**", textsize = 8, map_signif_level = TRUE, y_position = 70)+
   annotate("text", x=2.8, y=100, label= "Location")
   
 
@@ -1360,52 +1360,52 @@ ggboxplot(NaiveLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_
   
 
 ggboxplot(LearnedControlPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          ylim = c(0, 100), title = "Learned Control Scent") + 
+          ylim = c(0, 100)) + 
   scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 34.097 ; DF: 2,46 ; p = 0.94")+
+  annotate("text", x=2.85, y=95, label= "F: 0.07 ; DF: 2,46 ; p = 0.94")+
   annotate("text", x=2.8, y=100, label= "Location")
 
 ggboxplot(LearnedDeadPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          fill = "grey80", ylim = c(0, 100), title = "Learned Dead Bd Scent") + 
+          fill = "grey80", ylim = c(0, 100)) + 
   scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 532.81 ; DF: 2,40 ; p = 0.39")+
+  annotate("text", x=2.85, y=95, label= "F: 0.96 ; DF: 2,40 ; p = 0.39")+
   annotate("text", x=2.8, y=100, label= "Location")
 
 ggboxplot(LearnedLivePanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
-          fill = "grey40", ylim = c(0, 100), title = "Learned Live Bd Scent") + 
+          fill = "grey40", ylim = c(0, 100)) + 
   scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.85, y=95, label= "SS: 591.19 ; DF: 2,43 ; p = 0.29")+
+  annotate("text", x=2.85, y=95, label= "FL 1.28 ; DF: 2,43 ; p = 0.29")+
   annotate("text", x=2.8, y=100, label= "Location")
 
 ggboxplot(AllControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR",  ylab = " Time (square root seconds)", xlab = "Location",
-          color = "Type", ylim = c(0, 80), title = "All Control Scent") + 
+          color = "Type", ylim = c(0, 80)) + 
   scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.8, y=75, label= "SS: 165.96 ; DF: 2,181 ; p = 0.69")+
+  annotate("text", x=2.8, y=75, label= "F: 0.38 ; DF: 2,181 ; p = 0.69")+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
   scale_color_manual(values=c("black", "grey60"))
 
 ggboxplot(AllDeadFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey80", ylab = " Time (square root seconds)", xlab = "Location",
-          color = "Type", ylim = c(0, 80), title = "All Dead Bd Scent") + 
+          color = "Type", ylim = c(0, 80)) + 
   scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.8, y=75, label= "SS: 18.90 ; DF: 2,187 ; p = 0.94")+
+  annotate("text", x=2.8, y=75, label= "F: 0.07; DF: 2,187 ; p = 0.94")+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
   scale_color_manual(values=c("black", "grey60"))
 
 ggboxplot(AllLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey40", ylab = " Time (square root seconds)", xlab = "Location",
-          color = "Type", ylim = c(0, 80), title = "All Live Bd Scent") + 
+          color = "Type", ylim = c(0, 80)) + 
   scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
   scale_y_continuous(breaks=seq(0,80,by=10))+
   theme(plot.title=element_text(hjust=0.5))+
-  annotate("text", x=2.8, y=75, label= "SS: 480.42 ; DF: 2,184 ; p = 0.19")+
+  annotate("text", x=2.8, y=75, label= "F: 1.67 ; DF: 2,184 ; p = 0.19")+
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
