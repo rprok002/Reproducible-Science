@@ -919,6 +919,32 @@ residuals_plot_NaiveControlPanamaGLMM <- ggplot(data = NaiveControlPanamaAnalysi
 print(residuals_plot_NaiveControlPanamaGLMM)
 ## better but now total trial time as a covariate is significant, see with Christian if that is eventually an issue
 
+## Naive Control FIU (live) Square Root Seconds
+NaiveControlFIUAnalysis <- read.csv(file.choose())
+NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Seconds_Total_Fixed_SR+(1|Frog_Number) + (1|Trial.Order) , data = NaiveControlFIUAnalysis)
+anova(NaiveControlFIUGLMM)
+summary(NaiveControlFIUGLMM)
+car::Anova(NaiveControlPanamaGLMM, type="2")
+emmeans(NaiveControlFIUGLMM, pairwise~Group)$contrasts
+
+ggdensity(NaiveControlFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Control FIU")
+ggdensity(NaiveControlFIUAnalysis$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "Control FIU Total")
+ggqqplot(NaiveControlFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveControlFIUAnalysis$Seconds_Total_Fixed_SR)
+
+## still hetero
+
+## liquid and trial number don't seem to be amything, try as fixed
+NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Seconds_Total_Fixed_SR+(1|Frog_Number) + Trial.Order, data = NaiveControlFIUAnalysis)
+anova(NaiveControlFIUGLMM)
+summary(NaiveControlFIUGLMM)
+
+## trial order not sig as fixed either, removing
+NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveControlFIUAnalysis)
+anova(NaiveControlFIUGLMM)
+summary(NaiveControlFIUGLMM)
+emmeans(NaiveControlFIUGLMM, pairwise~Group)$contrasts
+
 NaiveDeadFIUPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Total_Seconds_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadFIUPanamaAnalysis, family = poisson)
 residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysis, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
   geom_point() +
@@ -1442,3 +1468,11 @@ emmeans(NaiveLivePanamalmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 
 ## Once again having agar added doesn't add any significances so going to continue combining FIU and Panama datasets
 ## for naive even though FIU was just beoth an d Panama was added agar
+
+
+
+## Summary of all square root LMER's
+NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveControlFIUAnalysis)
+anova(NaiveControlFIUGLMM)
+summary(NaiveControlFIUGLMM)
+emmeans(NaiveControlFIUGLMM, pairwise~Group)$contrasts
