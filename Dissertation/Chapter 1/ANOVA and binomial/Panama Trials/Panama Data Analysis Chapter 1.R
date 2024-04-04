@@ -945,6 +945,70 @@ anova(NaiveControlFIUGLMM)
 summary(NaiveControlFIUGLMM)
 emmeans(NaiveControlFIUGLMM, pairwise~Group)$contrasts
 
+NaiveDeadFIUAnalysis <- read.csv(file.choose())
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Trial.Order) + (1|Liquid.Amount), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+summary(NaiveDeadFIUGLMM)
+emmeans(NaiveDeadFIUGLMM, pairwise~Group)$contrasts
+## sex not sig, removing. liquid and trial number don't seem to be amything, try as fixed
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number) + Trial.Order + Liquid.Amount, data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+## liquid and trial don't do anything as fixed, removing
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+summary(NaiveDeadFIUGLMM)
+emmeans(NaiveDeadFIUGLMM, pairwise~Group)$contrasts
+## remove total time
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+(1|Frog_Number), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+summary(NaiveDeadFIUGLMM)
+emmeans(NaiveDeadFIUGLMM, pairwise~Group)$contrasts
+## didn't change anything, putting back in
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+summary(NaiveDeadFIUGLMM)
+emmeans(NaiveDeadFIUGLMM, pairwise~Group)$contrasts
+
+ggdensity(NaiveDeadFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dea FIU ")
+ggdensity(NaiveDeadFIUAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dead FIU Total")
+ggqqplot(NaiveDeadFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveDeadFIUAnalysis$Total_Seconds_Fixed_SR)
+
+## mostly not hetero anymore
+
+NaiveLiveFIUAnalysis <- read.csv(file.choose())
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Trial.Order) + (1|Liquid.Amount), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+## liquid and trial order as fixed
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number) + Trial.Order + Liquid.Amount, data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+## don't do anything, removing
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+## removing total trial time
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+(1|Frog_Number), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+## doesn't do anything, putting back in
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+
+ggdensity(NaiveLiveFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Live FIU ")
+ggdensity(NaiveLiveFIUAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Live FIU Total")
+ggqqplot(NaiveLiveFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveLiveFIUAnalysis$Total_Seconds_Fixed_SR)
+
+## mostly not hetero anymore
+
 NaiveDeadFIUPanamaGLMM <- glmer(Seconds_Fixed~Group+Sex+Total_Seconds_Fixed+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = NaiveDeadFIUPanamaAnalysis, family = poisson)
 residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysis, aes(x = fitted(NaiveDeadFIUPanamaGLMM), y = resid(NaiveDeadFIUPanamaGLMM))) +
   geom_point() +
@@ -1277,6 +1341,31 @@ residuals_plot_AllControlFIUPanamaGLMM<- ggplot(data = AllControlFIUPanamaAnalys
 print(residuals_plot_AllControlFIUPanamaGLMM)
 ## not really hetero
 
+## All Control FIU Naive Panama Learned No Outliers
+AllControlNaiveFIULearnedPanamaAnalysisNoOutliers <- read.csv(file.choose())
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+## pretty hetero now
+
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+## order and liquid as fixed
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+## total trial time no longer significant but that doesn't really matter so taking out liquid and order
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+## take out trial time total
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+## doesn't change, leaving in
+
 ## All Dead FIU Panama Square Root No Outliers
 AllDeadFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
 ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
@@ -1316,6 +1405,33 @@ residuals_plot_AllDeadFIUPanamaGLMM<- ggplot(data = AllDeadFIUPanamaAnalysisNoOu
 print(residuals_plot_AllDeadFIUPanamaGLMM)
 ## still hetero
 
+## All Dead FIU Panama Square Root No Outliers
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+## liquid and order as fixed
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+## doesn't affect, out
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+## out trial time
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+## no effect, back in
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+
 ## All Live FIU Panama Square Root No Outliers
 AllLiveFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
 ggdensity(AllLiveFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
@@ -1354,6 +1470,36 @@ residuals_plot_AllLiveFIUPanamaGLMM<- ggplot(data = AllLiveFIUPanamaAnalysisNoOu
   theme_minimal()
 print(residuals_plot_AllLiveFIUPanamaGLMM)
 ## still hetero
+
+
+## All Live Naive FIU Learned Panama Square Root No Outliers
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "All Dead Live Panama Total")
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
+## fairly hetero
+
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) + (1|Liquid.Amount) + (1|Trial.Order) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+## order and liquid as fixed
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) + Liquid.Amount + Trial.Order , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+## nothing, removing
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+## remove total time
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+## no effect, back in
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
 
 ## Boxplots
 ggboxplot(NaiveControlFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
@@ -1472,7 +1618,193 @@ emmeans(NaiveLivePanamalmer, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 
 
 ## Summary of all square root LMER's
-NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveControlFIUAnalysis)
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+library(nlme)
+library(lmtest)
+
+NaiveControlFIUAnalysis <- read.csv(file.choose())
+ggdensity(NaiveControlFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Control FIU")
+ggdensity(NaiveControlFIUAnalysis$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "Control FIU Total")
+ggqqplot(NaiveControlFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveControlFIUAnalysis$Seconds_Total_Fixed_SR)
+
+NaiveControlFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number), data = NaiveControlFIUAnalysis)
 anova(NaiveControlFIUGLMM)
 summary(NaiveControlFIUGLMM)
 emmeans(NaiveControlFIUGLMM, pairwise~Group)$contrasts
+
+NaiveDeadFIUAnalysis < read.csv(file.choose())
+ggdensity(NaiveDeadFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dea FIU ")
+ggdensity(NaiveDeadFIUAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Dead FIU Total")
+ggqqplot(NaiveDeadFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveDeadFIUAnalysis$Total_Seconds_Fixed_SR)
+
+NaiveDeadFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveDeadFIUAnalysis)
+anova(NaiveDeadFIUGLMM)
+summary(NaiveDeadFIUGLMM)
+emmeans(NaiveDeadFIUGLMM, pairwise~Group)$contrasts
+
+NaiveLiveFIUAnalysis <- read.csv(file.choose())
+ggdensity(NaiveLiveFIUAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Live FIU ")
+ggdensity(NaiveLiveFIUAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Live FIU Total")
+ggqqplot(NaiveLiveFIUAnalysis$Seconds_Fixed_SR)
+ggqqplot(NaiveLiveFIUAnalysis$Total_Seconds_Fixed_SR)
+
+NaiveLiveFIUGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = NaiveLiveFIUAnalysis)
+anova(NaiveLiveFIUGLMM)
+summary(NaiveLiveFIUGLMM)
+emmeans(NaiveLiveFIUGLMM, pairwise~Group)$contrasts
+
+LearnedControlPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(LearnedControlPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Control Panama")
+ggdensity(LearnedControlPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Control Panama Total")
+ggqqplot(LearnedControlPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(LearnedControlPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+LearnedControlPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedControlPanamaAnalysisNoOutliers)
+anova(LearnedControlPanamaGLMM)
+summary(LearnedControlPanamaGLMM)
+emmeans(LearnedControlPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+
+LearnedDeadPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(LearnedDeadPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Dead Panama")
+ggdensity(LearnedDeadPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Dead Panama Total")
+ggqqplot(LearnedDeadPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(LearnedDeadPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+LearnedDeadPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = LearnedDeadPanamaAnalysisNoOutliers)
+anova(LearnedDeadPanamaGLMM)
+summary(LearnedDeadPanamaGLMM)
+emmeans(LearnedDeadPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+
+LearnedLivePanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(LearnedLivePanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Live Panama")
+ggdensity(LearnedLivePanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Learned Live Panama Total")
+ggqqplot(LearnedLivePanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(LearnedLivePanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+LearnedLivePanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = LearnedLivePanamaAnalysisNoOutliers)
+anova(LearnedLivePanamaGLMM)
+summary(LearnedLivePanamaGLMM)
+emmeans(LearnedLivePanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
+
+AllControlNaiveFIULearnedPanamaAnalysisNoOutliers <- read.csv(file.choose())
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
+
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+emmeans(AllDeadNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
+
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "All Dead Live Panama Total")
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
+## fairly hetero
+
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+
+## Final Boxplots
+ggboxplot(NaiveControlFIUAnalysis, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          ylim = c(0, 100), color = "grey60") + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "F: 3.74  ; DF: 2,22 ; p = 0.04")+
+  annotate("text", x=2.8, y=100, label= "Location")+
+  geom_signif(comparisons = list(c("ConA", "Neutral")), annotations = "*", textsize = 8, map_signif_level = TRUE, y_position = 70)
+
+ggboxplot(NaiveDeadFIUAnalysis, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey80", color = "grey60", ylim = c(0, 100)) + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "F: 12.218 ; DF: 2,79 ; p < 0.0001")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "***", textsize = 8, map_signif_level = TRUE, y_position = 80)+
+  geom_signif(comparisons = list(c("Dead", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 70)+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(NaiveLiveFIUAnalysis, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey40", color = "grey60", ylim = c(0, 100),) + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "F: 14.228 ; DF: 2,73 ; p <0.0001")+
+  geom_signif(comparisons = list(c("Con", "Neutral")), annotations = "***", textsize = 8, map_signif_level = TRUE, y_position = 80)+
+  geom_signif(comparisons = list(c("Live", "Neutral")), annotations = "****", textsize = 8, map_signif_level = TRUE, y_position = 70)+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(LearnedControlPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          ylim = c(0, 100)) + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "F: 0.07 ; DF: 2,46 ; p = 0.94")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(LearnedDeadPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey80", ylim = c(0, 100)) + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "F: 0.96 ; DF: 2,40 ; p = 0.39")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(LearnedLivePanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", ylab = " Time (square root seconds)", xlab = "Location",
+          fill = "grey40", ylim = c(0, 100)) + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.85, y=95, label= "FL 1.28 ; DF: 2,43 ; p = 0.29")+
+  annotate("text", x=2.8, y=100, label= "Location")
+
+ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR",  ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80)) + 
+  scale_x_discrete(breaks=c("ConA","ConC","Neutral"), labels=c("Left","Right", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "F: 1.74 ; DF: 2,94 ; p = 0.18")+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey80", ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80)) + 
+  scale_x_discrete(breaks=c("Con","Dead","Neutral"), labels=c("Broth","Dead Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "F: 0.12; DF: 2,121 ; p = 0.87")+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")+
+  scale_color_manual(values=c("black", "grey60"))
+
+ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR", fill = "grey40", ylab = " Time (square root seconds)", xlab = "Location",
+          color = "Type", ylim = c(0, 80)) + 
+  scale_x_discrete(breaks=c("Con","Live","Neutral"), labels=c("Broth","Live Bd", "Neutral"))+
+  scale_y_continuous(breaks=seq(0,80,by=10))+
+  theme(plot.title=element_text(hjust=0.5))+
+  annotate("text", x=2.8, y=75, label= "F: 1.65 ; DF: 2,112 ; p = 0.20")+
+  scale_color_manual(values=c("black", "grey60"))+
+  annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
