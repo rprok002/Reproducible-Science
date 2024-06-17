@@ -1808,3 +1808,69 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   annotate("text", x=2.8, y=75, label= "F: 1.65 ; DF: 2,112 ; p = 0.20")+
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
+
+## Rework models to have less of them
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+library(nlme)
+library(lmtest)
+
+AllControlNaiveFIULearnedPanamaAnalysisNoOutliers <- read.csv(file.choose())
+## review heteroscedasticity: no square root
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed)
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed)
+## review heteroscedasticity: square root
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama")
+ggdensity(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "Naive Control FIU Panama Total")
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+## square root decreases heteroscedasticity
+## redo with all variables
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Type+Sex+Total_Seconds_Fixed_SR+(1|Trial.Order)+(1|Liquid.Amount)+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group)$contrasts
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Type)$contrasts
+## liquid amount and trial order not significant as random, redo as fixed
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Type+Sex+Total_Seconds_Fixed_SR+Trial.Order+Liquid.Amount+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group)$contrasts
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Type)$contrasts
+## doesn't affect, removing along with sex
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllControlNaiveFIULearnedPanamaGLMM)
+summary(AllControlNaiveFIULearnedPanamaGLMM)
+emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
+
+## Separate models for Dead and Live Bd Scent
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaGLMM)
+summary(AllDeadNaiveFIULearnedPanamaGLMM)
+emmeans(AllDeadNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
+
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "All Dead Live Panama Total")
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
+## fairly hetero
+
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaGLMM)
+summary(AllLiveNaiveFIULearnedPanamaGLMM)
+emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+
