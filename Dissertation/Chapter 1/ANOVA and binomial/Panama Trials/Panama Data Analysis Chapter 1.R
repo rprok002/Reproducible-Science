@@ -1845,7 +1845,7 @@ summary(AllControlNaiveFIULearnedPanamaGLMM)
 emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group)$contrasts
 emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Type)$contrasts
 ## doesn't affect, removing along with sex
-AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
+AllControlNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Type+Total_Seconds_Fixed_SR+(1|Frog_Number) , data = AllControlNaiveFIULearnedPanamaAnalysisNoOutliers)
 anova(AllControlNaiveFIULearnedPanamaGLMM)
 summary(AllControlNaiveFIULearnedPanamaGLMM)
 emmeans(AllControlNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
@@ -1857,10 +1857,10 @@ ggdensity(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Den
 ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
 ggqqplot(AllDeadFIUPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
 
-AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+AllDeadNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Type+Total_Seconds_Fixed_SR+(1|Frog_Number), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
 anova(AllDeadNaiveFIULearnedPanamaGLMM)
 summary(AllDeadNaiveFIULearnedPanamaGLMM)
-emmeans(AllDeadNaiveFIULearnedPanamaGLMM, pairwise~Group*Type)$contrasts
+emmeans(AllDeadNaiveFIULearnedPanamaGLMM, pairwise~Group)$contrasts
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
 ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Live FIU Panama")
@@ -1869,8 +1869,8 @@ ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
 ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
 ## fairly hetero
 
-AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group*Type+Sex+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+AllLiveNaiveFIULearnedPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Type+Seconds_Total_Fixed_SR+(1|Frog_Number) , data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
 anova(AllLiveNaiveFIULearnedPanamaGLMM)
 summary(AllLiveNaiveFIULearnedPanamaGLMM)
-emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group*Type,lmer.df = "satterthwaite")$contrasts
+emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group,lmer.df = "satterthwaite")$contrasts
 
