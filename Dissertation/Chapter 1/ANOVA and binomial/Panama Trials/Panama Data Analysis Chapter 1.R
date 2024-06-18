@@ -1877,25 +1877,25 @@ emmeans(AllLiveNaiveFIULearnedPanamaGLMM, pairwise~Group,lmer.df = "satterthwait
 ## Graphs, attempting to add significance lines to them
 
 AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("ConA", "Neutral", "ConC"))
-ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed",  ylab = " Time (seconds)", xlab = "Location",
+ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed",  ylab = " Time (seconds)", xlab = "Quadrant",
           color = "Type", ylim = c(0, 6500)) + 
   scale_x_discrete(labels=c("Left","Neutral", "Right"))+
   scale_y_continuous(breaks=seq(0,4500,by=500))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())+
   annotate("text", x=2.8, y=6300, label= "F: 1.11 ; DF: 2,97 ; p = 0.33", fontface = "bold")+
-  annotate("text", x=2.8, y=6700, label= " Location", fontface = "bold")+
+  annotate("text", x=2.8, y=6700, label= " Quadrant", fontface = "bold")+
   scale_color_manual(values=c("black", "grey60"))
 
 AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Dead"))
-ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey80", ylab = " Time (seconds)", xlab = "Location",
+ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey80", ylab = " Time (seconds)", xlab = "Quadrant",
           color = "Type", ylim = c(0, 6500)) + 
   scale_x_discrete(labels=c("Broth","Neutral", "Dead Bd"))+
   scale_y_continuous(breaks=seq(0,4500,by=500))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())+
   annotate("text", x=2.8, y=6300, label= "F: 7.94; DF: 2,124 ; p <0.001", fontface = "bold")+
-  annotate("text", x=2.8, y=6700, label= "Location", fontface = "bold")+
+  annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   scale_color_manual(values=c("black", "grey60"))+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
     annotation = c("***", "***", "***", "***"), tip_length = 0, textsize = 5)
@@ -1904,7 +1904,7 @@ ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
 
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Live"))
-ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey40", ylab = " Time (seconds)", xlab = "Location",
+ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey40", ylab = " Time (seconds)", xlab = "Quadrant",
           color = "Type", ylim = c(0, 6500)) + 
   scale_x_discrete(labels=c("Broth","Neutral", "Live Bd"))+
   scale_y_continuous(breaks=seq(0,4500,by=500))+
@@ -1912,7 +1912,7 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   theme(legend.title=element_blank())+
   annotate("text", x=2.8, y=6300, label= "F: 13.72 ; DF: 2,115 ; p < 0.001", fontface = "bold")+
   scale_color_manual(values=c("black", "grey60"))+
-  annotate("text", x=2.8, y=6700, label= "Location", fontface = "bold")+
+  annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
               annotation = c("***", "***", "***", "***"), tip_length = 0, textsize = 5)
 
