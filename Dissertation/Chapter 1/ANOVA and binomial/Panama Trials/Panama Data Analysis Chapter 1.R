@@ -1916,4 +1916,34 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
               annotation = c("***", "***", "***", "***"), tip_length = 0, textsize = 5)
 
+## Graphs with different colors
+AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("ConA", "Neutral", "ConC"))
+ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed",  ylab = " Time (seconds)", xlab = "Quadrant",
+          color = "Type", fill = "grey", ylim = c(0, 6500)) + 
+  scale_x_discrete(labels=c("Left","Neutral", "Right"))+
+  scale_y_continuous(breaks=seq(0,4500,by=500))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  scale_color_manual(values=c("black", "grey60"))
 
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Dead"))
+ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "cyan", ylab = " Time (seconds)", xlab = "Quadrant",
+          color = "Type", ylim = c(0, 6500)) + 
+  scale_x_discrete(labels=c("Broth","Neutral", "Dead Bd"))+
+  scale_y_continuous(breaks=seq(0,4500,by=500))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  scale_color_manual(values=c("black", "grey60"))+
+  geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
+              annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
+
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Live"))
+ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "purple1", ylab = " Time (seconds)", xlab = "Quadrant",
+          color = "Type", ylim = c(0, 6500)) + 
+  scale_x_discrete(labels=c("Broth","Neutral", "Live Bd"))+
+  scale_y_continuous(breaks=seq(0,4500,by=500))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  scale_color_manual(values=c("black", "grey60"))+
+  geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
+              annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
