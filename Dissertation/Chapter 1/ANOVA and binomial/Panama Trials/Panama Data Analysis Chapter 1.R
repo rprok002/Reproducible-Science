@@ -1898,7 +1898,7 @@ ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   scale_color_manual(values=c("black", "grey60"))+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
-    annotation = c("***", "***", "***", "***"), tip_length = 0, textsize = 5)
+    annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
 
 
 
@@ -1914,7 +1914,7 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
-              annotation = c("***", "***", "***", "***"), tip_length = 0, textsize = 5)
+              annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
 
 ## Graphs with different colors
 AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("ConA", "Neutral", "ConC"))
