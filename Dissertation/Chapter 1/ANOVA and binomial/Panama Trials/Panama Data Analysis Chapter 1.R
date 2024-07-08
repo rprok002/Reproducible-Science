@@ -1914,8 +1914,14 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
-              annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
-
+              annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)+
+  annotate("text", x=0.8, y=965, label="x")+
+  annotate("text", x=1.2, y=833, label="x")+
+  annotate("text", x=1.8, y=1287, label="x")+
+  annotate("text", x=2.2, y=1611, label="x")+
+  annotate("text", x=2.8, y=1042, label="x")+
+  annotate("text", x=3.2, y=646, label="x")
+    
 ## Graphs with different colors
 AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("ConA", "Neutral", "ConC"))
 ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed",  ylab = " Time (seconds)", xlab = "Quadrant",
@@ -1947,3 +1953,12 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   scale_color_manual(values=c("black", "grey60"))+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
               annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
+
+
+
+## Means and standard deviations
+mean_Live <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers %>%
+  group_by(Group, Type) %>% 
+  summarise(mean= mean(Seconds_Fixed),
+            se = sd(Seconds_Fixed))
+glimpse(mean_Live)
