@@ -1885,7 +1885,13 @@ ggboxplot(AllControlNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "S
   theme(legend.title=element_blank())+
   annotate("text", x=2.8, y=6300, label= "F: 1.11 ; DF: 2,97 ; p = 0.33", fontface = "bold")+
   annotate("text", x=2.8, y=6700, label= " Quadrant", fontface = "bold")+
-  scale_color_manual(values=c("black", "grey60"))
+  scale_color_manual(values=c("black", "grey60"))+
+  annotate("text", x=0.8, y=1163, label="x")+
+  annotate("text", x=1.2, y=751, label="x")+
+  annotate("text", x=1.8, y=1096, label="x")+
+  annotate("text", x=2.2, y=1314, label="x")+
+  annotate("text", x=2.8, y=1333, label="x")+
+  annotate("text", x=3.2, y=987, label="x")
 
 AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Dead"))
 ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey80", ylab = " Time (seconds)", xlab = "Quadrant",
@@ -1899,9 +1905,6 @@ ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   scale_color_manual(values=c("black", "grey60"))+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
     annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
-
-
-
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Live"))
 ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey40", ylab = " Time (seconds)", xlab = "Quadrant",
@@ -1957,6 +1960,12 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
 
 
 ## Means and standard deviations
+mean_Control <- AllControlNaiveFIULearnedPanamaAnalysisNoOutliers %>%
+  group_by(Group, Type) %>% 
+  summarise(mean= mean(Seconds_Fixed),
+            se = sd(Seconds_Fixed))
+glimpse(mean_Control)
+
 mean_Live <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers %>%
   group_by(Group, Type) %>% 
   summarise(mean= mean(Seconds_Fixed),
