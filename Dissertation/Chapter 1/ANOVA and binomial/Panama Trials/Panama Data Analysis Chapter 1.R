@@ -1904,7 +1904,13 @@ ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   annotate("text", x=2.8, y=6700, label= "Quadrant", fontface = "bold")+
   scale_color_manual(values=c("black", "grey60"))+
   geom_signif(y_position = c(6000,5600,5200, 4800), xmin = c(0.8, 1.2,1.8, 2.2), xmax = c(1.8, 2.2,2.8,3.2),
-    annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)
+    annotation = c("**", "**", "***", "***"), tip_length = 0, textsize = 5)+
+  annotate("text", x=0.8, y=933, label="x")+
+  annotate("text", x=1.2, y=953, label="x")+
+  annotate("text", x=1.8, y=1359, label="x")+
+  annotate("text", x=2.2, y=1424, label="x")+
+  annotate("text", x=2.8, y=1051, label="x")+
+  annotate("text", x=3.2, y=822, label="x")
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Neutral", "Live"))
 ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey40", ylab = " Time (seconds)", xlab = "Quadrant",
@@ -1965,6 +1971,12 @@ mean_Control <- AllControlNaiveFIULearnedPanamaAnalysisNoOutliers %>%
   summarise(mean= mean(Seconds_Fixed),
             se = sd(Seconds_Fixed))
 glimpse(mean_Control)
+
+mean_Dead <- AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers %>%
+  group_by(Group, Type) %>% 
+  summarise(mean= mean(Seconds_Fixed),
+            se = sd(Seconds_Fixed))
+glimpse(mean_Dead)
 
 mean_Live <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers %>%
   group_by(Group, Type) %>% 
