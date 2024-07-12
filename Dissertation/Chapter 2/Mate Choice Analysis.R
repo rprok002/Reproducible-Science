@@ -67,3 +67,25 @@ library(emmeans)
 library(multcomp)
 library(nlme)
 library(lmtest)
+
+ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+## Female frog number and trial order not effective as random, moving trial time to fixed
+
+ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+Female_Trial_Order , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+## doesn't effect anything, removing trial order from model and putting male pair as random
+ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+## male pair order still doens't affect, so keeping as random
+
+## Final control model
+ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Time_Interaction_Zone+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+
+## interaction zone time significant so keeping in model, but group is not significant so don't have to 
+## include side of apparatus as an effect in the infection model
