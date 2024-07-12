@@ -6,6 +6,7 @@ library(dplyr)
 
 MateChoiceCompiledDataControlNoCall <- read.csv(file.choose())
 MateChoiceAnalysisControl <- read.csv(file.choose())
+MateChoiceAnalysisInfected <- read.csv(file.choose())
 
 ggdensity(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
 ggqqplot(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds)
@@ -57,6 +58,15 @@ ggqqplot(MateChoiceAnalysisControl$SQRT_Time_Interaction_Zone)
 
 ## using sqrt for Weight Seconds because normalizes so no family need be added for LMER 
 
+ggdensity(MateChoiceAnalysisInfected$Weight_Seconds, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Weight_Seconds)
+
+ggdensity(MateChoiceAnalysisInfected$SQRT_Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
+ggqqplot(MateChoiceAnalysisInfected$SQRT_Weight_Seconds)
+## more normalized
+
+## using sqrt for Weight Seconds because normalizes so no family need be added for LMER 
+
 ## Control Models 
 install.packages("ggpubr")
 library(ggpubr)
@@ -77,10 +87,16 @@ ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interac
 anova(ControlTrialLMER)
 summary(ControlTrialLMER)
 ## doesn't effect anything, removing trial order from model and putting male pair as random
+
 ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisControl)
 anova(ControlTrialLMER)
 summary(ControlTrialLMER)
-## male pair order still doens't affect, so keeping as random
+## male pair order still doens't affect, so keeping as random. Removing interation zone to see if does anything
+
+ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+## makes Group even farther from significance but doesn't change anything else, so keeping in to be conservative
 
 ## Final control model
 ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Time_Interaction_Zone+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisControl)
@@ -89,3 +105,40 @@ summary(ControlTrialLMER)
 
 ## interaction zone time significant so keeping in model, but group is not significant so don't have to 
 ## include side of apparatus as an effect in the infection model
+
+## Infected Models
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+library(nlme)
+library(lmtest)
+
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisInfected)
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+## Female frog number and trial order not effective as random, moving trial time to fixed
+
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number)+ Female_Trial_Order , data = MateChoiceAnalysisInfected)
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+## doesn't effect anything, removing trial order from model and putting male pair as random
+## male pair order still doens't affect, so keeping as random
+## Removing interation zone to see if does anything
+
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected)
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+## interaction zone time significant so keeping in model, but group is not significant so don't have to 
+## include side of apparatus as an effect in the infection model
+
+## Final Infected Model
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+
+## interaction zone time significant so keeping in model, but group is not significant, so females don't
+## stay close to either infected or clean frog significantly less/more
