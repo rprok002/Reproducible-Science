@@ -152,15 +152,33 @@ ggboxplot(MateChoiceAnalysisControl, x = "Group", y = "Weight_Seconds",  ylab = 
   scale_y_continuous(breaks=seq(0,900,by=100))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())+
-  annotate("text", x=2, y=1100, label= "F: 0.18 ; DF: 1,233 ; p = 0.67", fontface = "bold", size = 6)+
-  annotate("text", x=2, y=1200, label= " Side", fontface = "bold", size = 6)+
+  annotate("text", x=2, y=1100, label= "F: 0.18 ; DF: 1,233 ; p = 0.67", fontface = "bold", size = 5)+
+  annotate("text", x=2, y=1200, label= " Side", fontface = "bold", size = 5)+
   annotate("text", x=1, y=296, label="x", size = 7)+
   annotate("text", x=2, y=265, label="x", size = 7)
   
-  
-  mean_Control <- MateChoiceAnalysisControl %>%
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
+ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1200), fill = "darkgrey") + 
+  scale_x_discrete(labels=c("Clean", "Infected"))+
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  annotate("text", x=2, y=1100, label= "F: 1.19 ; DF: 1,173 ; p = 0.28", fontface = "bold", size = 5)+
+  annotate("text", x=2, y=1200, label= " Side", fontface = "bold", size = 5)+
+  annotate("text", x=1, y=277, label="x", size = 7)+
+  annotate("text", x=2, y=336, label="x", size = 7)
+
+## Means and standard deviations for boxplots
+mean_Control <- MateChoiceAnalysisControl %>%
     group_by(Group, Type) %>% 
     summarise(mean= mean(Weight_Seconds),
               se = sd(Weight_Seconds))
-  glimpse(mean_Control)
+glimpse(mean_Control)
+  
+mean_Infected <- MateChoiceAnalysisInfected %>%
+    group_by(Group, Type) %>% 
+    summarise(mean= mean(Weight_Seconds),
+              se = sd(Weight_Seconds))
+glimpse(mean_Infected)
 
