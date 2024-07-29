@@ -7,6 +7,8 @@ library(dplyr)
 MateChoiceCompiledDataControlNoCall <- read.csv(file.choose())
 MateChoiceAnalysisControl <- read.csv(file.choose())
 MateChoiceAnalysisInfected <- read.csv(file.choose())
+MateChoiceAnalysisInfectedMore <- read.csv(file.choose())
+MateChoiceAnalysisInfectedLess <- read.csv(file.choose())
 
 ggdensity(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
 ggqqplot(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds)
@@ -142,6 +144,20 @@ summary(InfectedTrialLMER)
 
 ## interaction zone time significant so keeping in model, but group is not significant, so females don't
 ## stay close to either infected or clean frog significantly less/more
+
+## Infected Models Separated by Less and More Infected
+
+MoreInfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisInfectedMore)
+anova(MoreInfectedTrialLMER)
+summary(MoreInfectedTrialLMER)
+
+## still not signifiant even though more infected
+
+LessInfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisInfectedLess)
+anova(LessInfectedTrialLMER)
+summary(LessInfectedTrialLMER)
+
+## not significant even though less infected
 
 ##Boxplots
 
