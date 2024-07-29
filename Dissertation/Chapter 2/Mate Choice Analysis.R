@@ -142,7 +142,11 @@ InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+More_Less_Infected+(1|Male_P
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 
-## doesn't change anything, so even though color may change the females don't use that to choose mates
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group*More_Less_Infected+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+
+## doesn't change anything whether interaction or not, so even though color may change the females don't use that to choose mates
 
 ## Final Infected Model
 InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
