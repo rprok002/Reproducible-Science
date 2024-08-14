@@ -387,3 +387,49 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Greeness.score, colo
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 ## may be pattern, a couple high values of infection might be confounding
+
+## Tests of normality
+
+ggdensity(FrogImageDataControlDorsal$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Average.Brightness)
+## fairly normal
+ggdensity(FrogImageDataControlVentral$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlVentral$Average.Brightness)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataInfectedDorsal$Average.Brightness)
+## skewed right
+ggdensity(FrogImageDataInfectedVentral$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataInfectedVentral$Average.Brightness)
+## fairly normal
+
+ggdensity(FrogImageDataControlDorsal$Average.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Average.R)
+## fairly normal
+ggdensity(FrogImageDataControlDorsal$Average.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Average.G)
+## fairly normal
+ggdensity(FrogImageDataControlDorsal$Average.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Average.B)
+## fairly normal
+
+ggdensity(FrogImageDataControlDorsal$Proportion.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Proportion.R)
+## fairly normal
+ggdensity(FrogImageDataControlDorsal$Proportion.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Proportion.G)
+## fairly normal
+ggdensity(FrogImageDataControlDorsal$Proportion.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Proportion.B)
+## fairly normal
+
+ggdensity(FrogImageDataControlDorsal$Redness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Redness.score)
+## skewed right
+ggdensity(FrogImageDataControlDorsal$Greeness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Greeness.score)
+## skewed right
+
+ggdensity(FrogImageDataControlDorsal$Blueness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(FrogImageDataControlDorsal$Blueness.score)
+## fairly normal
