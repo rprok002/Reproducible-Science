@@ -241,7 +241,7 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.Brightness, 
 
 ## No discernible pattern
 
-## Color
+## Color Control Over Time
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.G, colour = Frog_Number)) +
@@ -258,6 +258,14 @@ ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.B, colour = Frog_Num
   geom_line()
 ## no pattern
 
+ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
+  geom_line()
+## no pattern
+
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.G, colour = Frog_Number)) +
@@ -271,5 +279,13 @@ ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.R, colour = Frog_Nu
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.G, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.B, colour = Frog_Number)) +
+  geom_line()
+## no pattern
+
+ggplot(FrogImageDataControlVentral, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataControlVentral, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataControlVentral, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 ## no pattern
