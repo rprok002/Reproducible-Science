@@ -209,3 +209,10 @@ mean_Infected <- MateChoiceAnalysisInfected %>%
               se = sd(Weight_Seconds))
 glimpse(mean_Infected)
 
+## Picture Analysis
+
+FrogImageData <- read.csv(file.choose())
+FrogImageDataControl <- subset(FrogImageData, Frog_Type == "Control")
+FrogImageDataControlDorsal <- subset(FrogImageDataControl,Dorsal_Ventral == "Dorsal")
+FrogImageDataControlVentral <- subset(FrogImageDataControl,Dorsal_Ventral == "Ventral")
+
