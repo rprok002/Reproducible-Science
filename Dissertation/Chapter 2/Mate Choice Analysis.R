@@ -390,75 +390,138 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colo
 
 ## Tests of normality
 
-ggdensity(FrogImageDataControlDorsal$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+## Control
+ggdensity(FrogImageDataControlDorsal$Average.Brightness)
 ggqqplot(FrogImageDataControlDorsal$Average.Brightness)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Average.Brightness)
 ggqqplot(FrogImageDataControlVentral$Average.Brightness)
 ## fairly normal
-ggdensity(FrogImageDataInfectedDorsal$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
-ggqqplot(FrogImageDataInfectedDorsal$Average.Brightness)
-## skewed right
-ggdensity(FrogImageDataInfectedVentral$Average.Brightness, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
-ggqqplot(FrogImageDataInfectedVentral$Average.Brightness)
-## fairly normal
 
-ggdensity(FrogImageDataControlDorsal$Average.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Average.R)
 ggqqplot(FrogImageDataControlDorsal$Average.R)
 ## fairly normal
-ggdensity(FrogImageDataControlDorsal$Average.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Average.G)
 ggqqplot(FrogImageDataControlDorsal$Average.G)
 ## fairly normal
-ggdensity(FrogImageDataControlDorsal$Average.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Average.B)
 ggqqplot(FrogImageDataControlDorsal$Average.B)
 ## fairly normal
 
-ggdensity(FrogImageDataControlVentral$Average.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Average.R)
 ggqqplot(FrogImageDataControlVentral$Average.R)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Average.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Average.G)
 ggqqplot(FrogImageDataControlVentral$Average.G)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Average.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Average.B)
 ggqqplot(FrogImageDataControlVentral$Average.B)
 ## fairly normal
 
-ggdensity(FrogImageDataControlDorsal$Proportion.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Proportion.R)
 ggqqplot(FrogImageDataControlDorsal$Proportion.R)
 ## fairly normal
-ggdensity(FrogImageDataControlDorsal$Proportion.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Proportion.G)
 ggqqplot(FrogImageDataControlDorsal$Proportion.G)
 ## fairly normal
-ggdensity(FrogImageDataControlDorsal$Proportion.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Proportion.B)
 ggqqplot(FrogImageDataControlDorsal$Proportion.B)
 ## fairly normal
 
-ggdensity(FrogImageDataControlVentral$Proportion.R, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Proportion.R)
 ggqqplot(FrogImageDataControlVentral$Proportion.R)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Proportion.G, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Proportion.G)
 ggqqplot(FrogImageDataControlVentral$Proportion.G)
 ## kinda skewed
-ggdensity(FrogImageDataControlVentral$Proportion.B, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Proportion.B)
 ggqqplot(FrogImageDataControlVentral$Proportion.B)
 ## fairly normal
 
-ggdensity(FrogImageDataControlDorsal$Redness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Redness.score)
 ggqqplot(FrogImageDataControlDorsal$Redness.score)
 ## skewed right
-ggdensity(FrogImageDataControlDorsal$Greeness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Greeness.score)
 ggqqplot(FrogImageDataControlDorsal$Greeness.score)
 ## skewed right
-ggdensity(FrogImageDataControlDorsal$Blueness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlDorsal$Blueness.score)
 ggqqplot(FrogImageDataControlDorsal$Blueness.score)
 ## fairly normal
 
-ggdensity(FrogImageDataControlVentral$Redness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Redness.score)
 ggqqplot(FrogImageDataControlVentral$Redness.score)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Greeness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Greeness.score)
 ggqqplot(FrogImageDataControlVentral$Greeness.score)
 ## fairly normal
-ggdensity(FrogImageDataControlVentral$Blueness.score, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggdensity(FrogImageDataControlVentral$Blueness.score)
 ggqqplot(FrogImageDataControlVentral$Blueness.score)
+## fairly normal
+
+## Infected
+ggdensity(FrogImageDataInfectedDorsal$Average.Brightness)
+ggqqplot(FrogImageDataInfectedDorsal$Average.Brightness)
+## skewed right
+ggdensity(FrogImageDataInfectedVentral$Average.Brightness)
+ggqqplot(FrogImageDataInfectedVentral$Average.Brightness)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedDorsal$Average.R)
+ggqqplot(FrogImageDataInfectedDorsal$Average.R)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Average.G)
+ggqqplot(FrogImageDataInfectedDorsal$Average.G)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Average.B)
+ggqqplot(FrogImageDataInfectedDorsal$Average.B)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedVentral$Average.R)
+ggqqplot(FrogImageDataInfectedVentral$Average.R)
+## fairly normal
+ggdensity(FrogImageDataInfectedVentral$Average.G)
+ggqqplot(FrogImageDataInfectedVentral$Average.G)
+## a bit right skewed
+ggdensity(FrogImageDataInfectedVentral$Average.B)
+ggqqplot(FrogImageDataInfectedVentral$Average.B)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedDorsal$Proportion.R)
+ggqqplot(FrogImageDataInfectedDorsal$Proportion.R)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Proportion.G)
+ggqqplot(FrogImageDataInfectedDorsal$Proportion.G)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Proportion.B)
+ggqqplot(FrogImageDataInfectedDorsal$Proportion.B)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedVentral$Proportion.R)
+ggqqplot(FrogImageDataInfectedVentral$Proportion.R)
+## fairly normal
+ggdensity(FrogImageDataInfectedVentral$Proportion.G)
+ggqqplot(FrogImageDataInfectedVentral$Proportion.G)
+## fairly normal
+ggdensity(FrogImageDataInfectedVentral$Proportion.B)
+ggqqplot(FrogImageDataInfectedVentral$Proportion.B)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedDorsal$Redness.score)
+ggqqplot(FrogImageDataInfectedDorsal$Redness.score)
+## fairly normal
+ggdensity(FrogImageDataInfectedDorsal$Greeness.score)
+ggqqplot(FrogImageDataInfectedDorsal$Greeness.score)
+## skewed right
+ggdensity(FrogImageDataInfectedDorsal$Blueness.score)
+ggqqplot(FrogImageDataInfectedDorsal$Blueness.score)
+## fairly normal
+
+ggdensity(FrogImageDataInfectedVentral$Redness.score)
+ggqqplot(FFrogImageDataInfectedVentral$Redness.score)
+## fairly normal
+ggdensity(FrogImageDataInfectedVentral$Greeness.score)
+ggqqplot(FrogImageDataInfectedVentral$Greeness.score)
+## fairly normal
+ggdensity(FrogImageDataInfectedVentral$Blueness.score)
+ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
