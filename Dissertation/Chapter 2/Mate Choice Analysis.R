@@ -215,4 +215,6 @@ FrogImageData <- read.csv(file.choose())
 FrogImageDataControl <- subset(FrogImageData, Frog_Type == "Control")
 FrogImageDataControlDorsal <- subset(FrogImageDataControl,Dorsal_Ventral == "Dorsal")
 FrogImageDataControlVentral <- subset(FrogImageDataControl,Dorsal_Ventral == "Ventral")
-
+FrogImageDataInfected <- subset(FrogImageData, Frog_Type == "Infected")
+FrogImageDataInfectedDorsal <- subset(FrogImageDataInfected,Dorsal_Ventral == "Dorsal")
+FrogImageDataInfectedVentral <- subset(FrogImageDataInfected,Dorsal_Ventral == "Ventral")
