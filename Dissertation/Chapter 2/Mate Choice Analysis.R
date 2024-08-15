@@ -226,6 +226,7 @@ ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.Brightness, colour =
 
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
+## might have a slight trend here
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
@@ -235,11 +236,11 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Average.Brightness, colour
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
-
+## consider removing F10 as outlier
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
+## consider removing F10 as outlier
 
-## No discernible pattern
 
 ## Color Control Over Time
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
@@ -260,11 +261,13 @@ ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.B, colour = Frog_Num
 
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
+## M19 outlier, take out
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
+## M19 outlier, take out
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## no pattern
+## M19 outlier, take out
 
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
@@ -289,6 +292,9 @@ ggplot(FrogImageDataControlVentral, aes(x = Day, y = Greeness.score, colour = Fr
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 ## no pattern
+
+## consider taking out one of the days for some of the frogs because it seems like the picture was brighter for some reason.
+## Maybe not, see what is going on in stats first
 
 ## Color Infected Over Time
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
