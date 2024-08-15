@@ -468,13 +468,13 @@ ggqqplot(FrogImageDataControlVentral$Proportion.B)
 
 ggdensity(FrogImageDataControlDorsal$Redness.score)
 ggqqplot(FrogImageDataControlDorsal$Redness.score)
-## skewed right. Looks like skewed because of one value, need to take out outlier. Probably M24
+
 ggdensity(FrogImageDataControlDorsal$Greeness.score)
 ggqqplot(FrogImageDataControlDorsal$Greeness.score)
-## skewed right. ## skewed right. Looks like skewed because of one value, need to take out outlier. Probably M24
+
 ggdensity(FrogImageDataControlDorsal$Blueness.score)
 ggqqplot(FrogImageDataControlDorsal$Blueness.score)
-## fairly normal. Need to take out M24 outlier
+
 
 ggdensity(FrogImageDataControlVentral$Redness.score)
 ggqqplot(FrogImageDataControlVentral$Redness.score)
