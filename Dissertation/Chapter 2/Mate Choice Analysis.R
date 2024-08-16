@@ -316,13 +316,13 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.B, colour = Frog_Nu
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
-## M24 is an outlier, take out if changes stats with or without
+## M26 is an outlier, take out if changes stats with or without
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
-## M24 is an outlier, take out if changes stats with or without
+## M26 is an outlier, take out if changes stats with or without
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## M24 is an outlier, take out if changes stats with or without
+## M26 is an outlier, take out if changes stats with or without
 ## no pattern
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
@@ -468,13 +468,13 @@ ggqqplot(FrogImageDataControlVentral$Proportion.B)
 
 ggdensity(FrogImageDataControlDorsal$Redness.score)
 ggqqplot(FrogImageDataControlDorsal$Redness.score)
-
+## fairly normal
 ggdensity(FrogImageDataControlDorsal$Greeness.score)
 ggqqplot(FrogImageDataControlDorsal$Greeness.score)
-
+## fairly normal
 ggdensity(FrogImageDataControlDorsal$Blueness.score)
 ggqqplot(FrogImageDataControlDorsal$Blueness.score)
-
+## fairly normal
 
 ggdensity(FrogImageDataControlVentral$Redness.score)
 ggqqplot(FrogImageDataControlVentral$Redness.score)
@@ -489,7 +489,7 @@ ggqqplot(FrogImageDataControlVentral$Blueness.score)
 ## Infected
 ggdensity(FrogImageDataInfectedDorsal$Average.Brightness)
 ggqqplot(FrogImageDataInfectedDorsal$Average.Brightness)
-## skewed right. Need to remove outlier, likely F8
+## fairly normal
 ggdensity(FrogImageDataInfectedVentral$Average.Brightness)
 ggqqplot(FrogImageDataInfectedVentral$Average.Brightness)
 ## fairly normal
@@ -509,7 +509,7 @@ ggqqplot(FrogImageDataInfectedVentral$Average.R)
 ## fairly normal
 ggdensity(FrogImageDataInfectedVentral$Average.G)
 ggqqplot(FrogImageDataInfectedVentral$Average.G)
-## a bit right skewed
+## slight skewed right
 ggdensity(FrogImageDataInfectedVentral$Average.B)
 ggqqplot(FrogImageDataInfectedVentral$Average.B)
 ## fairly normal
@@ -536,13 +536,13 @@ ggqqplot(FrogImageDataInfectedVentral$Proportion.B)
 
 ggdensity(FrogImageDataInfectedDorsal$Redness.score)
 ggqqplot(FrogImageDataInfectedDorsal$Redness.score)
-## fairly normal. Need to remove M24
+
 ggdensity(FrogImageDataInfectedDorsal$Greeness.score)
 ggqqplot(FrogImageDataInfectedDorsal$Greeness.score)
-## skewed right. Need to remove M24
+
 ggdensity(FrogImageDataInfectedDorsal$Blueness.score)
 ggqqplot(FrogImageDataInfectedDorsal$Blueness.score)
-## fairly normal
+
 
 ggdensity(FrogImageDataInfectedVentral$Redness.score)
 ggqqplot(FFrogImageDataInfectedVentral$Redness.score)
@@ -554,6 +554,8 @@ ggdensity(FrogImageDataInfectedVentral$Blueness.score)
 ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
 
-## Removed M19 D and V May 31 because outlier 
-## Removed M16 D and V Oct 15
-## Removed F10 D and V Oct 18
+## Removed M19 D and V color May 31 because outlier 
+## Removed M16 D and V Oct 15 because infection is outlier 
+## Removed F10 D and V Oct 18 because infection is outlier 
+## Removed M26 D and V color Oct 9 because outlier 
+## Removed F5 brightness Oct 16 because outlier
