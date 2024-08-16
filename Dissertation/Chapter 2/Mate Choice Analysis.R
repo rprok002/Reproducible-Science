@@ -559,3 +559,14 @@ ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## Removed F10 D and V Oct 18 because infection is outlier 
 ## Removed M26 D and V color Oct 9 because outlier 
 ## Removed F5 brightness Oct 16 because outlier
+
+## Separate Models
+install.packages("ggpubr")
+library(ggpubr)
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+library(nlme)
+library(lmtest)
