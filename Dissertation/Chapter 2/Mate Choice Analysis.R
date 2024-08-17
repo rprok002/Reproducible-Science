@@ -570,3 +570,30 @@ library(emmeans)
 library(multcomp)
 library(nlme)
 library(lmtest)
+
+## Control Models
+
+BrightnessControlDorsal <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
+anova(BrightnessControlDorsal)
+summary(BrightnessControlDorsal)
+emmeans(BrightnessControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+
+BrightnessInfectionDorsalInfection <- lmer(Average.Brightness~Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsalInfection)
+summary(BrightnessInfectionDorsalInfection)
+emmeans(BrightnessInfectionDorsalInfection, list (pairwise~Infection), lmer.df = "satterthwaite")
+
+RednessControlDorsal <- lmer(Redness.score~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
+anova(RednessControlDorsal)
+summary(RednessControlDorsal)
+emmeans(RednessControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+
+AverageRedControlDorsal <- lmer(Average.R~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
+anova(AverageRedControlDorsal)
+summary(AverageRedControlDorsal)
+emmeans(AverageRedControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+
+BrightnessInfectionDorsalDay <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsalDay)
+summary(BrightnessInfectionDorsalDay)
+
