@@ -363,6 +363,10 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.B, colour 
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()
+
+ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.R, colour = Frog_Number)) +
+  geom_line()+
+  xlim(0,10000)
 ## F10 outlier, take out
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.G, colour = Frog_Number)) +
   geom_line()
@@ -458,7 +462,7 @@ ggqqplot(FrogImageDataControlDorsal$Proportion.B)
 
 ggdensity(FrogImageDataControlVentral$Proportion.R)
 ggqqplot(FrogImageDataControlVentral$Proportion.R)
-## fairly normal
+## slightly skewed right
 ggdensity(FrogImageDataControlVentral$Proportion.G)
 ggqqplot(FrogImageDataControlVentral$Proportion.G)
 ## kinda skewed
@@ -583,6 +587,10 @@ anova(BrightnessInfectionDorsalInfection)
 summary(BrightnessInfectionDorsalInfection)
 emmeans(BrightnessInfectionDorsalInfection, list (pairwise~Infection), lmer.df = "satterthwaite")
 
+BrightnessInfectionDorsalDay <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsalDay)
+summary(BrightnessInfectionDorsalDay)
+
 RednessControlDorsal <- lmer(Redness.score~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
 anova(RednessControlDorsal)
 summary(RednessControlDorsal)
@@ -596,4 +604,7 @@ emmeans(AverageRedControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
 BrightnessInfectionDorsalDay <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsalDay)
 summary(BrightnessInfectionDorsalDay)
+
+
+## consider taking out frogs that didn't really get infected in infection trials (M2, M29, etc.)
 
