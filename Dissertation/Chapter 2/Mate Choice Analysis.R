@@ -218,6 +218,8 @@ FrogImageDataControlVentral <- subset(FrogImageDataControl,Dorsal_Ventral == "Ve
 FrogImageDataInfected <- subset(FrogImageData, Frog_Type == "Infected")
 FrogImageDataInfectedDorsal <- subset(FrogImageDataInfected,Dorsal_Ventral == "Dorsal")
 FrogImageDataInfectedVentral <- subset(FrogImageDataInfected,Dorsal_Ventral == "Ventral")
+FrogImageDataDorsal <- subset(FrogImageData, Dorsal_Ventral == "Dorsal")
+FrogImageDataVentral <- subset(FrogImageData, Dorsal_Ventral == "Ventral")
 
 ## Preliminary look
 ## Brightness
@@ -230,17 +232,17 @@ ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.Brightness, colour 
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
-## Outlier, need to find and remove. Likely F8
+
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
-## consider removing F10 as outlier, and another one that is an outlier
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
-## consider removing F10 as outlier, and another one that is an outlier
+
 
 
 ## Color Control Over Time
@@ -251,40 +253,42 @@ ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.G, colour = Frog_
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
 
-## no pattern
+
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.R, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.G, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.B, colour = Frog_Number)) +
   geom_line()
-## no pattern
+
 
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
-## M19 outlier, take out
+
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
-## M19 outlier, take out
+
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## M19 outlier, take out
+
 
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
+## M22 potential outlier, consider removing for Day 26
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.G, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
-## no pattern
+
 
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.R, colour = Frog_Number)) +
   geom_line()
+## M26 potential outlier for Day 23, consider removing
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.G, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Average.B, colour = Frog_Number)) +
   geom_line()
-## no pattern
+
 
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
@@ -294,8 +298,7 @@ ggplot(FrogImageDataControlVentral, aes(x = Day, y = Blueness.score, colour = Fr
   geom_line()
 ## no pattern
 
-## consider taking out one of the days for some of the frogs because it seems like the picture was brighter for some reason.
-## Maybe not, see what is going on in stats first
+
 
 ## Color Infected Over Time
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
@@ -304,7 +307,7 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Proportion.G, colour = Frog
   geom_line()
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
-## no pattern
+
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.R, colour = Frog_Number)) +
   geom_line()
@@ -312,18 +315,17 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.G, colour = Frog_Nu
   geom_line()
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.B, colour = Frog_Number)) +
   geom_line()
-## no pattern
+
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
-## M26 is an outlier, take out if changes stats with or without
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
-## M26 is an outlier, take out if changes stats with or without
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## M26 is an outlier, take out if changes stats with or without
-## no pattern
+
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
@@ -352,14 +354,13 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Blueness.score, colour = F
 ## Infected color vs. infection
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
-## F10 outlier high outlier by end of infection, take out. Also M16
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.G, colour = Frog_Number)) +
   geom_line()
-## F10 outlier high outlier by end of infection, take out. Also M16
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
-## F10 outlier high outlier by end of infection, take out. Also M16
-## may be pattern, a couple high values of infection might be confounding
+
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()
@@ -367,58 +368,60 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.R, colour = F
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()+
   xlim(0,10000)
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.G, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.B, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
-## may be pattern, a couple high values of infection might be confounding
+
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Redness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out. Also M24
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out. Also M24
+
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out. Also M24
-## may be pattern, a couple high values of infection might be confounding
+
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Proportion.G, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
-## may be pattern, a couple high values of infection might be confounding
+
+
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.G, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.B, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
-## may be pattern, a couple high values of infection might be confounding
+
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Redness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Greeness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
-## F10 outlier, take out
+
 ## may be pattern, a couple high values of infection might be confounding
+
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
+  geom_line()
+## this is lumping frogs all together which doesn't make much sense because it's what happens to the frogs over time,
+## averaging when there is between frog variation within groups doesn't make a lot of sense
 
 ## Tests of normality
 
@@ -429,6 +432,7 @@ ggqqplot(FrogImageDataControlDorsal$Average.Brightness)
 ggdensity(FrogImageDataControlVentral$Average.Brightness)
 ggqqplot(FrogImageDataControlVentral$Average.Brightness)
 ## fairly normal
+## bit of a dip in the middle but look fairly normal
 
 ggdensity(FrogImageDataControlDorsal$Average.R)
 ggqqplot(FrogImageDataControlDorsal$Average.R)
@@ -558,6 +562,8 @@ ggdensity(FrogImageDataInfectedVentral$Blueness.score)
 ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
 
+## a few values slightly skewed right but not enough that anything needs to be done
+
 ## Removed M19 D and V color May 31 because outlier 
 ## Removed M16 D and V Oct 15 because infection is outlier 
 ## Removed F10 D and V Oct 18 because infection is outlier 
@@ -580,9 +586,9 @@ library(lmtest)
 BrightnessControlDorsal <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
 anova(BrightnessControlDorsal)
 summary(BrightnessControlDorsal)
-emmeans(BrightnessControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+## neg, so over time getting less bright. Going to have Day as a factor in infected plots then
 
-BrightnessInfectionDorsalInfection <- lmer(Average.Brightness~Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+BrightnessInfectionDorsalInfection <- lmer(Average.Brightness~Infection+Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsalInfection)
 summary(BrightnessInfectionDorsalInfection)
 emmeans(BrightnessInfectionDorsalInfection, list (pairwise~Infection), lmer.df = "satterthwaite")
@@ -590,21 +596,35 @@ emmeans(BrightnessInfectionDorsalInfection, list (pairwise~Infection), lmer.df =
 BrightnessInfectionDorsalDay <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsalDay)
 summary(BrightnessInfectionDorsalDay)
+## not actually significant for infected frogs, but need because control frogs had slight significance
 
 RednessControlDorsal <- lmer(Redness.score~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
 anova(RednessControlDorsal)
 summary(RednessControlDorsal)
 emmeans(RednessControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+## redness in Control doesn't change
 
 AverageRedControlDorsal <- lmer(Average.R~Day+(1|Frog_Number), data = FrogImageDataControlDorsal)
 anova(AverageRedControlDorsal)
 summary(AverageRedControlDorsal)
 emmeans(AverageRedControlDorsal, list (pairwise~Day), lmer.df = "satterthwaite")
+## average red increases over time, need to include Day in infection models
 
 BrightnessInfectionDorsalDay <- lmer(Average.Brightness~Day+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsalDay)
 summary(BrightnessInfectionDorsalDay)
 
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BrightnessDorsalDay)
+summary(BrightnessDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 
 ## consider taking out frogs that didn't really get infected in infection trials (M2, M29, etc.)
+
+## Questions for Cori
+## Show QQ plot for Dorsal Control, see if the hump in the middle isn't ok
+## Show QQ plot and regular plot for Proportion R Ventral Control, skewed right but when do I do something about that when I have a lot of potential 
+## variables I am comparing?
+## Show Color vs. Infection Dorsal plot, how infected some frogs get is likely skewing, how to set rule for what to keep?
+## Show Dorsal Brightness Control is significant over days, means Day needs to be a covariate in infection models to account for that possible cause?
 
