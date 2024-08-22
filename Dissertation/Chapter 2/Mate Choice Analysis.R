@@ -243,7 +243,11 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.Brightness, c
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
 
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
 
+ggplot(FrogImageDataVentral, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
 
 ## Color Control Over Time
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
@@ -252,16 +256,12 @@ ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.G, colour = Frog_
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Number)) +
   geom_line()
-
-
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.R, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.G, colour = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.B, colour = Frog_Number)) +
   geom_line()
-
-
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Redness.score, colour = Frog_Number)) +
   geom_line()
 
@@ -297,9 +297,6 @@ ggplot(FrogImageDataControlVentral, aes(x = Day, y = Greeness.score, colour = Fr
 ggplot(FrogImageDataControlVentral, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 ## no pattern
-
-
-
 ## Color Infected Over Time
 ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
@@ -350,6 +347,14 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Greeness.score, colour = F
 ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 ## no pattern
+
+## Control vs Infection Over Time Color
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
 
 ## Infected color vs. infection
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.R, colour = Frog_Number)) +
@@ -416,12 +421,6 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Greeness.score, colo
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
 
-## may be pattern, a couple high values of infection might be confounding
-
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
-  geom_line()
-## this is lumping frogs all together which doesn't make much sense because it's what happens to the frogs over time,
-## averaging when there is between frog variation within groups doesn't make a lot of sense
 
 ## Tests of normality
 
@@ -562,7 +561,7 @@ ggdensity(FrogImageDataInfectedVentral$Blueness.score)
 ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
 
-## a few values slightly skewed right but not enough that anything needs to be done
+
 
 ## Removed M19 D and V color May 31 because outlier 
 ## Removed M16 D and V Oct 15 because infection is outlier 
@@ -621,15 +620,70 @@ emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite
 
 ## consider taking out frogs that didn't really get infected in infection trials (M2, M29, etc.)
 
-## Questions for Cori
-## Show QQ plot for Dorsal Control, see if the hump in the middle isn't ok
-## Show QQ plot and regular plot for Proportion R Ventral Control, skewed right but when do I do something about that when I have a lot of potential 
-## variables I am comparing?
-## Show Color vs. Infection Dorsal plot, how infected some frogs get is likely skewing, how to set rule for what to keep?
-## Show Dorsal Brightness Control is significant over days, means Day needs to be a covariate in infection models to account for that possible cause?
+## Models separated by question
+## Question 1: difference in frog attributes in control vs infected frogs
+
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BrightnessDorsalDay)
+summary(BrightnessDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction is slightly not significant, so taking out interaction 
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BrightnessDorsalDay)
+summary(BrightnessDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+
+BrightnessVentralDay <- lmer(Average.Brightness~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(BrightnessVentralDay)
+summary(BrightnessVentralDay)
+emmeans(BrightnessVentralDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction is significant
+
+AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageRDorsalDay)
+summary(AverageRDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## interaction is slightly not significant, so taking out interaction
+AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageRDorsalDay)
+summary(AverageRDorsalDay)
+emmeans(AverageRDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Day slightly not significant, so average R stays the same over time
+## Frog type significant, average R higher for control versus infected
+
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageGDorsalDay)
+summary(AverageGDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## interaction is not significant, so taking out interaction
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageGDorsalDay)
+summary(AverageGDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Day significant, average G decreases over time
+## Frog type significant, average G higher for control versus infected
+
+AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageBDorsalDay)
+summary(AverageBDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction significant
+## as days go up and control B goes up, so does infected B
+
+ProportionRDorsalDay <- lmer(Proportion.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(ProportionRDorsalDay)
+summary(ProportionRDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction not significant, taking interaction out of model
+ProportionRDorsalDay <- lmer(Proportion.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(ProportionRDorsalDay)
+summary(ProportionRDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Day significant, higher proportion R as days go on
+## Frog type not significant, no difference between proportion R in control vs infected
 
 ##dharma run through R
-## interaction between day and treatment for Day to see where that is 
+
 ## log transform load (log Bd copies +1)
 ## Yusan Yang, ask about natural infection load
 
