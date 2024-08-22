@@ -628,3 +628,8 @@ emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite
 ## Show Color vs. Infection Dorsal plot, how infected some frogs get is likely skewing, how to set rule for what to keep?
 ## Show Dorsal Brightness Control is significant over days, means Day needs to be a covariate in infection models to account for that possible cause?
 
+##dharma run through R
+## interaction between day and treatment for Day to see where that is 
+## log transform load (log Bd copies +1)
+## Yusan Yang, ask about natural infection load
+
