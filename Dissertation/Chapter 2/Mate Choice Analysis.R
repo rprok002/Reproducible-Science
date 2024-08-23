@@ -597,6 +597,11 @@ library(dplyr)
 library(lmerTest)
 library(emmeans)
 library(multcomp)
+library(performance)
+install.packages("margins")
+library(margins)
+install.packages("foreign")
+library(foreign)
 
 ## Control Models
 
@@ -650,12 +655,39 @@ BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), da
 anova(BrightnessDorsalDay)
 summary(BrightnessDorsalDay)
 emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+r2_nakagawa(BrightnessDorsalDay)
+## Conditional R2: 0.456, Marginal R2: 0.115
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Average.Brightness,
+  fun = median,
+  ylab = "Average Brightness",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
+
+
+## Interaction plot doesn't really cross, explains why barely not significant interaction effect
 
 BrightnessVentralDay <- lmer(Average.Brightness~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
 anova(BrightnessVentralDay)
 summary(BrightnessVentralDay)
 emmeans(BrightnessVentralDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## interaction is significant
+r2_nakagawa(BrightnessVentralDay)
+## Conditional: 0.6, marginal: 0.1
+interaction.plot(
+  x.factor = FrogImageDataVentral$Day,
+  trace.factor = FrogImageDataVentral$Frog_Type,
+  response = FrogImageDataVentral$Average.Brightness,
+  fun = median,
+  ylab = "Average Brightness",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
+## tends to follow same trend until days 13-16 when infected spikes above control 
 
 AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageRDorsalDay)
@@ -668,6 +700,18 @@ summary(AverageRDorsalDay)
 emmeans(AverageRDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 ## Day slightly not significant, so average R stays the same over time
 ## Frog type significant, average R higher for control versus infected
+r2_nakagawa(AverageRDorsalDay)
+## Conditional: 0.487, Marginal: 0.095
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Average.R,
+  fun = median,
+  ylab = "Average R",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageGDorsalDay)
@@ -680,6 +724,18 @@ summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 ## Day significant, average G decreases over time
 ## Frog type significant, average G higher for control versus infected
+r2_nakagawa(AverageGDorsalDay)
+## Conditional: 0.438, Marginal: 0.112
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Average.G,
+  fun = median,
+  ylab = "Average G",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageBDorsalDay)
@@ -688,6 +744,18 @@ emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwai
 ## interaction significant
 ## as days go up and control B goes up, so does infected B
 ## control B higher than infected B
+r2_nakagawa(AverageBDorsalDay)
+## Unable to calculate
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Average.B,
+  fun = median,
+  ylab = "Average B",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 ProportionRDorsalDay <- lmer(Proportion.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(ProportionRDorsalDay)
@@ -698,22 +766,56 @@ anova(ProportionRDorsalDay)
 summary(ProportionRDorsalDay)
 ## Day significant, higher proportion R as days go on
 ## Frog type not significant, no difference between proportion R in control vs infected
+r2_nakagawa(ProportionRDorsalDay)
+## Conditional: 0.101, Marginal: 0.099
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Proportion.R,
+  fun = median,
+  ylab = "Proportion R",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
+
 
 ProportionGDorsalDay <- lmer(Proportion.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(ProportionGDorsalDay)
 summary(ProportionGDorsalDay)
 emmeans(ProportionGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## interaction significant, leaving in
-## as day goes up and control proportion G goes down, so does infected proporiton G
-## control proportion G is higher than infected proportion G
+r2_nakagawa(ProportionGDorsalDay)
+## Conditional: 0.838, Marginal: 0.014
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Proportion.G,
+  fun = median,
+  ylab = "Proportion G",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 ProportionBDorsalDay <- lmer(Proportion.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(ProportionBDorsalDay)
 summary(ProportionBDorsalDay)
 emmeans(ProportionBDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## interaction significant, leaving in
-## as day goes up and control proportion B goes down, so does infected proportion B
-## control proportion B is lower than infected proportion B
+r2_nakagawa(ProportionBDorsalDay)
+## Conditional: 0.113, Marginal: 0.061
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Proportion.B,
+  fun = median,
+  ylab = "Proportion B",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
+
 
 RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(RednessDorsalDay)
@@ -725,6 +827,18 @@ anova(RednessDorsalDay)
 summary(RednessDorsalDay)
 emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## not significant, redness doesn't change over time and is not different between frog types
+r2_nakagawa(RednessDorsalDay)
+## Conditional: 0.164, Marginal: 0.014
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Redness.score,
+  fun = median,
+  ylab = "Redness Score",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(GreenessDorsalDay)
@@ -733,6 +847,18 @@ emmeans(GreenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwai
 ## interaction significant
 ## as day goes up and control greeness goes down, so does infection greeness
 ## control greeness is higher than infected greeness
+r2_nakagawa(GreenessDorsalDay)
+## Conditional: 0.613, Marginal: 0.092
+
+interaction.plot(
+  x.factor = FrogImageDataDorsal$Day,
+  trace.factor = FrogImageDataDorsal$Frog_Type,
+  response = FrogImageDataDorsal$Greeness.score,
+  fun = median,
+  ylab = "Greeness Score",
+  xlab = "Day",
+  trace.label = "Frog Type",
+  col = c("#0198f9", "#f95801"))
 
 BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(BluenessDorsalDay)
@@ -795,3 +921,8 @@ emmeans(ProportionRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwai
 
 ## Yusan Yang, ask about natural infection load
 
+## Graphs of Averages
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, color = Frog_Type )) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, color = Frog_Type )) +
+  geom_line()
