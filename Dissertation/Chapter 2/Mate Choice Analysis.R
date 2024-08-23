@@ -237,10 +237,12 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Day, y = Average.Brightness, colour 
 ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
 
-ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number))+
   geom_line()
 
-ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.Brightness, colour = Frog_Number)) +
+
+
+ggplot(FrogImageDataInfectedVentral, aes(x = Average.Brightness, y = Log_Infection, colour = Frog_Number)) +
   geom_line()
 
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number)) +
@@ -915,6 +917,10 @@ emmeans(ProportionRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwai
 ## As Day increases, Proportion R increases
 ## No difference between control and infected frogs
 
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 
 ##dharma run through R
 
