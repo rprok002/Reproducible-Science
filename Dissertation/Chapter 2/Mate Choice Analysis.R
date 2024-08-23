@@ -355,6 +355,27 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type, grou
   geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.G, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Redness.score, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+
+ggplot(FrogImageDataVentral, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataVentral, aes(x = Day, y = Average.G, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataVentral, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataVentral, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
 
 ## Infected color vs. infection
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.R, colour = Frog_Number)) +
@@ -573,12 +594,9 @@ ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
-library(lme4)
 library(lmerTest)
 library(emmeans)
 library(multcomp)
-library(nlme)
-library(lmtest)
 
 ## Control Models
 
@@ -669,21 +687,111 @@ summary(AverageBDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## interaction significant
 ## as days go up and control B goes up, so does infected B
+## control B higher than infected B
 
 ProportionRDorsalDay <- lmer(Proportion.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(ProportionRDorsalDay)
 summary(ProportionRDorsalDay)
-emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## interaction not significant, taking interaction out of model
 ProportionRDorsalDay <- lmer(Proportion.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(ProportionRDorsalDay)
 summary(ProportionRDorsalDay)
-emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
 ## Day significant, higher proportion R as days go on
 ## Frog type not significant, no difference between proportion R in control vs infected
 
+ProportionGDorsalDay <- lmer(Proportion.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(ProportionGDorsalDay)
+summary(ProportionGDorsalDay)
+emmeans(ProportionGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction significant, leaving in
+## as day goes up and control proportion G goes down, so does infected proporiton G
+## control proportion G is higher than infected proportion G
+
+ProportionBDorsalDay <- lmer(Proportion.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(ProportionBDorsalDay)
+summary(ProportionBDorsalDay)
+emmeans(ProportionBDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction significant, leaving in
+## as day goes up and control proportion B goes down, so does infected proportion B
+## control proportion B is lower than infected proportion B
+
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction not significant, removing
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## not significant, redness doesn't change over time and is not different between frog types
+
+GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(GreenessDorsalDay)
+summary(GreenessDorsalDay)
+emmeans(GreenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction significant
+## as day goes up and control greeness goes down, so does infection greeness
+## control greeness is higher than infected greeness
+
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## interaction not significant, taking out
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## neither day nor frog type is significant
+
+AverageRVentralDay <- lmer(Average.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(AverageRVentralDay)
+summary(AverageRVentralDay)
+emmeans(AverageRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## interaction not significant, taking out
+AverageRVentralDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(AverageRVentralDay)
+summary(AverageRVentralDay)
+emmeans(AverageRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Day not significant, frog type significant
+## Average R higher in control than infected frogs
+
+AverageGVentralDay <- lmer(Average.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(AverageGVentralDay)
+summary(AverageGVentralDay)
+emmeans(AverageGVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction not significant, taking out
+AverageGVentralDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(AverageGVentralDay)
+summary(AverageGVentralDay)
+emmeans(AverageGVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Both day and frog type significant
+## As Day increases, Average G decreases
+## Control Average G higher than infected Average G
+
+AverageBVentralDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(AverageBVentralDay)
+summary(AverageBVentralDay)
+emmeans(AverageBVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant, keeping in
+## Positive 
+
+ProportionRVentralDay <- lmer(Proportion.R~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(ProportionRVentralDay)
+summary(ProportionRVentralDay)
+emmeans(ProportionRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction not significant, taking out
+ProportionRVentralDay <- lmer(Proportion.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(ProportionRVentralDay)
+summary(ProportionRVentralDay)
+emmeans(ProportionRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## As Day increases, Proportion R increases
+## No difference between control and infected frogs
+
+
 ##dharma run through R
 
-## log transform load (log Bd copies +1)
+
 ## Yusan Yang, ask about natural infection load
 
