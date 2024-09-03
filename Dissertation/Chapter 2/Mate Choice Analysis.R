@@ -239,14 +239,18 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Average.Brightness, colour
 
 ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number))+
   geom_line()
-
+## need to add back in a couple of the infection frogs that I took out before
+## I log-transformed the data
 
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Average.Brightness, y = Log_Infection, colour = Frog_Number)) +
   geom_line()
 
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number)) +
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
 
 ggplot(FrogImageDataVentral, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
@@ -351,12 +355,20 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Day, y = Blueness.score, colour = F
 ## no pattern
 
 ## Control vs Infection Over Time Color
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
+  geom_point()+
+  geom_smooth(method = "lm")
+
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.G, colour = Frog_Type, group = Frog_Number)) +
@@ -584,7 +596,10 @@ ggdensity(FrogImageDataInfectedVentral$Blueness.score)
 ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
 
-
+## Tests of Normality: combined data for Day
+ggdensity(FrogImageDataDorsal$Average.Brightness)
+ggqqplot(FrogImageDataDorsal$Average.Brightness)
+## fairly normal, have a bit of a hump
 
 ## Removed M19 D and V color May 31 because outlier 
 ## Removed M16 D and V Oct 15 because infection is outlier 
@@ -922,8 +937,20 @@ anova(BrightnessInfectionDorsal)
 summary(BrightnessInfectionDorsal)
 emmeans(BrightnessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 
-##dharma run through R
+## DHARMA
+install.packages("DHARMa")
+library(DHARMa)
 
+simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
+plot(simsBrightnessDorsalDay, quantreg = FALSE)
+
+simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
+par(mfrow = c(1, 2))
+plotQQunif(simsBrightnessDorsalDay)
+mtext(text = "(a)", side = 3, adj = 0, line = 2)
+plotResiduals(simsBrightnessDorsalDay, quantreg = T)
+mtext(text = "(b)", side = 3, adj = 0, line = 2)
+## Deviation is not significant, so don't need to worry about 
 
 ## Yusan Yang, ask about natural infection load
 
