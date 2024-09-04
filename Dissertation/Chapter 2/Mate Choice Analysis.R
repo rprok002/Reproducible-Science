@@ -1114,7 +1114,7 @@ plot(simsBrightnessVentralDay, quantreg = FALSE)
 
 simsAverageRDorsalDay <- simulateResiduals(AverageRDorsalDay)
 plot(simsAverageRDorsalDay, quantreg = FALSE)
-## Deviation is not significant, so don't need to worry about 
+## Deviation is significant, so need to ID outliers
 
 simsAverageGDorsalDay <- simulateResiduals(AverageGDorsalDay)
 plot(simsAverageGDorsalDay, quantreg = FALSE)
@@ -1123,10 +1123,6 @@ plot(simsAverageGDorsalDay, quantreg = FALSE)
 simsAverageBDorsalDay <- simulateResiduals(AverageBDorsalDay)
 plot(simsAverageBDorsalDay, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about 
-
-simsAverageBDorsalDay <- simulateResiduals(AverageBDorsalDay)
-plot(simsAverageBDorsalDay, quantreg = FALSE)
-## Deviation is not significant, so don't need to worry about
 
 simsProportionRDorsalDay <- simulateResiduals(ProportionRDorsalDay)
 plot(simsProportionRDorsalDay, quantreg = FALSE)
@@ -1255,7 +1251,7 @@ plot(simsRednessInfectionVentral, quantreg = FALSE)
 
 simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
 plot(simsGreenessInfectionDorsal, quantreg = FALSE)
-## Deviation is not significant, so don't need to worry about
+## Deviation is significant, need to figure that out
 
 simsGreenessInfectionVentral <- simulateResiduals(GreenessInfectionVentral)
 plot(simsGreenessInfectionVentral, quantreg = FALSE)
@@ -1294,6 +1290,7 @@ summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
 ## Day is significant: Average G decreases over time
 ## Frog Type is significant: infected frogs tend to have less average G than control frogs
+
 AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageBDorsalDay)
 summary(AverageBDorsalDay)
@@ -1325,6 +1322,48 @@ emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwai
 ## Neither Day nor Frog Type significant
 
 ## Models using for Question 2: difference in frog attributes compared to log infection
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Brightness decreases as infection load increases
+
+AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageRInfectionDorsal)
+summary(AverageRInfectionDorsal)
+emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Average R decreases as infection load increases
+
+AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageGInfectionDorsal)
+summary(AverageGInfectionDorsal)
+emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Average G decreases as infection load increases
+
+AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageBInfectionDorsal)
+summary(AverageBInfectionDorsal)
+emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## no significance in Average B
+
+RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(RednessInfectionDorsal)
+summary(RednessInfectionDorsal)
+emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Redness score decreases as log infection increases
+
+GreenessInfectionDorsal <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(GreenessInfectionDorsal)
+summary(GreenessInfectionDorsal)
+emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Greeness score increases as log infection increases. It's because average R plummets over
+## log infection but average G only slightly decreases, so the greeness score increases 
+
+BluenessInfectionDorsal <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BluenessInfectionDorsal)
+summary(BluenessInfectionDorsal)
+emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Blueness score just barely not significant
 
 ## Plots using for Question 1: difference in frog attributes in control vs infected frogs
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
@@ -1350,3 +1389,27 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type)
   geom_smooth(method = "lm")
 
 ## Plots using for Question 2: difference in frog attributes compared to log infection
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness))+
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.R)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.G)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.B)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Redness.score)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Greeness.score)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Blueness.score)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
+## Average R Dorsal over day is significant in DARMa, so need to ID outliers and redo analyses there
+## Greeness over infection is significant in DARMa, so need to ID outliers and redo analyses there
