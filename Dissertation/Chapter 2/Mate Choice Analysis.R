@@ -1272,8 +1272,48 @@ simsBluenessInfectionVentral <- simulateResiduals(BluenessInfectionVentral)
 plot(simsBluenessInfectionVentral, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 
-## Graphs of Averages
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, color = Frog_Type )) +
-  geom_line()
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, color = Frog_Type )) +
-  geom_line()
+## Models using for Question 1: difference in frog attributes in control vs infected frogs
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BrightnessDorsalDay)
+summary(BrightnessDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+r2_nakagawa(BrightnessDorsalDay)
+## Day is significant: brightness decreases over time
+## Frog Type is significant: infected frogs tend to be less bright than control frogs on any given day
+
+AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageRDorsalDay)
+summary(AverageRDorsalDay)
+emmeans(AverageRDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Day is not significant: Average R does not significantly change over time
+## Frog Type is significant: infected frogs tend to have less average R than control frogs
+
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageGDorsalDay)
+summary(AverageGDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Day is significant: Average G decreases over time
+## Frog Type is significant: infected frogs tend to have less average G than control frogs
+AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(AverageBDorsalDay)
+summary(AverageBDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Interaction Significant
+## Control frogs decrease in average blue at a faster rate than infected frogs, and 
+## control frogs start out with higher average blue than infected frogs but by about 18
+## days that reverses
+
+## Plots using for Question 1: difference in frog attributes in control vs infected frogs
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
+  geom_point()+
+  geom_smooth(method = "lm")
+  
