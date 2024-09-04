@@ -399,6 +399,18 @@ ggplot(FrogImageDataVentral, aes(x = Day, y = Average.B, colour = Frog_Type, gro
 ggplot(FrogImageDataVentral, aes(x = Day, y = Average.B, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
 
+ggplot(FrogImageDataVentral, aes(x = Day, y = Proportion.G, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
+ggplot(FrogImageDataVentral, aes(x = Day, y = Redness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
+ggplot(FrogImageDataVentral, aes(x = Day, y = Greeness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
 ## Infected color vs. infection
 ggplot(FrogImageDataInfectedDorsal, aes(x = Infection, y = Proportion.R, colour = Frog_Number)) +
   geom_line()
@@ -458,8 +470,9 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Average.B, colour = 
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Redness.score, colour = Frog_Number)) +
   geom_line()
 
-ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Greeness.score, colour = Frog_Number)) +
-  geom_line()
+ggplot(FrogImageDataInfectedVentral, aes(x = Log_Infection, y = Greeness.score)) +
+  geom_point()+
+  geom_smooth(method = "lm")
 
 ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colour = Frog_Number)) +
   geom_line()
@@ -512,6 +525,9 @@ ggqqplot(FrogImageDataControlVentral$Proportion.R)
 ggdensity(FrogImageDataControlVentral$Proportion.G)
 ggqqplot(FrogImageDataControlVentral$Proportion.G)
 ## kinda skewed
+ggdensity(FrogImageDataVentral$Proportion.G)
+ggqqplot(FrogImageDataVentral$Proportion.G)
+
 ggdensity(FrogImageDataControlVentral$Proportion.B)
 ggqqplot(FrogImageDataControlVentral$Proportion.B)
 ## fairly normal
@@ -601,9 +617,15 @@ ggqqplot(FrogImageDataInfectedDorsal$Blueness.score)
 ggdensity(FrogImageDataInfectedVentral$Redness.score)
 ggqqplot(FFrogImageDataInfectedVentral$Redness.score)
 ## fairly normal
+ggdensity(FrogImageDataVentral$Redness.score)
+ggqqplot(FrogImageDataVentral$Redness.score)
+
 ggdensity(FrogImageDataInfectedVentral$Greeness.score)
 ggqqplot(FrogImageDataInfectedVentral$Greeness.score)
 ## fairly normal
+ggdensity(FrogImageDataVentral$Greeness.score)
+ggqqplot(FrogImageDataVentral$Greeness.score)
+
 ggdensity(FrogImageDataInfectedVentral$Blueness.score)
 ggqqplot(FrogImageDataInfectedVentral$Blueness.score)
 ## fairly normal
@@ -944,10 +966,139 @@ emmeans(ProportionRVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwai
 ## As Day increases, Proportion R increases
 ## No difference between control and infected frogs
 
+ProportionGVentralDay <- lmer(Proportion.G~Day+Frog_Type*Day+(1|Frog_Number), data = FrogImageDataVentral)
+anova(ProportionGVentralDay)
+summary(ProportionGVentralDay)
+emmeans(ProportionGVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant, keeping in
+
+ProportionBVentralDay <- lmer(Proportion.B~Day+Frog_Type*Day+(1|Frog_Number), data = FrogImageDataVentral)
+anova(ProportionBVentralDay)
+summary(ProportionBVentralDay)
+emmeans(ProportionBVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant, keeping in
+
+RednessVentralDay <- lmer(Redness.score~Day+Frog_Type*Day+(1|Frog_Number), data = FrogImageDataVentral)
+anova(RednessVentralDay)
+summary(RednessVentralDay)
+emmeans(RednessVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction not significant, taking out
+RednessVentralDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
+anova(RednessVentralDay)
+summary(RednessVentralDay)
+emmeans(RednessVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+
+GreenessVentralDay <- lmer(Greeness.score~Day+Frog_Type*Day+(1|Frog_Number), data = FrogImageDataVentral)
+anova(GreenessVentralDay)
+summary(GreenessVentralDay)
+emmeans(GreenessVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant, keeping in
+
+BluenessVentralDay <- lmer(Blueness.score~Day+Frog_Type*Day+(1|Frog_Number), data = FrogImageDataVentral)
+anova(BluenessVentralDay)
+summary(BluenessVentralDay)
+emmeans(BluenessVentralDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant, keeping in
+
 BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsal)
 summary(BrightnessInfectionDorsal)
-emmeans(BrightnessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+BrightnessInfectionVentral <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(BrightnessInfectionVentral)
+summary(BrightnessInfectionVentral)
+emmeans(BrightnessInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageRInfectionDorsal)
+summary(AverageRInfectionDorsal)
+emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageRInfectionVentral <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(AverageRInfectionVentral)
+summary(AverageRInfectionVentral)
+emmeans(AverageRInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageGInfectionDorsal)
+summary(AverageGInfectionDorsal)
+emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageGInfectionVentral <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(AverageGInfectionVentral)
+summary(AverageGInfectionVentral)
+emmeans(AverageGInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageBInfectionDorsal)
+summary(AverageBInfectionDorsal)
+emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+AverageBInfectionVentral <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(AverageBInfectionVentral)
+summary(AverageBInfectionVentral)
+emmeans(AverageBInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionRInfectionDorsal <- lmer(Proportion.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(ProportionRInfectionDorsal)
+summary(ProportionRInfectionDorsal)
+emmeans(ProportionRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionRInfectionVentral <- lmer(Proportion.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(ProportionRInfectionVentral)
+summary(ProportionRInfectionVentral)
+emmeans(ProportionRInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionGInfectionDorsal <- lmer(Proportion.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(ProportionGInfectionDorsal)
+summary(ProportionGInfectionDorsal)
+emmeans(ProportionGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionGInfectionVentral <- lmer(Proportion.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(ProportionGInfectionVentral)
+summary(ProportionGInfectionVentral)
+emmeans(ProportionGInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionBInfectionDorsal <- lmer(Proportion.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(ProportionBInfectionDorsal)
+summary(ProportionBInfectionDorsal)
+emmeans(ProportionBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+ProportionBInfectionVentral <- lmer(Proportion.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(ProportionBInfectionVentral)
+summary(ProportionBInfectionVentral)
+emmeans(ProportionBInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(RednessInfectionDorsal)
+summary(RednessInfectionDorsal)
+emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+RednessInfectionVentral <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(RednessInfectionVentral)
+summary(RednessInfectionVentral)
+emmeans(RednessInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+GreenessInfectionDorsal <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(GreenessInfectionDorsal)
+summary(GreenessInfectionDorsal)
+emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+GreenessInfectionVentral <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(GreenessInfectionVentral)
+summary(GreenessInfectionVentral)
+emmeans(GreenessInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+BluenessInfectionDorsal <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BluenessInfectionDorsal)
+summary(BluenessInfectionDorsal)
+emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+
+BluenessInfectionVentral <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedVentral)
+anova(BluenessInfectionVentral)
+summary(BluenessInfectionVentral)
+emmeans(BluenessInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 
 ## DHARMA
 install.packages("DHARMa")
@@ -1001,7 +1152,125 @@ simsBluenessDorsalDay <- simulateResiduals(BluenessDorsalDay)
 plot(simsBluenessDorsalDay, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 
+simsAverageRVentralDay <- simulateResiduals(AverageRVentralDay)
+plot(simsAverageRVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageGVentralDay <- simulateResiduals(AverageGVentralDay)
+plot(simsAverageGVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageBVentralDay <- simulateResiduals(AverageBVentralDay)
+plot(simsAverageBVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionRVentralDay <- simulateResiduals(ProportionRVentralDay)
+plot(simsProportionRVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionGVentralDay <- simulateResiduals(ProportionGVentralDay)
+plot(simsProportionGVentralDay, quantreg = FALSE)
+## Deviation is significant for KS test
+
+simsProportionBVentralDay <- simulateResiduals(ProportionBVentralDay)
+plot(simsProportionBVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsRednessVentralDay <- simulateResiduals(RednessVentralDay)
+plot(simsRednessVentralDay, quantreg = FALSE)
+## just slightly significant, need to look for outliers 
+simsRednessVentralDay
+
+simsGreenessVentralDay <- simulateResiduals(GreenessVentralDay)
+plot(simsGreenessVentralDay, quantreg = FALSE)
+## Definitely significant
+
+simsBluenessVentralDay <- simulateResiduals(BluenessVentralDay)
+plot(simsBluenessVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsBrightnessInfectionDorsal <- simulateResiduals(BrightnessInfectionDorsal)
+plot(simsBrightnessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsBrightnessInfectionVentral <- simulateResiduals(BrightnessInfectionVentral)
+plot(simsBrightnessInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageRInfectionDorsal <- simulateResiduals(AverageRInfectionDorsal)
+plot(simsAverageRInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageRInfectionVentral <- simulateResiduals(AverageRInfectionVentral)
+plot(simsAverageRInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageGInfectionDorsal <- simulateResiduals(AverageGInfectionDorsal)
+plot(simsAverageGInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageGInfectionVentral <- simulateResiduals(AverageGInfectionVentral)
+plot(simsAverageGInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageBInfectionDorsal <- simulateResiduals(AverageBInfectionDorsal)
+plot(simsAverageBInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsAverageBInfectionVentral <- simulateResiduals(AverageBInfectionVentral)
+plot(simsAverageBInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionRInfectionDorsal <- simulateResiduals(ProportionRInfectionDorsal)
+plot(simsProportionRInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionRInfectionVentral <- simulateResiduals(ProportionRInfectionVentral)
+plot(simsProportionRInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionGInfectionDorsal <- simulateResiduals(ProportionGInfectionDorsal)
+plot(simsProportionGInfectionDorsal, quantreg = FALSE)
+## Definitely significant
+
+simsProportionGInfectionVentral <- simulateResiduals(ProportionGInfectionVentral)
+plot(simsProportionGInfectionVentral, quantreg = FALSE)
+## Definitely significant
+
+simsProportionBInfectionDorsal <- simulateResiduals(ProportionBInfectionDorsal)
+plot(simsProportionBInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionBInfectionVentral <- simulateResiduals(ProportionBInfectionVentral)
+plot(simsProportionBInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsRednessInfectionDorsal <- simulateResiduals(RednessInfectionDorsal)
+plot(simsRednessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsRednessInfectionVentral <- simulateResiduals(RednessInfectionVentral)
+plot(simsRednessInfectionVentral, quantreg = FALSE)
+## Definitely significant
+
+simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
+plot(simsGreenessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsGreenessInfectionVentral <- simulateResiduals(GreenessInfectionVentral)
+plot(simsGreenessInfectionVentral, quantreg = FALSE)
+## Definitely significant
+which(residuals(simsGreenessInfectionVentral) == 1 | residuals(simsGreenessInfectionVentral) == 0)
+which(residuals(simsGreenessInfectionVentral) >0.99 | residuals(simsGreenessInfectionVentral) < 0.01)
 ## Yusan Yang, ask about natural infection load
+
+simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
+plot(simsBluenessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsBluenessInfectionVentral <- simulateResiduals(BluenessInfectionVentral)
+plot(simsBluenessInfectionVentral, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
 
 ## Graphs of Averages
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, color = Frog_Type )) +
