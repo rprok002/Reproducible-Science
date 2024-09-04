@@ -1303,6 +1303,29 @@ emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwai
 ## control frogs start out with higher average blue than infected frogs but by about 18
 ## days that reverses
 
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## neither Day nor frog type is significant, overall redness score next to the
+## standard red card in photos doesn't change over time and is not different
+## between control and infected frogs
+
+GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(GreenessDorsalDay)
+summary(GreenessDorsalDay)
+emmeans(GreenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Interaction significant
+## Greeness in control frogs increases over time while slightly decreases in infected frogs
+
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Neither Day nor Frog Type significant
+
+## Models using for Question 2: difference in frog attributes compared to log infection
+
 ## Plots using for Question 1: difference in frog attributes in control vs infected frogs
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
   geom_point()+
@@ -1316,4 +1339,14 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type)) +
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
   geom_point()+
   geom_smooth(method = "lm")
-  
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Redness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
+## Plots using for Question 2: difference in frog attributes compared to log infection
