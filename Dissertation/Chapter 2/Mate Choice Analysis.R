@@ -492,6 +492,9 @@ ggqqplot(FrogImageDataControlVentral$Average.Brightness)
 ggdensity(FrogImageDataControlDorsal$Average.R)
 ggqqplot(FrogImageDataControlDorsal$Average.R)
 ## fairly normal
+ggdensity(FrogImageDataDorsal$Average.R)
+ggqqplot(FrogImageDataDorsal$Average.R)
+
 ggdensity(FrogImageDataControlDorsal$Average.G)
 ggqqplot(FrogImageDataControlDorsal$Average.G)
 ## fairly normal
@@ -538,6 +541,9 @@ ggqqplot(FrogImageDataControlDorsal$Redness.score)
 ggdensity(FrogImageDataControlDorsal$Greeness.score)
 ggqqplot(FrogImageDataControlDorsal$Greeness.score)
 ## fairly normal
+ggdensity(FrogImageDataDorsal$Greeness.score)
+ggqqplot(FrogImageDataDorsal$Greeness.score)
+
 ggdensity(FrogImageDataControlDorsal$Blueness.score)
 ggqqplot(FrogImageDataControlDorsal$Blueness.score)
 ## fairly normal
@@ -1115,6 +1121,8 @@ plot(simsBrightnessVentralDay, quantreg = FALSE)
 simsAverageRDorsalDay <- simulateResiduals(AverageRDorsalDay)
 plot(simsAverageRDorsalDay, quantreg = FALSE)
 ## Deviation is significant, so need to ID outliers
+which(residuals(simsAverageRDorsalDay) == 1 | residuals(simsAverageRDorsalDay) == 0)
+which(residuals(simsAverageRDorsalDay) >0.99 | residuals(simsAverageRDorsalDay) < 0.01)
 
 simsAverageGDorsalDay <- simulateResiduals(AverageGDorsalDay)
 plot(simsAverageGDorsalDay, quantreg = FALSE)
@@ -1252,6 +1260,8 @@ plot(simsRednessInfectionVentral, quantreg = FALSE)
 simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
 plot(simsGreenessInfectionDorsal, quantreg = FALSE)
 ## Deviation is significant, need to figure that out
+which(residuals(simsGreenessInfectionDorsal) == 1 | residuals(simsGreenessInfectionDorsal) == 0)
+which(residuals(simsGreenessInfectionDorsal) >0.99 | residuals(simsGreenessInfectionDorsal) < 0.01)
 
 simsGreenessInfectionVentral <- simulateResiduals(GreenessInfectionVentral)
 plot(simsGreenessInfectionVentral, quantreg = FALSE)
@@ -1411,5 +1421,51 @@ ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Blueness.score)) 
   geom_point()+
   geom_smooth(method = "lm")
 
-## Average R Dorsal over day is significant in DARMa, so need to ID outliers and redo analyses there
-## Greeness over infection is significant in DARMa, so need to ID outliers and redo analyses there
+## Average R Dorsal over day is significant in DARMa, so removed M19 color information completely 
+## Greeness over infection is significant in DARMa, so removed 5 entry's Greeness scores, notes on excel file
+
+## Question 1 DHARMas for all needed models after outliers removed (REMEMBER TO RERUN MODELS!)
+simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
+plot(simsBrightnessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+simsAverageRDorsalDay <- simulateResiduals(AverageRDorsalDay)
+plot(simsAverageRDorsalDay, quantreg = FALSE)
+## No deviation anymore
+simsAverageGDorsalDay <- simulateResiduals(AverageGDorsalDay)
+plot(simsAverageGDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+simsAverageBDorsalDay <- simulateResiduals(AverageBDorsalDay)
+plot(simsAverageBDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+simsRednessDorsalDay <- simulateResiduals(RednessDorsalDay)
+plot(simsRednessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsGreenessDorsalDay <- simulateResiduals(GreenessDorsalDay)
+plot(simsGreenessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsBluenessDorsalDay <- simulateResiduals(BluenessDorsalDay)
+plot(simsBluenessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+## Question 2 DHARMas for all needed models after outliers removed (REMEMBER TO RERUN MODELS!)
+simsBrightnessInfectionDorsal <- simulateResiduals(BrightnessInfectionDorsal)
+plot(simsBrightnessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsAverageRInfectionDorsal <- simulateResiduals(AverageRInfectionDorsal)
+plot(simsAverageRInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsAverageGInfectionDorsal <- simulateResiduals(AverageGInfectionDorsal)
+plot(simsAverageGInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsAverageBInfectionDorsal <- simulateResiduals(AverageBInfectionDorsal)
+plot(simsAverageBInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsRednessInfectionDorsal <- simulateResiduals(RednessInfectionDorsal)
+plot(simsRednessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
+plot(simsGreenessInfectionDorsal, quantreg = FALSE)
+## No deviation anymore
+simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
+plot(simsBluenessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
