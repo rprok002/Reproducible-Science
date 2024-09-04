@@ -371,8 +371,16 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
 
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.R, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.G, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.G, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Redness.score, colour = Frog_Type, group = Frog_Number)) +
@@ -562,6 +570,10 @@ ggqqplot(FrogImageDataInfectedDorsal$Proportion.R)
 ggdensity(FrogImageDataInfectedDorsal$Proportion.G)
 ggqqplot(FrogImageDataInfectedDorsal$Proportion.G)
 ## fairly normal
+ggdensity(FrogImageDataDorsal$Proportion.G)
+ggqqplot(FrogImageDataDorsal$Proportion.G)
+## DHARMa significant, so need to look at plot and see the issue
+
 ggdensity(FrogImageDataInfectedDorsal$Proportion.B)
 ggqqplot(FrogImageDataInfectedDorsal$Proportion.B)
 ## fairly normal
@@ -943,14 +955,51 @@ library(DHARMa)
 
 simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
 plot(simsBrightnessDorsalDay, quantreg = FALSE)
-
-simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
-par(mfrow = c(1, 2))
-plotQQunif(simsBrightnessDorsalDay)
-mtext(text = "(a)", side = 3, adj = 0, line = 2)
-plotResiduals(simsBrightnessDorsalDay, quantreg = T)
-mtext(text = "(b)", side = 3, adj = 0, line = 2)
 ## Deviation is not significant, so don't need to worry about 
+
+simsBrightnessVentralDay <- simulateResiduals(BrightnessVentralDay)
+plot(simsBrightnessVentralDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+
+simsAverageRDorsalDay <- simulateResiduals(AverageRDorsalDay)
+plot(simsAverageRDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+
+simsAverageGDorsalDay <- simulateResiduals(AverageGDorsalDay)
+plot(simsAverageGDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+
+simsAverageBDorsalDay <- simulateResiduals(AverageBDorsalDay)
+plot(simsAverageBDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+
+simsAverageBDorsalDay <- simulateResiduals(AverageBDorsalDay)
+plot(simsAverageBDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionRDorsalDay <- simulateResiduals(ProportionRDorsalDay)
+plot(simsProportionRDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsProportionGDorsalDay <- simulateResiduals(ProportionGDorsalDay)
+plot(simsProportionGDorsalDay, quantreg = FALSE)
+## Deviation is significant for KS test
+
+simsProportionBDorsalDay <- simulateResiduals(ProportionBDorsalDay)
+plot(simsProportionBDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsRednessDorsalDay <- simulateResiduals(RednessDorsalDay)
+plot(simsRednessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsGreenessDorsalDay <- simulateResiduals(GreenessDorsalDay)
+plot(simsGreenessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+simsBluenessDorsalDay <- simulateResiduals(BluenessDorsalDay)
+plot(simsBluenessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
 
 ## Yusan Yang, ask about natural infection load
 
