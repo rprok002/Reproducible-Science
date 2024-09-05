@@ -1282,10 +1282,11 @@ plot(simsBluenessInfectionVentral, quantreg = FALSE)
 BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(BrightnessDorsalDay)
 summary(BrightnessDorsalDay)
-emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+emmeans(BrightnessDorsalDay, list (pairwise~Sex), lmer.df = "satterthwaite")
 r2_nakagawa(BrightnessDorsalDay)
 ## Day is significant: brightness decreases over time
 ## Frog Type is significant: infected frogs tend to be less bright than control frogs on any given day
+
 
 AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageRDorsalDay)
