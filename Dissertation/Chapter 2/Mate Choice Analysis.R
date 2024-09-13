@@ -105,6 +105,24 @@ ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Time_Interaction_Zone+(1|Frog
 anova(ControlTrialLMER)
 summary(ControlTrialLMER)
 
+plot(ControlTrialLMER)
+simsControlTrialLMER <- simulateResiduals(ControlTrialLMER)
+plot(simsControlTrialLMER, quantreg = FALSE)
+which(residuals(simsControlTrialLMER) == 1 | residuals(simsControlTrialLMER) == 0)
+which(residuals(simsControlTrialLMER) >0.99 | residuals(simsControlTrialLMER) < 0.01)
+
+## remove F12 Male Pair B, F5 Male Pair E and F12 Male Pair E, F4 Male Pair E, F5 Male Pair J, F19 Male Pair B making new data table 
+
+MateChoiceAnalysisControlDHARMa <- read.csv(file.choose())
+ControlTrialLMERDHARMa <- lmer(SQRT_Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter), data = MateChoiceAnalysisControlDHARMa)
+anova(ControlTrialLMERDHARMa)
+summary(ControlTrialLMERDHARMa)
+simsControlTrialLMERDHARMa <- simulateResiduals(ControlTrialLMERDHARMa)
+plot(simsControlTrialLMERDHARMa, quantreg = FALSE)
+which(residuals(simsControlTrialLMERDHARMa) == 1 | residuals(simsControlTrialLMERDHARMa) == 0)
+which(residuals(simsControlTrialLMERDHARMa) >0.99 | residuals(simsControlTrialLMERDHARMa) < 0.01)
+
+## Still just barely nonsignificant, still worth it to look at weighted regressions 
 ## interaction zone time significant so keeping in model, but group is not significant so don't have to 
 ## include side of apparatus as an effect in the infection model
 
@@ -149,9 +167,25 @@ summary(InfectedTrialLMER)
 ## doesn't change anything whether interaction or not, so even though color may change the females don't use that to choose mates
 
 ## Final Infected Model
-InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
+InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
+plot(InfectedTrialLMER)
+
+simsInfectedTrialLMER <- simulateResiduals(InfectedTrialLMER)
+plot(simsInfectedTrialLMER, quantreg = FALSE)
+which(residuals(simsInfectedTrialLMER) == 1 | residuals(simsInfectedTrialLMER) == 0)
+which(residuals(simsInfectedTrialLMER) >0.99 | residuals(simsInfectedTrialLMER) < 0.01)
+
+## Remove F12 Male Pair A and F12 Male Pair H
+
+MateChoiceAnalysisInfectedDHARMa <- read.csv(file.choose())
+InfectedTrialLMERDHARMa <- lmer(SQRT_Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisInfectedDHARMa)
+anova(InfectedTrialLMERDHARMa)
+summary(ControlTrialLMERDHARMa)
+simsInfectedTrialLMERDHARMa <- simulateResiduals(InfectedTrialLMERDHARMa)
+plot(simsInfectedTrialLMERDHARMa, quantreg = FALSE)
+
 
 ## interaction zone time significant so keeping in model, but group is not significant, so females don't
 ## stay close to either infected or clean frog significantly less/more
@@ -219,6 +253,7 @@ FrogImageDataInfected <- subset(FrogImageData, Frog_Type == "Infected")
 FrogImageDataInfectedDorsal <- subset(FrogImageDataInfected,Dorsal_Ventral == "Dorsal")
 FrogImageDataInfectedVentral <- subset(FrogImageDataInfected,Dorsal_Ventral == "Ventral")
 FrogImageDataDorsal <- subset(FrogImageData, Dorsal_Ventral == "Dorsal")
+FrogImageDataDorsalMale <- subset(FrogImageDataDorsal, Sex == "Male")
 FrogImageDataVentral <- subset(FrogImageData, Dorsal_Ventral == "Ventral")
 
 ## Preliminary look
@@ -1279,28 +1314,27 @@ plot(simsBluenessInfectionVentral, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 
 ## Models using for Question 1: difference in frog attributes in control vs infected frogs
-BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+BrightnessDorsalDay <- lmer(Average.Brightness~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessDorsalDay)
 summary(BrightnessDorsalDay)
 emmeans(BrightnessDorsalDay, list (pairwise~Sex), lmer.df = "satterthwaite")
 r2_nakagawa(BrightnessDorsalDay)
-## Day is significant: brightness decreases over time
-## Frog Type is significant: infected frogs tend to be less bright than control frogs on any given day
+## Interaction significant
+## Brightness decreases faster over time for control frogs than infected
 
-
-AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+AverageRDorsalDay <- lmer(Average.R~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageRDorsalDay)
 summary(AverageRDorsalDay)
 emmeans(AverageRDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
-## Day is not significant: Average R does not significantly change over time
-## Frog Type is significant: infected frogs tend to have less average R than control frogs
+## Interaction significant
+## Average R decreases for control while increases for infected
 
-AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+AverageGDorsalDay <- lmer(Average.G~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageGDorsalDay)
 summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
-## Day is significant: Average G decreases over time
-## Frog Type is significant: infected frogs tend to have less average G than control frogs
+## Interaction significant
+## Both decreasing, control seems to be faster than infected
 
 AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(AverageBDorsalDay)
@@ -1377,13 +1411,13 @@ emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satte
 ## Blueness score just barely not significant
 
 ## Plots using for Question 1: difference in frog attributes in control vs infected frogs
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
   geom_point()+
   geom_smooth(method = "lm")
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.R, colour = Frog_Type)) +
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.G, colour = Frog_Type)) +
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
