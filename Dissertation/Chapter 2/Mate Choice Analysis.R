@@ -79,6 +79,7 @@ library(emmeans)
 library(multcomp)
 library(nlme)
 library(lmtest)
+library(car)
 
 ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisControl)
 anova(ControlTrialLMER)
@@ -101,11 +102,14 @@ summary(ControlTrialLMER)
 ## makes Group even farther from significance but doesn't change anything else, so keeping in to be conservative
 
 ## Final control model
-ControlTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Time_Interaction_Zone+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisControl)
+ControlTrialLMER <- lmer(Weight_Seconds~Group+Time_Interaction_Zone+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisControl)
 anova(ControlTrialLMER)
 summary(ControlTrialLMER)
-
 plot(ControlTrialLMER)
+
+WS <- MateChoiceAnalysisControl$Weight_Seconds
+hist(WS)
+
 simsControlTrialLMER <- simulateResiduals(ControlTrialLMER)
 plot(simsControlTrialLMER, quantreg = FALSE)
 which(residuals(simsControlTrialLMER) == 1 | residuals(simsControlTrialLMER) == 0)
@@ -153,7 +157,7 @@ InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 ## interaction zone time significant so keeping in model, but group is not significant so don't have to 
-## include side of apparatus as an effect in the infection model
+
 
 ## Comparing more and less infected, adding in a variable real quick
 InfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+More_Less_Infected+(1|Male_Pair_Letter)+Time_Interaction_Zone+(1|Frog_Number) , data = MateChoiceAnalysisInfected)
@@ -192,17 +196,59 @@ plot(simsInfectedTrialLMERDHARMa, quantreg = FALSE)
 
 ## Infected Models Separated by Less and More Infected
 
-MoreInfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisInfectedMore)
+MoreInfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisInfectedMore, family = "poisson")
 anova(MoreInfectedTrialLMER)
 summary(MoreInfectedTrialLMER)
 
+plot(MoreInfectedTrialLMER)
 ## still not signifiant even though more infected
 
-LessInfectedTrialLMER <- lmer(SQRT_Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisInfectedLess)
+LessInfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter) , data = MateChoiceAnalysisInfectedLess, family = "poisson")
 anova(LessInfectedTrialLMER)
 summary(LessInfectedTrialLMER)
+plot(LessInfectedTrialLMER)
 
 ## not significant even though less infected
+
+## Weighted Least Squares Regression
+ControlTrialLMER <- lmer(Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+## Removing female trial order because not significant, putting male pair as random factor 
+
+ControlTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter), data = MateChoiceAnalysisControl,  family = "binomial")
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+
+ControlTrialLMER <- lmer(Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter), data = MateChoiceAnalysisControl)
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+
+ControlTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number)+(1|Male_Pair_Letter), data = MateChoiceAnalysisControl, family = "poisson")
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+
+simsControlTrialLMER <- simulateResiduals(ControlTrialLMER)
+plot(simsControlTrialLMER, quantreg = FALSE)
+
+plot(ControlTrialLMER)
+
+## Linearity
+ggqqplot(residuals(ControlTrialLMER))
+plot(ControlTrialLMER)
+
+ggdensity(MateChoiceAnalysisControl$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
+ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
+
+InfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson")
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+plot(InfectedTrialLMER)
+ggqqplot(residuals(InfectedTrialLMER))
+
+simsInfectedTrialLMER <- simulateResiduals(InfectedTrialLMER)
+plot(simsInfectedTrialLMER, quantreg = FALSE)
+
 
 ##Boxplots
 
@@ -254,7 +300,9 @@ FrogImageDataInfectedDorsal <- subset(FrogImageDataInfected,Dorsal_Ventral == "D
 FrogImageDataInfectedVentral <- subset(FrogImageDataInfected,Dorsal_Ventral == "Ventral")
 FrogImageDataDorsal <- subset(FrogImageData, Dorsal_Ventral == "Dorsal")
 FrogImageDataDorsalMale <- subset(FrogImageDataDorsal, Sex == "Male")
+FrogImageDataDorsalMaleControl <- subset(FrogImageDataDorsalMale, Frog_Type == "Control")
 FrogImageDataVentral <- subset(FrogImageData, Dorsal_Ventral == "Ventral")
+FrogImageDataDorsalMaleInfected <- subset(FrogImageDataDorsalMale, Frog_Type == "Infected")
 
 ## Preliminary look
 ## Brightness
@@ -1317,15 +1365,16 @@ plot(simsBluenessInfectionVentral, quantreg = FALSE)
 BrightnessDorsalDay <- lmer(Average.Brightness~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessDorsalDay)
 summary(BrightnessDorsalDay)
-emmeans(BrightnessDorsalDay, list (pairwise~Sex), lmer.df = "satterthwaite")
-r2_nakagawa(BrightnessDorsalDay)
+plot(BrightnessDorsalDay)
+leveneTest(residuals(BrightnessDorsalDay) ~ FrogImageDataDorsalMale$Frog_Type)
 ## Interaction significant
 ## Brightness decreases faster over time for control frogs than infected
+
 
 AverageRDorsalDay <- lmer(Average.R~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageRDorsalDay)
 summary(AverageRDorsalDay)
-emmeans(AverageRDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+plot(AverageRDorsalDay)
 ## Interaction significant
 ## Average R decreases for control while increases for infected
 
@@ -1411,9 +1460,14 @@ emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satte
 ## Blueness score just barely not significant
 
 ## Plots using for Question 1: difference in frog attributes in control vs infected frogs
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number))+
+  geom_line()
+ggboxplot(FrogImageDataDorsalMaleControl, x = "Day", y = "Average.Brightness", color = "Frog_Type")
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
+  geom_line()
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
@@ -1434,9 +1488,9 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type)
   geom_smooth(method = "lm")
 
 ## Plots using for Question 2: difference in frog attributes compared to log infection
-ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness))+
-  geom_point()+
-  geom_smooth(method = "lm")
+ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number))+
+  geom_line()
+ggboxplot(FrogImageDataDorsalMaleInfected, x = "Day", y = "Log_Infection")
 ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.R)) +
   geom_point()+
   geom_smooth(method = "lm")
@@ -1504,3 +1558,14 @@ plot(simsGreenessInfectionDorsal, quantreg = FALSE)
 simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
 plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
+
+
+## Separate models for each day or nest frog number 
+## Ian, ask him about models 
+## separate infection models by day as well
+## box and whisker plots 
+
+##Day 7-10 does treatment impact dorsal coloration, can also bracket it 
+## correlation at same point in time in dorsal coloration
+## From Days 0-10, are coloration values differing between control and infected frogs?
+## Test movement of control vs infected frog, maybe why she prefers?
