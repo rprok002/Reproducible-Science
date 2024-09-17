@@ -303,6 +303,22 @@ FrogImageDataDorsalMale <- subset(FrogImageDataDorsal, Sex == "Male")
 FrogImageDataDorsalMaleControl <- subset(FrogImageDataDorsalMale, Frog_Type == "Control")
 FrogImageDataVentral <- subset(FrogImageData, Dorsal_Ventral == "Ventral")
 FrogImageDataDorsalMaleInfected <- subset(FrogImageDataDorsalMale, Frog_Type == "Infected")
+FrogImageDataDorsalMaleDay0 <- subset(FrogImageDataDorsalMale, Day_Bracket == "0")
+FrogImageDataDorsalMaleDay12 <- subset(FrogImageDataDorsalMale, Day_Bracket == "1_2")
+FrogImageDataDorsalMaleDay45 <- subset(FrogImageDataDorsalMale, Day_Bracket == "4_5")
+FrogImageDataDorsalMaleDay78 <- subset(FrogImageDataDorsalMale, Day_Bracket == "7_8")
+FrogImageDataDorsalMaleDay1011 <- subset(FrogImageDataDorsalMale, Day_Bracket == "10_11")
+FrogImageDataDorsalMaleDay1314 <- subset(FrogImageDataDorsalMale, Day_Bracket == "13_14")
+FrogImageDataDorsalMaleDay1618 <- subset(FrogImageDataDorsalMale, Day_Bracket == "16_18")
+FrogImageDataDorsalMaleDay2021 <- subset(FrogImageDataDorsalMale, Day_Bracket == "20_21")
+FrogImageDataDorsalMaleDay2223 <- subset(FrogImageDataDorsalMale, Day_Bracket == "22_23")
+FrogImageDataDorsalMaleDay26 <- subset(FrogImageDataDorsalMale, Day_Bracket == "26")
+FrogImageDataDorsalMaleDay2829 <- subset(FrogImageDataDorsalMale, Day_Bracket == "28_29")
+FrogImageDataDorsalMaleDay3132 <- subset(FrogImageDataDorsalMale, Day_Bracket == "31_32")
+FrogImageDataDorsalMaleDay35 <- subset(FrogImageDataDorsalMale, Day_Bracket == "35")
+FrogImageDataDorsalMaleDay38 <- subset(FrogImageDataDorsalMale, Day_Bracket == "38")
+FrogImageDataDorsalMaleDay41 <- subset(FrogImageDataDorsalMale, Day_Bracket == "41")
+FrogImageDataDorsalMaleDay44 <- subset(FrogImageDataDorsalMale, Day_Bracket == "44")
 
 ## Preliminary look
 ## Brightness
@@ -1490,7 +1506,7 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type)
 ## Plots using for Question 2: difference in frog attributes compared to log infection
 ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number))+
   geom_line()
-ggboxplot(FrogImageDataDorsalMaleInfected, x = "Day", y = "Log_Infection")
+ggboxplot(FrogImageDataDorsalMale, x = "Day", y = "Average.R", color = "Frog_Type")
 ggplot(FrogImageDataInfectedDorsal, aes(x = Log_Infection, y = Average.R)) +
   geom_point()+
   geom_smooth(method = "lm")
