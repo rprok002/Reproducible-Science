@@ -1611,26 +1611,26 @@ t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.e
 
 ggdensity(FrogImageDataDorsalMaleDay0$Average.R)
 shapiro.test(FrogImageDataDorsalMaleDay0$Average.R)
-var.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
-t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.equal = TRUE)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.equal = FALSE)
 ## At day 0, not statistically different
 
 ggdensity(FrogImageDataDorsalMaleDay0$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay0$Average.G)
-var.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
-t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.equal = TRUE)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.equal = FALSE)
 ## At day 0, not statistically different
 
 ggdensity(FrogImageDataDorsalMaleDay0$Average.B)
 shapiro.test(FrogImageDataDorsalMaleDay0$Average.B)
-var.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
 t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay0, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay0, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
 ## At day 0, not statistically different
 
 ggdensity(FrogImageDataDorsalMaleDay12$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay12$Average.Brightness)
-var.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
 t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay12, var.equal = TRUE)
 ## At day 1_2, just barely significant. Infected less bright than control
 
@@ -1644,49 +1644,50 @@ ggboxplot(FrogImageDataDorsalMaleDay12, x = "Day_Bracket", y = "Average.R", colo
 
 ggdensity(FrogImageDataDorsalMaleDay12$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay12$Average.G)
-var.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
 t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay12, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay12, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
 ## At Day 1_2, Infected G is lower than control
 
 ggdensity(FrogImageDataDorsalMaleDay12$Average.B)
 shapiro.test(FrogImageDataDorsalMaleDay12$Average.B)
-var.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay12)
 t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay12, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay12, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
 ## At Day 1_2, Not statistically different
 
 ggdensity(FrogImageDataDorsalMaleDay45$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay45$Average.Brightness)
-var.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
 t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay45, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay45, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
 ## At day 4_5, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay45$Average.R)
 shapiro.test(FrogImageDataDorsalMaleDay45$Average.R)
-var.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
 t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay45, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay45, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
 ## At day 4_5, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay45$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay45$Average.G)
-var.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
 t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay45, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay45, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
 ## At day 4_5, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay45$Average.B)
 shapiro.test(FrogImageDataDorsalMaleDay45$Average.B)
-var.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
-t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay45, var.equal = TRUE)
 leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay45)
+t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay45, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay45, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
 ## At day 4_5, Average B lower in infected than control
 
 ggdensity(FrogImageDataDorsalMaleDay78$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay78$Average.Brightness)
-var.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
-t.test(FrogImageDataDorsalMaleDay78, Average.Brightness ~ Frog_Type, var.equal = TRUE)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
+t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay78, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay78, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
 ## At day 7_8, not significant
 
@@ -1700,50 +1701,188 @@ ggboxplot(FrogImageDataDorsalMaleDay78, x = "Day_Bracket", y = "Average.R", colo
 
 ggdensity(FrogImageDataDorsalMaleDay78$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay78$Average.G)
-var.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
 t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay78, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay78, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
 ## At day 7_8, Infected are less green than control
 
 ggdensity(FrogImageDataDorsalMaleDay78$Average.B)
 shapiro.test(FrogImageDataDorsalMaleDay78$Average.B)
-var.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay78)
 t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay78, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay78, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
 ## At day 7_8, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay1011$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay1011$Average.Brightness)
-var.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
 t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay1011, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
 ## At day 10_11, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay1011$Average.R)
 shapiro.test(FrogImageDataDorsalMaleDay1011$Average.R)
-var.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
 t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay1011, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
 ## At day 10_11, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay1011$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay1011$Average.G)
-var.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
 t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay1011, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
 ## At day 10_11, not significant
 
 ggdensity(FrogImageDataDorsalMaleDay1314$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay1314$Average.Brightness)
-var.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
-t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, var.equal = TRUE)
-ggboxplot(FrogImageDataDorsalMaleDay1011, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
+t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, var.equal = FALSE)
+ggboxplot(FrogImageDataDorsalMaleDay1314, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
 ## At day 13_14, not significant
 
-ggdensity(FrogImageDataDorsalMaleDay1011$Average.B)
-shapiro.test(FrogImageDataDorsalMaleDay1011$Average.B)
+ggdensity(FrogImageDataDorsalMaleDay1314$Average.R)
+shapiro.test(FrogImageDataDorsalMaleDay1314$Average.R)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, var.equal = FALSE)
+ggboxplot(FrogImageDataDorsalMaleDay1314, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 13_14, not significant
+
+ggdensity(FrogImageDataDorsalMaleDay1314$Average.G)
+shapiro.test(FrogImageDataDorsalMaleDay1314$Average.G)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, var.equal = FALSE)
+ggboxplot(FrogImageDataDorsalMaleDay1314, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
+## At day 13_14, not significant
+
+ggdensity(FrogImageDataDorsalMaleDay1314$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay1314$Average.B)
 ## not normally distributed, so need to do variance test that is less affected by normality and a mann-whitney U test
-var.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011)
-t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1011, var.equal = TRUE)
-ggboxplot(FrogImageDataDorsalMaleDay1011, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
-## At day 10_11, not significant
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
+wilcox.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, alternative = "two.sided", exact = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay1314, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 13_14, not significant
+
+ggdensity(FrogImageDataDorsalMaleDay1314$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay1314$Average.B)
+## not normally distributed, so need to do variance test that is less affected by normality and a mann-whitney U test
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314)
+wilcox.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay1314, alternative = "two.sided", exact = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay1314, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 13_14, not significant
+
+ggdensity(FrogImageDataDorsalMaleDay2021$Average.Brightness)
+shapiro.test(FrogImageDataDorsalMaleDay2021$Average.Brightness)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021)
+t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2021, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
+## At day 20_21 brightness for infected frogs is higher
+
+ggdensity(FrogImageDataDorsalMaleDay2021$Average.R)
+shapiro.test(FrogImageDataDorsalMaleDay2021$Average.R)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2021, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 20_21 Average R for infected frogs is higher
+
+ggdensity(FrogImageDataDorsalMaleDay2021$Average.G)
+shapiro.test(FrogImageDataDorsalMaleDay2021$Average.G)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2021, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
+## At day 20_21 Average G is not different
+
+ggdensity(FrogImageDataDorsalMaleDay2021$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay2021$Average.B)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021)
+t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2021, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2021, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 20_21 Average B is not different
+
+ggdensity(FrogImageDataDorsalMaleDay2223$Average.Brightness)
+shapiro.test(FrogImageDataDorsalMaleDay2223$Average.Brightness)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223)
+t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2223, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
+## At day 22_23 Average Brightness for infected is lower
+
+ggdensity(FrogImageDataDorsalMaleDay2223$Average.R)
+shapiro.test(FrogImageDataDorsalMaleDay2223$Average.R)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2223, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 22_23 Average R for infected is lower
+
+ggdensity(FrogImageDataDorsalMaleDay2223$Average.G)
+shapiro.test(FrogImageDataDorsalMaleDay2223$Average.G)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2223, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 22_23 Average G for infected is lower
+
+ggdensity(FrogImageDataDorsalMaleDay2223$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay2223$Average.B)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223)
+t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2223, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2223, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 22_23 Average B is not different
+
+ggdensity(FrogImageDataDorsalMaleDay3132$Average.Brightness)
+shapiro.test(FrogImageDataDorsalMaleDay3132$Average.Brightness)
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
+t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
+## At day 22_23 Average Brightness is lower for infected
+
+ggdensity(FrogImageDataDorsalMaleDay3132$Average.R)
+shapiro.test(FrogImageDataDorsalMaleDay3132$Average.R)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 22_23 Average R is lower for infected
+
+ggdensity(FrogImageDataDorsalMaleDay3132$Average.G)
+shapiro.test(FrogImageDataDorsalMaleDay3132$Average.G)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
+## At day 22_23 Average G is lower for infected
+
+ggdensity(FrogImageDataDorsalMaleDay3132$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay3132$Average.B)
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
+t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = FALSE)
+ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 22_23 Average B is higher for infected
+
+## Had to switch up brightness for images Day 31_32, maybe not use
+
+ggdensity(FrogImageDataDorsalMaleDay2829$Average.Brightness)
+shapiro.test(FrogImageDataDorsalMaleDay2829$Average.Brightness)
+## not normally distributed, so need to do variance test that is less affected by normality and a mann-whitney U test
+leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829)
+wilcox.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829, alternative = "two.sided", exact = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
+## At day 28_29 not different
+
+ggdensity(FrogImageDataDorsalMaleDay2829$Average.R)
+shapiro.test(FrogImageDataDorsalMaleDay2829$Average.R)
+leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829)
+t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
+## At day 28_29 not different
+
+ggdensity(FrogImageDataDorsalMaleDay2829$Average.G)
+shapiro.test(FrogImageDataDorsalMaleDay2829$Average.G)
+leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829)
+t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829, var.equal = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
+## At day 28_29 Average G lower in infected
+
+ggdensity(FrogImageDataDorsalMaleDay2829$Average.B)
+shapiro.test(FrogImageDataDorsalMaleDay2829$Average.B)
+## not normally distributed, so need to do variance test that is less affected by normality and a mann-whitney U test
+leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829)
+wilcox.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829, alternative = "two.sided", exact = TRUE)
+ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
+## At day 28_29 Average B lower in infected
