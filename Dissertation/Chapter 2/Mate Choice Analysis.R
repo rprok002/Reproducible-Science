@@ -240,14 +240,13 @@ plot(ControlTrialLMER)
 ggdensity(MateChoiceAnalysisControl$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
 ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
 
-InfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson")
+InfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 plot(InfectedTrialLMER)
 ggqqplot(residuals(InfectedTrialLMER))
 
-simsInfectedTrialLMER <- simulateResiduals(InfectedTrialLMER)
-plot(simsInfectedTrialLMER, quantreg = FALSE)
+
 
 
 ##Boxplots
@@ -1603,6 +1602,7 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
 ## general pattern of the frogs dosed once 
 
 ## T-tests by day
+## Question 1: difference in frog attributes in control vs infected frogs by day
 ggdensity(FrogImageDataDorsalMaleDay0$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay0$Average.Brightness)
 leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay0)
@@ -1832,30 +1832,28 @@ shapiro.test(FrogImageDataDorsalMaleDay3132$Average.Brightness)
 leveneTest(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
 t.test(Average.Brightness ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type")
-## At day 22_23 Average Brightness is lower for infected
+## At day 31_32 Average Brightness is lower for infected
 
 ggdensity(FrogImageDataDorsalMaleDay3132$Average.R)
 shapiro.test(FrogImageDataDorsalMaleDay3132$Average.R)
 leveneTest(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
 t.test(Average.R ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.R", color = "Frog_Type")
-## At day 22_23 Average R is lower for infected
+## At day 31_32 Average R is lower for infected
 
 ggdensity(FrogImageDataDorsalMaleDay3132$Average.G)
 shapiro.test(FrogImageDataDorsalMaleDay3132$Average.G)
 leveneTest(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
 t.test(Average.G ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.G", color = "Frog_Type")
-## At day 22_23 Average G is lower for infected
+## At day 31_32 Average G is lower for infected
 
 ggdensity(FrogImageDataDorsalMaleDay3132$Average.B)
 shapiro.test(FrogImageDataDorsalMaleDay3132$Average.B)
 leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132)
 t.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay3132, var.equal = FALSE)
 ggboxplot(FrogImageDataDorsalMaleDay3132, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
-## At day 22_23 Average B is higher for infected
-
-## Had to switch up brightness for images Day 31_32, maybe not use
+## At day 31_32 Average B is higher for infected
 
 ggdensity(FrogImageDataDorsalMaleDay2829$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay2829$Average.Brightness)
@@ -1886,3 +1884,58 @@ leveneTest(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829)
 wilcox.test(Average.B ~ Frog_Type, data = FrogImageDataDorsalMaleDay2829, alternative = "two.sided", exact = TRUE)
 ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.B", color = "Frog_Type")
 ## At day 28_29 Average B lower in infected
+
+## Important days for mate choice are 20_21, 22_23, 28_29, 31_32
+## Overall during this time if there is a difference it is mostly that infected is lower than 
+## control, however females spent more time near infected frogs in mate choice trials
+
+## Not going to do across days because don't have enough data similar from same days to make meaningful tests. Will
+## only comment that on Day 0 measurements aren't different between groups but on other days they are
+
+
+## Models using for Question 2: difference in frog attributes compared to log infection
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BrightnessInfectionDorsal)
+## Brightness decreases as infection load increases
+
+AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageRInfectionDorsal)
+summary(AverageRInfectionDorsal)
+emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Average R decreases as infection load increases
+
+AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageGInfectionDorsal)
+summary(AverageGInfectionDorsal)
+emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## Average G decreases as infection load increases
+
+AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+anova(AverageBInfectionDorsal)
+summary(AverageBInfectionDorsal)
+emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+## no significance in Average B
+
+## For Question 2, it doesn't matter what day they were seen with this infection load, it just matters that this was
+## their load at that point in time and it corresponded to that color or brightness, and we see a trend for all of these 
+## variables that as infection increases coloration decreases and so does dorsal brightness, except for Average B
+
+## Cori Comments from talking about carotenoids
+##Carotenoids helps with both color and immune so might expect fewer carotenoids in color if trying to use for immune or might not have enough to do both 
+
+##Mention in carotenoid paper that frogs euthanized was happening around day 20-30 when I was seeing some color change, go back and actually document. Also frogs that died early were experiencing color change,
+## or hitting day 13_14. Might take out frogs that died super early and compare results for just them if they seem strange.
+## Also have M24, M17 and M28 in data where they died months before others, same with WF2 died on month 9 thought could argue that had been on rich diet
+## for so long it would have been even keel already and euthanized past day 20_21
+##Ordination style multivariate to see if composition of all between groups is different 
+##-Multivariate analysis of variance (MANOVA)
+##-Vegan package meant for this type of ordination analyses
+
+##-Look at wild frogs versus supplemented frogs output (Leila Freeborn dissertation, and Justin one), they should have done MANOVAs 
+
+##Reason supplement is to try and keep coloration similar to what is in the wild but the gut-loaded didn’t change color at all but seems to be healthier frogs with carotenoid supplementation 
+##-look up cori supplementation paper, don’t know where exactly these are coming so can’t say exactly what is it becoming
+##-can say carotenoids are not limiting resource, same playing field
