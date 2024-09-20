@@ -237,7 +237,7 @@ plot(ControlTrialLMER)
 ggqqplot(residuals(ControlTrialLMER))
 plot(ControlTrialLMER)
 
-ggdensity(MateChoiceAnalysisControl$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
+ggdensity(MateChoiceAnalysisInfected$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
 ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
 
 InfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
@@ -246,8 +246,37 @@ summary(InfectedTrialLMER)
 plot(InfectedTrialLMER)
 ggqqplot(residuals(InfectedTrialLMER))
 
+## Male movement data
+MateChoiceAnalysisInfectedMaleMove <- read.csv(file.choose())
+ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds)
 
+InfectedTrialLMERMaleWander <- glmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfectedMaleMove, family = "poisson")
+anova(InfectedTrialLMERMaleWander)
+summary(InfectedTrialLMERMaleWander)
+plot(InfectedTrialLMERMaleWander)
+ggqqplot(residuals(InfectedTrialLMERMaleWander))
 
+simsInfectedTrialLMERMaleWander <- simulateResiduals(InfectedTrialLMERMaleWander)
+plot(simsInfectedTrialLMERMaleWander, quantreg = FALSE)
+
+ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds)
+
+InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfectedMaleMove, family = "poisson")
+anova(InfectedTrialLMERMaleFront)
+summary(InfectedTrialLMERMaleFront)
+plot(InfectedTrialLMERMaleFront)
+ggqqplot(residuals(InfectedTrialLMERMaleFront))
+
+##Questions for Ian: repeated measures, am I doing it correctly?
+##Questions for Ian: I am doing the Poisson distribution which makes the most sense but still hetero, what are my options now
+## since behaviorally the data points that are outliers aren't actually outliers at all?
+## Go over outcomes to make sure I am reading correctly
+## Why doesn't the box plot look like what the outcome of the glm looks like?
+## Box plot for Female time spent near clean vs infected shows higher for infected, but glm says opposite because the 
+## control group is the reference point, so a positive z value means spent more time near control versus infected right?
+## Also box plot for wandering shows no difference but the glm says there is 
 
 ##Boxplots
 
@@ -274,6 +303,22 @@ ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds",  ylab =
   annotate("text", x=2, y=1200, label= " Side", fontface = "bold", size = 5)+
   annotate("text", x=1, y=277, label="x", size = 7)+
   annotate("text", x=2, y=336, label="x", size = 7)
+
+MateChoiceAnalysisInfectedMaleMove$Group <- factor(MateChoiceAnalysisInfectedMaleMove$Group, levels = c("Clean", "Infected"))
+ggboxplot(MateChoiceAnalysisInfectedMaleMove, x = "Group", y = "Male_Wander_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1200), fill = "darkgrey") + 
+  scale_x_discrete(labels=c("Clean", "Infected"))+
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())
+
+MateChoiceAnalysisInfectedMaleMove$Group <- factor(MateChoiceAnalysisInfectedMaleMove$Group, levels = c("Clean", "Infected"))
+ggboxplot(MateChoiceAnalysisInfectedMaleMove, x = "Group", y = "Male_Front_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1200), fill = "darkgrey") + 
+  scale_x_discrete(labels=c("Clean", "Infected"))+
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())
 
 ## Means and standard deviations for boxplots
 mean_Control <- MateChoiceAnalysisControl %>%
