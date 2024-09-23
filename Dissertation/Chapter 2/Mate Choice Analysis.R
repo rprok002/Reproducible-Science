@@ -1632,12 +1632,53 @@ plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Test movement of control vs infected frog, maybe why she prefers?
 
 ##Plots separated by day 
-ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type",
-          order = c("0", "1_2", "4_5", "7_8", "10_11", "13_14", "16_18", "20_21", "22_23", "26", "28_29",
-                     "31_32", "35", "38", "41", "44"))
+ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type", palette = c("black","darkgrey"),
+          select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                     "31_32"),
+          order = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                    "31_32"),
+          ylab = " Average Brightness (%)", xlab = "Day Bracket", ylim = c(24, 48)) +
+scale_y_continuous(breaks=seq(25,45,by=5))+
+scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32"))+
+theme(legend.title=element_blank())+
+theme(legend.position = c(0.8, 0.9), legend.direction = "horizontal")
+
+ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.R", color = "Frog_Type", palette = c("darkred","red"),
+          select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                     "31_32"),
+          order = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                    "31_32"),
+          ylab = " Average Red Pixels", xlab = "Day Bracket", ylim = c(95, 170)) +
+  scale_y_continuous(breaks=seq(95,165,by=10))+
+  scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32"))+
+  theme(legend.title=element_blank())+
+  theme(legend.position = c(0.8, 0.9), legend.direction = "horizontal")
+
+ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.G", color = "Frog_Type", palette = c("darkgreen","green"),
+          select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                     "31_32"),
+          order = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                    "31_32"),
+          ylab = " Average Green Pixels", xlab = "Day Bracket", ylim = c(30, 110)) +
+  scale_y_continuous(breaks=seq(30,100,by=10))+
+  scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32"))+
+  theme(legend.title=element_blank())+
+  theme(legend.position = c(0.8, 0.9), legend.direction = "horizontal")
+
+ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.B", color = "Frog_Type", palette = c("blue","turquoise"),
+          select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                     "31_32"),
+          order = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
+                    "31_32"),
+          ylab = " Average Blue Pixels", xlab = "Day Bracket", ylim = c(0, 60)) +
+  scale_y_continuous(breaks=seq(0,50,by=10))+
+  scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32"))+
+  theme(legend.title=element_blank())+
+  theme(legend.position = c(0.8, 0.9), legend.direction = "horizontal")
+
 ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection",
-          order = c("0", "1_2", "4_5", "7_8", "10_11", "13_14", "16_18", "20_21", "22_23", "26", "28_29",
-                    "31_32", "35", "38", "41", "44"))
+          order = c("0", "1_2", "4_5", "7_8", "10_11", "13_14", "20_21", "22_23","28_29",
+                    "31_32"))
 ## Going to test Day 0, Day 1_2, Day 4_5, Day 7_8, Day 10_11, Day 13_14, Day 20_21, Day 22_23, Day 31_32
 
 ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet.by = "Number.of.Doses",
@@ -2034,6 +2075,7 @@ plot(InfectedTrialLMER)
 ## Not linear, so then tried weighted glmer
 InfectedTrialLMER <- glmer(Weight_Seconds_Female~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
 anova(InfectedTrialLMER)
+car::Anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 plot(InfectedTrialLMER)
 ggqqplot(residuals(InfectedTrialLMER))
