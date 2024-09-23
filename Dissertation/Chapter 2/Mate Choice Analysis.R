@@ -1688,6 +1688,69 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
 ## Infection levels for frogs dosed 3 times instead of 1 are higher on some of the days but still follow the 
 ## general pattern of the frogs dosed once 
 
+## Line Graphs for infection
+
+
+ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Brigtness (%)", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 8, by = 1))+
+  scale_y_continuous(breaks = seq(25, 445, by = 5))+
+  expand_limits(x = 7)+
+  expand_limits(y = 45)
+
+ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, colour = Frog_Number)) +
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Red Pixels", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 8, by = 1))+
+  scale_y_continuous(breaks = seq(80, 170, by = 10))+
+  expand_limits(x = 7)+
+  expand_limits(y = 170)
+
+ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.G, colour = Frog_Number)) +
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Green Pixels", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 8, by = 1))+
+  scale_y_continuous(breaks = seq(0, 90, by = 10))+
+  expand_limits(x = 7)+
+  expand_limits(y = c(30,90))
+
+ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, colour = Frog_Number)) +
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Blue Pixels", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 8, by = 1))+
+  scale_y_continuous(breaks = seq(0, 60, by = 10))+
+  expand_limits(x = 7)+
+  expand_limits(y = c(0,60))
+
 ## T-tests by day
 ## Question 1: difference in frog attributes in control vs infected frogs by day
 ggdensity(FrogImageDataDorsalMaleDay0$Average.Brightness)
