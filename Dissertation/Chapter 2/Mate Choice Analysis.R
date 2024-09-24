@@ -1711,9 +1711,16 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
 ## Infection levels for frogs dosed 3 times instead of 1 are higher on some of the days but still follow the 
 ## general pattern of the frogs dosed once 
 
+## Line Graphs for color change over time
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
+  geom_line()
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
+  geom_line()
 ## Line Graphs for infection coloration####
-
-
 ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()+
   geom_point()+
