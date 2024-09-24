@@ -4,12 +4,14 @@ install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
 
+## Mate Choice Data Files####
 MateChoiceCompiledDataControlNoCall <- read.csv(file.choose())
 MateChoiceAnalysisControl <- read.csv(file.choose())
 MateChoiceAnalysisInfected <- read.csv(file.choose())
 MateChoiceAnalysisInfectedMore <- read.csv(file.choose())
 MateChoiceAnalysisInfectedLess <- read.csv(file.choose())
 
+## Original qqplots of mate choice data####
 ggdensity(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
 ggqqplot(MateChoiceCompiledDataControlNoCall$Total_Trial_Time_Seconds)
 ## def not normal distribution, but independent variable doesn't need to be 
@@ -69,7 +71,7 @@ ggqqplot(MateChoiceAnalysisInfected$SQRT_Weight_Seconds)
 
 ## using sqrt for Weight Seconds because normalizes so no family need be added for LMER 
 
-## Control Models 
+## Control Models Mate Choice####
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
@@ -130,7 +132,7 @@ which(residuals(simsControlTrialLMERDHARMa) >0.99 | residuals(simsControlTrialLM
 ## interaction zone time significant so keeping in model, but group is not significant so don't have to 
 ## include side of apparatus as an effect in the infection model
 
-## Infected Models
+## Infected Models Mate Choice ####
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
@@ -210,7 +212,7 @@ plot(LessInfectedTrialLMER)
 
 ## not significant even though less infected
 
-## Weighted Least Squares Regression
+## Weighted Least Squares Regression Models and Male Movement Models ####
 ControlTrialLMER <- lmer(Weight_Seconds~Group+Male_Pair_Letter+Time_Interaction_Zone+(1|Frog_Number)+(1|Female_Trial_Order) , data = MateChoiceAnalysisControl)
 anova(ControlTrialLMER)
 summary(ControlTrialLMER)
@@ -270,16 +272,8 @@ summary(InfectedTrialLMERMaleFront)
 plot(InfectedTrialLMERMaleFront)
 ggqqplot(residuals(InfectedTrialLMERMaleFront))
 
-##Questions for Ian: repeated measures, am I doing it correctly?
-##Questions for Ian: I am doing the Poisson distribution which makes the most sense but still hetero, what are my options now
-## since behaviorally the data points that are outliers aren't actually outliers at all?
-## Go over outcomes to make sure I am reading correctly
-## Why doesn't the box plot look like what the outcome of the glm looks like?
-## Box plot for Female time spent near clean vs infected shows higher for infected, but glm says opposite because the 
-## control group is the reference point, so a positive z value means spent more time near control versus infected right?
-## Also box plot for wandering shows no difference but the glm says there is 
 
-##Boxplots
+## Boxplots Mate Choice ####
 
 MateChoiceAnalysisControl$Group <- factor(MateChoiceAnalysisControl$Group, levels = c("LeftM", "RightM"))
 ggboxplot(MateChoiceAnalysisControl, x = "Group", y = "Weight_Seconds",  ylab = " Time (seconds)", xlab = "Male",
@@ -334,7 +328,7 @@ mean_Infected <- MateChoiceAnalysisInfected %>%
               se = sd(Weight_Seconds))
 glimpse(mean_Infected)
 
-## Picture Analysis
+## Picture Analysis Data Files####
 
 FrogImageData <- read.csv(file.choose())
 FrogImageDataControl <- subset(FrogImageData, Frog_Type == "Control")
@@ -364,8 +358,32 @@ FrogImageDataDorsalMaleDay35 <- subset(FrogImageDataDorsalMale, Day_Bracket == "
 FrogImageDataDorsalMaleDay38 <- subset(FrogImageDataDorsalMale, Day_Bracket == "38")
 FrogImageDataDorsalMaleDay41 <- subset(FrogImageDataDorsalMale, Day_Bracket == "41")
 FrogImageDataDorsalMaleDay44 <- subset(FrogImageDataDorsalMale, Day_Bracket == "44")
+FrogImageDataDorsalM2 <- subset(FrogImageDataDorsalMale, Frog_Number == "M2")
+FrogImageDataDorsalM5 <- subset(FrogImageDataDorsalMale, Frog_Number == "M5")
+FrogImageDataDorsalM6 <- subset(FrogImageDataDorsalMale, Frog_Number == "M6")
+FrogImageDataDorsalM7 <- subset(FrogImageDataDorsalMale, Frog_Number == "M7")
+FrogImageDataDorsalM8 <- subset(FrogImageDataDorsalMale, Frog_Number == "M8")
+FrogImageDataDorsalM9 <- subset(FrogImageDataDorsalMale, Frog_Number == "M9")
+FrogImageDataDorsalM11 <- subset(FrogImageDataDorsalMale, Frog_Number == "M11")
+FrogImageDataDorsalM13 <- subset(FrogImageDataDorsalMale, Frog_Number == "M13")
+FrogImageDataDorsalM14 <- subset(FrogImageDataDorsalMale, Frog_Number == "M14")
+FrogImageDataDorsalM15 <- subset(FrogImageDataDorsalMale, Frog_Number == "M15")
+FrogImageDataDorsalM16 <- subset(FrogImageDataDorsalMale, Frog_Number == "M16")
+FrogImageDataDorsalM17 <- subset(FrogImageDataDorsalMale, Frog_Number == "M17")
+FrogImageDataDorsalM18 <- subset(FrogImageDataDorsalMale, Frog_Number == "M18")
+FrogImageDataDorsalM19 <- subset(FrogImageDataDorsalMale, Frog_Number == "M19")
+FrogImageDataDorsalM20 <- subset(FrogImageDataDorsalMale, Frog_Number == "M20")
+FrogImageDataDorsalM21 <- subset(FrogImageDataDorsalMale, Frog_Number == "M21")
+FrogImageDataDorsalM22 <- subset(FrogImageDataDorsalMale, Frog_Number == "M22")
+FrogImageDataDorsalM24 <- subset(FrogImageDataDorsalMale, Frog_Number == "M24")
+FrogImageDataDorsalM25 <- subset(FrogImageDataDorsalMale, Frog_Number == "M25")
+FrogImageDataDorsalM26 <- subset(FrogImageDataDorsalMale, Frog_Number == "M26")
+FrogImageDataDorsalM27 <- subset(FrogImageDataDorsalMale, Frog_Number == "M27")
+FrogImageDataDorsalM28 <- subset(FrogImageDataDorsalMale, Frog_Number == "M28")
+FrogImageDataDorsalM29 <- subset(FrogImageDataDorsalMale, Frog_Number == "M29")
+FrogImageDataDorsalM30 <- subset(FrogImageDataDorsalMale, Frog_Number == "M30")
 
-## Preliminary look
+## Preliminary look plots####
 ## Brightness
 ggplot(FrogImageDataControlDorsal, aes(x = Day, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()
@@ -622,7 +640,7 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colo
   geom_line()
 
 
-## Tests of normality
+## Tests of normality Picture Analysis####
 
 ## Control
 ggdensity(FrogImageDataControlDorsal$Average.Brightness)
@@ -790,8 +808,7 @@ ggqqplot(FrogImageDataDorsal$Average.Brightness)
 ## Removed F10 D and V Oct 18 because infection is outlier 
 ## Removed M26 D and V color Oct 9 because outlier 
 ## Removed F5 brightness Oct 16 because outlier
-
-## Separate Models
+## Separate Models by Control and Infected Frogs####
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
@@ -844,7 +861,7 @@ emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite
 
 ## consider taking out frogs that didn't really get infected in infection trials (M2, M29, etc.)
 
-## Models separated by question
+## Models separated by question####
 ## Question 1: difference in frog attributes in control vs infected frogs
 
 BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
@@ -870,7 +887,12 @@ interaction.plot(
   col = c("#0198f9", "#f95801"))
 
 
-## Interaction plot doesn't really cross, explains why barely not significant interaction effect
+## Interaction plot doesn't really cross, explains why barely not significant interaction effect 
+
+BrightnessM19 <- lm(Average.Brightness~Day, data = FrogImageDataDorsalM19)
+anova(BrightnessM19)
+coef(BrightnessM19)
+summary(BrightnessVentralDay)
 
 BrightnessVentralDay <- lmer(Average.Brightness~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataVentral)
 anova(BrightnessVentralDay)
@@ -914,7 +936,7 @@ interaction.plot(
   trace.label = "Frog Type",
   col = c("#0198f9", "#f95801"))
 
-AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number)-1, data = FrogImageDataDorsal)
 anova(AverageGDorsalDay)
 summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
@@ -1250,7 +1272,7 @@ anova(BluenessInfectionVentral)
 summary(BluenessInfectionVentral)
 emmeans(BluenessInfectionVentral, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 
-## DHARMA
+## DHARMA####
 install.packages("DHARMa")
 library(DHARMa)
 
@@ -1422,6 +1444,7 @@ simsBluenessInfectionVentral <- simulateResiduals(BluenessInfectionVentral)
 plot(simsBluenessInfectionVentral, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 
+## Consolidated models, plots and DARMAs for Question 1 and 2####
 ## Models using for Question 1: difference in frog attributes in control vs infected frogs
 BrightnessDorsalDay <- lmer(Average.Brightness~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessDorsalDay)
@@ -1631,7 +1654,7 @@ plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## From Days 0-10, are coloration values differing between control and infected frogs?
 ## Test movement of control vs infected frog, maybe why she prefers?
 
-##Plots separated by day 
+## Coloration Boxplots####
 ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type", palette = c("black","darkgrey"),
           select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
                      "31_32"),
@@ -1688,7 +1711,7 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
 ## Infection levels for frogs dosed 3 times instead of 1 are higher on some of the days but still follow the 
 ## general pattern of the frogs dosed once 
 
-## Line Graphs for infection
+## Line Graphs for infection coloration####
 
 
 ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
@@ -1751,7 +1774,7 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, co
   expand_limits(x = 7)+
   expand_limits(y = c(0,60))
 
-## T-tests by day
+## T-tests by day coloration####
 ## Question 1: difference in frog attributes in control vs infected frogs by day
 ggdensity(FrogImageDataDorsalMaleDay0$Average.Brightness)
 shapiro.test(FrogImageDataDorsalMaleDay0$Average.Brightness)
@@ -2042,7 +2065,7 @@ ggboxplot(FrogImageDataDorsalMaleDay2829, x = "Day_Bracket", y = "Average.B", co
 ## Not going to do across days because don't have enough data similar from same days to make meaningful tests. Will
 ## only comment that on Day 0 measurements aren't different between groups but on other days they are
 
-
+## Coloration vs log infection models again####
 ## Models using for Question 2: difference in frog attributes compared to log infection
 BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
 anova(BrightnessInfectionDorsal)
@@ -2073,7 +2096,7 @@ emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satte
 ## their load at that point in time and it corresponded to that color or brightness, and we see a trend for all of these 
 ## variables that as infection increases coloration decreases and so does dorsal brightness, except for Average B
 
-## Cori Comments from talking about carotenoids
+## Cori Comments from talking about carotenoids####
 ##Carotenoids helps with both color and immune so might expect fewer carotenoids in color if trying to use for immune or might not have enough to do both 
 
 ##Mention in carotenoid paper that frogs euthanized was happening around day 20-30 when I was seeing some color change, go back and actually document. Also frogs that died early were experiencing color change,
@@ -2092,7 +2115,7 @@ emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satte
 
 
 
-## Models for Ian to look at
+## Models for Ian to look at####
 
 ## Packages
 install.packages("ggpubr")
@@ -2113,8 +2136,8 @@ library(DHARMa)
 ## Females went through trials with each of 9 male frog pairs, so repeated measures both for female (Frog_Number) and male pair (Male_Pair_Letter)
 ## For glm, weighted by time female spent near both males versus the rest of the behavior chamber (ex. if female spent all 15 minutes near males, weighted high. If female spent only a little time near males, weighted lower)
 MateChoiceAnalysisInfected <- read.csv(file.choose())
-ggdensity(MateChoiceAnalysisControl$Weight_Seconds_Female, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
-ggqqplot(MateChoiceAnalysisControl$Weight_Seconds_Female)
+ggdensity(MateChoiceAnalysisInfected$Weight_Seconds_Female, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Weight_Seconds_Female)
 ## not normal
 
 ## Try with SQRT seconds
@@ -2153,6 +2176,7 @@ ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female", 
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())
 
+hist(log(MateChoiceAnalysisInfected$Weight_Seconds_Female))
 ## Questions for Ian about first model set:
 ## 1. Am I setting up repeated measures correctly? I've read about nesting random effects and I tried it but the models failed
 ## 2. Even after converting to glm, still heteroscedasticity and can't do DARMA with weighted data
@@ -2163,6 +2187,7 @@ ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female", 
 
 ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
 ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds)
 
 ## first lmer for male wander
 InfectedTrialLMERMaleWander <- lmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected)
@@ -2196,6 +2221,7 @@ summary(InfectedTrialLMERMaleFront)
 plot(InfectedTrialLMERMaleFront)
 ggqqplot(residuals(InfectedTrialLMERMaleFront))
 
+hist(MateChoiceAnalysisInfected$Male_Front_Seconds)
 ## now glm
 
 InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfectedMaleMove, family = poisson(link="log"))
@@ -2568,3 +2594,12 @@ plot(simsAverageBInfectionDorsal, quantreg = FALSE)
 
 ## Questions for Ian for fourth model set:
 ## 1. Should Day be a repeated measures here because measurements were taken on different days? Or is the repeated measures for the frog ID enough?
+
+## Notes From Ian Session ####
+##1. For female mate choice, take out repeated measures of male pair, it doesn't make sense to keep in
+##2. For male mate choice wander and front, take out female ID as repeated measures because doesn't make sense
+##3. For all mate choice data the distributions are strange and poisson may not make most sense, Ian is researching for me to try and help
+##4. For color information, makes sense to run lmer with interaction of day and frog type, interaction term is slope. Would expect significant interaction term with control frogs staying same and infected changing
+##5. For color information, run each individual and get coef() for slope and intercept. Average slope and intercepts of both control and infected frogs and plot to see what distribution looks like and what lmer should be
+##6. For color information compared to log infection, accounted for day by repeated measures of individual frog, so those models are fine
+##7. Linear models for mate choice likely don't make sense because of distributions of raw data and residuals
