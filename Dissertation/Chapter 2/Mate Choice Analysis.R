@@ -294,7 +294,7 @@ ggboxplot(MateChoiceAnalysisControl, x = "Group", y = "Weight_Seconds",  ylab = 
   annotate("text", x=2, y=265, label="x", size = 7)
   
 MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female",  ylab = " Time (seconds)", xlab = "Male",
           ylim = c(0, 1200), fill = "darkgrey") + 
   scale_x_discrete(labels=c("Clean", "Infected"))+
   scale_y_continuous(breaks=seq(0,900,by=100))+
@@ -305,16 +305,16 @@ ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds",  ylab =
   annotate("text", x=1, y=277, label="x", size = 7)+
   annotate("text", x=2, y=336, label="x", size = 7)
 
-MateChoiceAnalysisInfectedMaleMove$Group <- factor(MateChoiceAnalysisInfectedMaleMove$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfectedMaleMove, x = "Group", y = "Male_Wander_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
+ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Wander_Seconds",  ylab = " Time (seconds)", xlab = "Male",
           ylim = c(0, 1200), fill = "darkgrey") + 
   scale_x_discrete(labels=c("Clean", "Infected"))+
   scale_y_continuous(breaks=seq(0,900,by=100))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())
 
-MateChoiceAnalysisInfectedMaleMove$Group <- factor(MateChoiceAnalysisInfectedMaleMove$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfectedMaleMove, x = "Group", y = "Male_Front_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
+ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Front_Seconds",  ylab = " Time (seconds)", xlab = "Male",
           ylim = c(0, 1200), fill = "darkgrey") + 
   scale_x_discrete(labels=c("Clean", "Infected"))+
   scale_y_continuous(breaks=seq(0,900,by=100))+
