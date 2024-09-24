@@ -242,7 +242,7 @@ plot(ControlTrialLMER)
 ggdensity(MateChoiceAnalysisInfected$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
 ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
 
-InfectedTrialLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
+InfectedTrialLMER <- glmer(Weight_Seconds_Female~Group+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 plot(InfectedTrialLMER)
@@ -254,7 +254,7 @@ MateChoiceAnalysisInfectedMaleMove <- read.csv(file.choose())
 ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
 ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds)
 
-InfectedTrialLMERMaleWander <- glmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfectedMaleMove, family = poisson(link="log"))
+InfectedTrialLMERMaleWander <- glmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"), weights = wt)
 anova(InfectedTrialLMERMaleWander)
 summary(InfectedTrialLMERMaleWander)
 plot(InfectedTrialLMERMaleWander)
@@ -266,7 +266,7 @@ plot(simsInfectedTrialLMERMaleWander, quantreg = FALSE)
 ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
 ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds)
 
-InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number), data = MateChoiceAnalysisInfectedMaleMove, family = poisson(link="log"))
+InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"))
 anova(InfectedTrialLMERMaleFront)
 summary(InfectedTrialLMERMaleFront)
 plot(InfectedTrialLMERMaleFront)
@@ -2603,3 +2603,4 @@ plot(simsAverageBInfectionDorsal, quantreg = FALSE)
 ##5. For color information, run each individual and get coef() for slope and intercept. Average slope and intercepts of both control and infected frogs and plot to see what distribution looks like and what lmer should be
 ##6. For color information compared to log infection, accounted for day by repeated measures of individual frog, so those models are fine
 ##7. Linear models for mate choice likely don't make sense because of distributions of raw data and residuals
+##8. For mate choice wander data seems to be zero inflated, Ian will help me with that as well
