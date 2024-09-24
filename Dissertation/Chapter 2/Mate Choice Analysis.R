@@ -1448,6 +1448,7 @@ plot(simsBluenessInfectionVentral, quantreg = FALSE)
 ## Models using for Question 1: difference in frog attributes in control vs infected frogs
 BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessDorsalDay)
+anova(BrightnessDorsalDay) %>% as.data.frame() %>% write.csv(file = "BrightnessDorsalDay_anova_table.csv")
 summary(BrightnessDorsalDay)
 plot(BrightnessDorsalDay)
 leveneTest(residuals(BrightnessDorsalDay) ~ FrogImageDataDorsalMale$Frog_Type)
