@@ -1550,7 +1550,8 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Fr
   geom_point()+
   geom_smooth(method = "lm")
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
-  geom_line()
+  geom_line()+
+  geom_point()
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
