@@ -1446,37 +1446,35 @@ plot(simsBluenessInfectionVentral, quantreg = FALSE)
 
 ## Consolidated models, plots and DARMAs for Question 1 and 2####
 ## Models using for Question 1: difference in frog attributes in control vs infected frogs
-BrightnessDorsalDay <- lmer(Average.Brightness~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessDorsalDay)
 summary(BrightnessDorsalDay)
 plot(BrightnessDorsalDay)
 leveneTest(residuals(BrightnessDorsalDay) ~ FrogImageDataDorsalMale$Frog_Type)
-## Interaction significant
-## Brightness decreases faster over time for control frogs than infected
+emmeans(BrightnessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Interaction not significant
+## Brightness decreases over days for both control and infected frogs and not different between frogs
 
-
-AverageRDorsalDay <- lmer(Average.R~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageRDorsalDay)
 summary(AverageRDorsalDay)
 plot(AverageRDorsalDay)
-## Interaction significant
-## Average R decreases for control while increases for infected
+## Interaction not significant
+## Average R for both slightly decrease over time
 
-AverageGDorsalDay <- lmer(Average.G~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageGDorsalDay)
 summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
-## Interaction significant
-## Both decreasing, control seems to be faster than infected
+## Interaction not significant
+## Both decreasing over time, difference between control and infected frogs not significant
 
-AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
+AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageBDorsalDay)
 summary(AverageBDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
-## Interaction Significant
-## Control frogs decrease in average blue at a faster rate than infected frogs, and 
-## control frogs start out with higher average blue than infected frogs but by about 18
-## days that reverses
+## Interaction not significant
+## Both decreaseing over time, difference between control and infected frogs not singificant
 
 RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsal)
 anova(RednessDorsalDay)
@@ -1544,13 +1542,13 @@ emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satte
 ## Blueness score just barely not significant
 
 ## Plots using for Question 1: difference in frog attributes in control vs infected frogs
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, group = Frog_Number))+
-  geom_line()
-ggboxplot(FrogImageDataDorsalMaleControl, x = "Day", y = "Average.Brightness", color = "Frog_Type")
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number))+
+  geom_line()+
+  geom_point()
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
   geom_point()+
   geom_smooth(method = "lm")
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
   geom_line()
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type)) +
   geom_point()+
@@ -1558,9 +1556,15 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type))
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
+  geom_point()+
+  geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type))+
   geom_point()+
   geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number))+
+  geom_point()+
+  geom_line()
 ggplot(FrogImageDataDorsal, aes(x = Day, y = Redness.score, colour = Frog_Type)) +
   geom_point()+
   geom_smooth(method = "lm")
@@ -1657,12 +1661,12 @@ plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Coloration Boxplots####
 ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type", palette = c("black","darkgrey"),
           select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
-                     "31_32"),
+                     "31_32", "35"),
           order = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
-                    "31_32"),
+                    "31_32", "35"),
           ylab = " Average Brightness (%)", xlab = "Day Bracket", ylim = c(24, 48)) +
 scale_y_continuous(breaks=seq(25,45,by=5))+
-scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32"))+
+scale_x_discrete(labels=c("0", "7/8", "10/11", "13/14", "20/21", "22/23", "28/29", "31/32", "35"))+
 theme(legend.title=element_blank())+
 theme(legend.position = c(0.8, 0.9), legend.direction = "horizontal")
 
