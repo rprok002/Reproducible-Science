@@ -1499,25 +1499,25 @@ emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwai
 ## Neither Day nor Frog Type significant
 
 ## Models using for Question 2: difference in frog attributes compared to log infection
-BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessInfectionDorsal)
 summary(BrightnessInfectionDorsal)
 emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 ## Brightness decreases as infection load increases
 
-AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageRInfectionDorsal)
 summary(AverageRInfectionDorsal)
 emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 ## Average R decreases as infection load increases
 
-AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageGInfectionDorsal)
 summary(AverageGInfectionDorsal)
 emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 ## Average G decreases as infection load increases
 
-AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
+AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageBInfectionDorsal)
 summary(AverageBInfectionDorsal)
 emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
