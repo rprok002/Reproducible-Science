@@ -3,6 +3,14 @@
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+library(nlme)
+library(lmtest)
+library(car)
+
 
 ## Mate Choice Data Files####
 MateChoiceCompiledDataControlNoCall <- read.csv(file.choose())
@@ -1660,7 +1668,7 @@ plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## From Days 0-10, are coloration values differing between control and infected frogs?
 ## Test movement of control vs infected frog, maybe why she prefers?
 
-## Coloration Boxplots####
+## Coloration Boxplots and Line Graphs for Day####
 ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Average.Brightness", color = "Frog_Type", palette = c("black","darkgrey"),
           select = c("0", "7_8", "10_11", "13_14","20_21", "22_23", "28_29",
                      "31_32", "35"),
@@ -1714,18 +1722,63 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
           order = c("0", "1_2", "4_5", "7_8", "10_11", "13_14", "16_18", "20_21", "22_23", "26", "28_29",
                     "31_32", "35", "38", "41", "44"))
 
-## Infection levels for frogs dosed 3 times instead of 1 are higher on some of the days but still follow the 
-## general pattern of the frogs dosed once 
-
 ## Line Graphs for color change over time
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number)) +
-  geom_line()
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Brigtness (%)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_y_continuous(breaks = seq(25, 45, by = 5))+
+  expand_limits(y = 45)+
+  scale_color_manual(values = c("black", "darkgrey"))+
+  theme(legend.title=element_blank())
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
-  geom_line()
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Red Pixels", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_y_continuous(breaks = seq(95, 165, by = 10))+
+  expand_limits(y = 165)+
+  scale_color_manual(values = c("darkred", "red"))+
+  theme(legend.title=element_blank())
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
-  geom_line()
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Red Pixels", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_y_continuous(breaks = seq(30, 100, by = 10))+
+  expand_limits(y = 100)+
+  scale_color_manual(values = c("darkgreen", "green"))+
+  theme(legend.title=element_blank())
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
-  geom_line()
+  geom_line()+
+  geom_point()+
+  labs(y = "Average Red Pixels", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_y_continuous(breaks = seq(0, 50, by = 10))+
+  expand_limits(y = 50)+
+  scale_color_manual(values = c("darkblue", "blue"))+
+  theme(legend.title=element_blank())
 ## Line Graphs for infection coloration####
 ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()+
@@ -1738,7 +1791,7 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brigh
         panel.border = element_blank(),
         panel.background = element_blank())+
   scale_x_continuous(breaks = seq(0, 8, by = 1))+
-  scale_y_continuous(breaks = seq(25, 445, by = 5))+
+  scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(x = 7)+
   expand_limits(y = 45)
 
