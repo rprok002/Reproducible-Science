@@ -1723,7 +1723,9 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
                     "31_32", "35", "38", "41", "44"))
 
 ## Line Graphs for color change over time
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number)) +
+
+
+BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Brigtness (%)", x = "Day")+
@@ -1737,7 +1739,7 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Fr
   expand_limits(y = 45)+
   scale_color_manual(values = c("black", "darkgrey"))+
   theme(legend.title=element_blank())
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
+RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Red Pixels", x = "Day")+
@@ -1751,10 +1753,10 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, 
   expand_limits(y = 165)+
   scale_color_manual(values = c("darkred", "red"))+
   theme(legend.title=element_blank())
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
+GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
-  labs(y = "Average Red Pixels", x = "Day")+
+  labs(y = "Average Green Pixels", x = "Day")+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -1765,10 +1767,10 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, 
   expand_limits(y = 100)+
   scale_color_manual(values = c("darkgreen", "green"))+
   theme(legend.title=element_blank())
-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
+BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
-  labs(y = "Average Red Pixels", x = "Day")+
+  labs(y = "Average Blue Pixels", x = "Day")+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -1779,8 +1781,13 @@ ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, 
   expand_limits(y = 50)+
   scale_color_manual(values = c("darkblue", "blue"))+
   theme(legend.title=element_blank())
+
+library(patchwork)
+(BrightnessLineDay | RedLineDay)/
+  (GreenLineDay | BlueLineDay)
+
 ## Line Graphs for infection coloration####
-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
+BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Brigtness (%)", x = "Bd Infection (log transformed)")+
@@ -1795,7 +1802,8 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brigh
   expand_limits(x = 7)+
   expand_limits(y = 45)
 
-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, colour = Frog_Number)) +
+
+RedLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Red Pixels", x = "Bd Infection (log transformed)")+
@@ -1810,7 +1818,7 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, co
   expand_limits(x = 7)+
   expand_limits(y = 170)
 
-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.G, colour = Frog_Number)) +
+GreenLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.G, colour = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Green Pixels", x = "Bd Infection (log transformed)")+
@@ -1825,7 +1833,7 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.G, co
   expand_limits(x = 7)+
   expand_limits(y = c(30,90))
 
-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, colour = Frog_Number)) +
+BlueLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, colour = Frog_Number)) +
   geom_line()+
   geom_point()+
   labs(y = "Average Blue Pixels", x = "Bd Infection (log transformed)")+
@@ -1839,6 +1847,11 @@ ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, co
   scale_y_continuous(breaks = seq(0, 60, by = 10))+
   expand_limits(x = 7)+
   expand_limits(y = c(0,60))
+
+(BrightnessLineInfection | RedLineInfection)/
+  (GreenLineInfection | BlueLineInfection)
+
+ggarrange(BrightnessLineInfection, RedLineInfection, GreenLineInfection, BlueLineInfection, ncol=2, nrow=2, common.legend = TRUE, legend="right")
 
 ## T-tests by day coloration####
 ## Question 1: difference in frog attributes in control vs infected frogs by day
