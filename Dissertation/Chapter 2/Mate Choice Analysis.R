@@ -1816,9 +1816,9 @@ BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_In
   scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(x = 7)+
   expand_limits(y = 45)+
-  annotate("text", x=6, y=43, label= "F: 0.18 ; DF: 1,233 ; p = 0.67", fontface = "bold", size = 5)+
-  annotate("text", x=6, y=45, label= " Day", fontface = "bold", size = 5)
-
+  annotate("text", x=5, y=43.5, label= "F: 7.86 ; DF: 1,76.20 ; p < 0.001", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=45, label= "Log Infection", fontface = "bold", size = 2)
+BrightnessLineInfection
 
 RedLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, colour = Frog_Number)) +
   geom_line()+
@@ -1833,7 +1833,10 @@ RedLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection
   scale_x_continuous(breaks = seq(0, 8, by = 1))+
   scale_y_continuous(breaks = seq(80, 170, by = 10))+
   expand_limits(x = 7)+
-  expand_limits(y = 170)
+  expand_limits(y = 170)+
+  annotate("text", x=5, y=165, label= "F: 9.10 ; DF: 1,83.34 ; p <0.01", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=170, label= "Log Infection", fontface = "bold", size = 2)
+RedLineInfection
 
 GreenLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.G, colour = Frog_Number)) +
   geom_line()+
@@ -1848,7 +1851,10 @@ GreenLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infecti
   scale_x_continuous(breaks = seq(0, 8, by = 1))+
   scale_y_continuous(breaks = seq(0, 90, by = 10))+
   expand_limits(x = 7)+
-  expand_limits(y = c(30,90))
+  expand_limits(y = c(30,90))+
+  annotate("text", x=5, y=90, label= "F: 11.93 ; DF: 1,86.33 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=95, label= " Log Infection", fontface = "bold", size = 2)
+GreenLineInfection
 
 BlueLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.B, colour = Frog_Number)) +
   geom_line()+
@@ -1861,12 +1867,13 @@ BlueLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infectio
         panel.border = element_blank(),
         panel.background = element_blank())+
   scale_x_continuous(breaks = seq(0, 8, by = 1))+
-  scale_y_continuous(breaks = seq(0, 60, by = 10))+
+  scale_y_continuous(breaks = seq(0, 50, by = 10))+
   expand_limits(x = 7)+
-  expand_limits(y = c(0,60))
+  expand_limits(y = c(0,50))+
+  annotate("text", x=5, y=47, label= "F: 1.57 ; DF: 1,88 ; p = 0.21", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=50, label= "Log Infection", fontface = "bold", size = 2)
+BlueLineInfection
 
-(BrightnessLineInfection | RedLineInfection)/
-  (GreenLineInfection | BlueLineInfection)
 
 ggarrange(BrightnessLineInfection, RedLineInfection, GreenLineInfection, BlueLineInfection, ncol=2, nrow=2, common.legend = TRUE, legend="right")
 
