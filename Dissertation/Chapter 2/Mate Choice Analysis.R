@@ -1738,7 +1738,11 @@ BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Br
   scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(y = 45)+
   scale_color_manual(values = c("black", "darkgrey"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=25, y=43.5, label= "F: 22.10 ; DF: 1,175.98 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=45, label= " Day", fontface = "bold", size = 2)
+BrightnessLineDay
+
 RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
@@ -1752,7 +1756,11 @@ RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour
   scale_y_continuous(breaks = seq(95, 165, by = 10))+
   expand_limits(y = 165)+
   scale_color_manual(values = c("darkred", "red"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=25, y=165, label= "F: 14.87 ; DF: 1,174.84 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=170, label= " Day", fontface = "bold", size = 2)
+RedLineDay
+
 GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
@@ -1766,7 +1774,11 @@ GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colo
   scale_y_continuous(breaks = seq(30, 100, by = 10))+
   expand_limits(y = 100)+
   scale_color_manual(values = c("darkgreen", "green"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=25, y=96, label= "F: 33.69 ; DF: 1,175.30 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=100, label= " Day", fontface = "bold", size = 2)
+GreenLineDay
+
 BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
   geom_point()+
@@ -1780,7 +1792,10 @@ BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour
   scale_y_continuous(breaks = seq(0, 50, by = 10))+
   expand_limits(y = 50)+
   scale_color_manual(values = c("darkblue", "blue"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=25, y=47, label= "F: 21.31 ; DF: 1,191 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=50, label= " Day", fontface = "bold", size = 2)
+BlueLineDay
 
 library(patchwork)
 (BrightnessLineDay | RedLineDay)/
@@ -1800,7 +1815,9 @@ BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_In
   scale_x_continuous(breaks = seq(0, 8, by = 1))+
   scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(x = 7)+
-  expand_limits(y = 45)
+  expand_limits(y = 45)+
+  annotate("text", x=6, y=43, label= "F: 0.18 ; DF: 1,233 ; p = 0.67", fontface = "bold", size = 5)+
+  annotate("text", x=6, y=45, label= " Day", fontface = "bold", size = 5)
 
 
 RedLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.R, colour = Frog_Number)) +
