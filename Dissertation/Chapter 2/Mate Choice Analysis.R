@@ -1740,13 +1740,14 @@ BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Br
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_x_continuous(breaks = seq(0, 45, by = 5))+
   scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(y = 45)+
+  expand_limits(x = 45)+
   scale_color_manual(values = c("black", "darkgrey"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=43.5, label= "F: 21.31 ; DF: 1,182.30 ; p <0.001", fontface = "bold", size = 2)+
-  annotate("text", x=25, y=45, label= " Day", fontface = "bold", size = 2)
+  annotate("text", x=35, y=43.5, label= "F: 21.31 ; DF: 1,182.30 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=45, label= " Day", fontface = "bold", size = 2)
 BrightnessLineDay
 
 RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
@@ -1758,13 +1759,14 @@ RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_x_continuous(breaks = seq(0, 45, by = 5))+
   scale_y_continuous(breaks = seq(95, 165, by = 10))+
   expand_limits(y = 165)+
+  expand_limits(x = 45)+
   scale_color_manual(values = c("darkred", "red"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=165, label= "F: 13.56 ; DF: 1,181.33 ; p <0.001", fontface = "bold", size = 2)+
-  annotate("text", x=25, y=170, label= " Day", fontface = "bold", size = 2)
+  annotate("text", x=35, y=165, label= "F: 13.56 ; DF: 1,181.33 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=170, label= " Day", fontface = "bold", size = 2)
 RedLineDay
 
 GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colour = Frog_Type, line = Frog_Number)) +
@@ -1776,13 +1778,14 @@ GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colo
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_x_continuous(breaks = seq(0, 45, by = 5))+
   scale_y_continuous(breaks = seq(30, 100, by = 10))+
   expand_limits(y = 100)+
+  expand_limits(x = 45)+
   scale_color_manual(values = c("darkgreen", "green"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=96, label= "F: 32.01 ; DF: 1,181.58 ; p <0.001", fontface = "bold", size = 2)+
-  annotate("text", x=25, y=100, label= " Day", fontface = "bold", size = 2)
+  annotate("text", x=35, y=96, label= "F: 32.01 ; DF: 1,181.58 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=100, label= " Day", fontface = "bold", size = 2)
 GreenLineDay
 
 BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour = Frog_Type, line = Frog_Number)) +
@@ -1794,13 +1797,14 @@ BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_x_continuous(breaks = seq(0, 35, by = 5))+
+  scale_x_continuous(breaks = seq(0, 45, by = 5))+
   scale_y_continuous(breaks = seq(0, 50, by = 10))+
   expand_limits(y = 50)+
+  expand_limits(x = 45)+
   scale_color_manual(values = c("darkblue", "blue"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=48, label= "F: 16.49 ; DF: 1,191 ; p <0.001", fontface = "bold", size = 2)+
-  annotate("text", x=25, y=51, label= " Day", fontface = "bold", size = 2)
+  annotate("text", x=35, y=48, label= "F: 16.49 ; DF: 1,191 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=51, label= " Day", fontface = "bold", size = 2)
 BlueLineDay
 
 library(patchwork)
