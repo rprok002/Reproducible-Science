@@ -120,6 +120,7 @@ factor(group)
 group
 ## Run BoxM
 boxM(dependentcarotenoids, group)
+## this code not working, need to look back at code from tutorial
 
 ## Outliers
 ## Subset by group
@@ -227,312 +228,332 @@ results15 <- Carotenoids %>%
   select(Apocarotenoid, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results15
+results15$plots
 
 results16 <- Carotenoids %>%
   select(Apocarotenoid, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results16
-
-##+15
+results16$plots
 
 results17 <- Carotenoids %>%
   select(Canary.xanthophyll, Canthaxanthin, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results17
+results17$plots
 
 results18 <- Carotenoids %>%
   select(Canary.xanthophyll, Xanthophyll, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results18
+results18$plots
 
 results19 <- Carotenoids %>%
   select(Canary.xanthophyll, Echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results19
+results19$plots
 
 results20 <- Carotenoids %>%
   select(Canary.xanthophyll, cis.ketocarotenoid, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results20
+results20$plots
 
 results21 <- Carotenoids %>%
   select(Canary.xanthophyll, X3.hydroxy.echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results21
+results21$plots
 
 results22 <- Carotenoids %>%
   select(Canary.xanthophyll, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results22
+results22$plots
 
 results23 <- Carotenoids %>%
   select(Canary.xanthophyll, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results23
+results23$plots
+## correlated, likely will have to use only one of them because they are all derivations of each other
 
 results24 <- Carotenoids %>%
   select(Canary.xanthophyll, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results24
+results24$plots
 
 results25 <- Carotenoids %>%
   select(Canary.xanthophyll, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results25
+results25$plots
 
 results26 <- Carotenoids %>%
   select(Canary.xanthophyll, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results26
+results26$plots
 
 results27 <- Carotenoids %>%
   select(Canary.xanthophyll, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results27
+results27$plots
 
 results28 <- Carotenoids %>%
   select(Canary.xanthophyll, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results28
+results28$plots
 
 results29 <- Carotenoids %>%
   select(Canary.xanthophyll, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results29
+results29$plots
 
 results30 <- Carotenoids %>%
   select(Canary.xanthophyll, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results30
+results30$plots
 
 results31 <- Carotenoids %>%
   select(Canary.xanthophyll, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results31
+results31$plots
 
 results32 <- Carotenoids %>%
   select(Canthaxanthin, Xanthophyll, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results32
+results32$plots
 
 results33 <- Carotenoids %>%
   select(Canthaxanthin, Echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results33
+results33$plots
 
 results34 <- Carotenoids %>%
   select(Canthaxanthin, cis.ketocarotenoid, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results34
+results34$plots
 
 results35 <- Carotenoids %>%
   select(Canthaxanthin, X3.hydroxy.echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results35
+results35$plots
 
 results36 <- Carotenoids %>%
   select(Canthaxanthin, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results36
+results36$plots
 
 results37 <- Carotenoids %>%
   select(Canthaxanthin, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results37
+results37$plots
 
 results38 <- Carotenoids %>%
   select(Canthaxanthin, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results38
+results38$plots
 
 results39 <- Carotenoids %>%
   select(Canthaxanthin, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results39
+results39$plots
 
 results40 <- Carotenoids %>%
   select(Canthaxanthin, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results40
+results40$plots
 
 results41 <- Carotenoids %>%
   select(Canthaxanthin, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
-results41
+results41$plots
 
 results42 <- Carotenoids %>%
   select(Canthaxanthin, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results42
+results42$plots
 
 results43 <- Carotenoids %>%
   select(Canthaxanthin, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results43
+results43$plots
 
 results44 <- Carotenoids %>%
   select(Canthaxanthin, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results44
+results44$plots
 
 results45 <- Carotenoids %>%
   select(Canthaxanthin, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results45
-## +13
+results45$plots
 
 results46 <- Carotenoids %>%
   select(Xanthophyll, Echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results46
+results46$plots
 
 results47 <- Carotenoids %>%
   select(Xanthophyll, cis.ketocarotenoid, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results47
+results47$plots
 
 results48 <- Carotenoids %>%
   select(Xanthophyll, X3.hydroxy.echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results48
+results48$plots
 
 results49 <- Carotenoids %>%
   select(Xanthophyll, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results49
+results49$plots
 
 results50 <- Carotenoids %>%
   select(Xanthophyll, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results50
+results50$plots
 
 results51 <- Carotenoids %>%
   select(Xanthophyll, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results51
+results51$plots
 
 results52 <- Carotenoids %>%
   select(Xanthophyll, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results52
+results52$plots
 
 results53 <- Carotenoids %>%
   select(Xanthophyll, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results53
+results53$plots
 
 results54 <- Carotenoids %>%
   select(Xanthophyll, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results54
+results54$plots
 
 results55 <- Carotenoids %>%
   select(Xanthophyll, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results55
+results55$plots
 
 results56 <- Carotenoids %>%
   select(Xanthophyll, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results56
+results56$plots
 
 results57 <- Carotenoids %>%
   select(Xanthophyll, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results57
+results57$plots
 
 results58 <- Carotenoids %>%
   select(Xanthophyll, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results58
-
-## +12
+results58$plots
 
 results59 <- Carotenoids %>%
   select(Echinenone, cis.ketocarotenoid, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results59
+results59$plots
 
 results60 <- Carotenoids %>%
   select(Echinenone, X3.hydroxy.echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results60
+results60$plots
 
 results61 <- Carotenoids %>%
   select(Echinenone, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results61
+results61$plots
 
 results62 <- Carotenoids %>%
   select(Echinenone, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results62
+results62$plots
 
 results63 <- Carotenoids %>%
   select(Echinenone, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results63
+results63$plots
 
 results64 <- Carotenoids %>%
   select(Echinenone, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results64
+results64$plots
 
 results65 <- Carotenoids %>%
   select(Echinenone, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results65
+results65$plots
 
 results66 <- Carotenoids %>%
   select(Echinenone, ketocarotenoid.ester.2, Frog.Type) %>%
@@ -545,6 +566,7 @@ results67 <- Carotenoids %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results67
+results67$plots
 
 results68 <- Carotenoids %>%
   select(Echinenone, canthaxanthin.ester, Frog.Type) %>%
@@ -557,44 +579,51 @@ results69 <- Carotenoids %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results69
+results69$plots
 
 results70 <- Carotenoids %>%
   select(Echinenone, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results70
-
-## +11
+results70$plots
 
 results71 <- Carotenoids %>%
   select(cis.ketocarotenoid, X3.hydroxy.echinenone, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results71
+results71$plots
+## correlated
 
 results72 <- Carotenoids %>%
   select(cis.ketocarotenoid, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results72
+results72$plots
 
 results73 <- Carotenoids %>%
   select(cis.ketocarotenoid, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results73
+results73$plots
 
 results74 <- Carotenoids %>%
   select(cis.ketocarotenoid, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results74
+results74$plots
 
 results75 <- Carotenoids %>%
   select(cis.ketocarotenoid, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results75
+results75$plots
+## correlated
 
 results76 <- Carotenoids %>%
   select(cis.ketocarotenoid, ketocarotenoid.ester.1, Frog.Type) %>%
@@ -607,363 +636,426 @@ results77 <- Carotenoids %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results77
+results77$plots
 
 results78 <- Carotenoids %>%
   select(cis.ketocarotenoid, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results78
+results78$plots
 
 results79 <- Carotenoids %>%
   select(cis.ketocarotenoid, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results79
+results79$plots
 
 results80 <- Carotenoids %>%
   select(cis.ketocarotenoid, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results80
+results80$plots
 
 results81 <- Carotenoids %>%
   select(cis.ketocarotenoid, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results81
-## +10
+results81$plots
 
 results82 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, lutein.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results82
+results82$plots
+## correlated
 
 results83 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results83
+results83$plots
 
 results84 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results84
+results84$plots
+## correlated
 
 results85 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results85
+results85$plots
+## correlated
 
 results86 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results86
+results86$plots
 
 results87 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results87
+results87$plots
 
 results88 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results88
+results88$plots
 
 results89 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results89
+results89$plots
 
 results90 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results90
+results90$plots
 
 results91 <- Carotenoids %>%
   select(X3.hydroxy.echinenone, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results91
-
-## +9
+results91$plots
 
 results92 <- Carotenoids %>%
   select(lutein.ester.1, canary.xanthophyll.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results92
+results92$plots
 
 results93 <- Carotenoids %>%
   select(lutein.ester.1, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results93
+results93$plots
+## correlated
 
 results94 <- Carotenoids %>%
   select(lutein.ester.1, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results94
+results94$plots
 
 results95 <- Carotenoids %>%
   select(lutein.ester.1, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results95
+results95$plots
 
 results96 <- Carotenoids %>%
   select(lutein.ester.1, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results96
+results96$plots
 
 results97 <- Carotenoids %>%
   select(lutein.ester.1, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results97
+results97$plots
 
 results98 <- Carotenoids %>%
   select(lutein.ester.1, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results98
+results98$plots
 
 results99 <- Carotenoids %>%
   select(lutein.ester.1, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results99
+results99$plots
 
 results100 <- Carotenoids %>%
   select(lutein.ester.1, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results100
+results100$plots
 
 results101 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, beta.carotene, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results101
+results101$plots
 
 results102 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results102
+results102$plots
+## correlated
 
 results103 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results103
+results103$plots
 
 results104 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results104
+results104$plots
 
 results105 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results105
+results105$plots
 
 results106 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results106
+results106$plots
 
 results107 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results107
+results107$plots
 
 results108 <- Carotenoids %>%
   select(canary.xanthophyll.ester.1, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results108
+results108$plots
 
 results109 <- Carotenoids %>%
   select(beta.carotene, canary.xanthophyll.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results109
+results109$plots
+## correlated
 
 results110 <- Carotenoids %>%
   select(beta.carotene, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results110
+results110$plots
 
 results111 <- Carotenoids %>%
   select(beta.carotene, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results111
+results111$plots
 
 results112 <- Carotenoids %>%
   select(beta.carotene, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results112
+results112$plots
 
 results113 <- Carotenoids %>%
   select(beta.carotene, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results113
+results113$plots
 
 results114 <- Carotenoids %>%
   select(beta.carotene, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results114
+results114$plots
 
 results115 <- Carotenoids %>%
   select(beta.carotene, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results115
+results115$plots
 
 results116 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, ketocarotenoid.ester.1, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results116
+results116$plots
 
 results117 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results117
+results117$plots
 
 results118 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results118
+results118$plots
 
 results119 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results119
+results119$plots
 
 results120 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results120
+results120$plots
 
 results121 <- Carotenoids %>%
   select(canary.xanthophyll.ester.2, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results121
+results121$plots
 
 results122 <- Carotenoids %>%
   select(ketocarotenoid.ester.1, ketocarotenoid.ester.2, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results122
+results122$plots
 
 results123 <- Carotenoids %>%
   select(ketocarotenoid.ester.1, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results123
+results123$plots
 
 results124 <- Carotenoids %>%
   select(ketocarotenoid.ester.1, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results124
+results124$plots
 
 results125 <- Carotenoids %>%
   select(ketocarotenoid.ester.1, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results125
+results125$plots
 
 results126 <- Carotenoids %>%
   select(ketocarotenoid.ester.1, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results126
+results126$plots
 
 results127 <- Carotenoids %>%
   select(ketocarotenoid.ester.2, canary.xanthophyll.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results127
+results127$plots
 
 results128 <- Carotenoids %>%
   select(ketocarotenoid.ester.2, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results128
+results128$plots
 
 results129 <- Carotenoids %>%
   select(ketocarotenoid.ester.2, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results129
+results129$plots
 
 results130 <- Carotenoids %>%
   select(ketocarotenoid.ester.2, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results130
+results130$plots
 
 results131 <- Carotenoids %>%
   select(canary.xanthophyll.ester.3, canthaxanthin.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results131
+results131$plots
 
 results132 <- Carotenoids %>%
   select(canary.xanthophyll.ester.3, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results132
+results132$plots
 
 results133 <- Carotenoids %>%
   select(canary.xanthophyll.ester.3, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results133
+results133$plots
 
 results134 <- Carotenoids %>%
   select(canthaxanthin.ester, X3HE.ester, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results134
+results134$plots
 
 results135 <- Carotenoids %>%
   select(canthaxanthin.ester, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results135
+results135$plots
 
 results136 <- Carotenoids %>%
   select(X3HE.ester, ketocarotenoid.ester.3, Frog.Type) %>%
   group_by(Frog.Type) %>%
   doo(~ggpairs(.) + theme_bw(), result = "plots")
 results136
+results136$plots
 
 ## Multicoliearity, <0.9 no multicolinearity
 cor.test(x = Carotenoids$variable1, y = df$canopy_vol, method = "pearson")$estimate
