@@ -651,25 +651,25 @@ ggplot(FrogImageDataInfectedVentral, aes(x = Infection, y = Blueness.score, colo
 ## Tests of normality Picture Analysis####
 
 ## Control
-ggdensity(FrogImageDataControlDorsal$Average.Brightness)
-ggqqplot(FrogImageDataControlDorsal$Average.Brightness)
+ggdensity(FrogImageDataDorsalMale$Average.Brightness)
+ggqqplot(FrogImageDataDorsalMale$Average.Brightness)
 ## fairly normal
 ggdensity(FrogImageDataControlVentral$Average.Brightness)
 ggqqplot(FrogImageDataControlVentral$Average.Brightness)
 ## fairly normal
 ## bit of a dip in the middle but look fairly normal
 
-ggdensity(FrogImageDataControlDorsal$Average.R)
-ggqqplot(FrogImageDataControlDorsal$Average.R)
+ggdensity(FrogImageDataDorsalMale$Average.R)
+ggqqplot(FrogImageDataDorsalMale$Average.R)
 ## fairly normal
 ggdensity(FrogImageDataDorsal$Average.R)
 ggqqplot(FrogImageDataDorsal$Average.R)
 
-ggdensity(FrogImageDataControlDorsal$Average.G)
-ggqqplot(FrogImageDataControlDorsal$Average.G)
+ggdensity(FrogImageDataDorsalMale$Average.G)
+ggqqplot(FrogImageDataDorsalMale$Average.G)
 ## fairly normal
-ggdensity(FrogImageDataControlDorsal$Average.B)
-ggqqplot(FrogImageDataControlDorsal$Average.B)
+ggdensity(FrogImageDataDorsalMale$Average.B)
+ggqqplot(FrogImageDataDorsalMale$Average.B)
 ## fairly normal
 
 ggdensity(FrogImageDataControlVentral$Average.R)
@@ -1475,6 +1475,7 @@ AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogIm
 anova(AverageGDorsalDay)
 summary(AverageGDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+plot(AverageGDorsalDay)
 ## Interaction not significant
 ## Both decreasing over time, difference between control and infected frogs not significant
 
@@ -1482,6 +1483,7 @@ AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+(1|Frog_Number), data = FrogIm
 anova(AverageBDorsalDay)
 summary(AverageBDorsalDay)
 emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(AverageBDorsalDay)
 ## Interaction not significant
 ## Both decreaseing over time, difference between control and infected frogs not singificant
 
@@ -1511,24 +1513,28 @@ BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Numbe
 anova(BrightnessInfectionDorsal)
 summary(BrightnessInfectionDorsal)
 emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BrightnessInfectionDorsal)
 ## Brightness decreases as infection load increases
 
 AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageRInfectionDorsal)
 summary(AverageRInfectionDorsal)
 emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageRInfectionDorsal)
 ## Average R decreases as infection load increases
 
 AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageGInfectionDorsal)
 summary(AverageGInfectionDorsal)
 emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageGInfectionDorsal)
 ## Average G decreases as infection load increases
 
 AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(AverageBInfectionDorsal)
 summary(AverageBInfectionDorsal)
 emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageBInfectionDorsal)
 ## no significance in Average B
 
 RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataInfectedDorsal)
@@ -1739,7 +1745,7 @@ BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Br
   expand_limits(y = 45)+
   scale_color_manual(values = c("black", "darkgrey"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=43.5, label= "F: 22.10 ; DF: 1,175.98 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=43.5, label= "F: 21.31 ; DF: 1,182.30 ; p <0.001", fontface = "bold", size = 2)+
   annotate("text", x=25, y=45, label= " Day", fontface = "bold", size = 2)
 BrightnessLineDay
 
@@ -1757,7 +1763,7 @@ RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour
   expand_limits(y = 165)+
   scale_color_manual(values = c("darkred", "red"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=165, label= "F: 14.87 ; DF: 1,174.84 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=165, label= "F: 13.56 ; DF: 1,181.33 ; p <0.001", fontface = "bold", size = 2)+
   annotate("text", x=25, y=170, label= " Day", fontface = "bold", size = 2)
 RedLineDay
 
@@ -1775,7 +1781,7 @@ GreenLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.G, colo
   expand_limits(y = 100)+
   scale_color_manual(values = c("darkgreen", "green"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=96, label= "F: 33.69 ; DF: 1,175.30 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=96, label= "F: 32.01 ; DF: 1,181.58 ; p <0.001", fontface = "bold", size = 2)+
   annotate("text", x=25, y=100, label= " Day", fontface = "bold", size = 2)
 GreenLineDay
 
@@ -1793,8 +1799,8 @@ BlueLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.B, colour
   expand_limits(y = 50)+
   scale_color_manual(values = c("darkblue", "blue"))+
   theme(legend.title=element_blank())+
-  annotate("text", x=25, y=47, label= "F: 21.31 ; DF: 1,191 ; p <0.001", fontface = "bold", size = 2)+
-  annotate("text", x=25, y=50, label= " Day", fontface = "bold", size = 2)
+  annotate("text", x=25, y=48, label= "F: 16.49 ; DF: 1,191 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=25, y=51, label= " Day", fontface = "bold", size = 2)
 BlueLineDay
 
 library(patchwork)
@@ -1816,7 +1822,7 @@ BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_In
   scale_y_continuous(breaks = seq(25, 45, by = 5))+
   expand_limits(x = 7)+
   expand_limits(y = 45)+
-  annotate("text", x=5, y=43.5, label= "F: 7.86 ; DF: 1,76.20 ; p < 0.001", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=43.5, label= "F: 7.79 ; DF: 1,76.08 ; p < 0.01", fontface = "bold", size = 2)+
   annotate("text", x=5, y=45, label= "Log Infection", fontface = "bold", size = 2)
 BrightnessLineInfection
 
@@ -1834,7 +1840,7 @@ RedLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection
   scale_y_continuous(breaks = seq(80, 170, by = 10))+
   expand_limits(x = 7)+
   expand_limits(y = 170)+
-  annotate("text", x=5, y=165, label= "F: 9.10 ; DF: 1,83.34 ; p <0.01", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=165, label= "F: 9.01 ; DF: 1,83.26 ; p <0.01", fontface = "bold", size = 2)+
   annotate("text", x=5, y=170, label= "Log Infection", fontface = "bold", size = 2)
 RedLineInfection
 
@@ -1852,7 +1858,7 @@ GreenLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infecti
   scale_y_continuous(breaks = seq(0, 90, by = 10))+
   expand_limits(x = 7)+
   expand_limits(y = c(30,90))+
-  annotate("text", x=5, y=90, label= "F: 11.93 ; DF: 1,86.33 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=5, y=90, label= "F: 11.83 ; DF: 1,86.29 ; p <0.001", fontface = "bold", size = 2)+
   annotate("text", x=5, y=95, label= " Log Infection", fontface = "bold", size = 2)
 GreenLineInfection
 
