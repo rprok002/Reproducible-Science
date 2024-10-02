@@ -35,7 +35,7 @@ Carotenoids <- read.csv(file.choose())
 attach(Carotenoids)
 Carotenoidsoriginal <- Carotenoids[,c(3, 5, 7,9,11,13,15,17,19,21,23,25,27,29,31,33,35)]
 Carotenoidssqrt <- Carotenoids[,c(4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36)]
-## One-way MANOVA for Carotenoids: Assumptions, outliers ####
+## Assumptions: independent, normality ####
 ## Independent observations: ICC
 ICC(Carotenoidsoriginal) ## Change columns to have all dependent variables
 ## Look at absolute correlation values
@@ -166,7 +166,7 @@ ggqqplot(Carotenoids, "sqrtketocarotenoid.ester.3", facet.by = "Frog.Type",
 
 ## though shapiro test positive the qqplots look fine so going to move forward with that
 
-## Variance/Covariance Positive Determinant: needs to be positive
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive ####
 Covdependentcarotenoids <- cov(dependentcarotenoids)
 det(Covdependentcarotenoids)
 ## very positive, looks good
@@ -174,7 +174,7 @@ Covdependentcarotenoidssqrt <- cov(dependentcarotenoidssqrt)
 det(Covdependentcarotenoidssqrt)
 ## positive determinant thought not very positive like the original data
 
-## Equality of Variance Between Groups Control and Infected
+## Assumptions: Equality of Variance Between Groups Control and Infected ####
 ## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
 group <- c("Infected","Infected","Infected","Infected", "Control", "Control",
            "Control", "Infected","Infected","Infected","Infected","Infected",
@@ -197,8 +197,7 @@ mahalanobis_distance(data = dependentcarotenoids)$is.outlier
 mahalanobis_distance(data = dependentcarotenoidssqrt)$is.outlier
 ## No outliers in sqrt data
 
-## Linearity and multicollinearity
-## By FrogType group, no sqrt
+## Assumptions: multicollinearity ####
 cor.matoriginal <- Carotenoidsoriginal %>% cor_mat()
 cor.matoriginal
 
@@ -226,6 +225,9 @@ cor.matsqrt
 ## sqrtcanary xanthophyll ester 1 and sqrtcanary xanthophyll ester 2
 ## sqrtcanthaxnthin ester has better correlations, still going to just use canthaxanthin
 
+## within one sex group canthaxanthin is correlated, consider not using. Also really not normally distributed
+
+## Assumptions: linearity by FrogType group, no sqrt and sqrt ####
 library(GGally)
 results1 <- Carotenoids %>%
   select(Apocarotenoid, Canary.xanthophyll, Frog.Type) %>%
@@ -2144,7 +2146,1916 @@ results136a <- Carotenoids %>%
 results136a
 results136a$plots
 
-## By FrogType group, sqrt
+## Assumptions: Linearity  by Sex, no sqrt and sqrt ####
+results137 <- Carotenoids %>%
+  select(Apocarotenoid, Canary.xanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results137
+results137$plots
+
+results137a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtCanary.xanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results137a
+results137a$plots
+
+results138 <- Carotenoids %>%
+  select(Apocarotenoid, Canthaxanthin, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results138
+results138$plots
+
+results138a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtCanthaxanthin, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results138a
+results138a$plots
+
+results139 <- Carotenoids %>%
+  select(Apocarotenoid, Xanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results139
+results139$plots
+
+results139a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtXanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results139a
+results139a$plots
+
+results140 <- Carotenoids %>%
+  select(Apocarotenoid, Echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results140
+results140$plots
+
+results140a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtEchinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results140a
+results140a$plots
+
+results141 <- Carotenoids %>%
+  select(Apocarotenoid, cis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results141
+results141$plots
+
+results141a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtcis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results141a
+results141a$plots
+
+results142 <- Carotenoids %>%
+  select(Apocarotenoid, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results142
+results142$plots
+
+results142a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results142a
+results142a$plots
+
+results143 <- Carotenoids %>%
+  select(Apocarotenoid, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results143
+results143$plots
+
+results143a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results143a
+results143a$plots
+
+results144 <- Carotenoids %>%
+  select(Apocarotenoid, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results144
+results144$plots
+
+results144a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results144a
+results144a$plots
+## still correlated, helps a little bit
+
+results145 <- Carotenoids %>%
+  select(Apocarotenoid, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results145
+results145$plots
+
+results145a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results145a
+results145a$plots
+
+results146 <- Carotenoids %>%
+  select(Apocarotenoid, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results146
+results146$plots
+## control correlated
+
+results146a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results146a
+results146a$plots
+## control correlated, but better
+
+results147 <- Carotenoids %>%
+  select(Apocarotenoid, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results147
+results147$plots
+
+results147a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results147a
+results147a$plots
+
+results148 <- Carotenoids %>%
+  select(Apocarotenoid, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results148
+results148$plots
+
+results148a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results148a
+results148a$plots
+
+results149 <- Carotenoids %>%
+  select(Apocarotenoid, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results149
+results149$plots
+
+results149a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results149a
+results149a$plots
+
+results150 <- Carotenoids %>%
+  select(Apocarotenoid, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results150
+results150$plots
+
+results150a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results150a
+results150a$plots
+
+results151 <- Carotenoids %>%
+  select(Apocarotenoid, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results151
+results151$plots
+
+results151a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results151a
+results151a$plots
+
+results152 <- Carotenoids %>%
+  select(Apocarotenoid, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results152
+results152$plots
+
+results152a <- Carotenoids %>%
+  select(sqrtApocarotenoid, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results152a
+results152a$plots
+
+results153 <- Carotenoids %>%
+  select(Canary.xanthophyll, Canthaxanthin, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results153
+results153$plots
+
+results153a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtCanthaxanthin, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results153a
+results153a$plots
+
+results154 <- Carotenoids %>%
+  select(Canary.xanthophyll, Xanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results154
+results154$plots
+
+results154a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtXanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results154a
+results154a$plots
+
+results155 <- Carotenoids %>%
+  select(Canary.xanthophyll, Echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results155
+results155$plots
+
+results155a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtEchinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results155a
+results155a$plots
+
+results156 <- Carotenoids %>%
+  select(Canary.xanthophyll, cis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results156
+results156$plots
+
+results156a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtcis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results156a
+results156a$plots
+
+results157 <- Carotenoids %>%
+  select(Canary.xanthophyll, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results157
+results157$plots
+
+results157a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results157a
+results157a$plots
+
+results158 <- Carotenoids %>%
+  select(Canary.xanthophyll, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results158
+results158$plots
+
+results158a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results158a
+results158a$plots
+
+results159 <- Carotenoids %>%
+  select(Canary.xanthophyll, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results159
+results159$plots
+## correlated, likely will have to use only one of them because they are all derivations of each other
+
+results159a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results159a
+results159a$plots
+## correlated, likely will have to use only one of them because they are all derivations of each other
+
+results160 <- Carotenoids %>%
+  select(Canary.xanthophyll, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results160
+results160$plots
+
+results160a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results160a
+results160a$plots
+
+results161 <- Carotenoids %>%
+  select(Canary.xanthophyll, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results161
+results161$plots
+
+results161a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results161a
+results161a$plots
+
+results162 <- Carotenoids %>%
+  select(Canary.xanthophyll, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results162
+results162$plots
+
+results162a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results162a
+results162a$plots
+
+results163 <- Carotenoids %>%
+  select(Canary.xanthophyll, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results163
+results163$plots
+
+results163a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results163a
+results163a$plots
+
+results164 <- Carotenoids %>%
+  select(Canary.xanthophyll, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.)+ theme_bw(), result = "plots")
+results164
+results164$plots
+
+results164a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results164a
+results164a$plots
+
+results165 <- Carotenoids %>%
+  select(Canary.xanthophyll, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results165
+results165$plots
+
+results165a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results165a
+results165a$plots
+
+results166 <- Carotenoids %>%
+  select(Canary.xanthophyll, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results166
+results166$plots
+
+results166a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results166a
+results166a$plots
+
+results167 <- Carotenoids %>%
+  select(Canary.xanthophyll, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results167
+results167$plots
+
+results167a <- Carotenoids %>%
+  select(sqrtCanary.xanthophyll, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results167a
+results167a$plots
+
+results168 <- Carotenoids %>%
+  select(Canthaxanthin, Xanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results168
+results168$plots
+
+results168a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtXanthophyll, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results168a
+results168a$plots
+
+results169 <- Carotenoids %>%
+  select(Canthaxanthin, Echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results169
+results169$plots
+
+results169a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtEchinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results169a
+results169a$plots
+
+results170 <- Carotenoids %>%
+  select(Canthaxanthin, cis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results170
+results170$plots
+
+results170a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtcis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results170a
+results170a$plots
+
+results171 <- Carotenoids %>%
+  select(Canthaxanthin, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results171
+results171$plots
+
+results171a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results171a
+results171a$plots
+
+results172 <- Carotenoids %>%
+  select(Canthaxanthin, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results172
+results172$plots
+
+results172a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results172a
+results172a$plots
+
+results173 <- Carotenoids %>%
+  select(Canthaxanthin, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results173
+results173$plots
+
+results173a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results173a
+results173a$plots
+
+results174 <- Carotenoids %>%
+  select(Canthaxanthin, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results174
+results174$plots
+
+results174a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results174a
+results174a$plots
+
+results175 <- Carotenoids %>%
+  select(Canthaxanthin, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results175
+results175$plots
+
+results175a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results175a
+results175a$plots
+
+results176 <- Carotenoids %>%
+  select(Canthaxanthin, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results176
+results176$plots
+
+results176a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results176a
+results176a$plots
+
+results177 <- Carotenoids %>%
+  select(Canthaxanthin, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results177
+results177$plots
+
+results177a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results177a
+results177a$plots
+
+results178 <- Carotenoids %>%
+  select(Canthaxanthin, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results178
+results178$plots
+
+results178a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results178a
+results178a$plots
+
+results179 <- Carotenoids %>%
+  select(Canthaxanthin, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results179
+results179$plots
+
+results179a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results179a
+results179a$plots
+
+results180 <- Carotenoids %>%
+  select(Canthaxanthin, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results180
+results180$plots
+
+results180a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results180a
+results180a$plots
+
+results181 <- Carotenoids %>%
+  select(Canthaxanthin, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results181
+results181$plots
+
+results181a <- Carotenoids %>%
+  select(sqrtCanthaxanthin, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results181a
+results181a$plots
+
+results182 <- Carotenoids %>%
+  select(Xanthophyll, Echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results182
+results182$plots
+
+results182a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtEchinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results182a
+results182a$plots
+
+results183 <- Carotenoids %>%
+  select(Xanthophyll, cis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results183
+results183$plots
+
+results183a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtcis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results183a
+results183a$plots
+
+results184 <- Carotenoids %>%
+  select(Xanthophyll, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results184
+results184$plots
+
+results184a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results184a
+results184a$plots
+
+results185 <- Carotenoids %>%
+  select(Xanthophyll, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results185
+results185$plots
+
+results185a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results185a
+results185a$plots
+
+results186 <- Carotenoids %>%
+  select(Xanthophyll, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results186
+results186$plots
+
+results186a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results186a
+results186a$plots
+
+results187 <- Carotenoids %>%
+  select(Xanthophyll, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results187
+results187$plots
+
+results187a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results187a
+results187a$plots
+
+results188 <- Carotenoids %>%
+  select(Xanthophyll, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results188
+results188$plots
+
+results188a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results188a
+results188a$plots
+
+results189 <- Carotenoids %>%
+  select(Xanthophyll, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results189
+results189$plots
+
+results189a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results189a
+results189a$plots
+
+results190 <- Carotenoids %>%
+  select(Xanthophyll, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results190
+results190$plots
+
+results190a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results190a
+results190a$plots
+
+results191 <- Carotenoids %>%
+  select(Xanthophyll, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results191
+results191$plots
+
+results191a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results191a
+results191a$plots
+
+results192 <- Carotenoids %>%
+  select(Xanthophyll, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results192
+results192$plots
+
+results192a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results192a
+results192a$plots
+
+results193 <- Carotenoids %>%
+  select(Xanthophyll, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results193
+results193$plots
+
+results193a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results193a
+results193a$plots
+
+results194 <- Carotenoids %>%
+  select(Xanthophyll, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results194
+results194$plots
+
+results194a <- Carotenoids %>%
+  select(sqrtXanthophyll, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results194a
+results194a$plots
+
+results195 <- Carotenoids %>%
+  select(Echinenone, cis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results195
+results195$plots
+
+results195a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtcis.ketocarotenoid, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results195a
+results195a$plots
+
+results196 <- Carotenoids %>%
+  select(Echinenone, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results196
+results196$plots
+
+results196a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results196a
+results196a$plots
+
+results197 <- Carotenoids %>%
+  select(Echinenone, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results197
+results197$plots
+
+results197a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results197a
+results197a$plots
+
+results198 <- Carotenoids %>%
+  select(Echinenone, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results198
+results198$plots
+
+results198a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results198a
+results198a$plots
+
+results199 <- Carotenoids %>%
+  select(Echinenone, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results199
+results199$plots
+
+results199a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results199a
+results199a$plots
+
+results200 <- Carotenoids %>%
+  select(Echinenone, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results200
+results200$plots
+
+results200a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results200a
+results200a$plots
+
+results201 <- Carotenoids %>%
+  select(Echinenone, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results201
+results201$plots
+
+results201a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results201a
+results201a$plots
+
+results202 <- Carotenoids %>%
+  select(Echinenone, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results202
+results202$plots
+
+results202a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results202a
+results202a$plots
+
+results203 <- Carotenoids %>%
+  select(Echinenone, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results203
+results203$plots
+
+results203a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results203a
+results203a$plots
+
+results204 <- Carotenoids %>%
+  select(Echinenone, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results204
+results204$plots
+
+results204a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results204a
+results204a$plots
+
+results205 <- Carotenoids %>%
+  select(Echinenone, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results205
+results205$plots
+
+results205a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results205a
+results205a$plots
+
+results206 <- Carotenoids %>%
+  select(Echinenone, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results206
+results206$plots
+
+results206a <- Carotenoids %>%
+  select(sqrtEchinenone, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results206a
+results206a$plots
+
+results207 <- Carotenoids %>%
+  select(cis.ketocarotenoid, X3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results207
+results207$plots
+
+results207a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrt3.hydroxy.echinenone, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results207a
+results207a$plots
+
+results208 <- Carotenoids %>%
+  select(cis.ketocarotenoid, lutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results208
+results208$plots
+
+results208a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtlutein.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results208a
+results208a$plots
+
+results209 <- Carotenoids %>%
+  select(cis.ketocarotenoid, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results209
+results209$plots
+
+results209a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results209a
+results209a$plots
+
+results210 <- Carotenoids %>%
+  select(cis.ketocarotenoid, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results210
+results210$plots
+
+results210a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results210a
+results210a$plots
+
+results211 <- Carotenoids %>%
+  select(cis.ketocarotenoid, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results211
+results211$plots
+
+results211a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results211a
+results211a$plots
+
+results212 <- Carotenoids %>%
+  select(cis.ketocarotenoid, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results212
+results212$plots
+
+results212a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results212a
+results212a$plots
+
+results213 <- Carotenoids %>%
+  select(cis.ketocarotenoid, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results213
+results213$plots
+
+results213a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results213a
+results213a$plots
+
+results214 <- Carotenoids %>%
+  select(cis.ketocarotenoid, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results214
+results214$plots
+
+results214a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results214a
+results214a$plots
+
+results215 <- Carotenoids %>%
+  select(cis.ketocarotenoid, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results215
+results215$plots
+
+results215a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results215a
+results215a$plots
+
+results216 <- Carotenoids %>%
+  select(cis.ketocarotenoid, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results216
+results216$plots
+
+results216a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results216a
+results216a$plots
+
+results217 <- Carotenoids %>%
+  select(cis.ketocarotenoid, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results217
+results217$plots
+
+results217a <- Carotenoids %>%
+  select(sqrtcis.ketocarotenoid, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results217a
+results217a$plots
+
+results218 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, lutein.ester.1, Frog.Type) %>%
+  group_by(Frog.Type) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results218
+results218$plots
+
+results218a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtlutein.ester.1, Frog.Type) %>%
+  group_by(Frog.Type) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results218a
+results218a$plots
+
+results219 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results219
+results219$plots
+
+results219a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results219a
+results219a$plots
+
+results220 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results220
+results220$plots
+
+results220a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results220a
+results200a$plots
+
+results221 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results221
+results221$plots
+
+results221a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone,sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results221a
+results221a$plots
+
+results222 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results222
+results222$plots
+
+results222a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results222a
+results222a$plots
+
+results223 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results223
+results223$plots
+
+results223a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results223a
+results223a$plots
+
+results224 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results224
+results224$plots
+
+results224a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results224a
+results224a$plots
+
+results225 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results225
+results225$plots
+
+results225a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results225a
+results225a$plots
+
+results226 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results226
+results226$plots
+
+results226a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results226a
+results226a$plots
+
+results227 <- Carotenoids %>%
+  select(X3.hydroxy.echinenone, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results227
+results227$plots
+
+results227a <- Carotenoids %>%
+  select(sqrt3.hydroxy.echinenone, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results227a
+results227a$plots
+
+results228 <- Carotenoids %>%
+  select(lutein.ester.1, canary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results228
+results228$plots
+
+results228a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtcanary.xanthophyll.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results228a
+results228a$plots
+
+results229 <- Carotenoids %>%
+  select(lutein.ester.1, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results229
+results229$plots
+
+results229a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results229a
+results229a$plots
+
+results230 <- Carotenoids %>%
+  select(lutein.ester.1, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results230
+results230$plots
+
+results230a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results230a
+results230a$plots
+
+results231 <- Carotenoids %>%
+  select(lutein.ester.1, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results231
+results231$plots
+
+results231a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results231a
+results231a$plots
+
+results232 <- Carotenoids %>%
+  select(lutein.ester.1, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results232
+results232$plots
+
+results232a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results232a
+results232a$plots
+
+results233 <- Carotenoids %>%
+  select(lutein.ester.1, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results233
+results233$plots
+
+results233a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results233a
+results233a$plots
+
+results234 <- Carotenoids %>%
+  select(lutein.ester.1, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results234
+results234$plots
+
+results234a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results234a
+results234a$plots
+
+results235 <- Carotenoids %>%
+  select(lutein.ester.1, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results235
+results235$plots
+
+results235a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results235a
+results235a$plots
+
+results236 <- Carotenoids %>%
+  select(lutein.ester.1, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results236
+results236$plots
+
+results236a <- Carotenoids %>%
+  select(sqrtlutein.ester.1, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results236a
+results236a$plots
+
+results237 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, beta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results237
+results237$plots
+
+results237a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtbeta.carotene, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results237a
+results237a$plots
+
+results238 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results238
+results238$plots
+
+results238a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results238a
+results238a$plots
+
+results239 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results239
+results239$plots
+
+results239a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results239a
+results239a$plots
+
+results240 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results240
+results240$plots
+
+results240a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results240a
+results240a$plots
+
+results241 <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results241
+results241$plots
+
+results241a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results241a
+results241a$plots
+
+results242 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results242
+results242$plots
+
+results242a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results242a
+results242a$plots
+
+results243 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results243
+results243$plots
+
+results243a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results243a
+results243a$plots
+
+results244 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.1, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results244
+results244$plots
+
+results244a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.1, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results244a
+results244a$plots
+
+results245 <- Carotenoids %>%
+  select(beta.carotene, canary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results245
+results245$plots
+
+results245a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtcanary.xanthophyll.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results245a
+results245a$plots
+
+results246 <- Carotenoids %>%
+  select(beta.carotene, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results246
+results246$plots
+
+results246a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results246a
+results246a$plots
+
+results247 <- Carotenoids %>%
+  select(beta.carotene, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results247
+results247$plots
+
+results247a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results247a
+results247a$plots
+
+results248 <- Carotenoids %>%
+  select(beta.carotene, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results248
+results248$plots
+
+results248a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results248a
+results248a$plots
+
+results249 <- Carotenoids %>%
+  select(beta.carotene, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results249
+results249$plots
+
+results249a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results249a
+results249a$plots
+
+results250 <- Carotenoids %>%
+  select(beta.carotene, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results250
+results250$plots
+
+results250a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results250a
+results250a$plots
+
+results251 <- Carotenoids %>%
+  select(beta.carotene, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results251
+results251$plots
+
+results251a <- Carotenoids %>%
+  select(sqrtbeta.carotene, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results251a
+results251a$plots
+
+results252 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, ketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results252
+results252$plots
+
+results252a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrtketocarotenoid.ester.1, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results252a
+results252a$plots
+
+results253 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results253
+results253$plots
+
+results253a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results253a
+results253a$plots
+
+results254 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results254
+results254$plots
+
+results254a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results254a
+results254a$plots
+
+results255 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results255
+results255$plots
+
+results255a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results255a
+results255a$plots
+
+results256 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results256
+results256$plots
+
+results256a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results256a
+results256a$plots
+
+results257 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.2, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results257
+results257$plots
+
+results257a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.2, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results257a
+results257a$plots
+
+results258 <- Carotenoids %>%
+  select(ketocarotenoid.ester.1, ketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results258
+results258$plots
+
+results258a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.1, sqrtketocarotenoid.ester.2, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results258a
+results258a$plots
+
+results259 <- Carotenoids %>%
+  select(ketocarotenoid.ester.1, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results259
+results259$plots
+
+results259a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.1, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results259a
+results259a$plots
+
+results260 <- Carotenoids %>%
+  select(ketocarotenoid.ester.1, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results260
+results260$plots
+
+results260a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.1, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results260a
+results260a$plots
+
+results261 <- Carotenoids %>%
+  select(ketocarotenoid.ester.1, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results261
+results261$plots
+
+results261a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.1, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results261a
+results261a$plots
+
+results262 <- Carotenoids %>%
+  select(ketocarotenoid.ester.1, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results262
+results262$plots
+
+results262a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.1, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results262a
+results262a$plots
+
+results263 <- Carotenoids %>%
+  select(ketocarotenoid.ester.2, canary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results263
+results263$plots
+
+results263a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.2, sqrtcanary.xanthophyll.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results263a
+results263a$plots
+
+results264 <- Carotenoids %>%
+  select(ketocarotenoid.ester.2, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results264
+results264$plots
+
+results264a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.2, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results264a
+results264a$plots
+
+results265 <- Carotenoids %>%
+  select(ketocarotenoid.ester.2, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results265
+results265$plots
+
+results265a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.2, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results265a
+results265a$plots
+
+results266 <- Carotenoids %>%
+  select(ketocarotenoid.ester.2, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results266
+results266$plots
+
+results266a <- Carotenoids %>%
+  select(sqrtketocarotenoid.ester.2, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results266a
+results266a$plots
+
+results267 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.3, canthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results267
+results267$plots
+
+results267a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.3, sqrtcanthaxanthin.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results267a
+results267a$plots
+
+results268 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.3, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results268
+results268$plots
+
+results268a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.3, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results268a
+results268a$plots
+
+results269 <- Carotenoids %>%
+  select(canary.xanthophyll.ester.3, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results269
+results269$plots
+
+results269a <- Carotenoids %>%
+  select(sqrtcanary.xanthophyll.ester.3, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results269a
+results269a$plots
+
+results270 <- Carotenoids %>%
+  select(canthaxanthin.ester, X3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results270
+results270$plots
+
+results270a <- Carotenoids %>%
+  select(sqrtcanthaxanthin.ester, sqrt3HE.ester, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results270a
+results270a$plots
+
+results271 <- Carotenoids %>%
+  select(canthaxanthin.ester, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results271
+results271$plots
+
+results271a <- Carotenoids %>%
+  select(sqrtcanthaxanthin.ester, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results271a
+results271a$plots
+
+results272 <- Carotenoids %>%
+  select(X3HE.ester, ketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results272
+results272$plots
+
+results272a <- Carotenoids %>%
+  select(sqrt3HE.ester, sqrtketocarotenoid.ester.3, Sex) %>%
+  group_by(Sex) %>%
+  doo(~ggpairs(.) + theme_bw(), result = "plots")
+results272a
+results272a$plots
+
 
 ## Multivariate tests of normality ####
 
