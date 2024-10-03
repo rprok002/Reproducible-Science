@@ -30,6 +30,8 @@ library(car)
 library(broom)
 install.packages("npmv")
 library(npmv)
+install.packages("MVN")
+library(MVN)
 ## Load dataset, attach, subset ####
 Carotenoids <- read.csv(file.choose())
 attach(Carotenoids)
@@ -191,7 +193,7 @@ boxM(dependentcarotenoids, group)
 ## Outliers
 ## Subset by group
 
-mahalanobis_distance(data = dependentcarotenoids)$is.outlier
+mahalanobis_distance(data = dependentcarotenoidsnew)$is.outlier
 ## No outliers in the data
 
 mahalanobis_distance(data = dependentcarotenoidssqrt)$is.outlier
@@ -4273,10 +4275,42 @@ results272a$plots
 ## sqrtX3H3 ester and sqrtketocarotenoid ester 3 female
 
 
-## Multivariate tests of normality ####
+## Multivariate tests of normality for original and sqrt original####
+
+MVNMardiafull <- mvn(data = Carotenoidsoriginal, mvnTest = "mardia", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardiafull$multivariateNormality
+## definitely nonormal
+MVNMardiafullsqrt <- mvn(data = Carotenoidssqrt, mvnTest = "mardia",multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardiafullsqrt$multivariateNormality
+## definitely nonormal
+MVNHzfull <- mvn(data = Carotenoidsoriginal, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHzfull$multivariateNormality
+## definitely nonormal
+MVNHzfullsqrt <- mvn(data = Carotenoidssqrt, mvnTest = "hz", multivariatePlot = "qq")
+MVNHzfullsqrt$multivariateNormality
+## P is 0.02 so not normal
+MVNroystonfull <- mvn(data = Carotenoidsoriginal, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonfull$multivariateNormality
+## definitely nonormal
+MVNroystonfullsqrt <- mvn(data = Carotenoidssqrt, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonfullsqrt$multivariateNormality
+## definitely nonormal
+MVNDhfull <- mvn(data = Carotenoidsoriginal, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhfull$multivariateNormality
+## definitely nonormal
+MVNDhfullsqrt <- mvn(data = Carotenoidssqrt, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhfullsqrt$multivariateNormality
+## definitely nonormal
+MVNenergyfull <- mvn(data = Carotenoidsoriginal, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergyfull$multivariateNormality
+## definitely nonormal
+MVNenergyfullsqrt <- mvn(data = Carotenoidssqrt, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergyfullsqrt$multivariateNormality
+## definitely nonormal
+
 ## Overall comparisons of all 17 variables ####
 
-## Multicollinearity for original
+## Multicollinearity for original 
 
 ## Apocarotenoid and Canary.Xanthophyll
 ## Apocarotenoid and canary.xanthophyll ester 1
@@ -4427,6 +4461,123 @@ results272a$plots
 ## Carotenoids not using: Canary Xanthophyll, Canary Xanthophyll Ester 1, Canary Xanthophyll Ester 2,
 ## X3 Hydroxy.Echinenone, X3H3 ester, Ketocarotenoid ester 1, Ketocarotenoid ester 2, Ketocarotenoid ester 3, 
 ## Lutein Ester 1, Canthaxanthin
+
+## Redo Assumptions with outliers taken out ####
+## Outliers removed in order: F1, M3, M29, F19, M17
+Carotenoidsnew <- Carotenoids[,c(3,9,11,13,21,29,31)]
+Carotenoidsnewsqrt <- Carotenoids[,c(4,10,12,14,22,30,32)]
+
+## Independent assumptions with little correlation
+ICC(Carotenoidsnew) ## -0.084, fine
+ICC(Carotenoidsnewsqrt) ## -0.054, fine
+
+## Multivariate Normality
+dependentcarotenoidsnew <- data.frame(Carotenoids$Apocarotenoid, Carotenoids$Xanthophyll, Carotenoids$Echinenone, Carotenoids$cis.ketocarotenoid,
+                                   Carotenoids$beta.carotene, Carotenoids$canary.xanthophyll.ester.3, Carotenoids$canthaxanthin.ester)
+dependentcarotenoidsnewsqrt <- data.frame(Carotenoids$sqrtApocarotenoid, Carotenoids$sqrtXanthophyll, Carotenoids$sqrtEchinenone, Carotenoids$sqrtcis.ketocarotenoid,
+                                          Carotenoids$sqrtbeta.carotene, Carotenoids$sqrtcanary.xanthophyll.ester.3, Carotenoids$sqrtcanthaxanthin.ester)
+
+transpose_dependentcarotenoidsnew <- t(dependentcarotenoidsnew)
+transpose_dependentcarotenoidsnewsqrt <- t(dependentcarotenoidsnewsqrt)
+mshapiro.test(transpose_dependentcarotenoidsnew) ## not normal
+mshapiro.test(transpose_dependentcarotenoidsnewsqrt) ## not normal
+
+MVNMardianew <- mvn(data = Carotenoidsnew, mvnTest = "mardia", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardianew$multivariateNormality
+MVNMardianewsqrt <- mvn(data = Carotenoidsnewsqrt, mvnTest = "mardia", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardianewsqrt$multivariateNormality
+## sqrt now normal
+MVNHznew <- mvn(data = Carotenoidsnew, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHznew$multivariateNormality
+MVNHznewsqrt <- mvn(data = Carotenoidsnewsqrt, mvnTest = "hz", multivariatePlot = "qq")
+MVNHznewsqrt$multivariateNormality
+## sqrt now normal
+MVNroystonnew <- mvn(data = Carotenoidsnew, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonnew$multivariateNormality
+MVNroystonnewsqrt <- mvn(data = Carotenoidsnewsqrt, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonnewsqrt$multivariateNormality
+## sqrt now normal
+MVNDhnew <- mvn(data = Carotenoidsnew, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhnew$multivariateNormality
+MVNDhnewsqrt <- mvn(data = Carotenoidsnewsqrt, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhnewsqrt$multivariateNormality
+##nonnormal
+MVNenergynew <- mvn(data = Carotenoidsnew, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergynew$multivariateNormality
+MVNenergynewsqrt <- mvn(data = Carotenoidsnewsqrt, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergynewsqrt$multivariateNormality
+## sqrt now normal
+
+## Univariate Normality
+ggqqplot(Carotenoids, "Apocarotenoid", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "sqrtApocarotenoid", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "Xanthophyll", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "sqrtXanthophyll", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+ggqqplot(Carotenoids, "Echinenone", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "sqrtEchinenone", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+ggqqplot(Carotenoids, "cis.ketocarotenoid", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "sqrtcis.ketocarotenoid", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+ggqqplot(Carotenoids, "beta.carotene", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a bit of a tail, not bad
+ggqqplot(Carotenoids, "sqrtbeta.carotene", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+ggqqplot(Carotenoids, "canary.xanthophyll.ester.3", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## good
+ggqqplot(Carotenoids, "sqrtcanary.xanthophyll.ester.3", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+ggqqplot(Carotenoids, "canthaxanthin.ester", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## good
+ggqqplot(Carotenoids, "sqrtcanthaxanthin.ester", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## helps
+
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
+Covddependentcarotenoidsnew <- cov(dependentcarotenoidsnew)
+det(Covddependentcarotenoidsnew)
+## very positive, looks good
+Covdependentcarotenoidsnewsqrt <- cov(dependentcarotenoidsnewsqrt)
+det(Covdependentcarotenoidsnewsqrt)
+## positive determinant thought not very positive like the original data
+
+## Homogeneity of Variance
+groupnew <- c("Infected","Infected","Infected", "Control",
+           "Control", "Infected","Infected","Infected","Infected","Infected",
+           "Control", "Infected","Infected","Infected","Infected","Infected",
+           "Infected","Infected","Infected","Infected","Infected",
+           "Control","Infected","Infected","Infected",
+           "Control", "Control", "Control", "Infected", "Control", "Infected")
+factor(groupnew)
+groupnew
+boxM(dependentcarotenoidsnew, groupnew)
+boxM(dependentcarotenoidsnewsqrt, groupnew) ## sqrt is now higher than 0.05, so is regular but sqrt likely better to use
+
+## Multicollinearity
+cor.matnew <- Carotenoidsnew %>% cor_mat()
+cor.matnew ## looks good
+
+cor.matnewsqrt <- Carotenoidsnewsqrt %>% cor_mat()
+cor.matnewsqrt ## looks good
 
 ## MANOVA ####
 ## Make group (Control and Infected) categorical variables
