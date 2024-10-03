@@ -4598,7 +4598,22 @@ summary(MANOVA, test = "Roy")
 ## formula: 1-(0.63202)^(1/b)
 ## Answer will be percentage of variance between outcome variables is due to difference in group variable
 
+## Post hoc test
 
+iris_lda <- lda(independent_var ~ dependent_vars, CV = F)
+iris_lda
+
+
+lda_df <- data.frame(
+  species = iris[, "Species"],
+  lda = predict(iris_lda)$x
+)
+lda_df
+
+
+ggplot(lda_df) +
+  geom_point(aes(x = lda.LD1, y = lda.LD2, color = species), size = 4) +
+  theme_classic()
 
 ## Factorial MANOVA ####
 group <- factor(Frog.Type)
