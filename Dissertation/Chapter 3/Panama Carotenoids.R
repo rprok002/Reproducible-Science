@@ -10,7 +10,7 @@
 ## If want to have male/female as group as well, will likely be factorial
 
 ## Packages####
-## Assumptions
+
 library(car)
 install.packages("mvnormtest")
 library(mvnormtest)
@@ -4346,6 +4346,88 @@ results272a$plots
 ## ketocarotenoid ester 1 and ketocarotenoid ester 3 control
 ## sqrtketocarotenoid ester 1 and sqrtketocarotenoid ester 3 control
 ## sqrt3HE ester control and sqrtketocarotenoid ester 3 control
+
+## Linearity graph comparisons above 0.9 for Group Male/Female
+
+## Apocarotenoid and canary xanthophyll both
+## sqrtApocarotenoid and sqrtcanary xanthophyll both
+## Apocarotenoid and canary xanthophyll ester 1 male
+## sqrtApocarotenoid and sqrtcanary xanthophyll ester 1 male
+## Apocarotenoid and canary xanthophyll ester 2 both
+## Apocarotenoid and ketocarotenoid ester 1 male
+## Canary xanthophyll and canary xanthophyll ester 1 male
+## sqrtCanary xanthophyll and sqrtcanary xanthophyll ester 1 male
+## Canary xanthophyll and canary xanthophyll ester 2 male
+## sqrtCanary xanthophyll and sqrtcanary xanthophyll ester 2 male
+## Canthaxanthin and cisketocarotenoid female
+## sqrtCanthaxanthin and sqrtcisketocarotenoid female
+## Canthaxanthin and X3.hydroxy.echinenone female
+## sqrtCanthaxanthin and sqrt3.hydroxy.echinenone female
+## Canthaxanthin and canary xanthophyll ester 1 female
+## sqrtCanthaxanthin and sqrtcanary xanthophyll ester 1 female
+## Canthaxanthin and canary xanthophyll ester 2 female
+## sqrtCanthaxanthin and sqrtcanary xanthophyll ester 2 female
+## Canthaxanthin and ketocarotenoid ester 1 female
+## sqrtCanthaxanthin and sqrtketocarotenoid ester 1 female
+## Canthaxanthin and canary xanthophyll ester 3 female
+## Canthaxanthin and ketocarotenoid ester 3 female
+## sqrtCanthaxanthin and sqrtketocarotenoid ester 3 female
+## sqrtXanthophyll and sqrtcisketocarotenoid male
+## cisketocarotenoid and X3.hydroxy.echinenone both
+## sqrtcisketocarotenoid and sqrtX3.hydroxy.echinenone both
+## cisketocarotenoid and beta carotene male
+## sqrtcisketocarotenoid and sqrtbeta carotene male
+## cisketocarotenoid and canary xanthophyll ester 2 both
+## sqrtcisketocarotenoid and sqrtcanary xanthophyll ester 2 both
+## cisketocarotenoid and canary xanthophyll ester 3 female
+## sqrtcisketocarotenoid and sqrtcanary xanthophyll ester 3 female
+## cisketocarotenoid and ketocarotenoid ester 3 female
+## sqrtcisketocarotenoid and sqrtketocarotenoid ester 3 female
+## X3.hydroxy.echinenone and lutein ester 1 male
+## sqrt3.hydroxy.echinenone and sqrtlutein ester 1 male
+## X3.hydroxy.echinenone and beta carotene male
+## sqrt3.hydroxy.echinenone and sqrtbeta carotene male
+## X3.hydroxy.echinenone and canary xanthophyll ester 2 both
+## sqrt3.hydroxy.echinenone and sqrtcanary xanthophyll ester 2 both
+## X3.hydroxy.echinenone and ketocarotenoid ester 1 female
+## sqrt3.hydroxy.echinenone and sqrtketocarotenoid ester 1 female
+## X3.hydroxy.echinenone and canary xanthophyll ester 3 male
+## sqrt3.hydroxy.echinenone and sqrtcanary xanthophyll ester 3 male
+## X3.hydroxy.echinenone and X3H3 ester female
+## sqrtX3.hydroxy.echinenone and sqrtX3H3 ester female
+## X3.hydroxy.echinenone and ketocarotenoid ester 3 female
+## sqrt3.hydroxy.echinenone and sqrtketocarotenoid ester 3 female
+## Lutein ester 1 and beta carotene both
+## sqrtLutein ester 1 and sqrtbeta carotene both
+## Lutein ester 1 and X3H3 ester female
+## sqrtLutein ester 1 and sqrtX3H3 ester female
+## Lutein ester 1 and ketocarotenoid ester 3 female
+## sqrtLutein ester 1 and sqrtketocarotenoid ester 3 female
+## Canary xanthophyll ester 1 and canary xanthophyll ester 2 both
+## sqrtCanary xanthophyll ester 1 and sqrtcanary xanthophyll ester 2 both
+## Canary xanthophyll ester 1 and ketocarotenoid ester 1 female
+## sqrtCanary xanthophyll ester 1 and sqrtketocarotenoid ester 1 female
+## Beta carotene and X3H3 ester female
+## sqrtBeta carotene and sqrt3H3 ester female
+## Canary xanthophyll ester 2 and ketocarotenoid ester 1 female
+## sqrtCanary xanthophyll ester 2 and sqrtketocarotenoid ester 1 female
+## Canary xanthophyll ester 2 and canary xanthophyll ester 3 female
+## sqrtCanary xanthophyll ester 2 and sqrtcanary xanthophyll ester 3 female
+## Canary xanthophyll ester 2 and ketocarotenoid ester 3 female
+## sqrtCanary xanthophyll ester 2 and sqrtketocarotenoid ester 3 female
+## Ketocarotenoid ester 1 and ketocarotenoid ester 3 female
+## sqrtKetocarotenoid ester 1 and sqrtketocarotenoid ester 3 female
+## sqrtKetocarotenoid ester 2 and sqrtX3H3 ester female
+## X3H3 ester and ketocarotenoid ester 3 female
+## sqrtX3H3 ester and sqrtketocarotenoid ester 3 female
+
+## Carotenoids to keep: Apocarotenoid, Canary Xanthophyll Ester 3, Echineone, Cisketocarotenoid, 
+## Xanthophyll, Beta carotene, Canthaxanthin Ester
+
+## Carotenoids not using: Canary Xanthophyll, Canary Xanthophyll Ester 1, Canary Xanthophyll Ester 2,
+## X3 Hydroxy.Echinenone, X3H3 ester, Ketocarotenoid ester 1, Ketocarotenoid ester 2, Ketocarotenoid ester 3, 
+## Lutein Ester 1, Canthaxanthin
+
 ## MANOVA ####
 ## Make group (Control and Infected) categorical variables
 ## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY
