@@ -1,5 +1,5 @@
 ## Data Analysis Panama Chapter 1
-## First try with LM
+## First try with LM separated by Frog Type and Scent Type, still using panama naive trials ####
 NaiveControlPanama= read.csv(file.choose())
 NaiveDeadPanama= read.csv(file.choose())
 NaiveLivePanama = read.csv(file.choose())
@@ -668,7 +668,7 @@ emmeans(AllLiveGLM, list (pairwise~Group*Type), lmer.df = "satterthwaite")
 
 
 
-## Boxplot
+## First try with Box plots separated by Frog Type and Scent Type, still using panama naive trials ####
 library(ggplot2)
 library(multcompView)
 library(dplyr)
@@ -746,7 +746,7 @@ ggboxplot(AllLiveFIUPanamaAnalysis, x = "Group", y = "Weight", fill = "grey40", 
   annotate("text", x=2.8, y=110, label= "SS: 605.7 ; DF: 2,215 ; p = 0.20")+
   scale_color_manual(values=c("black", "grey60"))
 
-## Second try: Looking at glm stuff
+## Second try: Looking at glm stuff and Square Root data. Still using naive panama traisl in data ####
 
 ## Weight distribution per data set
 ## Using seconds
@@ -1047,6 +1047,7 @@ residuals_plot_NaiveDeadFIUPanamaGLMM <- ggplot(data = NaiveDeadFIUPanamaAnalysi
 print(residuals_plot_NaiveDeadFIUPanamaGLMM)
 ## data still hetero
 boxplot(NaiveDeadFIUPanamaAnalysis$Seconds_Fixed_SR)
+## Second Try LMERS removing outliers, still using naive panama trials ####
 ## Removing M3 C and F19 B and F8 B and M6 A 
 NaiveDeadFIUPanamaAnalysisNoOutliers = read.csv(file.choose())
 NaiveDeadFIUPanamaGLMM <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Frog_Number)+(1|Trial.Order)+(1|Liquid.Amount), data = NaiveDeadFIUPanamaAnalysisNoOutliers)
@@ -1583,7 +1584,7 @@ ggboxplot(AllLiveFIUPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed_SR
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
 
 
-## Separate Naive LMER's for FIU and Panama 
+## Separate Naive LMER's for FIU and Panama and no outliers ####
 NaiveDeadFIUAnalysis = read.csv(file.choose())
 NaiveDeadFIUlmer <- lmer(Seconds_Fixed_SR~Group+Sex+Total_Seconds_Fixed_SR+(1|Liquid.Amount)+(1|Frog_Number)+(1|Trial.Order), data = NaiveDeadFIUAnalysis)
 anova(NaiveDeadFIUlmer)
@@ -1809,7 +1810,7 @@ ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   scale_color_manual(values=c("black", "grey60"))+
   annotate("text", x=2.8, y=80, label= "Interaction Location/Type")
 
-## Rework models to have less of them
+## Have all control, all dead and all live in separate models, models used in manuscript ####
 install.packages("ggpubr")
 library(ggpubr)
 library(dplyr)
