@@ -32,6 +32,12 @@ install.packages("npmv")
 library(npmv)
 install.packages("MVN")
 library(MVN)
+install.packages("effectsize")
+library(effectsize)
+install.packages ("rgl")
+library(rgl)
+install.packages("heplots")
+library(heplots)
 ## Load dataset, attach, subset ####
 Carotenoids <- read.csv(file.choose())
 attach(Carotenoids)
@@ -5176,37 +5182,48 @@ results267a$plots
 ## MANOVA ####
 ## Make group (Control and Infected) categorical variables
 ## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY
-group = factor(group)
+groupnew = factor(groupnew)
 ## Bind dependent variables together into one vector
-Y = cbind(variable1, variable2, variable3, variable4, more)
+sqrtApocarotenoid <- Carotenoids$sqrtApocarotenoid
+sqrtXanthophyll <- Carotenoids$Xanthophyll
+sqrtEchinenone <- Carotenoids$Echinenone
+sqrtcis.ketocarotenoid <- Carotenoids$cis.ketocarotenoid
+sqrtbeta.carotene <- Carotenoids$sqrtbeta.carotene
+sqrtcanary.xanthophyll.ester.3 <- Carotenoids$sqrtcanary.xanthophyll.ester.3
+sqrtcanthaxanthin.ester <- Carotenoids$sqrtcanthaxanthin.ester
+Y <- cbind(sqrtApocarotenoid,sqrtXanthophyll,sqrtEchinenone,sqrtbeta.carotene,sqrtcis.ketocarotenoid,
+           sqrtcanary.xanthophyll.ester.3,sqrtcanthaxanthin.ester)
 ## Run MANOVA
-MANOVA = manova(Y-group)
+MANOVA = manova(Y~groupnew)
 ## Run Tests on MANOVA, check if p values are below 0.05
 summary(MANOVA, test = "Wilks")
 summary(MANOVA, test = "Pillai")
 summary(MANOVA, test = "Hotelling-Lawley")
 summary(MANOVA, test = "Roy")
 
+## nothing significant here between groups 
+
 ## Wilks Lambda partial eta squares values
 ## Take smaller of two values, number of outcome variables (here, 16) or df of group variable = b
 ## formula: 1-(0.63202)^(1/b)
 ## Answer will be percentage of variance between outcome variables is due to difference in group variable
 
-## Post hoc test
+## Post hoc tests
+## Effect size
+eta_squared(MANOVA) ## value is 0.12, not high enough to mean anything really which explains the non-significant p-value
 
-iris_lda <- lda(independent_var ~ dependent_vars, CV = F)
-iris_lda
+MANOVA_lda <- lda(groupnew ~ Y, CV = F)
+MANOVA_lda
 
-
-lda_df <- data.frame(
-  species = iris[, "Species"],
-  lda = predict(iris_lda)$x
+MANOVA_df <- data.frame(
+  species = Carotenoids[, "Frog.Type"],
+  lda = predict(MANOVA_lda)$x
 )
-lda_df
+MANOVA_df
 
 
-ggplot(lda_df) +
-  geom_point(aes(x = lda.LD1, y = lda.LD2, color = species), size = 4) +
+ggplot(MANOVA_df) +
+  geom_point(aes(x = LD1, y = species), size = 4) +
   theme_classic()
 
 ## Factorial MANOVA ####
@@ -5215,23 +5232,386 @@ group
 sex <- factor(Sex)
 sex
 
-FACTORIALSETUP <- lm(dependentcarotenoids~Frog.Type + Sex+Frog.Type*Sex -1, data = Carotenoids)
+FACTORIALSETUP <- lm(Y~Frog.Type + Sex -1, data = Carotenoids)
 summary(FACTORIALSETUP)
+## interaction not significant so using type II
 FACTORIALMANOVAwilks <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Wilks"))
 FACTORIALMANOVApillai <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Pillai"))
 FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Hotelling-Lawley"))
 FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Roy"))
 ## If interactions aren't significant, can use Type II
 FACTORIALMANOVAwilks <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Wilks"))
+FACTORIALMANOVAwilks
 FACTORIALMANOVApillai <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Pillai"))
+FACTORIALMANOVApillai
 FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Hotelling-Lawley"))
+FACTORIALMANOVAhotelling
 FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Roy"))
+FACTORIALMANOVAroy
+## Frog type significant for all of these 
+
+MANOVA_ldafactorial <- lda(groupnew ~ Y, CV = F)
+MANOVA_ldafactorial
+
 
 ## Wilks Lambda partial eta squares values
 ## For factorial, separated by group
 ## Take smaller of two values, number of outcome variables (here, 16) or df of group variable = b
 ## formula: 1-(0.63202)^(1/b)
 ## Answer will be percentage of variance between outcome variables is due to difference in group variable
+## MANCOVA testing handling time### 
+## no sex because wasn't significant in two-way MANOVA, compared frog type and handling time
+model <- manova (Y~Handling.Time.Infected.Mock*Frog.Type, data = Carotenoids)
+summary(model, test = "Wilks", type = "III")
+summary(model, test = "Pillai", type = "III")
+summary(model, test = "Hotelling-Lawley", type = "III")
+summary(model, test = "Roy", type = "III")
+## handling time not significant so taking out and not thinking about again
 
-## nonparametric multivariate
-nonpartest(weight|bot|fungi|rating~treatment,sberry,permreps=1000)
+## Visualization in box plots ####
+## coefficients for each of the polynomial terms in Frog Type
+lm(cbind(sqrtApocarotenoid, sqrtXanthophyll, sqrtEchinenone, sqrtcis.ketocarotenoid,
+         sqrtbeta.carotene, sqrtcanary.xanthophyll.ester.3, sqrtcanthaxanthin.ester
+         )~ Frog.Type, data=Carotenoids)
+## Means, standard deviations, and standard errors of the means
+means <- Carotenoids |>
+  group_by(Frog.Type) |>
+  summarise(
+    n = n(),
+    Ap_sd = sd(sqrtApocarotenoid, na.rm = TRUE),
+    Xa_sd = sd(sqrtXanthophyll, na.rm = TRUE),
+    Ec_sd = sd(sqrtEchinenone, na.rm = TRUE),
+    Ci_sd = sd(sqrtcis.ketocarotenoid, na.rm = TRUE),
+    Be_sd = sd(sqrtbeta.carotene, na.rm = TRUE),
+    Ca_sd = sd(sqrtcanary.xanthophyll.ester.3, na.rm = TRUE),
+    Canth_sd = sd(sqrtcanthaxanthin.ester, na.rm = TRUE),
+    Ap_se = Ap_sd / sqrt(n),
+    Xa_se = Xa_sd / sqrt(n),
+    Ec_se = Ec_sd / sqrt(n),
+    Ci_se = Ci_sd / sqrt(n),
+    Be_se = Be_sd / sqrt(n),
+    Ca_se = Ca_sd / sqrt(n),
+    Canth_se = Canth_sd / sqrt(n),
+    sqrtApocarotenoid = mean(sqrtApocarotenoid),
+    sqrtXanthophyll = mean(sqrtXanthophyll),
+    sqrtEchinenone = mean(sqrtEchinenone),
+    sqrtcis.ketocarotenoid = mean(sqrtcis.ketocarotenoid),
+    sqrtbeta.carotene = mean(sqrtbeta.carotene),
+    sqrtcanary.xanthophyll.ester.3 = mean(sqrtcanary.xanthophyll.ester.3),
+    sqrtcanthaxanthin.ester = mean(sqrtcanthaxanthin.ester) ) |> 
+  relocate(sqrtApocarotenoid, sqrtXanthophyll, sqrtEchinenone, sqrtcis.ketocarotenoid,
+           sqrtbeta.carotene, sqrtcanary.xanthophyll.ester.3, sqrtcanthaxanthin.ester,
+           .after = Frog.Type) |>
+  print()
+
+## Plot for each dependent variable
+Apmean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtApocarotenoid)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtApocarotenoid - Ap_se, 
+                    ymax = sqrtApocarotenoid + Ap_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Apmean
+
+Xamean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtXanthophyll)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtXanthophyll - Xa_se, 
+                    ymax = sqrtXanthophyll + Xa_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Xamean
+
+Ecmean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtEchinenone)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtEchinenone - Ec_se, 
+                    ymax = sqrtEchinenone + Ec_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Ecmean
+
+Cimean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtcis.ketocarotenoid)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtcis.ketocarotenoid - Ci_se, 
+                    ymax = sqrtcis.ketocarotenoid + Ci_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Cimean
+
+Bemean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtbeta.carotene)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtbeta.carotene - Be_se, 
+                    ymax = sqrtbeta.carotene + Be_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Bemean
+
+Camean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtcanary.xanthophyll.ester.3)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                    ymax = sqrtcanary.xanthophyll.ester.3 + Ca_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Camean
+
+Canthmean <-ggplot(data = means, aes(x = Frog.Type, y = sqrtcanthaxanthin.ester)) +
+  geom_point(size = 4) +
+  geom_line(aes(group = 1), linewidth = 1.2) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se),
+                width = .2) +
+  theme_bw(base_size = 15)
+Canthmean
+
+## Treating all as bivariate outcomes
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtXanthophyll, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtXanthophyll - Xa_se, 
+                    ymax = sqrtXanthophyll + Xa_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtEchinenone, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtEchinenone - Ec_se, 
+                    ymax = sqrtEchinenone + Ec_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtcis.ketocarotenoid, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtcis.ketocarotenoid - Ci_se, 
+                    ymax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtbeta.carotene, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtbeta.carotene - Be_se, 
+                    ymax = sqrtbeta.carotene + Be_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtcanary.xanthophyll.ester.3, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                    ymax = sqrtcanary.xanthophyll.ester.3 + Ca_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtApocarotenoid, y = sqrtcanthaxanthin.ester, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtApocarotenoid - Ap_se, 
+                     xmax = sqrtApocarotenoid + Ap_se)) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtXanthophyll, y = sqrtEchinenone, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtXanthophyll - Xa_se, 
+                     xmax = sqrtXanthophyll + Xa_se)) +
+  geom_errorbar(aes(ymin = sqrtEchinenone - Ec_se, 
+                    ymax = sqrtEchinenone + Ec_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtXanthophyll, y = sqrtcis.ketocarotenoid, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtXanthophyll - Xa_se, 
+                     xmax = sqrtXanthophyll + Xa_se)) +
+  geom_errorbar(aes(ymin = sqrtcis.ketocarotenoid - Ci_se, 
+                    ymax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtXanthophyll, y = sqrtbeta.carotene, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtXanthophyll - Xa_se, 
+                     xmax = sqrtXanthophyll + Xa_se)) +
+  geom_errorbar(aes(ymin = sqrtbeta.carotene - Be_se, 
+                    ymax = sqrtbeta.carotene + Be_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtXanthophyll, y = sqrtcanary.xanthophyll.ester.3, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtXanthophyll - Xa_se, 
+                     xmax = sqrtXanthophyll + Xa_se)) +
+  geom_errorbar(aes(ymin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                    ymax = sqrtcanary.xanthophyll.ester.3 + Ca_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtXanthophyll, y = sqrtcanthaxanthin.ester, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtXanthophyll - Xa_se, 
+                     xmax = sqrtXanthophyll + Xa_se)) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtEchinenone, y = sqrtcis.ketocarotenoid, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtEchinenone - Ec_se, 
+                     xmax = sqrtEchinenone + Ec_se)) +
+  geom_errorbar(aes(ymin = sqrtcis.ketocarotenoid - Ci_se, 
+                    ymax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtEchinenone, y = sqrtbeta.carotene, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtEchinenone - Ec_se, 
+                     xmax = sqrtEchinenone + Ec_se)) +
+  geom_errorbar(aes(ymin = sqrtbeta.carotene - Be_se, 
+                    ymax = sqrtbeta.carotene + Be_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtEchinenone, y = sqrtcanary.xanthophyll.ester.3, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtEchinenone - Ec_se, 
+                     xmax = sqrtEchinenone + Ec_se)) +
+  geom_errorbar(aes(ymin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                    ymax = sqrtcanary.xanthophyll.ester.3 + Ca_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtEchinenone, y = sqrtcanthaxanthin.ester, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtEchinenone - Ec_se, 
+                     xmax = sqrtEchinenone + Ec_se)) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtcis.ketocarotenoid, y = sqrtbeta.carotene, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtcis.ketocarotenoid - Ci_se, 
+                     xmax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_errorbar(aes(ymin = sqrtbeta.carotene - Be_se, 
+                    ymax = sqrtbeta.carotene + Be_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtcis.ketocarotenoid, y = sqrtcanary.xanthophyll.ester.3, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtcis.ketocarotenoid - Ci_se, 
+                     xmax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_errorbar(aes(ymin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                    ymax = sqrtcanary.xanthophyll.ester.3 + Ca_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtcis.ketocarotenoid, y = sqrtcanthaxanthin.ester, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtcis.ketocarotenoid - Ci_se, 
+                     xmax = sqrtcis.ketocarotenoid + Ci_se)) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
+
+ggplot(data = means, aes(x = sqrtcanary.xanthophyll.ester.3, y = sqrtcanthaxanthin.ester, 
+                         color = Frog.Type)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = sqrtcanary.xanthophyll.ester.3 - Ca_se, 
+                     xmax = sqrtcanary.xanthophyll.ester.3 + Ca_se)) +
+  geom_errorbar(aes(ymin = sqrtcanthaxanthin.ester - Canth_se, 
+                    ymax = sqrtcanthaxanthin.ester + Canth_se)) +
+  geom_line(aes(group = 1), linewidth = 1.5) +
+  geom_label(aes(label = Frog.Type), 
+             nudge_x = -0.015, nudge_y = 0.02) +
+  scale_color_discrete(guide = "none") +
+  theme_bw(base_size = 15)
