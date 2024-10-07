@@ -5615,3 +5615,5 @@ ggplot(data = means, aes(x = sqrtcanary.xanthophyll.ester.3, y = sqrtcanthaxanth
              nudge_x = -0.015, nudge_y = 0.02) +
   scale_color_discrete(guide = "none") +
   theme_bw(base_size = 15)
+
+
