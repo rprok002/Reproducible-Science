@@ -40,6 +40,11 @@ install.packages("heplots")
 library(heplots)
 install.packages("effects")
 library(effects)
+library(tidyverse)
+library(gridExtra)
+library(grid)
+install.packages("gridtext")
+library(gridtext)
 ## Load dataset, attach, subset ####
 Carotenoids <- read.csv(file.choose())
 attach(Carotenoids)
@@ -5755,3 +5760,309 @@ shapiro.test(Carotenoids$sqrtketocarotenoid.ester.3)
 leveneTest(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
+## Boxplots quantiles ####
+Carotenoidsboxplot <-read.csv(file.choose())
+Carotenoidsboxplotmeanse <-read.csv(file.choose())
+Carotenoidsboxplotapo <- subset(Carotenoidsboxplot,Carotenoid == "Apocarotenoid")
+Carotenoidsboxplotcanxan <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll")
+Carotenoidsboxplotcanxan1 <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll Ester 1")
+Carotenoidsboxplotcanxan2 <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll Ester 2")
+Carotenoidsboxplotcanxan3 <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll Ester 3")
+Carotenoidsboxplotxan <- subset(Carotenoidsboxplot,Carotenoid == "Xanthophyll")
+Carotenoidsboxplotbeta <- subset(Carotenoidsboxplot,Carotenoid == "Beta Carotene")
+Carotenoidsboxplotech <- subset(Carotenoidsboxplot,Carotenoid == "Echinenone")
+Carotenoidsboxplotcisket <- subset(Carotenoidsboxplot,Carotenoid == "cis Ketocarotenoid")
+Carotenoidsboxplotket1 <- subset(Carotenoidsboxplot,Carotenoid == "Ketocarotenoid Ester 1")
+Carotenoidsboxplotket2 <- subset(Carotenoidsboxplot,Carotenoid == "Ketocarotenoid Ester 2")
+Carotenoidsboxplotket3 <- subset(Carotenoidsboxplot,Carotenoid == "Ketocarotenoid Ester 3")
+Carotenoidsboxplotcan <- subset(Carotenoidsboxplot,Carotenoid == "Canthaxanthin")
+Carotenoidsboxplotcanest <- subset(Carotenoidsboxplot,Carotenoid == "Canthaxanthin Ester")
+Carotenoidsboxplotcanxhe <- subset(Carotenoidsboxplot,Carotenoid == "3-Hydroxy Echinenone")
+Carotenoidsboxplotcanx3h3 <- subset(Carotenoidsboxplot,Carotenoid == "X3H3 Ester")
+Carotenoidsboxplotlut <- subset(Carotenoidsboxplot,Carotenoid == "Lutein Ester 1")
+## Individial
+Apo <- ggplot(Carotenoidsboxplotapo, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 5, by = 1))+
+  expand_limits(y = 5)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Apo
+
+Canxan <- ggplot(Carotenoidsboxplotcanxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 55, by = 20))+
+  expand_limits(y = 55)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canxan
+
+Canxan1 <- ggplot(Carotenoidsboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 75, by = 20))+
+  expand_limits(y = 75)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canxan1
+
+Canxan2 <- ggplot(Carotenoidsboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 120, by = 30))+
+  expand_limits(y = 120)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canxan2
+
+Canxan3 <- ggplot(Carotenoidsboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 40, by = 10))+
+  expand_limits(y = 40)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canxan3
+
+Xan <- ggplot(Carotenoidsboxplotxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 30, by = 10))+
+  expand_limits(y = 30)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Xan
+
+Beta <- ggplot(Carotenoidsboxplotbeta, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 400, by = 100))+
+  expand_limits(y = 400)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Beta
+
+Ech <- ggplot(Carotenoidsboxplotech, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 20, by = 5))+
+  expand_limits(y = 20)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Ech
+
+Cisk <- ggplot(Carotenoidsboxplotcisket, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 20, by = 5))+
+  expand_limits(y = 20)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Cisk
+
+Ket1 <- ggplot(Carotenoidsboxplotket1, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 20, by = 5))+
+  expand_limits(y = 20)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Ket1
+
+Ket2 <- ggplot(Carotenoidsboxplotket2, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 15, by = 5))+
+  expand_limits(y = 15)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Ket2
+
+Ket3 <- ggplot(Carotenoidsboxplotket3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 60, by = 20))+
+  expand_limits(y = 60)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Ket3
+
+Canth <- ggplot(Carotenoidsboxplotcan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 20, by = 5))+
+  expand_limits(y = 20)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canth
+
+Canthest <- ggplot(Carotenoidsboxplotcanest, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 30, by = 10))+
+  expand_limits(y = 30)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Canthest
+
+XHE <- ggplot(Carotenoidsboxplotcanxhe, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 70, by = 20))+
+  expand_limits(y = 70)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+XHE
+
+X3H3ester <- ggplot(Carotenoidsboxplotcanx3h3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 60, by = 20))+
+  expand_limits(y = 60)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+X3H3ester
+
+Lut <- ggplot(Carotenoidsboxplotlut, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_y_continuous(breaks = seq(0, 80, by = 20))+
+  expand_limits(y = 80)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))
+Lut
+
+top_row <- ggarrange(Apo,Beta,Ech,XHE,X3H3ester, ncol=5,nrow=1, common.legend = TRUE)
+second_row <- ggarrange(Xan, Canxan, Canxan1, Canxan2, Canxan3, ncol=5, nrow=1)
+third_row <- ggarrange(Cisk,Ket1,Ket2,Ket3,Lut, ncol=5, nrow=1)
+bottom_row <- ggarrange(Canth,Canthest, ncol=3, nrow=1)
+
+blank <- ggplot() + theme_void()
+boxplotlegend <- as_ggplot(get_legend(Apo))
+
+
+figure <- ggarrange(Apo,Beta,Ech,XHE,X3H3ester,
+                    Xan, Canxan, Canxan1, Canxan2, Canxan3,
+                    Cisk,Ket1,Ket2,Ket3,Lut,
+                    blank, Canth, Canthest, boxplotlegend, blank,
+                    ncol=5, nrow=4, legend = "none")
+figure
+annotate_figure(figure,
+                left = text_grob("µg carotenoid per µg skin", rot = 90))
+
+
+## Full boxplot, probably won't use because too hard to control
+ggplot(Carotenoidsboxplot, aes(x=Carotenoid, y=Value, fill=Frog.Type)) + 
+  geom_boxplot()+
+  facet_wrap(~factor(Carotenoid, c("Apocarotenoid", "beta carotene","Xanthophyll", "Canary Xanthophyll", "canary xanthophyll ester 1",
+                                   "canary xanthophyll ester 2", "canary xanthophyll ester 3", "Echinenone", "3-hydroxy-echinenone",
+                                   "X3H3 ester", "cis.ketocarotenoid", "ketocarotenoid ester 1", "ketocarotenoid ester 2",
+                                   "ketocarotenoid ester 3", "lutein ester 1", "Canthaxanthin")), scale="free")+
+  stat_summary(fun = mean, color = "darkred", position = position_dodge(0.75),
+               geom = "point", shape = 18, size = 3,
+               show.legend = FALSE)+
+  theme(strip.text.x = element_blank(), strip.background = element_blank())
