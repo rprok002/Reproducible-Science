@@ -5762,7 +5762,6 @@ t.test(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids, var.equal = T
 ## not significant
 ## Boxplots quantiles ####
 Carotenoidsboxplot <-read.csv(file.choose())
-Carotenoidsboxplotmeanse <-read.csv(file.choose())
 Carotenoidsboxplotapo <- subset(Carotenoidsboxplot,Carotenoid == "Apocarotenoid")
 Carotenoidsboxplotcanxan <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll")
 Carotenoidsboxplotcanxan1 <- subset(Carotenoidsboxplot,Carotenoid == "Canary Xanthophyll Ester 1")
@@ -5790,10 +5789,11 @@ Apo <- ggplot(Carotenoidsboxplotapo, aes(x=Carotenoid, y=Value, color=Frog.Type)
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 5, by = 1))+
-  expand_limits(y = 5)+
+  ylim(0,5)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=1.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=1.48, label= "x", fontface = "bold", size = 2)
 Apo
 
 Canxan <- ggplot(Carotenoidsboxplotcanxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5805,10 +5805,11 @@ Canxan <- ggplot(Carotenoidsboxplotcanxan, aes(x=Carotenoid, y=Value, color=Frog
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 55, by = 20))+
-  expand_limits(y = 55)+
+  ylim(0,50)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=23.48, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=23.27, label= "x", fontface = "bold", size = 2)
 Canxan
 
 Canxan1 <- ggplot(Carotenoidsboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5820,10 +5821,11 @@ Canxan1 <- ggplot(Carotenoidsboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Fr
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 75, by = 20))+
-  expand_limits(y = 75)+
+  ylim(0,80)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=25.46, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=24.06, label= "x", fontface = "bold", size = 2)
 Canxan1
 
 Canxan2 <- ggplot(Carotenoidsboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5835,10 +5837,11 @@ Canxan2 <- ggplot(Carotenoidsboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Fr
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 120, by = 30))+
-  expand_limits(y = 120)+
+  ylim(0,120)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=49.55, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=51.78, label= "x", fontface = "bold", size = 2)
 Canxan2
 
 Canxan3 <- ggplot(Carotenoidsboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5850,10 +5853,11 @@ Canxan3 <- ggplot(Carotenoidsboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Fr
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 40, by = 10))+
-  expand_limits(y = 40)+
+  ylim(0,40)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=21.68, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=20.61, label= "x", fontface = "bold", size = 2)
 Canxan3
 
 Xan <- ggplot(Carotenoidsboxplotxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5865,10 +5869,11 @@ Xan <- ggplot(Carotenoidsboxplotxan, aes(x=Carotenoid, y=Value, color=Frog.Type)
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 30, by = 10))+
-  expand_limits(y = 30)+
+  ylim(0,30)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=7.27, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=7.57, label= "x", fontface = "bold", size = 2)
 Xan
 
 Beta <- ggplot(Carotenoidsboxplotbeta, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5883,7 +5888,9 @@ Beta <- ggplot(Carotenoidsboxplotbeta, aes(x=Carotenoid, y=Value, color=Frog.Typ
   scale_y_continuous(breaks = seq(0, 400, by = 100))+
   expand_limits(y = 400)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=161.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=130.59, label= "x", fontface = "bold", size = 2)
 Beta
 
 Ech <- ggplot(Carotenoidsboxplotech, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5898,7 +5905,9 @@ Ech <- ggplot(Carotenoidsboxplotech, aes(x=Carotenoid, y=Value, color=Frog.Type)
   scale_y_continuous(breaks = seq(0, 20, by = 5))+
   expand_limits(y = 20)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=5.86, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=5.64, label= "x", fontface = "bold", size = 2)
 Ech
 
 Cisk <- ggplot(Carotenoidsboxplotcisket, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5913,7 +5922,9 @@ Cisk <- ggplot(Carotenoidsboxplotcisket, aes(x=Carotenoid, y=Value, color=Frog.T
   scale_y_continuous(breaks = seq(0, 20, by = 5))+
   expand_limits(y = 20)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=6.61, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=6.01, label= "x", fontface = "bold", size = 2)
 Cisk
 
 Ket1 <- ggplot(Carotenoidsboxplotket1, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5925,10 +5936,11 @@ Ket1 <- ggplot(Carotenoidsboxplotket1, aes(x=Carotenoid, y=Value, color=Frog.Typ
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 20, by = 5))+
-  expand_limits(y = 20)+
+  ylim(0,20)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=7.98, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=7.43, label= "x", fontface = "bold", size = 2)
 Ket1
 
 Ket2 <- ggplot(Carotenoidsboxplotket2, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5943,7 +5955,9 @@ Ket2 <- ggplot(Carotenoidsboxplotket2, aes(x=Carotenoid, y=Value, color=Frog.Typ
   scale_y_continuous(breaks = seq(0, 15, by = 5))+
   expand_limits(y = 15)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=5.10, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=4.90, label= "x", fontface = "bold", size = 2)
 Ket2
 
 Ket3 <- ggplot(Carotenoidsboxplotket3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5958,7 +5972,9 @@ Ket3 <- ggplot(Carotenoidsboxplotket3, aes(x=Carotenoid, y=Value, color=Frog.Typ
   scale_y_continuous(breaks = seq(0, 60, by = 20))+
   expand_limits(y = 60)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=22.20, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=22.75, label= "x", fontface = "bold", size = 2)
 Ket3
 
 Canth <- ggplot(Carotenoidsboxplotcan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5970,10 +5986,11 @@ Canth <- ggplot(Carotenoidsboxplotcan, aes(x=Carotenoid, y=Value, color=Frog.Typ
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 20, by = 5))+
-  expand_limits(y = 20)+
+  ylim(0,20)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=7.07, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=7.08, label= "x", fontface = "bold", size = 2)
 Canth
 
 Canthest <- ggplot(Carotenoidsboxplotcanest, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5988,7 +6005,9 @@ Canthest <- ggplot(Carotenoidsboxplotcanest, aes(x=Carotenoid, y=Value, color=Fr
   scale_y_continuous(breaks = seq(0, 30, by = 10))+
   expand_limits(y = 30)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=14.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=11.96, label= "x", fontface = "bold", size = 2)
 Canthest
 
 XHE <- ggplot(Carotenoidsboxplotcanxhe, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -6003,7 +6022,9 @@ XHE <- ggplot(Carotenoidsboxplotcanxhe, aes(x=Carotenoid, y=Value, color=Frog.Ty
   scale_y_continuous(breaks = seq(0, 70, by = 20))+
   expand_limits(y = 70)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=20.97, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=22.07, label= "x", fontface = "bold", size = 2)
 XHE
 
 X3H3ester <- ggplot(Carotenoidsboxplotcanx3h3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -6018,7 +6039,9 @@ X3H3ester <- ggplot(Carotenoidsboxplotcanx3h3, aes(x=Carotenoid, y=Value, color=
   scale_y_continuous(breaks = seq(0, 60, by = 20))+
   expand_limits(y = 60)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=22.83, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=22.11, label= "x", fontface = "bold", size = 2)
 X3H3ester
 
 Lut <- ggplot(Carotenoidsboxplotlut, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -6033,7 +6056,9 @@ Lut <- ggplot(Carotenoidsboxplotlut, aes(x=Carotenoid, y=Value, color=Frog.Type)
   scale_y_continuous(breaks = seq(0, 80, by = 20))+
   expand_limits(y = 80)+
   scale_color_manual(values=c("darkgrey","black"))+
-  scale_fill_manual(values=c("white","white"))
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=21.77, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=22.24, label= "x", fontface = "bold", size = 2)
 Lut
 
 top_row <- ggarrange(Apo,Beta,Ech,XHE,X3H3ester, ncol=5,nrow=1, common.legend = TRUE)
@@ -6066,3 +6091,309 @@ ggplot(Carotenoidsboxplot, aes(x=Carotenoid, y=Value, fill=Frog.Type)) +
                geom = "point", shape = 18, size = 3,
                show.legend = FALSE)+
   theme(strip.text.x = element_blank(), strip.background = element_blank())
+
+## Boxplots mean se ####
+Carotenoidsboxplotmeanse <-read.csv(file.choose())
+Carotenoidsboxplotmeanapo <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Apocarotenoid")
+Carotenoidsboxplotmeancanxan <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canary Xanthophyll")
+Carotenoidsboxplotmeancanxan1 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 1")
+Carotenoidsboxplotmeancanxan2 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 2")
+Carotenoidsboxplotmeancanxan3 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 3")
+Carotenoidsboxplotmeanxan <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Xanthophyll")
+Carotenoidsboxplotmeanbeta <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Beta Carotene")
+Carotenoidsboxplotmeanech <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Echinenone")
+Carotenoidsboxplotmeancisket <- subset(Carotenoidsboxplotmeanse,Carotenoid == "cis Ketocarotenoid")
+Carotenoidsboxplotmeanket1 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Ketocarotenoid Ester 1")
+Carotenoidsboxplotmeanket2 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Ketocarotenoid Ester 2")
+Carotenoidsboxplotmeanket3 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Ketocarotenoid Ester 3")
+Carotenoidsboxplotmeancan <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canthaxanthin")
+Carotenoidsboxplotmeancanest <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Canthaxanthin Ester")
+Carotenoidsboxplotmeancanxhe <- subset(Carotenoidsboxplotmeanse,Carotenoid == "3-Hydroxy Echinenone")
+Carotenoidsboxplotmeancanx3h3 <- subset(Carotenoidsboxplotmeanse,Carotenoid == "X3H3 Ester")
+Carotenoidsboxplotmeanlut <- subset(Carotenoidsboxplotmeanse,Carotenoid == "Lutein Ester 1")
+
+Apomean <- ggplot(Carotenoidsboxplotmeanapo, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,2)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=1.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=1.48, label= "x", fontface = "bold", size = 2)
+Apomean
+
+Canxanmean <- ggplot(Carotenoidsboxplotmeancanxan, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=23.48, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=23.27, label= "x", fontface = "bold", size = 2)
+Canxanmean
+
+Canxan1mean <- ggplot(Carotenoidsboxplotmeancanxan1, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,40)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=23.48, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=23.27, label= "x", fontface = "bold", size = 2)
+Canxan1mean
+
+Canxan2mean <- ggplot(Carotenoidsboxplotmeancanxan2, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,80)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=49.55, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=51.78, label= "x", fontface = "bold", size = 2)
+Canxan2mean
+
+Canxan3mean <- ggplot(Carotenoidsboxplotmeancanxan3, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=21.68, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=20.61, label= "x", fontface = "bold", size = 2)
+Canxan3mean
+
+Xanmean <- ggplot(Carotenoidsboxplotmeanxan, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=7.27, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=7.57, label= "x", fontface = "bold", size = 2)
+Xanmean
+
+Betamean <- ggplot(Carotenoidsboxplotmeanbeta, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,200)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=161.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=130.59, label= "x", fontface = "bold", size = 2)
+Betamean
+
+Echmean <- ggplot(Carotenoidsboxplotmeanech, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=5.86, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=5.64, label= "x", fontface = "bold", size = 2)
+Echmean
+
+Cisketmean <- ggplot(Carotenoidsboxplotmeancisket, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=6.61, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=6.01, label= "x", fontface = "bold", size = 2)
+Cisketmean
+
+Ket1mean <- ggplot(Carotenoidsboxplotmeanket1, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=7.98, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=7.43, label= "x", fontface = "bold", size = 2)
+Ket1mean
+
+Ket2mean <- ggplot(Carotenoidsboxplotmeanket2, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=5.10, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=4.90, label= "x", fontface = "bold", size = 2)
+Ket2mean
+
+Ket3mean <- ggplot(Carotenoidsboxplotmeanket3, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=22.20, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=22.75, label= "x", fontface = "bold", size = 2)
+Ket3mean
+
+Canmean <- ggplot(Carotenoidsboxplotmeancan, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=7.07, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=7.08, label= "x", fontface = "bold", size = 2)
+Canmean
+
+Canestmean <- ggplot(Carotenoidsboxplotmeancanest, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,20)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=14.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=11.96, label= "x", fontface = "bold", size = 2)
+Canestmean
+
+Xhemean <- ggplot(Carotenoidsboxplotmeancanxhe, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=20.97, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=22.07, label= "x", fontface = "bold", size = 2)
+Xhemean
+
+X3h3mean <- ggplot(Carotenoidsboxplotmeancanx3h3, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=22.83, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=22.11, label= "x", fontface = "bold", size = 2)
+X3h3mean
+
+Lutmean <- ggplot(Carotenoidsboxplotmeanlut, aes(x = Carotenoid, color = Frog.Type)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,30)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=21.77, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=22.24, label= "x", fontface = "bold", size = 2)
+Lutmean
+
+
+blank <- ggplot() + theme_void()
+boxplotlegendmean <- as_ggplot(get_legend(Apomean))
+
+
+figuremean <- ggarrange(Apomean,Betamean,Echmean,Xhemean,X3h3mean,
+                    Xanmean, Canxanmean, Canxan1mean, Canxan2mean, Canxan3mean,
+                    Cisketmean,Ket1mean,Ket2mean,Ket3mean,Lutmean,
+                    blank, Canmean, Canestmean, boxplotlegendmean, blank,
+                    ncol=5, nrow=4, legend = "none")
+figuremean
+annotate_figure(figuremean,
+                left = text_grob("µg carotenoid per µg skin", rot = 90))
