@@ -5644,15 +5644,24 @@ plot(MANOVA.effect, ask=FALSE)
 ## T-tests ####
 ggdensity(Carotenoids$sqrtApocarotenoid)
 ggqqplot(Carotenoids$sqrtApocarotenoid)
+ggdensity(Carotenoids$Apocarotenoid)
+ggqqplot(Carotenoids$Apocarotenoid)
 shapiro.test(Carotenoids$sqrtApocarotenoid)
+shapiro.test(Carotenoids$Apocarotenoid)
 leveneTest(sqrtApocarotenoid ~ Frog.Type, data = Carotenoids)
+leveneTest(Apocarotenoid ~ Frog.Type, data = Carotenoids)
 t.test(sqrtApocarotenoid ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+t.test(Apocarotenoid ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtCanary.xanthophyll)
 ggqqplot(Carotenoids$sqrtCanary.xanthophyll)
+ggdensity(Carotenoids$Canary.xanthophyll)
+ggqqplot(Carotenoids$Canary.xanthophyll)
 shapiro.test(Carotenoids$sqrtCanary.xanthophyll)
+shapiro.test(Carotenoids$Canary.xanthophyll)
 leveneTest(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoids)
+leveneTest(Canary.xanthophyll ~ Frog.Type, data = Carotenoids)
 t.test(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
