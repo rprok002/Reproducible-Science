@@ -247,10 +247,11 @@ plot(ControlTrialLMER)
 ggqqplot(residuals(ControlTrialLMER))
 plot(ControlTrialLMER)
 
-ggdensity(MateChoiceAnalysisInfected$Weight_Seconds, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
-ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
+ggdensity(MateChoiceAnalysisInfected$Weight_Seconds_Female, main = "Density Plot of SQRT Weight Seconds", xlab = " SQRT Weight Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Weight_Seconds_Female)
+hist(MateChoiceAnalysisInfected$Weight_Seconds_Female)
 
-InfectedTrialLMER <- glmer(Weight_Seconds_Female~Group+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson", weights = wt)
+InfectedTrialLMER <- glmer(Weight_Seconds_Female~Group+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson")
 anova(InfectedTrialLMER)
 summary(InfectedTrialLMER)
 plot(InfectedTrialLMER)
@@ -259,26 +260,36 @@ emmeans(InfectedTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
 
 ## Male movement data
 MateChoiceAnalysisInfectedMaleMove <- read.csv(file.choose())
-ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
-ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Wander_Seconds)
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds)
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log)
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT)
 
 InfectedTrialLMERMaleWander <- glmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"), weights = wt)
 anova(InfectedTrialLMERMaleWander)
 summary(InfectedTrialLMERMaleWander)
 plot(InfectedTrialLMERMaleWander)
 ggqqplot(residuals(InfectedTrialLMERMaleWander))
+emmeans(InfectedTrialLMERMaleWander, list (pairwise~Group), lmer.df = "satterthwaite")
 
 simsInfectedTrialLMERMaleWander <- simulateResiduals(InfectedTrialLMERMaleWander)
 plot(simsInfectedTrialLMERMaleWander, quantreg = FALSE)
 
-ggdensity(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
-ggqqplot(MateChoiceAnalysisInfectedMaleMove$Male_Front_Seconds)
+## Front
+ggdensity(MateChoiceAnalysisInfected$Male_Front_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Front_Seconds)
 
-InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"))
+InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"), weights = wt)
 anova(InfectedTrialLMERMaleFront)
 summary(InfectedTrialLMERMaleFront)
 plot(InfectedTrialLMERMaleFront)
 ggqqplot(residuals(InfectedTrialLMERMaleFront))
+emmeans(InfectedTrialLMERMaleFront, list (pairwise~Group), lmer.df = "satterthwaite")
 
 
 ## Boxplots Mate Choice ####
@@ -2717,3 +2728,62 @@ plot(simsAverageBInfectionDorsal, quantreg = FALSE)
 ##6. For color information compared to log infection, accounted for day by repeated measures of individual frog, so those models are fine
 ##7. Linear models for mate choice likely don't make sense because of distributions of raw data and residuals
 ##8. For mate choice wander data seems to be zero inflated, Ian will help me with that as well
+
+## Mate Choice GLMER models poisson distribution ####
+## Histograms show general poisson distribution, so staying with it
+
+hist(MateChoiceAnalysisInfected$Weight_Seconds_Female)
+InfectedTrialLMER <- glmer(Weight_Seconds_Female~Group+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson")
+anova(InfectedTrialLMER)
+summary(InfectedTrialLMER)
+plot(InfectedTrialLMER)
+ggqqplot(residuals(InfectedTrialLMER))
+emmeans(InfectedTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
+
+
+## Male movement data
+MateChoiceAnalysisInfectedMaleMove <- read.csv(file.choose())
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds)
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log)
+ggdensity(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds_Log)
+hist(MateChoiceAnalysisInfected$Male_Wander_Seconds_SQRT)
+
+InfectedTrialLMERMaleWander <- glmer(Male_Wander_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"), weights = wt)
+anova(InfectedTrialLMERMaleWander)
+summary(InfectedTrialLMERMaleWander)
+plot(InfectedTrialLMERMaleWander)
+ggqqplot(residuals(InfectedTrialLMERMaleWander))
+emmeans(InfectedTrialLMERMaleWander, list (pairwise~Group), lmer.df = "satterthwaite")
+
+simsInfectedTrialLMERMaleWander <- simulateResiduals(InfectedTrialLMERMaleWander)
+plot(simsInfectedTrialLMERMaleWander, quantreg = FALSE)
+
+## Front
+ggdensity(MateChoiceAnalysisInfected$Male_Front_Seconds, main = "Density Plot of Male Wander Seconds", xlab = " Male Wander Seconds")
+ggqqplot(MateChoiceAnalysisInfected$Male_Front_Seconds)
+
+InfectedTrialLMERMaleFront <- glmer(Male_Front_Seconds~Group+(1|Male_Pair_Letter), data = MateChoiceAnalysisInfected, family = poisson(link="log"), weights = wt)
+anova(InfectedTrialLMERMaleFront)
+summary(InfectedTrialLMERMaleFront)
+plot(InfectedTrialLMERMaleFront)
+ggqqplot(residuals(InfectedTrialLMERMaleFront))
+emmeans(InfectedTrialLMERMaleFront, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Quick side recheck
+ControlTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number), data = MateChoiceAnalysisControl, family = "poisson")
+anova(ControlTrialLMER)
+summary(ControlTrialLMER)
+emmeans(ControlTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
+
+InfectedTrialLMERside <- glmer(Weight_Seconds_Female~Side+(1|Frog_Number), data = MateChoiceAnalysisInfected, family = "poisson")
+anova(InfectedTrialLMERside)
+summary(InfectedTrialLMERside)
+emmeans(InfectedTrialLMERside, list (pairwise~Side), lmer.df = "satterthwaite")
+
+## Control trials preferred opposite side to infected, so reiterates that side doesn't matter
+## even though I standardized it when I ran the trials in the first place
