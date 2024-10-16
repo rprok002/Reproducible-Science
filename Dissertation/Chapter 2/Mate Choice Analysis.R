@@ -566,10 +566,12 @@ ggplot(FrogImageDataDorsal, aes(x = Day, y = Proportion.B, colour = Frog_Type, g
   geom_line()
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Redness.score, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Greeness.score, colour = Frog_Type, group = Frog_Number)) +
-  geom_line()
-ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type, group = Frog_Number)) +
-  geom_line()
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Greeness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Blueness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
 
 ggplot(FrogImageDataVentral, aes(x = Day, y = Average.R, colour = Frog_Type, group = Frog_Number)) +
   geom_line()
@@ -1527,7 +1529,7 @@ emmeans(GreenessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
 plot(GreenessDorsalDay)
 ## Interaction not significant
 ## Greeness increases over time
-## Greeness in control frogs higher than infected
+
 
 BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BluenessDorsalDay)
@@ -1689,7 +1691,7 @@ plot(simsRednessInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
 plot(simsGreenessInfectionDorsal, quantreg = FALSE)
-## No deviation anymore
+## Deviation but not bad so keeping it
 simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
 plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
@@ -1764,7 +1766,7 @@ ggboxplot(FrogImageDataDorsalMale, x = "Day_Bracket", y = "Log_Infection", facet
 
 BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
-  geom_point()+
+  geom_point(size=0.75)+
   labs(y = "Average Brigtness (%)", x = "Day")+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
@@ -1772,11 +1774,14 @@ BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Br
         panel.border = element_blank(),
         panel.background = element_blank(),
         axis.title.y = element_text(size = 7),
-        axis.title.x = element_text(size = 7))+
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
   xlim(0,50)+
   ylim(20,45)+
   scale_color_manual(values = c("black", "darkgrey"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=43, label= "F: 21.31 ; DF: 1,182.30 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=45, label= " Day", fontface = "bold", size = 2)
 BrightnessLineDay
 
 RedLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.R, colour = Frog_Type, line = Frog_Number)) +
@@ -1838,7 +1843,7 @@ BlueLineDay
 
 RednessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Redness.score, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
-  geom_point()+
+  geom_point(size=0.75)+
   labs(y = "Dorsal Redness (Rdorsum/Rstandard)", x = "Day")+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
@@ -1846,16 +1851,19 @@ RednessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Redness.score
         panel.border = element_blank(),
         panel.background = element_blank(),
         axis.title.y = element_text(size = 7),
-        axis.title.x = element_text(size = 7))+
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
   xlim(0,50)+
   ylim(0.75,1.2)+
   scale_color_manual(values = c("darkred", "red"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=1.15, label= "F < 0.01 ; DF: 1,192.00 ; p = 0.99", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=1.2, label= " Day", fontface = "bold", size = 2)
 RednessLineDay
 
 GreenessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Greeness.score, colour = Frog_Type, line = Frog_Number)) +
   geom_line()+
-  geom_point()+
+  geom_point(size=0.75)+
   labs(y = "Dorsal Greenness (Gdorsum/Gstandard)", x = "Day")+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
@@ -1863,19 +1871,42 @@ GreenessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Greeness.sco
         panel.border = element_blank(),
         panel.background = element_blank(),
         axis.title.y = element_text(size = 7),
-        axis.title.x = element_text(size = 7))+
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
   ylim(1,2)+
   xlim(0,50)+
   scale_color_manual(values = c("darkgreen", "green"))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=1.9, label= "F: 27.31 ; DF: 1,179.76 ; p < 0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=2, label= " Day", fontface = "bold", size = 2)
 GreenessLineDay
+
+BluenessLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Blueness.score, colour = Frog_Type, line = Frog_Number)) +
+  geom_line()+
+  geom_point(size=0.75)+
+  labs(y = "Dorsal Blueness (Bdorsum/Bstandard)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
+  xlim(0,50)+
+  ylim(0,1.2)+
+  scale_color_manual(values = c("darkblue", "blue"))+
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=1.1, label= "F: 8.41 ; DF: 1,185.17 ; p < 0.01", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=1.2, label= " Day", fontface = "bold", size = 2)
+BluenessLineDay
 
 library(patchwork)
 (BrightnessLineDay | RedLineDay)/
   (GreenLineDay | BlueLineDay)
 
 (BrightnessLineDay | RednessLineDay)/
-  (GreenLineDay | BlueLineDay)
+  (GreenessLineDay | BluenessLineDay)
 
 ## Line Graphs for infection coloration####
 BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
@@ -1980,7 +2011,7 @@ GreennessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Inf
         axis.title.x = element_text(size = 7))+
   ylim(1,2)+
   xlim(0,8)+
-  annotate("text", x=6, y=1.93, label= "F: 1.53 ; DF: 1,82.32 ; p = 0.22", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=1.93, label= "F: 1.93 ; DF: 1,86.02 ; p = 0.17", fontface = "bold", size = 2)+
   annotate("text", x=6, y=2, label= "Log Infection", fontface = "bold", size = 2)
 GreennessLineInfection
 
@@ -1998,7 +2029,7 @@ BluenessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infe
         axis.title.x = element_text(size = 7))+
   ylim(0,1.5)+
   xlim(0,8)+
-  annotate("text", x=6, y=1.4, label= "F: 0.01 ; DF: 1,88 ; p = 0.90", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=1.4, label= "F: 0.01 ; DF: 1,88 ; p = 0.91", fontface = "bold", size = 2)+
   annotate("text", x=6, y=1.5, label= "Log Infection", fontface = "bold", size = 2)
 BluenessLineInfection
 
