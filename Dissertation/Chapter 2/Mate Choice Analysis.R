@@ -306,33 +306,62 @@ ggboxplot(MateChoiceAnalysisControl, x = "Group", y = "Weight_Seconds",  ylab = 
   annotate("text", x=1, y=296, label="x", size = 7)+
   annotate("text", x=2, y=265, label="x", size = 7)
   
-MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female",  ylab = " Time (seconds)", xlab = "Male",
-          ylim = c(0, 1200), fill = "darkgrey") + 
-  scale_x_discrete(labels=c("Clean", "Infected"))+
+
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Control", "Infected"))
+mc1 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1100), fill = "Group", palette = c("snow3", "snow4")) + 
   scale_y_continuous(breaks=seq(0,900,by=100))+
   theme(plot.title=element_text(hjust=0.5))+
-  theme(legend.title=element_blank())+
-  annotate("text", x=2, y=1100, label= "F: 1.19 ; DF: 1,173 ; p = 0.28", fontface = "bold", size = 5)+
-  annotate("text", x=2, y=1200, label= " Side", fontface = "bold", size = 5)+
+  theme(axis.title.x = element_blank(),
+        legend.title=element_blank(),
+        legend.position = "bottom",
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
   annotate("text", x=1, y=277, label="x", size = 7)+
-  annotate("text", x=2, y=336, label="x", size = 7)
+  annotate("text", x=2, y=336, label="x", size = 7)+
+  geom_signif(y_position = c(1000), xmin = c(1), xmax = c(2),
+              annotation = c("***"), tip_length = 0, textsize = 5)
+mc1
 
-MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Wander_Seconds",  ylab = " Time (seconds)", xlab = "Male",
-          ylim = c(0, 1200), fill = "darkgrey") + 
-  scale_x_discrete(labels=c("Clean", "Infected"))+
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Control", "Infected"))
+mc2 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Wander_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1100), fill = "Group", palette = c("snow3", "snow4")) + 
   scale_y_continuous(breaks=seq(0,900,by=100))+
   theme(plot.title=element_text(hjust=0.5))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "bottom",
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())+
+  annotate("text", x=1, y=89, label="x", size = 7)+
+  annotate("text", x=2, y=97, label="x", size = 7)+
+  geom_signif(y_position = c(1000), xmin = c(1), xmax = c(2),
+              annotation = c("***"), tip_length = 0, textsize = 5)
+mc2
 
-MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Clean", "Infected"))
-ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Front_Seconds",  ylab = " Time (seconds)", xlab = "Male",
-          ylim = c(0, 1200), fill = "darkgrey") + 
-  scale_x_discrete(labels=c("Clean", "Infected"))+
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Control", "Infected"))
+mc3 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Male_Front_Seconds",  ylab = " Time (seconds)", xlab = "Male",
+          ylim = c(0, 1100), fill = "Group", palette = c("snow3", "snow4")) + 
   scale_y_continuous(breaks=seq(0,900,by=100))+
   theme(plot.title=element_text(hjust=0.5))+
-  theme(legend.title=element_blank())
+  theme(legend.title=element_blank(),
+        axis.title.x = element_blank(),
+        legend.position = "bottom",
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.title.y=element_blank(),
+        axis.line.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())+
+  annotate("text", x=1, y=615, label="x", size = 7)+
+  annotate("text", x=2, y=634, label="x", size = 7)+
+  geom_signif(y_position = c(1000), xmin = c(1), xmax = c(2),
+              annotation = c("***"), tip_length = 0, textsize = 5)
+mc3
 
 ## Means and standard deviations for boxplots
 mean_Control <- MateChoiceAnalysisControl %>%
@@ -343,9 +372,38 @@ glimpse(mean_Control)
   
 mean_Infected <- MateChoiceAnalysisInfected %>%
     group_by(Group, Type) %>% 
-    summarise(mean= mean(Weight_Seconds),
-              se = sd(Weight_Seconds))
+    summarise(mean= mean(Male_Front_Seconds),
+              se = sd(Male_Front_Seconds))
 glimpse(mean_Infected)
+
+
+ggarrange(mc1, mc2, mc3, ncol=3, nrow=1, common.legend = TRUE, legend = "bottom")
+
+## Different way of trying to combine
+MateChoiceGraph <- read.csv(file.choose())
+MateChoiceGraph$Factor <- factor(MateChoiceGraph$Factor, levels = c("Female Choice", "Male Wander", "Male Front"))
+ggplot(MateChoiceGraph, aes(x=Factor, y=Value, fill = Group))+
+  geom_boxplot()+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.x = element_blank(),
+        legend.title= element_blank(),
+        legend.position = "bottom")+
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  ylab("Time (seconds")+
+  expand_limits(y = 1100)+
+  scale_fill_manual(values=c("snow3", "snow4"))+
+  geom_signif(y_position = c(1000,1000,1000), xmin = c(0.8,1.8,2.8), xmax = c(1.2,2.2,3.2),
+              annotation = c("***"), tip_length = 0, textsize = 5)+
+  annotate("text", x=0.8, y=277, label="x", size = 5)+
+  annotate("text", x=1.2, y=336, label="x", size = 5)+
+  annotate("text", x=1.8, y=89, label="x", size = 5)+
+  annotate("text", x=2.2, y=97, label="x", size = 5)+
+  annotate("text", x=2.8, y=615, label="x", size = 5)+
+  annotate("text", x=3.2, y=634, label="x", size = 5)
 
 ## Picture Analysis Data Files####
 
