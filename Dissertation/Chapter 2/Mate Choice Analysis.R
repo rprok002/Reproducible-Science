@@ -2878,6 +2878,7 @@ plot(InfectedTrialLMER)
 ggqqplot(residuals(InfectedTrialLMER))
 emmeans(InfectedTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
 
+car::Anova(InfectedTrialLMER, type=3)
 
 ## Male movement data
 MateChoiceAnalysisInfectedMaleMove <- read.csv(file.choose())
@@ -2898,6 +2899,8 @@ plot(InfectedTrialLMERMaleWander)
 ggqqplot(residuals(InfectedTrialLMERMaleWander))
 emmeans(InfectedTrialLMERMaleWander, list (pairwise~Group), lmer.df = "satterthwaite")
 
+car::Anova(InfectedTrialLMERMaleWander, type=3)
+
 simsInfectedTrialLMERMaleWander <- simulateResiduals(InfectedTrialLMERMaleWander)
 plot(simsInfectedTrialLMERMaleWander, quantreg = FALSE)
 
@@ -2912,6 +2915,8 @@ plot(InfectedTrialLMERMaleFront)
 ggqqplot(residuals(InfectedTrialLMERMaleFront))
 emmeans(InfectedTrialLMERMaleFront, list (pairwise~Group), lmer.df = "satterthwaite")
 
+car::Anova(InfectedTrialLMERMaleFront, type=3)
+
 ## Quick side recheck
 ControlTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number), data = MateChoiceAnalysisControl, family = "poisson")
 anova(ControlTrialLMER)
@@ -2925,3 +2930,20 @@ emmeans(InfectedTrialLMERside, list (pairwise~Side), lmer.df = "satterthwaite")
 
 ## Control trials preferred opposite side to infected, so reiterates that side doesn't matter
 ## even though I standardized it when I ran the trials in the first place
+
+## Infected more or less
+hist(MateChoiceAnalysisInfectedLess$Weight_Seconds)
+InfectedLessTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number), data = MateChoiceAnalysisInfectedLess, family = "poisson", weights = wt)
+anova(InfectedLessTrialLMER)
+summary(InfectedLessTrialLMER)
+plot(InfectedLessTrialLMER)
+ggqqplot(residuals(InfectedLessTrialLMER))
+emmeans(InfectedLessTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
+
+hist(MateChoiceAnalysisInfectedMore$Weight_Seconds)
+InfectedMoreTrialLMER <- glmer(Weight_Seconds~Group+(1|Frog_Number), data = MateChoiceAnalysisInfectedMore, family = "poisson", weights = wt)
+anova(InfectedMoreTrialLMER)
+summary(InfectedMoreTrialLMER)
+plot(InfectedMoreTrialLMER)
+ggqqplot(residuals(InfectedMoreTrialLMER))
+emmeans(InfectedMoreTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
