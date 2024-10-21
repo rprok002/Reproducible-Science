@@ -393,7 +393,7 @@ ggplot(MateChoiceGraph, aes(x=Factor, y=Value, fill = Group))+
         legend.title= element_blank(),
         legend.position = "bottom")+
   scale_y_continuous(breaks=seq(0,900,by=100))+
-  ylab("Time (seconds")+
+  ylab("Time (seconds)")+
   expand_limits(y = 1100)+
   scale_fill_manual(values=c("snow3", "snow4"))+
   geom_signif(y_position = c(1000,1000,1000), xmin = c(0.8,1.8,2.8), xmax = c(1.2,2.2,3.2),
