@@ -5801,8 +5801,8 @@ Apo <- ggplot(Carotenoidsboxplotapo, aes(x=Carotenoid, y=Value, color=Frog.Type)
   ylim(0,5)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=1.42, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=1.48, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=1.68, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=1.46, label= "x", fontface = "bold", size = 2)
 Apo
 
 Canxan <- ggplot(Carotenoidsboxplotcanxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5817,8 +5817,8 @@ Canxan <- ggplot(Carotenoidsboxplotcanxan, aes(x=Carotenoid, y=Value, color=Frog
   ylim(0,50)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=23.48, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=23.27, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=26.15, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=23.21, label= "x", fontface = "bold", size = 2)
 Canxan
 
 Canxan1 <- ggplot(Carotenoidsboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5833,8 +5833,8 @@ Canxan1 <- ggplot(Carotenoidsboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Fr
   ylim(0,80)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=25.46, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=24.06, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=28.17, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=24.05, label= "x", fontface = "bold", size = 2)
 Canxan1
 
 Canxan2 <- ggplot(Carotenoidsboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5849,8 +5849,8 @@ Canxan2 <- ggplot(Carotenoidsboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Fr
   ylim(0,120)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=49.55, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=51.78, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=56.40, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=51.19, label= "x", fontface = "bold", size = 2)
 Canxan2
 
 Canxan3 <- ggplot(Carotenoidsboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5865,8 +5865,8 @@ Canxan3 <- ggplot(Carotenoidsboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Fr
   ylim(0,40)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=21.68, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=20.61, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=22.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=20.73, label= "x", fontface = "bold", size = 2)
 Canxan3
 
 Xan <- ggplot(Carotenoidsboxplotxan, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5881,8 +5881,8 @@ Xan <- ggplot(Carotenoidsboxplotxan, aes(x=Carotenoid, y=Value, color=Frog.Type)
   ylim(0,30)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=7.27, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=7.57, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=8.52, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=7.48, label= "x", fontface = "bold", size = 2)
 Xan
 
 Beta <- ggplot(Carotenoidsboxplotbeta, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5898,8 +5898,8 @@ Beta <- ggplot(Carotenoidsboxplotbeta, aes(x=Carotenoid, y=Value, color=Frog.Typ
   expand_limits(y = 400)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=161.29, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=130.59, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=167.83, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=129.18, label= "x", fontface = "bold", size = 2)
 Beta
 
 Ech <- ggplot(Carotenoidsboxplotech, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
@@ -5911,12 +5911,12 @@ Ech <- ggplot(Carotenoidsboxplotech, aes(x=Carotenoid, y=Value, color=Frog.Type)
         panel.grid.minor = element_blank(),
         panel.border = element_blank(),
         panel.background = element_blank())+
-  scale_y_continuous(breaks = seq(0, 20, by = 5))+
-  expand_limits(y = 20)+
+  scale_y_continuous(breaks = seq(0, 30, by = 10))+
+  expand_limits(y = 30)+
   scale_color_manual(values=c("darkgrey","black"))+
   scale_fill_manual(values=c("white","white"))+
-  annotate("text", x=0.81, y=5.86, label= "x", fontface = "bold", size = 2)+
-  annotate("text", x=1.19, y=5.64, label= "x", fontface = "bold", size = 2)
+  annotate("text", x=0.81, y=8.46, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=6.05, label= "x", fontface = "bold", size = 2)
 Ech
 
 Cisk <- ggplot(Carotenoidsboxplotcisket, aes(x=Carotenoid, y=Value, color=Frog.Type)) + 
