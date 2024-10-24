@@ -5641,7 +5641,95 @@ heplot(FACTORIALSETUP)
 MANOVA.effect <- allEffects(MANOVA)
 plot(MANOVA.effect, ask=FALSE)
 
-## T-tests ####
+## Normality tests Control ####
+Carotenoidscontrol <- subset(Carotenoids, Frog.Type == "Control")
+
+ggdensity(Carotenoidscontrol$Apocarotenoid)
+ggqqplot(Carotenoidscontrol$Apocarotenoid)
+shapiro.test(Carotenoidscontrol$Apocarotenoid)
+## just not normal
+
+ggdensity(Carotenoidscontrol$Canary.xanthophyll)
+ggqqplot(Carotenoidscontrol$Canary.xanthophyll)
+shapiro.test(Carotenoidscontrol$Canary.xanthophyll)
+## normal
+
+ggdensity(Carotenoidscontrol$Canthaxanthin)
+ggqqplot(Carotenoidscontrol$Canthaxanthin)
+shapiro.test(Carotenoidscontrol$Canthaxanthin)
+## just not normal
+
+ggdensity(Carotenoidscontrol$Xanthophyll)
+ggqqplot(Carotenoidscontrol$Xanthophyll)
+shapiro.test(Carotenoidscontrol$Xanthophyll)
+## normal
+
+ggdensity(Carotenoidscontrol$Echinenone)
+ggqqplot(Carotenoidscontrol$Echinenone)
+shapiro.test(Carotenoidscontrol$Echinenone)
+## not normal
+
+ggdensity(Carotenoidscontrol$cis.ketocarotenoid)
+ggqqplot(Carotenoidscontrol$cis.ketocarotenoid)
+shapiro.test(Carotenoidscontrol$cis.ketocarotenoid)
+## normal
+
+ggdensity(Carotenoidscontrol$X3.hydroxy.echinenone)
+ggqqplot(Carotenoidscontrol$X3.hydroxy.echinenone)
+shapiro.test(Carotenoidscontrol$X3.hydroxy.echinenone)
+## normal
+
+ggdensity(Carotenoidscontrol$lutein.ester.1)
+ggqqplot(Carotenoidscontrol$lutein.ester.1)
+shapiro.test(Carotenoidscontrol$lutein.ester.1)
+## normal
+
+ggdensity(Carotenoidscontrol$canary.xanthophyll.ester.1)
+ggqqplot(Carotenoidscontrol$canary.xanthophyll.ester.1)
+shapiro.test(Carotenoidscontrol$canary.xanthophyll.ester.1)
+## normal
+
+ggdensity(Carotenoidscontrol$beta.carotene)
+ggqqplot(Carotenoidscontrol$beta.carotene)
+shapiro.test(Carotenoidscontrol$beta.carotene)
+## normal
+
+ggdensity(Carotenoidscontrol$canary.xanthophyll.ester.2)
+ggqqplot(Carotenoidscontrol$canary.xanthophyll.ester.2)
+shapiro.test(Carotenoidscontrol$canary.xanthophyll.ester.2)
+## normal
+
+ggdensity(Carotenoidscontrol$ketocarotenoid.ester.1)
+ggqqplot(Carotenoidscontrol$ketocarotenoid.ester.1)
+shapiro.test(Carotenoidscontrol$ketocarotenoid.ester.1)
+## not normal
+
+ggdensity(Carotenoidscontrol$ketocarotenoid.ester.2)
+ggqqplot(Carotenoidscontrol$ketocarotenoid.ester.2)
+shapiro.test(Carotenoidscontrol$ketocarotenoid.ester.2)
+## normal
+
+ggdensity(Carotenoidscontrol$canary.xanthophyll.ester.3)
+ggqqplot(Carotenoidscontrol$canary.xanthophyll.ester.3)
+shapiro.test(Carotenoidscontrol$canary.xanthophyll.ester.3)
+## not normal
+
+ggdensity(Carotenoidscontrol$canthaxanthin.ester)
+ggqqplot(Carotenoidscontrol$canthaxanthin.ester)
+shapiro.test(Carotenoidscontrol$canthaxanthin.ester)
+## normal
+
+ggdensity(Carotenoidscontrol$X3HE.ester)
+ggqqplot(Carotenoidscontrol$X3HE.ester)
+shapiro.test(Carotenoidscontrol$X3HE.ester)
+## normal
+
+ggdensity(Carotenoidscontrol$ketocarotenoid.ester.3)
+ggqqplot(Carotenoidscontrol$ketocarotenoid.ester.3)
+shapiro.test(Carotenoidscontrol$ketocarotenoid.ester.3)
+## normal
+
+## T-tests Control vs Infected####
 Carotenoidsf <- subset(Carotenoids,Sex == "F")
 Carotenoidsm <- subset(Carotenoids,Sex == "M")
 
@@ -6666,3 +6754,53 @@ figuremean <- ggarrange(Apomean,Betamean,Echmean,Xhemean,X3h3mean,
 figuremean
 annotate_figure(figuremean,
                 left = text_grob("µg carotenoid per µg skin", rot = 90))
+
+## Compare to Crothers ####
+install.packages("BSDA")
+library(BSDA)
+
+## Apo Control vs Crothers
+tsum.test(mean.x=1.68,   s.x=.46, n.x=9,
+          mean.y=5.67, s.y=4.88, n.y=19)
+## sig diff
+
+## Canxan Control vs Crothers
+tsum.test(mean.x=26.15,   s.x=14.84, n.x=9,
+          mean.y=21.29, s.y=17.26, n.y=19)
+## not sig
+
+## Canxan1 Control vs Crothers
+tsum.test(mean.x=28.17,   s.x=7.36, n.x=9,
+          mean.y=56.55, s.y=55.92, n.y=19)
+
+## Canxan2 Control vs Crothers
+tsum.test(mean.x=56.40,   s.x=34.22, n.x=9,
+          mean.y=76.67, s.y=63.44, n.y=19)
+
+## Xan Control vs Crothers
+tsum.test(mean.x=8.52,   s.x=4.63, n.x=9,
+          mean.y=6.47, s.y=6.73, n.y=19)
+
+## Canthest Control vs Crothers
+tsum.test(mean.x=14.58,   s.x=4.50, n.x=9,
+          mean.y=50.64, s.y=32.31, n.y=19)
+
+## X3Hydr Control vs Crothers
+tsum.test(mean.x=25.19,   s.x=18.13, n.x=9,
+          mean.y=47.31, s.y=43.29, n.y=19)
+
+## Beta Control vs Crothers
+tsum.test(mean.x=167.83,   s.x=78.23, n.x=9,
+          mean.y=195.08, s.y=134.50, n.y=19)
+
+## Lut Control vs Crothers
+tsum.test(mean.x=24.33,   s.x=14.88, n.x=9,
+          mean.y=34.76, s.y=27.05, n.y=19)
+
+## cisk Control vs Crothers
+tsum.test(mean.x=7.29,   s.x=4.58, n.x=9,
+          mean.y=8.30, s.y=9.99, n.y=19)
+
+## ket2 Control vs Crothers
+tsum.test(mean.x=5.42,   s.x=2.04, n.x=9,
+          mean.y=2.63, s.y=8.45, n.y=19)
