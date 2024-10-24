@@ -5642,6 +5642,9 @@ MANOVA.effect <- allEffects(MANOVA)
 plot(MANOVA.effect, ask=FALSE)
 
 ## T-tests ####
+Carotenoidsf <- subset(Carotenoids,Sex == "F")
+Carotenoidsm <- subset(Carotenoids,Sex == "M")
+
 ggdensity(Carotenoids$sqrtApocarotenoid)
 ggqqplot(Carotenoids$sqrtApocarotenoid)
 ggdensity(Carotenoids$Apocarotenoid)
@@ -5652,6 +5655,30 @@ leveneTest(sqrtApocarotenoid ~ Frog.Type, data = Carotenoids)
 leveneTest(Apocarotenoid ~ Frog.Type, data = Carotenoids)
 t.test(sqrtApocarotenoid ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 t.test(Apocarotenoid ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtApocarotenoid)
+ggqqplot(Carotenoidsf$sqrtApocarotenoid)
+ggdensity(Carotenoidsf$Apocarotenoid)
+ggqqplot(Carotenoidsf$Apocarotenoid)
+shapiro.test(Carotenoidsf$sqrtApocarotenoid)
+shapiro.test(Carotenoidsf$Apocarotenoid)
+leveneTest(sqrtApocarotenoid ~ Frog.Type, data = Carotenoidsf)
+leveneTest(Apocarotenoid ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtApocarotenoid ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+t.test(Apocarotenoid ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtApocarotenoid)
+ggqqplot(Carotenoidsm$sqrtApocarotenoid)
+ggdensity(Carotenoidsm$Apocarotenoid)
+ggqqplot(Carotenoidsm$Apocarotenoid)
+shapiro.test(Carotenoidsm$sqrtApocarotenoid)
+shapiro.test(Carotenoidsm$Apocarotenoid)
+leveneTest(sqrtApocarotenoid ~ Frog.Type, data = Carotenoidsm)
+leveneTest(Apocarotenoid ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtApocarotenoid ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+t.test(Apocarotenoid ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtCanary.xanthophyll)
@@ -5665,11 +5692,47 @@ leveneTest(Canary.xanthophyll ~ Frog.Type, data = Carotenoids)
 t.test(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtCanary.xanthophyll)
+ggqqplot(Carotenoidsf$sqrtCanary.xanthophyll)
+ggdensity(Carotenoidsf$Canary.xanthophyll)
+ggqqplot(Carotenoidsf$Canary.xanthophyll)
+shapiro.test(Carotenoidsf$sqrtCanary.xanthophyll)
+shapiro.test(Carotenoidsf$Canary.xanthophyll)
+leveneTest(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoidsf)
+leveneTest(Canary.xanthophyll ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtCanary.xanthophyll)
+ggqqplot(Carotenoidsm$sqrtCanary.xanthophyll)
+ggdensity(Carotenoidsm$Canary.xanthophyll)
+ggqqplot(Carotenoidsm$Canary.xanthophyll)
+shapiro.test(Carotenoidsm$sqrtCanary.xanthophyll)
+shapiro.test(Carotenoidsm$Canary.xanthophyll)
+leveneTest(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoidsm)
+leveneTest(Canary.xanthophyll ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtCanary.xanthophyll ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtCanthaxanthin)
 ggqqplot(Carotenoids$sqrtCanthaxanthin)
 shapiro.test(Carotenoids$sqrtCanthaxanthin)
 leveneTest(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoids)
 t.test(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtCanthaxanthin)
+ggqqplot(Carotenoidsf$sqrtCanthaxanthin)
+shapiro.test(Carotenoidsf$sqrtCanthaxanthin)
+leveneTest(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoidsf)
+wilcox.test(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoidsf, alternative = "two.sided", exact = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtCanthaxanthin)
+ggqqplot(Carotenoidsm$sqrtCanthaxanthin)
+shapiro.test(Carotenoidsm$sqrtCanthaxanthin)
+leveneTest(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtCanthaxanthin ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtXanthophyll)
@@ -5679,11 +5742,39 @@ leveneTest(sqrtXanthophyll ~ Frog.Type, data = Carotenoids)
 t.test(sqrtXanthophyll ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtXanthophyll)
+ggqqplot(Carotenoidsf$sqrtXanthophyll)
+shapiro.test(Carotenoidsf$sqrtXanthophyll)
+leveneTest(sqrtXanthophyll ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtXanthophyll ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtXanthophyll)
+ggqqplot(Carotenoidsm$sqrtXanthophyll)
+shapiro.test(Carotenoidsm$sqrtXanthophyll)
+leveneTest(sqrtXanthophyll ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtXanthophyll ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtEchinenone)
 ggqqplot(Carotenoids$sqrtEchinenone)
 shapiro.test(Carotenoids$sqrtEchinenone)
 leveneTest(sqrtEchinenone ~ Frog.Type, data = Carotenoids)
 t.test(sqrtEchinenone ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtEchinenone)
+ggqqplot(Carotenoidsf$sqrtEchinenone)
+shapiro.test(Carotenoidsf$sqrtEchinenone)
+leveneTest(sqrtEchinenone ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtEchinenone ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtEchinenone)
+ggqqplot(Carotenoidsm$sqrtEchinenone)
+shapiro.test(Carotenoidsm$sqrtEchinenone)
+leveneTest(sqrtEchinenone ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtEchinenone ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtcis.ketocarotenoid)
@@ -5693,11 +5784,39 @@ leveneTest(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoids)
 t.test(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtcis.ketocarotenoid)
+ggqqplot(Carotenoidsf$sqrtcis.ketocarotenoid)
+shapiro.test(Carotenoidsf$sqrtcis.ketocarotenoid)
+leveneTest(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtcis.ketocarotenoid)
+ggqqplot(Carotenoidsm$sqrtcis.ketocarotenoid)
+shapiro.test(Carotenoidsm$sqrtcis.ketocarotenoid)
+leveneTest(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtcis.ketocarotenoid ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrt3.hydroxy.echinenone)
 ggqqplot(Carotenoids$sqrt3.hydroxy.echinenone)
 shapiro.test(Carotenoids$sqrt3.hydroxy.echinenone)
 leveneTest(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoids)
 t.test(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrt3.hydroxy.echinenone)
+ggqqplot(Carotenoidsf$sqrt3.hydroxy.echinenone)
+shapiro.test(Carotenoidsf$sqrt3.hydroxy.echinenone)
+leveneTest(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrt3.hydroxy.echinenone)
+ggqqplot(Carotenoidsm$sqrt3.hydroxy.echinenone)
+shapiro.test(Carotenoidsm$sqrt3.hydroxy.echinenone)
+leveneTest(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrt3.hydroxy.echinenone ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtlutein.ester.1)
@@ -5707,11 +5826,39 @@ leveneTest(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtlutein.ester.1)
+ggqqplot(Carotenoidsf$sqrtlutein.ester.1)
+shapiro.test(Carotenoidsf$sqrtlutein.ester.1)
+leveneTest(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtlutein.ester.1)
+ggqqplot(Carotenoidsm$sqrtlutein.ester.1)
+shapiro.test(Carotenoidsm$sqrtlutein.ester.1)
+leveneTest(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtlutein.ester.1 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtcanary.xanthophyll.ester.1)
 ggqqplot(Carotenoids$sqrtcanary.xanthophyll.ester.1)
 shapiro.test(Carotenoids$sqrtcanary.xanthophyll.ester.1)
 leveneTest(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtcanary.xanthophyll.ester.1)
+ggqqplot(Carotenoidsf$sqrtcanary.xanthophyll.ester.1)
+shapiro.test(Carotenoidsf$sqrtcanary.xanthophyll.ester.1)
+leveneTest(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtcanary.xanthophyll.ester.1)
+ggqqplot(Carotenoidsm$sqrtcanary.xanthophyll.ester.1)
+shapiro.test(Carotenoidsm$sqrtcanary.xanthophyll.ester.1)
+leveneTest(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtcanary.xanthophyll.ester.1 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtbeta.carotene)
@@ -5721,11 +5868,39 @@ leveneTest(sqrtbeta.carotene ~ Frog.Type, data = Carotenoids)
 t.test(sqrtbeta.carotene ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtbeta.carotene)
+ggqqplot(Carotenoidsf$sqrtbeta.carotene)
+shapiro.test(Carotenoidsf$sqrtbeta.carotene)
+leveneTest(sqrtbeta.carotene ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtbeta.carotene ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtbeta.carotene)
+ggqqplot(Carotenoidsm$sqrtbeta.carotene)
+shapiro.test(Carotenoidsm$sqrtbeta.carotene)
+leveneTest(sqrtbeta.carotene ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtbeta.carotene ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtcanary.xanthophyll.ester.2)
 ggqqplot(Carotenoids$sqrtcanary.xanthophyll.ester.2)
 shapiro.test(Carotenoids$sqrtcanary.xanthophyll.ester.2)
 leveneTest(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtcanary.xanthophyll.ester.2)
+ggqqplot(Carotenoidsf$sqrtcanary.xanthophyll.ester.2)
+shapiro.test(Carotenoidsf$sqrtcanary.xanthophyll.ester.2)
+leveneTest(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtcanary.xanthophyll.ester.2)
+ggqqplot(Carotenoidsm$sqrtcanary.xanthophyll.ester.2)
+shapiro.test(Carotenoidsm$sqrtcanary.xanthophyll.ester.2)
+leveneTest(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtcanary.xanthophyll.ester.2 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtketocarotenoid.ester.1)
@@ -5735,11 +5910,39 @@ leveneTest(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtketocarotenoid.ester.1)
+ggqqplot(Carotenoidsf$sqrtketocarotenoid.ester.1)
+shapiro.test(Carotenoidsf$sqrtketocarotenoid.ester.1)
+leveneTest(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtketocarotenoid.ester.1)
+ggqqplot(Carotenoidsm$sqrtketocarotenoid.ester.1)
+shapiro.test(Carotenoidsm$sqrtketocarotenoid.ester.1)
+leveneTest(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtketocarotenoid.ester.1 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtketocarotenoid.ester.2)
 ggqqplot(Carotenoids$sqrtketocarotenoid.ester.2)
 shapiro.test(Carotenoids$sqrtketocarotenoid.ester.2)
 leveneTest(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtketocarotenoid.ester.2)
+ggqqplot(Carotenoidsf$sqrtketocarotenoid.ester.2)
+shapiro.test(Carotenoidsf$sqrtketocarotenoid.ester.2)
+leveneTest(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtketocarotenoid.ester.2)
+ggqqplot(Carotenoidsm$sqrtketocarotenoid.ester.2)
+shapiro.test(Carotenoidsm$sqrtketocarotenoid.ester.2)
+leveneTest(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrtcanary.xanthophyll.ester.3)
@@ -5749,11 +5952,39 @@ leveneTest(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoids, var.equal = FALSE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrtcanary.xanthophyll.ester.3)
+ggqqplot(Carotenoidsf$sqrtcanary.xanthophyll.ester.3)
+shapiro.test(Carotenoidsf$sqrtcanary.xanthophyll.ester.3)
+leveneTest(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoidsf, var.equal = FALSE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtcanary.xanthophyll.ester.3)
+ggqqplot(Carotenoidsm$sqrtcanary.xanthophyll.ester.3)
+shapiro.test(Carotenoidsm$sqrtcanary.xanthophyll.ester.3)
+leveneTest(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtcanary.xanthophyll.ester.3 ~ Frog.Type, data = Carotenoidsm, var.equal = FALSE)
+## not significant
+
 ggdensity(Carotenoids$sqrtcanthaxanthin.ester)
 ggqqplot(Carotenoids$sqrtcanthaxanthin.ester)
 shapiro.test(Carotenoids$sqrtcanthaxanthin.ester)
 leveneTest(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoids)
 t.test(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsf$sqrtcanthaxanthin.ester)
+ggqqplot(Carotenoidsf$sqrtcanthaxanthin.ester)
+shapiro.test(Carotenoidsf$sqrtcanthaxanthin.ester)
+leveneTest(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtcanthaxanthin.ester)
+ggqqplot(Carotenoidsm$sqrtcanthaxanthin.ester)
+shapiro.test(Carotenoidsm$sqrtcanthaxanthin.ester)
+leveneTest(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtcanthaxanthin.ester ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
 ## not significant
 
 ggdensity(Carotenoids$sqrt3HE.ester)
@@ -5763,12 +5994,41 @@ leveneTest(sqrt3HE.ester ~ Frog.Type, data = Carotenoids)
 t.test(sqrt3HE.ester ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
 
+ggdensity(Carotenoidsf$sqrt3HE.ester)
+ggqqplot(Carotenoidsf$sqrt3HE.ester)
+shapiro.test(Carotenoidsf$sqrt3HE.ester)
+leveneTest(sqrt3HE.ester ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrt3HE.ester ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrt3HE.ester)
+ggqqplot(Carotenoidsm$sqrt3HE.ester)
+shapiro.test(Carotenoidsm$sqrt3HE.ester)
+leveneTest(sqrt3HE.ester ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrt3HE.ester ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ggdensity(Carotenoids$sqrtketocarotenoid.ester.3)
 ggqqplot(Carotenoids$sqrtketocarotenoid.ester.3)
 shapiro.test(Carotenoids$sqrtketocarotenoid.ester.3)
 leveneTest(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids)
 t.test(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids, var.equal = TRUE)
 ## not significant
+
+ggdensity(Carotenoidsf$sqrtketocarotenoid.ester.3)
+ggqqplot(Carotenoidsf$sqrtketocarotenoid.ester.3)
+shapiro.test(Carotenoidsf$sqrtketocarotenoid.ester.3)
+leveneTest(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoidsf)
+t.test(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoidsf, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidsm$sqrtketocarotenoid.ester.3)
+ggqqplot(Carotenoidsm$sqrtketocarotenoid.ester.3)
+shapiro.test(Carotenoidsm$sqrtketocarotenoid.ester.3)
+leveneTest(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoidsm)
+t.test(sqrtketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoidsm, var.equal = TRUE)
+## not significant
+
 ## Boxplots quantiles ####
 Carotenoidsboxplot <-read.csv(file.choose())
 Carotenoidsboxplotapo <- subset(Carotenoidsboxplot,Carotenoid == "Apocarotenoid")
