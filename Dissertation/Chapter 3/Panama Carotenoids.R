@@ -6755,7 +6755,7 @@ figuremean
 annotate_figure(figuremean,
                 left = text_grob("µg carotenoid per µg skin", rot = 90))
 
-## Compare to Crothers ####
+## Compare to Crothers means ####
 install.packages("BSDA")
 library(BSDA)
 
@@ -6804,3 +6804,367 @@ tsum.test(mean.x=7.29,   s.x=4.58, n.x=9,
 ## ket2 Control vs Crothers
 tsum.test(mean.x=5.42,   s.x=2.04, n.x=9,
           mean.y=2.63, s.y=8.45, n.y=19)
+
+## Sup vs Unsup T-tests ####
+Carotenoidssupunsup <- read.csv(file.choose())
+
+ggdensity(Carotenoidssupunsup$sqrtApocarotenoid)
+ggqqplot(Carotenoidssupunsup$sqrtApocarotenoid)
+shapiro.test(Carotenoidssupunsup$sqrtApocarotenoid)
+leveneTest(sqrtApocarotenoid ~ Group, data = Carotenoidssupunsup)
+wilcox.test(sqrtApocarotenoid ~ Group, data = Carotenoidssupunsup, alternative = "two.sided", exact = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtCanaryXanthophyll)
+ggqqplot(Carotenoidssupunsup$sqrtCanaryXanthophyll)
+shapiro.test(Carotenoidssupunsup$sqrtCanaryXanthophyll)
+leveneTest(sqrtCanaryXanthophyll ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtCanaryXanthophyll ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtCanthaxanthin)
+ggqqplot(Carotenoidssupunsup$sqrtCanthaxanthin)
+shapiro.test(Carotenoidssupunsup$sqrtCanthaxanthin)
+leveneTest(sqrtCanthaxanthin ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtCanthaxanthin ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtXanthophyll)
+ggqqplot(Carotenoidssupunsup$sqrtXanthophyll)
+shapiro.test(Carotenoidssupunsup$sqrtXanthophyll)
+leveneTest(sqrtXanthophyll ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtXanthophyll ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtcisketocarotenoid)
+ggqqplot(Carotenoidssupunsup$sqrtcisketocarotenoid)
+shapiro.test(Carotenoidssupunsup$sqrtcisketocarotenoid)
+leveneTest(sqrtcisketocarotenoid ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtcisketocarotenoid ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtEchinenone)
+ggqqplot(Carotenoidssupunsup$sqrtEchinenone)
+shapiro.test(Carotenoidssupunsup$sqrtEchinenone)
+leveneTest(sqrtEchinenone ~ Group, data = Carotenoidssupunsup)
+wilcox.test(sqrtEchinenone ~ Group, data = Carotenoidssupunsup, alternative = "two.sided", exact = TRUE)
+## significant
+## df is 26
+
+ggdensity(Carotenoidssupunsup$sqrt3HE)
+ggqqplot(Carotenoidssupunsup$sqrt3HE)
+shapiro.test(Carotenoidssupunsup$sqrt3HE)
+leveneTest(sqrt3HE ~ Group, data = Carotenoidssupunsup)
+t.test(sqrt3HE ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtluteinester1)
+ggqqplot(Carotenoidssupunsup$sqrtluteinester1)
+shapiro.test(Carotenoidssupunsup$sqrtluteinester1)
+leveneTest(sqrtluteinester1 ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtluteinester1 ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtcanaryxanthophyllester1)
+ggqqplot(Carotenoidssupunsup$sqrtcanaryxanthophyllester1)
+shapiro.test(Carotenoidssupunsup$sqrtcanaryxanthophyllester1)
+leveneTest(sqrtcanaryxanthophyllester1 ~ Group, data = Carotenoidssupunsup)
+wilcox.test(sqrtcanaryxanthophyllester1 ~ Group, data = Carotenoidssupunsup, alternative = "two.sided", exact = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtbetacarotene)
+ggqqplot(Carotenoidssupunsup$sqrtbetacarotene)
+shapiro.test(Carotenoidssupunsup$sqrtbetacarotene)
+leveneTest(sqrtbetacarotene ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtbetacarotene ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtcanaryxanthophyllester2)
+ggqqplot(Carotenoidssupunsup$sqrtcanaryxanthophyllester2)
+shapiro.test(Carotenoidssupunsup$sqrtcanaryxanthophyllester2)
+leveneTest(sqrtcanaryxanthophyllester2 ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtcanaryxanthophyllester2 ~ Group, data = Carotenoidssupunsup, var.equal = TRUE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtketocarotenoidester2)
+ggqqplot(Carotenoidssupunsup$sqrtketocarotenoidester2)
+shapiro.test(Carotenoidssupunsup$sqrtketocarotenoidester2)
+leveneTest(sqrtketocarotenoidester2 ~ Group, data = Carotenoidssupunsup)
+wilcox.test(sqrtketocarotenoidester2 ~ Group, data = Carotenoidssupunsup, alternative = "two.sided", exact = TRUE)
+## significant
+
+ggdensity(Carotenoidssupunsup$sqrtcanaryxanthophyllester3)
+ggqqplot(Carotenoidssupunsup$sqrtcanaryxanthophyllester3)
+shapiro.test(Carotenoidssupunsup$sqrtcanaryxanthophyllester3)
+leveneTest(sqrtcanaryxanthophyllester3 ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtcanaryxanthophyllester3 ~ Group, data = Carotenoidssupunsup, var.equal = FALSE)
+## not significant
+
+ggdensity(Carotenoidssupunsup$sqrtcanthaxanthinester)
+ggqqplot(Carotenoidssupunsup$sqrtcanthaxanthinester)
+shapiro.test(Carotenoidssupunsup$sqrtcanthaxanthinester)
+leveneTest(sqrtcanthaxanthinester ~ Group, data = Carotenoidssupunsup)
+t.test(sqrtcanthaxanthinester ~ Group, data = Carotenoidssupunsup, var.equal = FALSE)
+## significant
+
+## Sup vs Unsup Boxplots ####
+
+Carotenoidssupunsupboxplot <-read.csv(file.choose())
+Carotenoidssupunsupboxplotapo <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Apocarotenoid")
+Carotenoidssupunsupboxplotcanxan <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canary Xanthophyll")
+Carotenoidssupunsupboxplotcanxan1 <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canary Xanthophyll Ester 1")
+Carotenoidssupunsupboxplotcanxan2 <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canary Xanthophyll Ester 2")
+Carotenoidssupunsupboxplotcanxan3 <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canary Xanthophyll Ester 3")
+Carotenoidssupunsupboxplotxan <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Xanthophyll")
+Carotenoidssupunsupboxplotbeta <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Beta Carotene")
+Carotenoidssupunsupboxplotech <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Echinenone")
+Carotenoidssupunsupboxplotcisket <- subset(Carotenoidssupunsupboxplot,Carotenoid == "cis Ketocarotenoid")
+Carotenoidssupunsupboxplotket2 <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Ketocarotenoid Ester 2")
+Carotenoidssupunsupboxplotcan <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canthaxanthin")
+Carotenoidssupunsupboxplotcanest <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Canthaxanthin Ester")
+Carotenoidssupunsupboxplotcanxhe <- subset(Carotenoidssupunsupboxplot,Carotenoid == "3-Hydroxy Echinenone")
+Carotenoidssupunsupboxplotlut <- subset(Carotenoidssupunsupboxplot,Carotenoid == "Lutein Ester 1")
+
+Aposup <- ggplot(Carotenoidssupunsupboxplotapo, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,15)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=1.68, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=5.67, label= "x", fontface = "bold", size = 2)
+Aposup
+
+Canxansup <- ggplot(Carotenoidssupunsupboxplotcanxan, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,80)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=26.15, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=21.29, label= "x", fontface = "bold", size = 2)
+Canxansup
+
+Canxan1sup <- ggplot(Carotenoidssupunsupboxplotcanxan1, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,250)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=28.17, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=56.55, label= "x", fontface = "bold", size = 2)
+Canxan1sup
+
+Canxan2sup <- ggplot(Carotenoidssupunsupboxplotcanxan2, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,250)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=56.40, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=76.67, label= "x", fontface = "bold", size = 2)
+Canxan2sup
+
+Canxan3sup <- ggplot(Carotenoidssupunsupboxplotcanxan3, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,100)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=22.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=30.86, label= "x", fontface = "bold", size = 2)
+Canxan3sup
+
+Xansup <- ggplot(Carotenoidssupunsupboxplotxan, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,30)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=8.52, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=6.47, label= "x", fontface = "bold", size = 2)
+Xansup
+
+Betasup <- ggplot(Carotenoidssupunsupboxplotbeta, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,500)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=167.83, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=195.08, label= "x", fontface = "bold", size = 2)
+Betasup
+
+Echsup <- ggplot(Carotenoidssupunsupboxplotech, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,60)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=8.46, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=4.76, label= "x", fontface = "bold", size = 2)+
+  geom_signif(y_position = c(55), xmin = c(0.81), xmax = c(1.19),
+              annotation = c("***"), tip_length = 0, textsize = 5, color = "black")
+Echsup
+
+Cisksup <- ggplot(Carotenoidssupunsupboxplotcisket, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,50)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=7.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=8.30, label= "x", fontface = "bold", size = 2)
+Cisksup
+
+Ket2sup <- ggplot(Carotenoidssupunsupboxplotket2, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,40)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=5.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=2.63, label= "x", fontface = "bold", size = 2)+
+  geom_signif(y_position = c(37), xmin = c(0.81), xmax = c(1.19),
+              annotation = c("***"), tip_length = 0, textsize = 5, color = "black")
+Ket2sup
+
+Canthsup <- ggplot(Carotenoidssupunsupboxplotcan, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,80)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=9.24, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=11.93, label= "x", fontface = "bold", size = 2)
+Canthsup
+
+Canthestsup <- ggplot(Carotenoidssupunsupboxplotcanest, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,150)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=14.58, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=50.64, label= "x", fontface = "bold", size = 2)+
+  geom_signif(y_position = c(140), xmin = c(0.81), xmax = c(1.19),
+              annotation = c("***"), tip_length = 0, textsize = 5, color = "black")
+Canthestsup
+
+XHEsup <- ggplot(Carotenoidssupunsupboxplotcanxhe, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,200)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=25.19, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=47.31, label= "x", fontface = "bold", size = 2)
+XHEsup
+
+Lutsup <- ggplot(Carotenoidssupunsupboxplotlut, aes(x=Carotenoid, y=Value, color=Group)) + 
+  geom_boxplot()+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  ylim(0,100)+
+  scale_color_manual(values=c("darkgrey","black"))+
+  scale_fill_manual(values=c("white","white"))+
+  annotate("text", x=0.81, y=24.93, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.19, y=34.76, label= "x", fontface = "bold", size = 2)
+Lutsup
+
+blank <- ggplot() + theme_void()
+boxplotlegend <- as_ggplot(get_legend(Aposup))
+
+
+figuresup <- ggarrange(Aposup,Betasup,Echsup,XHEsup,
+                    Xansup, Canxansup, Canxan1sup, Canxan2sup, Canxan3sup,
+                    Cisksup,Ket2sup,Lutsup,Canthsup, Canthestsup, boxplotlegend, 
+                    ncol=5, nrow=3, legend = "none")
+figuresup
+annotate_figure(figure,
+                left = text_grob("µg carotenoid per µg skin", rot = 90))
+
+## Sup vs Unsup Mean SE ###
