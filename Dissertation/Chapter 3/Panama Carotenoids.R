@@ -7167,4 +7167,257 @@ figuresup
 annotate_figure(figure,
                 left = text_grob("µg carotenoid per µg skin", rot = 90))
 
-## Sup vs Unsup Mean SE ###
+## Sup vs Unsup Mean SE ####
+
+Carotenoidssupunsupboxplotmeanse <-read.csv(file.choose())
+Carotenoidssupunsupboxplotmeanapo <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Apocarotenoid")
+Carotenoidssupunsupboxplotmeancanxan <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canary Xanthophyll")
+Carotenoidssupunsupboxplotmeancanxan1 <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 1")
+Carotenoidssupunsupboxplotmeancanxan2 <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 2")
+Carotenoidssupunsupboxplotmeancanxan3 <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canary Xanthophyll Ester 3")
+Carotenoidssupunsupboxplotmeanxan <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Xanthophyll")
+Carotenoidssupunsupboxplotmeanbeta <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Beta Carotene")
+Carotenoidssupunsupboxplotmeanech <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Echinenone")
+Carotenoidssupunsupboxplotmeancisket <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "cis Ketocarotenoid")
+Carotenoidssupunsupboxplotmeanket2 <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Ketocarotenoid Ester 2")
+Carotenoidssupunsupboxplotmeancan <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canthaxanthin")
+Carotenoidssupunsupboxplotmeancanest <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Canthaxanthin Ester")
+Carotenoidssupunsupboxplotmeancanxhe <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "3-Hydroxy Echinenone")
+Carotenoidssupunsupboxplotmeanlut <- subset(Carotenoidssupunsupboxplotmeanse,Carotenoid == "Lutein Ester 1")
+
+Apomeansup <- ggplot(Carotenoidssupunsupboxplotmeanapo, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=1.68, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=5.67, label= "x", fontface = "bold", size = 2)
+Apomeansup
+
+Canxanmeansup <- ggplot(Carotenoidssupunsupboxplotmeancanxan, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,40)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=26.15, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=21.29, label= "x", fontface = "bold", size = 2)
+Canxanmeansup
+
+Canxan1meansup <- ggplot(Carotenoidssupunsupboxplotmeancanxan1, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,100)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.7)))+
+  annotate("text", x=0.85, y=28.17, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=56.55, label= "x", fontface = "bold", size = 2)
+Canxan1meansup
+
+Canxan2meansup <- ggplot(Carotenoidssupunsupboxplotmeancanxan2, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,100)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=56.40, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=76.67, label= "x", fontface = "bold", size = 2)
+Canxan2meansup
+
+Canxan3meansup <- ggplot(Carotenoidssupunsupboxplotmeancanxan3, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,40)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=22.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=30.86, label= "x", fontface = "bold", size = 2)
+Canxan3meansup
+
+Xanmeansup <- ggplot(Carotenoidssupunsupboxplotmeanxan, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,15)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=8.52, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=6.47, label= "x", fontface = "bold", size = 2)
+Xanmeansup
+
+Betameansup <- ggplot(Carotenoidssupunsupboxplotmeanbeta, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,250)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=167.83, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=195.08, label= "x", fontface = "bold", size = 2)
+Betameansup
+
+Echmeansup <- ggplot(Carotenoidssupunsupboxplotmeanech, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,15)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=8.46, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=4.76, label= "x", fontface = "bold", size = 2)
+Echmeansup
+
+Cisketmeansup <- ggplot(Carotenoidssupunsupboxplotmeancisket, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,15)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=7.29, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=8.30, label= "x", fontface = "bold", size = 2)
+Cisketmeansup
+
+Ket2meansup <- ggplot(Carotenoidssupunsupboxplotmeanket2, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,10)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=5.42, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=2.63, label= "x", fontface = "bold", size = 2)
+Ket2meansup
+
+Canmeansup <- ggplot(Carotenoidssupunsupboxplotmeancan, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,20)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=9.24, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=11.93, label= "x", fontface = "bold", size = 2)
+Canmeansup
+
+Canestmeansup <- ggplot(Carotenoidssupunsupboxplotmeancanest, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,60)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=14.58, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=50.64, label= "x", fontface = "bold", size = 2)
+Canestmeansup
+
+Xhemeansup <- ggplot(Carotenoidssupunsupboxplotmeancanxhe, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,60)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=25.19, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=47.31, label= "x", fontface = "bold", size = 2)
+Xhemeansup
+
+Lutmeansup <- ggplot(Carotenoidssupunsupboxplotmeanlut, aes(x = Carotenoid, color = Group)) +
+  geom_errorbar(aes(ymax = Mean + SE, ymin = Mean - SE),
+                position = "dodge", width = 0.6)+
+  labs(color = "Frog Type")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_color_manual(values=c("darkgrey","black"))+
+  ylim(0,50)+
+  theme(axis.ticks.x=element_blank(), axis.title.y=element_blank(), axis.title.x=element_blank(),axis.text.x=element_text(size=rel(0.75)))+
+  annotate("text", x=0.85, y=24.33, label= "x", fontface = "bold", size = 2)+
+  annotate("text", x=1.15, y=34.76, label= "x", fontface = "bold", size = 2)
+Lutmeansup
+
+blank <- ggplot() + theme_void()
+boxplotlegendmeansup <- as_ggplot(get_legend(Aposup))
+
+
+figuremeansup <- ggarrange(Apomeansup,Betameansup,Echmeansup,Xhemeansup,
+                           Xanmeansup, Canxanmeansup, Canxan1meansup, Canxan2meansup, 
+                           Canxan3meansup,Cisketmeansup,Ket2meansup,Lutmeansup,
+                           Canmeansup, Canestmeansup, boxplotlegendmeansup, 
+                        ncol=5, nrow=3, legend = "none")
+figuremeansup
+annotate_figure(figuremeansup,
+                left = text_grob("µg carotenoid per µg skin", rot = 90))
