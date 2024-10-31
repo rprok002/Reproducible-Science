@@ -6434,7 +6434,7 @@ figure <- ggarrange(Apo,Beta,Ech,XHE,X3H3ester,
                     ncol=5, nrow=4, legend = "none")
 figure
 annotate_figure(figure,
-                left = text_grob("µg carotenoid per µg skin", rot = 90))
+                left = text_grob("µg carotenoid per g skin", rot = 90))
 
 
 ## Full boxplot, probably won't use because too hard to control
@@ -7164,8 +7164,8 @@ figuresup <- ggarrange(Aposup,Betasup,Echsup,XHEsup,
                     Cisksup,Ket2sup,Lutsup,Canthsup, Canthestsup, boxplotlegend, 
                     ncol=5, nrow=3, legend = "none")
 figuresup
-annotate_figure(figure,
-                left = text_grob("µg carotenoid per µg skin", rot = 90))
+annotate_figure(figuresup,
+                left = text_grob("µg carotenoid per g skin", rot = 90))
 
 ## Sup vs Unsup Mean SE ####
 
