@@ -229,11 +229,11 @@ cororiginalp <- rcorr(as.matrix(Carotenoidsoriginal))
 cororiginalp
 cororiginalp$p
 
-## Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2 and canary xanthophyll ester 3 correlated, so summing
-## Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
-## Echinenone, x3hE hydroxy echinenone and e3hE ester correlated, summing
-## Apocarotenoid and beta carotene
-## not sure about lutein
+## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
+## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
+## 3.Echinenone, x3hE hydroxy echinenone and e3hE ester correlated, summing
+## 4.Apocarotenoid and beta carotene
+## Kevin says set 2 and 3 could be combined because all ketocarotenoids but echinenone and keto1 not correlated, so leaving like this for now
 
 
 
