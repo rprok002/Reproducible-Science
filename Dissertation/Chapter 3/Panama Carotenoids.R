@@ -45,6 +45,9 @@ library(gridExtra)
 library(grid)
 install.packages("gridtext")
 library(gridtext)
+install.packages("Hmisc")
+library(Hmisc)
+
 ## Load dataset, attach, subset ####
 Carotenoids <- read.csv(file.choose())
 attach(Carotenoids)
@@ -219,31 +222,20 @@ cor.matoriginal
 cor.matoriginal2 <- Carotenoidssqrt %>% cor_mat()
 cor.matoriginal2
 
+cororigincal<- cor(Carotenoidsoriginal)
 
-## Apocarotenoid and Canary.Xanthophyll
-## Apocarotenoid and canary.xanthophyll ester 1
-## Canary Xanthophyll and canary xanthophyll ester 1
-## cis ketocarotenoid and X3 hydroxy echinenone
-## cis ketocarotenoid and canary xanthophyll ester 2
-## X3 hydroxy echinenone and lutein ester 1
-## X3 hydroxy echinenone and beta carotene
-## X3 hydroxy echinenone and canary xanthophyll ester 2
-## lutein ester 1 and beta carotene
-## canary xanthophyll ester 1 and canary xanthophyll ester 2
-## canthaxanthin ester has low correlations so going to use canthaxanthin pure instead
+## p-values
+cororiginalp <- rcorr(as.matrix(Carotenoidsoriginal))
+cororiginalp
+cororiginalp$p
 
-cor.matsqrt <- Carotenoidssqrt %>% cor_mat()
-cor.matsqrt
-## sqrtApocarotenoid and sqrtCanary.Xanthophyll
-## sqrtApocarotenoid and sqrtcanary.xanthophyll ester 1
-## sqrtcis ketocarotenoid and sqrt3 hydroxy echinenone
-## sqrtcis ketocarotenoid and sqrtcanary xanthophyll ester 2
-## sqrtX3 hydroxy echinenone and sqrtcanary xanthophyll ester 2
-## sqrtlutein ester 1 and sqrtbeta carotene
-## sqrtcanary xanthophyll ester 1 and sqrtcanary xanthophyll ester 2
-## sqrtcanthaxnthin ester has better correlations, still going to just use canthaxanthin
+## Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2 and canary xanthophyll ester 3 correlated, so summing
+## Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
+## Echinenone, x3hE hydroxy echinenone and e3hE ester correlated, summing
+## Apocarotenoid and beta carotene
+## not sure about lutein
 
-## within one sex group canthaxanthin is correlated, consider not using. Also really not normally distributed
+
 
 ## Assumptions: linearity by FrogType group, no sqrt and sqrt ####
 library(GGally)
@@ -4593,7 +4585,9 @@ cor.matnew <- Carotenoidsnew %>% cor_mat()
 cor.matnew ## looks good
 
 cor.matnewsqrt <- Carotenoidsnewsqrt %>% cor_mat()
-cor.matnewsqrt ## looks good
+cor.matnewsqrt 
+
+cor(Carotenoidsoriginal)
 
 ## Linearity plots for FrogType, 7 variables and with outliers removed ####
 results3 <- Carotenoids %>%
@@ -5288,7 +5282,7 @@ summary(model, test = "Hotelling-Lawley", type = "III")
 summary(model, test = "Roy", type = "III")
 ## handling time not significant so taking out and not thinking about again
 
-## Nonparametric Test####
+## Nonparametric MANOVA-like Test####
 nonpartest(Apocarotenoid | Canary.xanthophyll | Canthaxanthin | Xanthophyll | Echinenone | cis.ketocarotenoid | X3.hydroxy.echinenone
               | lutein.ester.1 | canary.xanthophyll.ester.1 | beta.carotene | canary.xanthophyll.ester.2
               | ketocarotenoid.ester.1 | ketocarotenoid.ester.2 | canary.xanthophyll.ester.3 | canthaxanthin.ester
