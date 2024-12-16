@@ -216,6 +216,9 @@ mahalanobis_distance(data = dependentcarotenoidssqrt)$is.outlier
 cor.matoriginal <- Carotenoidsoriginal %>% cor_mat()
 cor.matoriginal
 
+cor.matoriginal2 <- Carotenoidssqrt %>% cor_mat()
+cor.matoriginal2
+
 
 ## Apocarotenoid and Canary.Xanthophyll
 ## Apocarotenoid and canary.xanthophyll ester 1
@@ -5284,6 +5287,14 @@ summary(model, test = "Pillai", type = "III")
 summary(model, test = "Hotelling-Lawley", type = "III")
 summary(model, test = "Roy", type = "III")
 ## handling time not significant so taking out and not thinking about again
+
+## Nonparametric Test####
+nonpartest(Apocarotenoid | Canary.xanthophyll | Canthaxanthin | Xanthophyll | Echinenone | cis.ketocarotenoid | X3.hydroxy.echinenone
+              | lutein.ester.1 | canary.xanthophyll.ester.1 | beta.carotene | canary.xanthophyll.ester.2
+              | ketocarotenoid.ester.1 | ketocarotenoid.ester.2 | canary.xanthophyll.ester.3 | canthaxanthin.ester
+              | X3HE.ester | ketocarotenoid.ester.3 ~ Frog.Type, data = Carotenoids, permreps = 1000)
+
+nonpartest(Apocarotenoid | Canary.xanthophyll | ketocarotenoid.ester.1 | ketocarotenoid.ester.2 ~ Frog.Type, data = Carotenoids, permreps = 1000, plots = TRUE)
 
 ## Visualization in box plots ####
 ## coefficients for each of the polynomial terms in Frog Type
