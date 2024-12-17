@@ -3182,6 +3182,34 @@ plot(BluenessDorsalDay)
 ## Interaction not significant
 ## Decrease over day
 
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BrightnessInfectionDorsal)
+## Brightness decreases as infection load increases
+
+RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessInfectionDorsal)
+summary(RednessInfectionDorsal)
+emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(RednessInfectionDorsal)
+## Redness score not significant
+
+GreenessInfectionDorsal <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessInfectionDorsal)
+summary(GreenessInfectionDorsal)
+emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(GreenessInfectionDorsal)
+## not significant
+
+BluenessInfectionDorsal <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessInfectionDorsal)
+summary(BluenessInfectionDorsal)
+emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BluenessInfectionDorsal)
+## not significant
+
 ## Graphs showing trends ####
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
   geom_point()+
@@ -3210,8 +3238,6 @@ plot(simsBluenessDorsalDay, quantreg = FALSE)
 ## Question 2 DHARMas for all needed models after outliers removed (REMEMBER TO RERUN MODELS!)
 simsBrightnessInfectionDorsal <- simulateResiduals(BrightnessInfectionDorsal)
 plot(simsBrightnessInfectionDorsal, quantreg = FALSE)
-## Deviation is not significant, so don't need to worry about
-plot(simsAverageBInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 simsRednessInfectionDorsal <- simulateResiduals(RednessInfectionDorsal)
 plot(simsRednessInfectionDorsal, quantreg = FALSE)
