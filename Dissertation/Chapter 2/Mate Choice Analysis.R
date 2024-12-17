@@ -899,6 +899,25 @@ ggqqplot(FrogImageDataDorsalMale$Blueness.score)
 ## Removed F10 D and V Oct 18 because infection is outlier 
 ## Removed M26 D and V color Oct 9 because outlier 
 ## Removed F5 brightness Oct 16 because outlier
+
+## Tests of normality Picture Analysis No Oct M14M16 Infected####
+
+ggdensity(FrogImageDataDorsalMale$Average.Brightness)
+ggqqplot(FrogImageDataDorsalMale$Average.Brightness)
+## fairly normal, have a bit of a hump
+
+ggdensity(FrogImageDataDorsalMale$Redness.score)
+ggqqplot(FrogImageDataDorsalMale$Redness.score)
+## normal
+
+ggdensity(FrogImageDataDorsalMale$Greeness.score)
+ggqqplot(FrogImageDataDorsalMale$Greeness.score)
+## normal
+
+ggdensity(FrogImageDataDorsalMale$Blueness.score)
+ggqqplot(FrogImageDataDorsalMale$Blueness.score)
+## normal
+
 ## Separate Models by Control and Infected Frogs####
 install.packages("ggpubr")
 library(ggpubr)
@@ -3005,3 +3024,201 @@ summary(InfectedMoreTrialLMER)
 plot(InfectedMoreTrialLMER)
 ggqqplot(residuals(InfectedMoreTrialLMER))
 emmeans(InfectedMoreTrialLMER, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## Notes for Outlier Removal Picture Analysis ####
+## Removed M19 D and V color May 31 because outlier 
+## Removed M16 D and V Oct 15 because infection is outlier 
+## Removed F10 D and V Oct 18 because infection is outlier 
+## Removed M26 D and V color Oct 9 because outlier 
+## Removed F5 brightness Oct 16 because outlier
+
+## Picture Analysis Final Models All ####
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessDorsalDay)
+anova(BrightnessDorsalDay) %>% as.data.frame() %>% write.csv(file = "BrightnessDorsalDay_anova_table.csv")
+summary(BrightnessDorsalDay)
+plot(BrightnessDorsalDay)
+leveneTest(residuals(BrightnessDorsalDay) ~ FrogImageDataDorsalMale$Frog_Type)
+emmeans(BrightnessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+## Interaction not significant
+## Brightness decreases over days for both control and infected frogs and not different between frogs
+
+AverageRDorsalDay <- lmer(Average.R~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageRDorsalDay)
+summary(AverageRDorsalDay)
+plot(AverageRDorsalDay)
+## Interaction not significant
+## Average R for both slightly decrease over time
+
+AverageGDorsalDay <- lmer(Average.G~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageGDorsalDay)
+summary(AverageGDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+plot(AverageGDorsalDay)
+## Interaction not significant
+## Both decreasing over time, difference between control and infected frogs not significant
+
+AverageBDorsalDay <- lmer(Average.B~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageBDorsalDay)
+summary(AverageBDorsalDay)
+emmeans(AverageGDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(AverageBDorsalDay)
+## Interaction not significant
+## Both decreaseing over time, difference between control and infected frogs not singificant
+
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(RednessDorsalDay)
+## neither Day nor frog type is significant, overall redness score next to the
+## standard red card in photos doesn't change over time and is not different
+## between control and infected frogs
+
+GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessDorsalDay)
+summary(GreenessDorsalDay)
+emmeans(GreenessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+emmeans(GreenessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+plot(GreenessDorsalDay)
+## Interaction not significant
+## Greeness increases over time
+
+
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(BluenessDorsalDay)
+## Interaction not significant
+## Decrease over day
+
+## Models using for Question 2: difference in frog attributes compared to log infection
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BrightnessInfectionDorsal)
+## Brightness decreases as infection load increases
+
+AverageRInfectionDorsal <- lmer(Average.R~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageRInfectionDorsal)
+summary(AverageRInfectionDorsal)
+emmeans(AverageRInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageRInfectionDorsal)
+## Average R decreases as infection load increases
+
+AverageGInfectionDorsal <- lmer(Average.G~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageGInfectionDorsal)
+summary(AverageGInfectionDorsal)
+emmeans(AverageGInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageGInfectionDorsal)
+## Average G decreases as infection load increases
+
+AverageBInfectionDorsal <- lmer(Average.B~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(AverageBInfectionDorsal)
+summary(AverageBInfectionDorsal)
+emmeans(AverageBInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(AverageBInfectionDorsal)
+## no significance in Average B
+
+RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessInfectionDorsal)
+summary(RednessInfectionDorsal)
+emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(RednessInfectionDorsal)
+## Redness score not significant
+
+GreenessInfectionDorsal <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessInfectionDorsal)
+summary(GreenessInfectionDorsal)
+emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(GreenessInfectionDorsal)
+## not significant
+
+BluenessInfectionDorsal <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessInfectionDorsal)
+summary(BluenessInfectionDorsal)
+emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+plot(BluenessInfectionDorsal)
+## not significant
+
+## Picture Analysis Final Models No Oct M1416 ####
+
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessDorsalDay)
+anova(BrightnessDorsalDay) %>% as.data.frame() %>% write.csv(file = "BrightnessDorsalDay_anova_table.csv")
+summary(BrightnessDorsalDay)
+plot(BrightnessDorsalDay)
+leveneTest(residuals(BrightnessDorsalDay) ~ FrogImageDataDorsalMale$Frog_Type)
+emmeans(BrightnessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+## Interaction not significant
+## Brightness decreases over days for both control and infected frogs and not different between frogs
+
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(RednessDorsalDay)
+## no interaction
+## neither Day nor frog type is significant, overall redness score next to the
+## standard red card in photos doesn't change over time and is not different
+## between control and infected frogs
+
+GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessDorsalDay)
+summary(GreenessDorsalDay)
+emmeans(GreenessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+emmeans(GreenessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+plot(GreenessDorsalDay)
+## Interaction not significant
+## Greeness increases over time
+
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day*Frog_Type), lmer.df = "satterthwaite")
+plot(BluenessDorsalDay)
+## Interaction not significant
+## Decrease over day
+
+## Graphs showing trends ####
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Greeness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+ggplot(FrogImageDataDorsal, aes(x = Day, y = Blueness.score, colour = Frog_Type)) +
+  geom_point()+
+  geom_smooth(method = "lm")
+
+## Final Picture DHARMAS ####
+simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
+plot(simsBrightnessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about 
+simsRednessDorsalDay <- simulateResiduals(RednessDorsalDay)
+plot(simsRednessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsGreenessDorsalDay <- simulateResiduals(GreenessDorsalDay)
+plot(simsGreenessDorsalDay, quantreg = FALSE)
+## Deviation just barely significant but not worried
+simsBluenessDorsalDay <- simulateResiduals(BluenessDorsalDay)
+plot(simsBluenessDorsalDay, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+
+## Question 2 DHARMas for all needed models after outliers removed (REMEMBER TO RERUN MODELS!)
+simsBrightnessInfectionDorsal <- simulateResiduals(BrightnessInfectionDorsal)
+plot(simsBrightnessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+plot(simsAverageBInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsRednessInfectionDorsal <- simulateResiduals(RednessInfectionDorsal)
+plot(simsRednessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
+simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
+plot(simsGreenessInfectionDorsal, quantreg = FALSE)
+## Deviation but not bad so keeping it
+simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
+plot(simsBluenessInfectionDorsal, quantreg = FALSE)
+## Deviation is not significant, so don't need to worry about
