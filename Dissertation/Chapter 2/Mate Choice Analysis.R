@@ -3266,3 +3266,5 @@ anova(InfectedTrialDiffLMER)
 summary(InfectedTrialDiffLMER)
 plot(InfectedTrialDiffLMER)
 
+ggboxplot(MateChoiceAnalysisInfectedDiff, y = "Difference_Seconds_Female", x = "Type")
+
