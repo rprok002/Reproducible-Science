@@ -3273,7 +3273,10 @@ plot(InfectedTrialDiffLMER)
 
 ggboxplot(MateChoiceAnalysisInfectedDiff, y = "Difference_Seconds_Female", x = "Type")
 
-InfectedTrialDiffGLMER <- glmer(Proportion_Seconds_Female~Clean_Male_Front+Infected_Male_Front+Clean_Male_Wander+
-                                Infected_Male_Wander+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfectedDiff, 
+InfectedTrialGLMER <- glmer(Weight_Seconds_Female~Group+Clean_Male_Front+Infected_Male_Front+Clean_Male_Wander+
+                                Infected_Male_Wander+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected, 
                                 weights = wt, family = "poisson")
+anova(InfectedTrialGLMER)
+summary(InfectedTrialGLMER)
 
+## Model doesn't converge when throw everything together so doesn't seem like a good idea
