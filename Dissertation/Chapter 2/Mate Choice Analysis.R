@@ -3248,3 +3248,21 @@ plot(simsGreenessInfectionDorsal, quantreg = FALSE)
 simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
 plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
+
+## Updated Mate Choice Models ####
+MateChoiceAnalysisInfectedDiff <- read.csv(file.choose())
+
+ggdensity(MateChoiceAnalysisInfectedDiff$Difference_Seconds_Female, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(MateChoiceAnalysisInfectedDiff$Difference_Seconds_Female)
+## normal distribution
+
+ggdensity(MateChoiceAnalysisInfectedDiff$Proportion_Seconds_Female, main = "Density Plot of Total Trial Time Seconds", xlab = " Total Trial Time Seconds")
+ggqqplot(MateChoiceAnalysisInfectedDiff$Proportion_Seconds_Female)
+## definitely not normal, but could use binomial model
+
+InfectedTrialDiffLMER <- lmer(Difference_Seconds_Female~Clean_Male_Front+Infected_Male_Front+Clean_Male_Wander+
+                                Infected_Male_Wander+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfectedDiff, weights = wt)
+anova(InfectedTrialDiffLMER)
+summary(InfectedTrialDiffLMER)
+plot(InfectedTrialDiffLMER)
+
