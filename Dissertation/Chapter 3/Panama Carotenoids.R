@@ -7560,3 +7560,46 @@ ggqqplot(Carotenoidscombined, "Combo.4.Sqrt", facet.by = "Sex",
 ## fine
 
 ## Sqrt helps the qq plots
+
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
+Covdependentcarotenoidscombo <- cov(dependentcarotenoidscombo)
+det(Covdependentcarotenoidscombo)
+## very positive, looks good
+Covdependentcarotenoidssqrtcombo <- cov(dependentcarotenoidssqrtcombo)
+det(Covdependentcarotenoidssqrtcombo)
+## very positive, good
+
+## Assumptions: Equality of Variance Between Groups Control and Infected and Sex
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
+Type <- c("Infected","Infected","Infected", "Control",
+           "Control", "Infected","Infected","Infected","Infected","Infected",
+           "Control", "Infected","Infected","Infected","Infected","Infected",
+           "Infected","Infected","Infected","Infected","Infected",
+           "Control","Infected","Infected","Infected",
+           "Control", "Control", "Control", "Infected", "Control", "Infected",
+          "Control", "Infected")
+Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M","M","M",
+         "M","M","M","M","M","M","M","M","M","M","M","F","F","F","M")
+factor(Type)
+Type
+factor(Sex)
+Sex
+## Run BoxM
+boxM(dependentcarotenoidscombo, Type)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidscombo, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidssqrtcombo, Type)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidssqrtcombo, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+
+
+## Outliers
+## Subset by group
+
+mahalanobis_distance(data = dependentcarotenoidsnew)$is.outlier
+## No outliers in the data
+
+mahalanobis_distance(data = dependentcarotenoidssqrt)$is.outlier
+## No outliers in sqrt data
