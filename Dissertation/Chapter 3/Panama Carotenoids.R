@@ -7426,3 +7426,46 @@ figuremeansup <- ggarrange(Apomeansup,Betameansup,Echmeansup,Xhemeansup,
 figuremeansup
 annotate_figure(figuremeansup,
                 left = text_grob("µg carotenoid per µg skin", rot = 90))
+
+
+## PCA of data ####
+PCAdata <- read.csv(file.choose())
+
+## data normalization
+install.packages("corrr")
+library(corrr)
+install.packages("ggcorrplot")
+library(ggcorrplot)
+install.packages("FactoMineR")
+library(FactoMineR)
+install.packages("factoextra")
+library(factoextra)
+
+PCA_normalized <- scale(PCAdata)
+head(PCA_normalized)
+
+## PCA
+data.pca <- princomp(PCA_normalized)
+summary(data.pca)
+## Looks like 4 components will explain almost 90% of data 
+data.pca$loadings[, 1:4]
+## all positive values seem relatively equal for component 1, so all frogs have a relative amount of each
+## component 2 has high apocarotenoid,canary xanthophyll, canthaxanthin, can xan ester 1, keto 1.
+## component 2 negatives higher for lutein, beta carotene, keto 2
+## component 3 has high pos Xanthophyll, high neg canthan ester and X3HE ester
+## component 4 has high post canthan ester and can xan ester 3
+
+## Scree plot
+fviz_eig(data.pca, addlabels = TRUE)
+
+# Graph of the variables
+fviz_pca_var(data.pca, col.var = "black")
+## Canary xan, apocar, canthaxanthin, can xan ester 1 and keto 1 all grouped, like component 2
+## X3HE ester, X3 hydrox, cis. keto and echinenone grouped
+## beta, lutein and keto 2 grouped 
+
+## Contribution to four components
+fviz_cos2(data.pca, choice = "var", axes = 1:4)
+## they all contribute to top 4, there really isn't any variable that doesn't except maybe echinenone
+## if just first 2 components, steadily fall over variables but can argue can xan ester 2, keto 2, apo, x3 hydrox,
+## lutein, can xan ester 1, beta carotene. Can make argument for additional keto 3, cis. keto, can xan, keto 1
