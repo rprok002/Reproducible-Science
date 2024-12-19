@@ -7478,7 +7478,7 @@ fviz_pca_var(data.pca, col.var = "cos2",
 ## Mid are canthaxanthin, can xan est 3, xan and x3he ester
 ## Low is echinenone and canthax ester
 
-## MANOVA work with combined values ####
+## MANOVA work with 4 combined values ####
 
 ## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
 ## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
@@ -7598,8 +7598,374 @@ boxM(dependentcarotenoidssqrtcombo, Sex)
 ## Outliers
 ## Subset by group
 
-mahalanobis_distance(data = dependentcarotenoidsnew)$is.outlier
+mahalanobis_distance(data = dependentcarotenoidscombo)$is.outlier
 ## No outliers in the data
 
-mahalanobis_distance(data = dependentcarotenoidssqrt)$is.outlier
+mahalanobis_distance(data = dependentcarotenoidssqrtcombo)$is.outlier
 ## No outliers in sqrt data
+
+## Assumptions: multicollinearity
+cor.matoriginalcombo <- Carotenoidsoriginalcombo %>% cor_mat()
+cor.matoriginalcombo
+
+cor.matoriginal2combo <- Carotenoidssqrtcombo %>% cor_mat()
+cor.matoriginal2combo
+
+## p-values
+cororiginalcombop <- rcorr(as.matrix(Carotenoidsoriginalcombo))
+cororiginalcombop
+cororiginalcombop$p
+
+## MANOVA work with 3 combined values ####
+## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
+## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
+## Echinenone, x3hE hydroxy echinenone and e3hE ester correlated
+## 3.Apocarotenoid and beta carotene
+
+Carotenoidscombined3 <- read.csv(file.choose())
+attach(Carotenoidscombined3)
+Carotenoidsoriginalcombo3 <- Carotenoidscombined3[,c(5,6,7)]
+Carotenoidssqrtcombo3 <- Carotenoidscombined3[,c(8,9,10)]
+
+## Independent observations: ICC
+ICC(Carotenoidsoriginalcombo3) ## Change columns to have all dependent variables
+## Look at absolute correlation values
+## 0.74, not great
+ICC(Carotenoidssqrtcombo3)
+## -0.237, not bad
+
+dependentcarotenoidscombo3 <- data.frame(Combo.1, Combo.2, Combo.3)
+dependentcarotenoidssqrtcombo3 <- data.frame(Combo.1.Sqrt, Combo.2.Sqrt, Combo.3.Sqrt)
+transpose_dependentcarotenoidscombo3 <- t(dependentcarotenoidscombo3)
+transpose_dependentcarotenoidssqrtcombo3 <- t(dependentcarotenoidssqrtcombo3)
+
+## Run Shapiro
+mshapiro.test(transpose_dependentcarotenoidscombo3)
+## data JUST normal according to this test
+mshapiro.test(transpose_dependentcarotenoidssqrtcombo3)
+## data still JUST not normal
+
+## checking qqplots, which are more important
+ggqqplot(Carotenoidscombined3, "Combo.1", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a couple control frogs seem to have an issue
+ggqqplot(Carotenoidscombined3, "Combo.1", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.2", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.2", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.3", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a couple infected off
+ggqqplot(Carotenoidscombined3, "Combo.3", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.1", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.1.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.1.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.2.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.2.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.3.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined3, "Combo.3.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+
+
+## Sqrt helps the qq plots
+
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
+Covdependentcarotenoidscombo3 <- cov(dependentcarotenoidscombo3)
+det(Covdependentcarotenoidscombo3)
+## very positive, looks good
+Covdependentcarotenoidssqrtcombo3 <- cov(dependentcarotenoidssqrtcombo3)
+det(Covdependentcarotenoidssqrtcombo3)
+## very positive, good
+
+## Assumptions: Equality of Variance Between Groups Control and Infected and Sex
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
+Type <- c("Infected","Infected","Infected", "Control",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Infected","Infected","Infected","Infected","Infected",
+          "Control","Infected","Infected","Infected",
+          "Control", "Control", "Control", "Infected", "Control", "Infected",
+          "Control", "Infected")
+Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M","M","M",
+         "M","M","M","M","M","M","M","M","M","M","M","F","F","F","M")
+factor(Type)
+Type
+factor(Sex)
+Sex
+## Run BoxM
+boxM(dependentcarotenoidscombo3, Type)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidscombo3, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidssqrtcombo3, Type)
+## p value is significant
+boxM(dependentcarotenoidssqrtcombo3, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+
+## Outliers
+## Subset by group
+
+mahalanobis_distance(data = dependentcarotenoidscombo3)$is.outlier
+## No outliers in the data
+
+mahalanobis_distance(data = dependentcarotenoidssqrtcombo3)$is.outlier
+## No outliers in sqrt data
+
+## Assumptions: multicollinearity
+cor.matoriginalcombo3 <- Carotenoidsoriginalcombo3 %>% cor_mat()
+cor.matoriginalcombo3
+
+cor.matoriginal2combo3 <- Carotenoidssqrtcombo3 %>% cor_mat()
+cor.matoriginal2combo3
+
+## p-values
+cororiginalcombop3 <- rcorr(as.matrix(Carotenoidsoriginalcombo3))
+cororiginalcombop3
+cororiginalcombop$p
+
+## still significant according to p-values but I've gotten them down and opinions say it doesn't 
+## mean I can't use the MANOVA, and it's below 0.9 for all combos
+
+MVNMardiafull <- mvn(data = Carotenoidsoriginalcombo3, mvnTest = "mardia", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardiafull$multivariateNormality
+## definitely nonormal
+MVNMardiafullsqrt <- mvn(data = Carotenoidssqrtcombo3, mvnTest = "mardia",multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNMardiafullsqrt$multivariateNormality
+## definitely nonormal
+MVNHzfull <- mvn(data = Carotenoidsoriginalcombo3, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHzfull$multivariateNormality
+## definitely nonormal
+MVNHzfullsqrt <- mvn(data = Carotenoidssqrtcombo3, mvnTest = "hz", multivariatePlot = "qq")
+MVNHzfullsqrt$multivariateNormality
+## P is 0.02 so not normal
+MVNroystonfull <- mvn(data = Carotenoidsoriginalcombo3, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonfull$multivariateNormality
+## definitely nonormal
+MVNroystonfullsqrt <- mvn(data = Carotenoidssqrtcombo3, mvnTest = "royston", multivariatePlot = "qq")
+MVNroystonfullsqrt$multivariateNormality
+## definitely nonormal
+MVNDhfull <- mvn(data = Carotenoidsoriginalcombo3, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhfull$multivariateNormality
+## definitely nonormal
+MVNDhfullsqrt <- mvn(data = Carotenoidssqrtcombo3, mvnTest = "dh", multivariatePlot = "qq")
+MVNDhfullsqrt$multivariateNormality
+## definitely nonormal
+MVNenergyfull <- mvn(data = Carotenoidsoriginalcombo3, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergyfull$multivariateNormality
+## definitely nonormal
+MVNenergyfullsqrt <- mvn(data = Carotenoidssqrtcombo3, mvnTest = "energy", multivariatePlot = "qq")
+MVNenergyfullsqrt$multivariateNormality
+## definitely nonormal
+
+## MANOVA with combined esters
+Carotenoidscombinedester <- read.csv(file.choose())
+attach(Carotenoidscombinedester)
+Carotenoidsoriginalcomboester <- Carotenoidscombinedester[,c(5,7,9,11,13,15,17)]
+Carotenoidssqrtcomboester <- Carotenoidscombinedester[,c(6,8,10,12,14,16,18)]
+
+## Assumptions: multicollinearity
+cor.matoriginalcomboester <- Carotenoidsoriginalcomboester %>% cor_mat()
+cor.matoriginalcomboester
+
+cor.matoriginal2combo3 <- Carotenoidssqrtcombo3 %>% cor_mat()
+cor.matoriginal2combo3
+
+## p-values
+cororiginalcombop3 <- rcorr(as.matrix(Carotenoidsoriginalcombo3))
+cororiginalcombop3
+cororiginalcombop$p
+
+## I want to keep beta carotene, so keeping that. I want to keep xanthophylls, so need to get rid of Apo
+## Removing can xan 2 because fairly correlated with all 
+## Can keep Echinenone, but need to remove the esters
+## Removing ketocarotenoids entirely because correlation
+## Removing canthaxanthin ester
+## need to remove lutein because highly correlated with beta carotene 
+
+## MANOVA Combo 5 ####
+Carotenoidscombined5 <- read.csv(file.choose())
+attach(Carotenoidscombined5)
+Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
+Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
+
+## Outliers
+## Removed F2 and M3 from previous tests
+## Additionally removed M21, F19, M17 and M11 to make sqrt tests normal
+
+## Assumption: Independent observations: ICC
+ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
+## Look at absolute correlation values
+## -0.128, good
+ICC(Carotenoidssqrtcombo5)
+## -0.206, good
+
+dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
+dependentcarotenoidssqrtcombo5 <- data.frame(SqrtXanthophylls, SqrtCanthaxanthins,SqrtEchinenone, SqrtBetaCarotene)
+transpose_dependentcarotenoidscombo5 <- t(dependentcarotenoidscombo5)
+transpose_dependentcarotenoidssqrtcombo5 <- t(dependentcarotenoidssqrtcombo5)
+
+## Assumption: Univariate normality
+## Run Shapiro
+mshapiro.test(transpose_dependentcarotenoidscombo5)
+## data JUST not normal
+mshapiro.test(transpose_dependentcarotenoidssqrtcombo5)
+## data normal
+
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
+Covdependentcarotenoidscombo5 <- cov(dependentcarotenoidscombo5)
+det(Covdependentcarotenoidscombo5)
+## very positive, looks good
+Covdependentcarotenoidssqrtcombo5 <- cov(dependentcarotenoidssqrtcombo5)
+det(Covdependentcarotenoidssqrtcombo5)
+## positive, good
+
+## Outliers additional test
+
+mahalanobis_distance(data = dependentcarotenoidscombo5)$is.outlier
+## No outliers in the data
+
+mahalanobis_distance(data = dependentcarotenoidssqrtcombo5)$is.outlier
+## No outliers in sqrt data
+
+## Assumptions: Equality of Variance Between Groups Control and Infected and Sex
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
+Type <- c("Infected","Infected","Infected", "Control",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Infected","Infected","Infected",
+          "Control","Infected","Infected","Infected",
+          "Control", "Control", "Control", "Infected", "Control", "Infected")
+          
+Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M",
+         "M","M","M","M","M","M","M","M","M","M","M","F","F")
+factor(Type)
+Type
+factor(Sex)
+Sex
+## Run BoxM
+boxM(dependentcarotenoidscombo5, Type)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidscombo5, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+boxM(dependentcarotenoidssqrtcombo5, Type)
+## p value is significant
+boxM(dependentcarotenoidssqrtcombo5, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+
+## Assumptions: multicollinearity
+cor.matoriginalcombo5 <- Carotenoidsoriginalcombo5 %>% cor_mat()
+cor.matoriginalcombo5
+
+cor.matoriginal2combo5 <- Carotenoidssqrtcombo5 %>% cor_mat()
+cor.matoriginal2combo5
+## correlation matrices  good without sqrt, with it they aren't as good but still within limits
+## I am comfortable with so keeping as is
+
+## Assumptions: multivariate normality
+MVNHzfull <- mvn(data = Carotenoidsoriginalcombo5, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHzfull$multivariateNormality
+## normal
+MVNHzfullsqrt <- mvn(data = Carotenoidssqrtcombo5, mvnTest = "hz", multivariatePlot = "qq")
+MVNHzfullsqrt$multivariateNormality
+## normalizes
+
+## I can actually do the original data instead of square root transforming. The only thing that 
+## isn't normal is the univariate analysis but it is in a place I am comfortable with 
+
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY
+Type = factor(Type)
+## Bind dependent variables together into one vector
+Xanthophylls <- Carotenoidscombined5$Xanthophylls
+Canthaxanthins <- Carotenoidscombined5$Canthaxanthins
+Echinenone <- Carotenoidscombined5$Echinenone
+BetaCarotene <- Carotenoidscombined5$BetaCarotene
+
+Y <- cbind(Xanthophylls,Canthaxanthins,Echinenone,BetaCarotene)
+## Run MANOVA
+MANOVA = manova(Y~Type)
+## Run Tests on MANOVA, check if p values are below 0.05
+summary(MANOVA, test = "Wilks")
+summary(MANOVA, test = "Pillai")
+summary(MANOVA, test = "Hotelling-Lawley")
+summary(MANOVA, test = "Roy")
+
+## nothing significant here between groups 
+
+linearHypothesis(MANOVA, "grade.L") |> print(SSP = FALSE)
+
+## Wilks Lambda partial eta squares values
+## Take smaller of two values, number of outcome variables (here, 16) or df of group variable = b
+## formula: 1-(0.63202)^(1/b)
+## Answer will be percentage of variance between outcome variables is due to difference in group variable
+
+## Post hoc tests
+## Effect size
+eta_squared(MANOVA) ## value is 0.08, not high enough to mean anything really which explains the non-significant p-value
+
+MANOVA_lda <- lda(groupnew ~ Y, CV = F)
+MANOVA_lda
+
+MANOVA_df <- data.frame(
+  species = Carotenoids[, "Frog.Type"],
+  lda = predict(MANOVA_lda)$x
+)
+MANOVA_df
+
+
+ggplot(MANOVA_df) +
+  geom_point(aes(x = LD1, y = species), size = 4) +
+  theme_classic()
+
+## Factorial MANOVA 
+
+
+FACTORIALSETUP <- lm(Y~Frog.Type*Sex, data = Carotenoidscombined5)
+summary(FACTORIALSETUP)
+Anova(FACTORIALSETUP, test.statistic="Roy")
+Anova(update(FACTORIALSETUP, Xanthophylls ~ .))
+Anova(update(FACTORIALSETUP, Canthaxanthins ~ .))
+Anova(update(FACTORIALSETUP, Echinenone ~ .))
+Anova(update(FACTORIALSETUP, BetaCarotene ~ .))
+
+## interaction not significant so using type II
+FACTORIALMANOVAwilks <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Wilks"))
+FACTORIALMANOVApillai <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Pillai"))
+FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Hotelling-Lawley"))
+FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("III"), test=("Roy"))
+## If interactions aren't significant, can use Type II
+FACTORIALMANOVAwilks <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Wilks"))
+FACTORIALMANOVAwilks
+FACTORIALMANOVApillai <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Pillai"))
+FACTORIALMANOVApillai
+FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Hotelling-Lawley"))
+FACTORIALMANOVAhotelling
+FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Roy"))
+FACTORIALMANOVAroy
+## Frog type significant for all of these, but sex isn't and given the 
+
+## Effect size of MANOVA
+
+etasq(FACTORIALSETUP,test="Wilks") # Using Wilks to be consistent with above
+## Not that significant, but sex explains more than frog type
+
+## No significane in factorial manova
