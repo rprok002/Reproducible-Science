@@ -25,8 +25,6 @@ install.packages("MASS")
 library(MASS)
 library(dplyr)
 library(ggpubr)
-library(rstatix)
-library(car)
 library(broom)
 install.packages("npmv")
 library(npmv)
@@ -7479,3 +7477,86 @@ fviz_pca_var(data.pca, col.var = "cos2",
 ## Mid high are can xan, keto 1, cis. keto and keto 3
 ## Mid are canthaxanthin, can xan est 3, xan and x3he ester
 ## Low is echinenone and canthax ester
+
+## MANOVA work with combined values ####
+
+## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
+## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
+## 3.Echinenone, x3hE hydroxy echinenone and e3hE ester correlated, summing
+## 4.Apocarotenoid and beta carotene
+## Kevin says set 2 and 3 could be combined because all ketocarotenoids but echinenone and keto1 not correlated, so leaving like this for now
+
+Carotenoidscombined <- read.csv(file.choose())
+attach(Carotenoidscombined)
+Carotenoidsoriginalcombo <- Carotenoidscombined[,c(5,6,7,8)]
+Carotenoidssqrtcombo <- Carotenoidscombined[,c(9,10,11,12)]
+
+## Independent observations: ICC
+ICC(Carotenoidsoriginalcombo) ## Change columns to have all dependent variables
+## Look at absolute correlation values
+## 0.30, higher than before combine but not 
+ICC(Carotenoidssqrtcombo)
+## 0.07, fine
+
+dependentcarotenoidscombo <- data.frame(Combo.1, Combo.2, Combo.3, Combo.4)
+dependentcarotenoidssqrtcombo <- data.frame(Combo.1.Sqrt, Combo.2.Sqrt, Combo.3.Sqrt, Combo.4.Sqrt)
+transpose_dependentcarotenoidscombo <- t(dependentcarotenoidscombo)
+transpose_dependentcarotenoidssqrtcombo <- t(dependentcarotenoidssqrtcombo)
+
+## Run Shapiro
+mshapiro.test(transpose_dependentcarotenoidscombo)
+## data JUST not normal according to this test
+mshapiro.test(transpose_dependentcarotenoidssqrtcombo)
+## data still JUST not normal
+
+## checking qqplots, which are more important
+ggqqplot(Carotenoidscombined, "Combo.1", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a couple control frogs seem to have an issue
+ggqqplot(Carotenoidscombined, "Combo.1", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.2", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.2", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.3", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.3", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.4", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## a couple infected frogs seem to have an issue
+ggqqplot(Carotenoidscombined, "Combo.1", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.1.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.1.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.2.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.2.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.3.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.3.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.4.Sqrt", facet.by = "Frog.Type",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+ggqqplot(Carotenoidscombined, "Combo.4.Sqrt", facet.by = "Sex",
+         ylab = "Frog.Type", ggtheme = theme_bw())
+## fine
+
+## Sqrt helps the qq plots
