@@ -7469,3 +7469,13 @@ fviz_cos2(data.pca, choice = "var", axes = 1:4)
 ## they all contribute to top 4, there really isn't any variable that doesn't except maybe echinenone
 ## if just first 2 components, steadily fall over variables but can argue can xan ester 2, keto 2, apo, x3 hydrox,
 ## lutein, can xan ester 1, beta carotene. Can make argument for additional keto 3, cis. keto, can xan, keto 1
+
+## Combine graph and contribution
+fviz_pca_var(data.pca, col.var = "cos2",
+             gradient.cols = c("black", "orange", "green"),
+             repel = TRUE)
+
+## High are apo, can xan ester 2, ket 2, can xan ester 1, lutein, beta, x3 hydr, 
+## Mid high are can xan, keto 1, cis. keto and keto 3
+## Mid are canthaxanthin, can xan est 3, xan and x3he ester
+## Low is echinenone and canthax ester
