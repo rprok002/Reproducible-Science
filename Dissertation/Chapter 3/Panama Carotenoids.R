@@ -7971,3 +7971,9 @@ etasq(FACTORIALSETUP,test="Wilks") # Using Wilks to be consistent with above
 ## No significane in factorial manova
 
 ## Doing a simple students t-test for total carotenoids because can't include in MANOVA since clearly correlated
+ggdensity(Carotenoidscombined5$Sum)
+ggqqplot(Carotenoidscombined5$Sum)
+shapiro.test(Carotenoidscombined5$Sum)
+leveneTest(Sum ~ Frog.Type, data = Carotenoidscombined5)
+t.test(Sum ~ Frog.Type, data = Carotenoidscombined5, var.equal = TRUE)
+## not significant diff between sum of carotenoids in control and infected frogs
