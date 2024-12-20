@@ -7804,6 +7804,12 @@ cororiginalcombop$p
 ## need to remove lutein because highly correlated with beta carotene 
 
 ## MANOVA Combo 5 ####
+## Final groups:
+## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 3
+## Echinenone: Echinenone
+## Canthaxanthins: canthaxanthin ester
+## Beta carotene: beta carotene
+
 Carotenoidscombined5 <- read.csv(file.choose())
 attach(Carotenoidscombined5)
 Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
