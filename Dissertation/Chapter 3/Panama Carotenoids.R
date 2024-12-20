@@ -7810,8 +7810,8 @@ Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
 Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
 
 ## Outliers
-## Removed F2 and M3 from previous tests
-## Additionally removed M21, F19, M17 and M11 to make sqrt tests normal
+## Removed M17 and M3 because of small skin size
+## Additionally removed M21, F19, F1, M11, M28 
 
 ## Assumption: Independent observations: ICC
 ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
@@ -7879,6 +7879,11 @@ cor.matoriginalcombo5
 
 cor.matoriginal2combo5 <- Carotenoidssqrtcombo5 %>% cor_mat()
 cor.matoriginal2combo5
+
+cororiginalp <- rcorr(as.matrix(Carotenoidsoriginalcombo5))
+cororiginalp
+cororiginalp$p
+
 ## correlation matrices  good without sqrt, with it they aren't as good but still within limits
 ## I am comfortable with so keeping as is
 
