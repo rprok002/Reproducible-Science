@@ -45,6 +45,7 @@ install.packages("gridtext")
 library(gridtext)
 install.packages("Hmisc")
 library(Hmisc)
+library(ggplot2)
 
 ## Load dataset, attach, subset ####
 Carotenoids <- read.csv(file.choose())
@@ -7961,12 +7962,12 @@ FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c(
 FACTORIALMANOVAhotelling
 FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Roy"))
 FACTORIALMANOVAroy
-## Frog type significant for all of these, but sex isn't and given the 
+## Neither frog type nor sex significant, and interaction not significant
 
 ## Effect size of MANOVA
 
 etasq(FACTORIALSETUP,test="Wilks") # Using Wilks to be consistent with above
-## Not that significant, but sex explains more than frog type
+## sex explains more than frog type but not high
 
 ## No significane in factorial manova
 
@@ -7977,3 +7978,52 @@ shapiro.test(Carotenoidscombined5$Sum)
 leveneTest(Sum ~ Frog.Type, data = Carotenoidscombined5)
 t.test(Sum ~ Frog.Type, data = Carotenoidscombined5, var.equal = TRUE)
 ## not significant diff between sum of carotenoids in control and infected frogs
+
+## Two Way ANOVA with both group and sex. Can't use lmer because no repeated measures
+
+mod <- aov(Sum ~ Frog.Type * Sex,
+           data = Carotenoidscombined5)
+mod
+
+plot(mod, which = 2)
+## residuals have a couple off but not bad
+
+hist(mod$residuals)
+## residuals seem a bit skewed
+
+# normality test
+shapiro.test(mod$residuals)
+## fits normality, so good
+
+## Homogeneity of variance
+plot(mod, which = 3)
+## looks pretty good
+leveneTest(mod)
+## test is good too
+
+# boxplots by sex
+ggplot(Carotenoidscombined5) +
+  aes(x = Sex, y = Sum) +
+  geom_boxplot()
+
+## might have a couple outliers in females, but not extreme enough to worry
+
+# boxplots by frog type
+ggplot(Carotenoidscombined5) +
+  aes(x = Frog.Type, y = Sum) +
+  geom_boxplot()
+## no outliers here 
+
+# mean and sd by group
+library(dplyr)
+
+# Two-way ANOVA with interaction
+# save model
+mod <- aov(Sum ~ Frog.Type * Sex,
+           data = Carotenoidscombined5
+)
+
+# print results
+summary(mod)
+
+## nothing significant for sum of carotenoids
