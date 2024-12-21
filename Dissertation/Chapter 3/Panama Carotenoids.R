@@ -7810,23 +7810,23 @@ cororiginalcombop$p
 ## Canthaxanthins: canthaxanthin ester
 ## Beta carotene: beta carotene
 
-Carotenoidscombined5 <- read.csv(file.choose())
-attach(Carotenoidscombined5)
-Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
-Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
+Carotenoidscombinedfinal <- read.csv(file.choose())
+attach(Carotenoidscombinedfinal)
+Carotenoidsoriginalcombofinal <- Carotenoidscombinedfinal[,c(5,7,9,11)]
+Carotenoidssqrtcombofinal <- Carotenoidscombinedfinal[,c(6,8,10,12)]
 
 ## Outliers
-## Removed M17 and M3 because of small skin size
-## Additionally removed M21, F19, F1, M11, M28 
+## Removed M17 and M3 because of small skin size, M14, M19, M27 and M29 because not infected at euth
+## Additionally removed F1 for outlier
 
 ## Assumption: Independent observations: ICC
-ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
+ICC(Carotenoidsoriginalcombofinal) ## Change columns to have all dependent variables
 ## Look at absolute correlation values
-## -0.128, good
-ICC(Carotenoidssqrtcombo5)
-## -0.206, good
+## -0.117, good
+ICC(Carotenoidssqrtcombofinal)
+## -0.19, good
 
-dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
+dependentcarotenoidscombofinal <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
 dependentcarotenoidssqrtcombo5 <- data.frame(SqrtXanthophylls, SqrtCanthaxanthins,SqrtEchinenone, SqrtBetaCarotene)
 transpose_dependentcarotenoidscombo5 <- t(dependentcarotenoidscombo5)
 transpose_dependentcarotenoidssqrtcombo5 <- t(dependentcarotenoidssqrtcombo5)
@@ -7860,11 +7860,12 @@ Type <- c("Infected","Infected","Infected", "Control",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Infected","Infected","Infected",
-          "Control","Infected","Infected","Infected",
-          "Control", "Control", "Control", "Infected", "Control", "Infected")
+          "Control","Infected",
+          "Control", "Control", "Control", "Infected", "Control", "Infected",
+          "Control")
           
 Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M",
-         "M","M","M","M","M","M","M","M","M","M","M","F","F")
+         "M","M","M","M","M","M","M","M","M","F","F", "F")
 factor(Type)
 Type
 factor(Sex)
