@@ -7812,18 +7812,18 @@ cororiginalcombop$p
 
 Carotenoidscombined5 <- read.csv(file.choose())
 attach(Carotenoidscombined5)
-Carotenoidsoriginalcombo5 <- Carotenoidscombinedfinal[,c(5,7,9,11)]
-Carotenoidssqrtcombo5 <- Carotenoidscombinedfinal[,c(6,8,10,12)]
+Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
+Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
 
 ## Outliers
 ## Removed M17 and M3 because of small skin size, M14, M19, M27 and M29 because not infected at euth
 ## Additionally removed F1, M28 and F19 for outliers
 
 ## Assumption: Independent observations: ICC
-ICC(Carotenoidsoriginalcombofinal) ## Change columns to have all dependent variables
+ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
 ## Look at absolute correlation values
 ## -0.117, good
-ICC(Carotenoidssqrtcombofinal)
+ICC(Carotenoidssqrtcombo5)
 ## -0.19, good
 
 dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
@@ -7861,11 +7861,11 @@ Type <- c("Infected","Infected","Infected", "Control",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Infected","Infected","Infected",
           "Control","Infected",
-          "Control", "Control", "Control", "Infected", "Control", "Infected",
-          "Control")
+          "Control", "Control", "Control", "Infected", "Control", "Infected"
+          )
           
 Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M",
-         "M","M","M","M","M","M","M","M","M","F","F", "F")
+         "M","M","M","M","M","M","M","M","M","F","F")
 factor(Type)
 Type
 factor(Sex)
@@ -7952,7 +7952,7 @@ ggplot(MANOVA_df) +
 ## Factorial MANOVA 
 
 
-FACTORIALSETUP <- lm(Y~Frog.Type*Sex, data = Carotenoidscombined5)
+FACTORIALSETUP <- lm(Y~Frog.Type+Sex, data = Carotenoidscombined5)
 summary(FACTORIALSETUP)
 Anova(FACTORIALSETUP, test.statistic="Roy")
 Anova(update(FACTORIALSETUP, Xanthophylls ~ .))
@@ -7974,7 +7974,7 @@ FACTORIALMANOVAhotelling <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c(
 FACTORIALMANOVAhotelling
 FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Roy"))
 FACTORIALMANOVAroy
-## Neither frog type nor sex significant, and interaction not significant
+## Neither frog type nor sex significant, and interaction not significant so removing 
 
 ## Effect size of MANOVA
 
@@ -8031,7 +8031,7 @@ library(dplyr)
 
 # Two-way ANOVA with interaction
 # save model
-mod <- aov(Sum ~ Frog.Type * Sex,
+mod <- aov(Sum ~ Frog.Type + Sex,
            data = Carotenoidscombined5
 )
 
