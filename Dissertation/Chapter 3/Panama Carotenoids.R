@@ -7816,7 +7816,7 @@ Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
 Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
 
 ## Outliers
-## Removed M17 and M3 because of small skin size, M14, M19, M27 and M29 because not infected at euth
+## Removed M17 and M3 because of small skin size, M11, M14, M19, M27 and M29 because not infected at euth
 ## Additionally removed F1, M28 and F19 for outliers
 
 ## Assumption: Independent observations: ICC
@@ -7859,13 +7859,13 @@ mahalanobis_distance(data = dependentcarotenoidssqrtcombo5)$is.outlier
 Type <- c("Infected","Infected","Infected", "Control",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Control", "Infected","Infected","Infected","Infected","Infected",
-          "Infected","Infected","Infected",
+          "Infected","Infected",
           "Control","Infected",
           "Control", "Control", "Control", "Infected", "Control", "Infected"
           )
           
 Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M",
-         "M","M","M","M","M","M","M","M","M","F","F")
+         "M","M","M","M","M","M","M","M","F","F")
 factor(Type)
 Type
 factor(Sex)
