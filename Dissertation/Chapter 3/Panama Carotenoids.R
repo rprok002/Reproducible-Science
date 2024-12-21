@@ -7810,14 +7810,14 @@ cororiginalcombop$p
 ## Canthaxanthins: canthaxanthin ester
 ## Beta carotene: beta carotene
 
-Carotenoidscombinedfinal <- read.csv(file.choose())
-attach(Carotenoidscombinedfinal)
-Carotenoidsoriginalcombofinal <- Carotenoidscombinedfinal[,c(5,7,9,11)]
-Carotenoidssqrtcombofinal <- Carotenoidscombinedfinal[,c(6,8,10,12)]
+Carotenoidscombined5 <- read.csv(file.choose())
+attach(Carotenoidscombined5)
+Carotenoidsoriginalcombo5 <- Carotenoidscombinedfinal[,c(5,7,9,11)]
+Carotenoidssqrtcombo5 <- Carotenoidscombinedfinal[,c(6,8,10,12)]
 
 ## Outliers
 ## Removed M17 and M3 because of small skin size, M14, M19, M27 and M29 because not infected at euth
-## Additionally removed F1 for outlier
+## Additionally removed F1, M28 and F19 for outliers
 
 ## Assumption: Independent observations: ICC
 ICC(Carotenoidsoriginalcombofinal) ## Change columns to have all dependent variables
@@ -7826,7 +7826,7 @@ ICC(Carotenoidsoriginalcombofinal) ## Change columns to have all dependent varia
 ICC(Carotenoidssqrtcombofinal)
 ## -0.19, good
 
-dependentcarotenoidscombofinal <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
+dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
 dependentcarotenoidssqrtcombo5 <- data.frame(SqrtXanthophylls, SqrtCanthaxanthins,SqrtEchinenone, SqrtBetaCarotene)
 transpose_dependentcarotenoidscombo5 <- t(dependentcarotenoidscombo5)
 transpose_dependentcarotenoidssqrtcombo5 <- t(dependentcarotenoidssqrtcombo5)
