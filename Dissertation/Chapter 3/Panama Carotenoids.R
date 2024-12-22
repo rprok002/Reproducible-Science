@@ -7816,8 +7816,8 @@ Carotenoidsoriginalcombo5 <- Carotenoidscombined5[,c(5,7,9,11)]
 Carotenoidssqrtcombo5 <- Carotenoidscombined5[,c(6,8,10,12)]
 
 ## Outliers
-## Removed M17 and M3 because of small skin size, M11, M14, M19, M27 and M29 because not infected at euth
-## Additionally removed F1, M28 and F19 for outliers
+## Removed M17, M3, M28 and M24 because of small skin size, M11, M14, M19 because not infected at 15 days
+## Additionally removed F1 and F19 for outliers
 
 ## Assumption: Independent observations: ICC
 ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
@@ -7859,13 +7859,12 @@ mahalanobis_distance(data = dependentcarotenoidssqrtcombo5)$is.outlier
 Type <- c("Infected","Infected","Infected", "Control",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Control", "Infected","Infected","Infected","Infected","Infected",
-          "Infected","Infected",
           "Control","Infected",
-          "Control", "Control", "Control", "Infected", "Control", "Infected"
-          )
+          "Control", "Control", "Control", "Infected", "Control", "Infected",
+          "Control")
           
-Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M","M","M",
-         "M","M","M","M","M","M","M","M","F","F")
+Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M",
+         "M","M","M","M","M","M","M","M","F","F","F")
 factor(Type)
 Type
 factor(Sex)
@@ -7952,7 +7951,7 @@ ggplot(MANOVA_df) +
 ## Factorial MANOVA 
 
 
-FACTORIALSETUP <- lm(Y~Frog.Type+Sex, data = Carotenoidscombined5)
+FACTORIALSETUP <- lm(Y~Frog.Type*Sex, data = Carotenoidscombined5)
 summary(FACTORIALSETUP)
 Anova(FACTORIALSETUP, test.statistic="Roy")
 Anova(update(FACTORIALSETUP, Xanthophylls ~ .))
@@ -8031,7 +8030,7 @@ library(dplyr)
 
 # Two-way ANOVA with interaction
 # save model
-mod <- aov(Sum ~ Frog.Type + Sex,
+mod <- aov(Sum ~ Frog.Type * Sex,
            data = Carotenoidscombined5
 )
 
