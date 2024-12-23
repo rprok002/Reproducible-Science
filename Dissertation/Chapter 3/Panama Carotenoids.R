@@ -7824,7 +7824,7 @@ ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
 ## Look at absolute correlation values
 ## -0.117, good
 ICC(Carotenoidssqrtcombo5)
-## -0.19, good
+## -0.202, good
 
 dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
 dependentcarotenoidssqrtcombo5 <- data.frame(SqrtXanthophylls, SqrtCanthaxanthins,SqrtEchinenone, SqrtBetaCarotene)
@@ -7859,12 +7859,12 @@ mahalanobis_distance(data = dependentcarotenoidssqrtcombo5)$is.outlier
 Type <- c("Infected","Infected","Infected", "Control",
           "Control", "Infected","Infected","Infected","Infected","Infected",
           "Control", "Infected","Infected","Infected","Infected","Infected",
-          "Control","Infected",
+          "Infected", "Control","Infected", "Infected",
           "Control", "Control", "Control", "Infected", "Control", "Infected",
-          "Control")
+          "Infected")
           
 Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M",
-         "M","M","M","M","M","M","M","M","F","F","F")
+         "M","M","M","M","M","M","M","M","M","M","F","F","M")
 factor(Type)
 Type
 factor(Sex)
@@ -7951,7 +7951,7 @@ ggplot(MANOVA_df) +
 ## Factorial MANOVA 
 
 
-FACTORIALSETUP <- lm(Y~Frog.Type*Sex, data = Carotenoidscombined5)
+FACTORIALSETUP <- lm(Y~Frog.Type+Sex, data = Carotenoidscombined5)
 summary(FACTORIALSETUP)
 Anova(FACTORIALSETUP, test.statistic="Roy")
 Anova(update(FACTORIALSETUP, Xanthophylls ~ .))
@@ -8030,7 +8030,7 @@ library(dplyr)
 
 # Two-way ANOVA with interaction
 # save model
-mod <- aov(Sum ~ Frog.Type * Sex,
+mod <- aov(Sum ~ Frog.Type + Sex,
            data = Carotenoidscombined5
 )
 
@@ -8038,3 +8038,13 @@ mod <- aov(Sum ~ Frog.Type * Sex,
 summary(mod)
 
 ## nothing significant for sum of carotenoids
+
+## MANOVA and two way anova diagrams ####
+colors = c("red", "darkblue", "darkgreen", "brown")
+heplot(FACTORIALSETUP, size="evidence", 
+       col=colors, cex=1.25,
+       fill=TRUE, fill.alpha=0.1)
+heplot(FACTORIALSETUP, size="effect", 
+       add=TRUE, lwd=5, term.labels=FALSE, col=colors)
+
+pairs(FACTORIALSETUP)
