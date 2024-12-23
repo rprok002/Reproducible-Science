@@ -7992,7 +7992,7 @@ t.test(Sum ~ Frog.Type, data = Carotenoidscombined5, var.equal = TRUE)
 
 ## Two Way ANOVA with both group and sex. Can't use lmer because no repeated measures
 
-mod <- aov(Sum ~ Frog.Type * Sex,
+mod <- aov(SqrtSum ~ Frog.Type * Sex,
            data = Carotenoidscombined5)
 mod
 
@@ -8014,7 +8014,7 @@ leveneTest(mod)
 
 # boxplots by sex
 ggplot(Carotenoidscombined5) +
-  aes(x = Sex, y = Sum) +
+  aes(x = Frog.Type, y = SqrtSum) +
   geom_boxplot()
 
 ## might have a couple outliers in females, but not extreme enough to worry
@@ -8030,7 +8030,7 @@ library(dplyr)
 
 # Two-way ANOVA with interaction
 # save model
-mod <- aov(Sum ~ Frog.Type + Sex,
+mod <- aov(SqrtSum ~ Frog.Type + Sex,
            data = Carotenoidscombined5
 )
 mod
@@ -8051,7 +8051,7 @@ heplot(FACTORIALSETUP, size="effect",
 pairs(FACTORIALSETUP)
 
 ## sum two way anova
-ggplot(Carotenoidscombined5, aes(x=Frog.Type, y=Sum, fill=Sex)) + 
+ggplot(Carotenoidscombined5, aes(x=Frog.Type, y=SqrtSum, fill=Sex)) + 
   geom_boxplot()+
   theme(axis.line = element_line(colour = "black"),
         panel.grid.major = element_blank(),
@@ -8061,12 +8061,12 @@ ggplot(Carotenoidscombined5, aes(x=Frog.Type, y=Sum, fill=Sex)) +
   scale_fill_manual(values=c("white", "darkgrey")) +
   theme(axis.title.x=element_blank(),axis.text.x=element_text(size=rel(1.2)),
         legend.position = "top")+
-  expand_limits(y=1000)+
-  ylab("Sum (µg carotenoids per g skin)")+
-  annotate("text", x=0.81, y=432.77, label= "x", fontface = "bold", size = 4)+
-  annotate("text", x=1.19, y=417.16, label= "x", fontface = "bold", size = 4)+
-  annotate("text", x=1.81, y=340.93, label= "x", fontface = "bold", size = 4)+
-  annotate("text", x=2.19, y=406.06, label= "x", fontface = "bold", size = 4)
+  ylim(0,100)+
+  ylab("SQRT Sum (µg carotenoids per g skin)")+
+  annotate("text", x=0.81, y=66.86, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.19, y=65.83, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.81, y=58.27, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=2.19, y=65.36, label= "x", fontface = "bold", size = 4)
   
   
 
