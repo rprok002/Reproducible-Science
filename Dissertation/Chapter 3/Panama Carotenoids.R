@@ -8021,7 +8021,7 @@ ggplot(Carotenoidscombined5) +
 
 # boxplots by frog type
 ggplot(Carotenoidscombined5) +
-  aes(x = Frog.Type, y = Sum) +
+  aes(x = Sex, y = Sum) +
   geom_boxplot()
 ## no outliers here 
 
@@ -8033,9 +8033,10 @@ library(dplyr)
 mod <- aov(Sum ~ Frog.Type + Sex,
            data = Carotenoidscombined5
 )
-
+mod
 # print results
 summary(mod)
+anova(mod)
 
 ## nothing significant for sum of carotenoids
 
