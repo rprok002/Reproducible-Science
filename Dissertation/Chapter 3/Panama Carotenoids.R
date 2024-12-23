@@ -7803,7 +7803,7 @@ cororiginalcombop$p
 ## Removing canthaxanthin ester
 ## need to remove lutein because highly correlated with beta carotene 
 
-## MANOVA Combo 5 ####
+## MANOVA Combo 5 try one more time ####
 ## Final groups:
 ## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 3
 ## Echinenone: Echinenone
@@ -8048,3 +8048,25 @@ heplot(FACTORIALSETUP, size="effect",
        add=TRUE, lwd=5, term.labels=FALSE, col=colors)
 
 pairs(FACTORIALSETUP)
+
+## sum two way anova
+ggplot(Carotenoidscombined5, aes(x=Frog.Type, y=Sum, fill=Sex)) + 
+  geom_boxplot()+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_fill_manual(values=c("white", "darkgrey")) +
+  theme(axis.title.x=element_blank(),axis.text.x=element_text(size=rel(1.2)),
+        legend.position = "top")+
+  expand_limits(y=1000)+
+  ylab("Sum (µg carotenoids per g skin)")+
+  annotate("text", x=0.81, y=432.77, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.19, y=417.16, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.81, y=340.93, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=2.19, y=406.06, label= "x", fontface = "bold", size = 4)
+  
+  
+
+        
