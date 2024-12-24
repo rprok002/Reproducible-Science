@@ -3249,6 +3249,170 @@ simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
 plot(simsBluenessInfectionDorsal, quantreg = FALSE)
 ## Deviation is not significant, so don't need to worry about
 
+## Final Picture Graphs ####
+BrightnessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type)) +
+  geom_smooth(method = "lm")+
+  geom_point(size=0.75)+
+  labs(y = "Average Brigtness (%)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
+  xlim(0,50)+
+  ylim(20,45)+
+  scale_color_manual(values = c("black", "darkgrey"))+
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=43, label= "F: 22.84 ; DF: 1,141.58 ; p <0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=45, label= " Day", fontface = "bold", size = 2)
+BrightnessLineDay
+
+RednessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Redness.score, colour = Frog_Type)) +
+  geom_point(size=0.75)+
+  labs(y = "Dorsal Redness (Rdorsum/Rstandard)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
+  xlim(0,50)+
+  ylim(0.75,1.2)+
+  scale_color_manual(values = c("darkred", "red"))+
+  theme(legend.title=element_blank())
+RednessLineDay
+
+## remove annotate because not significant but keeping here in case I need it
+annotate("text", x=35, y=1.15, label= "F < 0.30 ; DF: 1,192.00 ; p = 0.99", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=1.2, label= " Day", fontface = "bold", size = 2)
+
+GreenessLineDay <- ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Greeness.score, colour = Frog_Type)) +
+  geom_smooth(method = "lm")+
+  geom_point(size=0.75)+
+  labs(y = "Dorsal Greenness (Gdorsum/Gstandard)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
+  ylim(1,2)+
+  xlim(0,50)+
+  scale_color_manual(values = c("darkgreen", "green"))+
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=1.9, label= "F: 27.31 ; DF: 1,179.76 ; p < 0.001", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=2, label= " Day", fontface = "bold", size = 2)
+GreenessLineDay
+
+BluenessLineDay <-ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Blueness.score, colour = Frog_Type)) +
+  geom_smooth(method = "lm")+
+  geom_point(size=0.75)+
+  labs(y = "Dorsal Blueness (Bdorsum/Bstandard)", x = "Day")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7),
+        legend.position="top")+
+  xlim(0,50)+
+  ylim(0,1.2)+
+  scale_color_manual(values = c("darkblue", "blue"))+
+  theme(legend.title=element_blank())+
+  annotate("text", x=35, y=1.1, label= "F: 8.41 ; DF: 1,185.17 ; p < 0.01", fontface = "bold", size = 2)+
+  annotate("text", x=35, y=1.2, label= " Day", fontface = "bold", size = 2)
+BluenessLineDay
+
+BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Average.Brightness, colour = Frog_Number)) +
+  geom_smooth(method = "lm", se = FALSE)+
+  geom_point()+
+  labs(y = "Average Brigtness (%)", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7))+
+  ylim(20,45)+
+  xlim(0,8)+
+  annotate("text", x=6, y=43.5, label= "F: 8.66 ; DF: 1,34,83 ; p < 0.01", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=45, label= "Log Infection", fontface = "bold", size = 2)
+BrightnessLineInfection
+
+RednessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Redness.score, colour = Frog_Number)) +
+  geom_point()+
+  labs(y = "Dorsal Redness (Rdorsum/Rstandard)", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7))+
+  ylim(0.75,1.2)+
+  xlim(0,8)
+RednessLineInfection
+
+## keeping here just in case
+annotate("text", x=6, y=1.17, label= "F: 0.02 ; DF: 1,78.71 ; p = 0.90", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=1.2, label= "Log Infection", fontface = "bold", size = 2)
+
+GreennessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Greeness.score, colour = Frog_Number)) +
+  geom_point()+
+  labs(y = "Dorsal Greenness (Gdorsum/Gstandard)", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7))+
+  ylim(1,2)+
+  xlim(0,8)
+GreennessLineInfection
+
+## keeping here just in case
+annotate("text", x=6, y=1.93, label= "F: 1.93 ; DF: 1,86.02 ; p = 0.17", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=2, label= "Log Infection", fontface = "bold", size = 2)
+
+BluenessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_Infection, y = Blueness.score, colour = Frog_Number)) +
+  geom_point()+
+  labs(y = "Dorsal Blueness (Bdorsum/Bstandard)", x = "Bd Infection (log transformed)")+
+  labs(color = "Frog ID")+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.y = element_text(size = 7),
+        axis.title.x = element_text(size = 7))+
+  ylim(0,1.5)+
+  xlim(0,8)
+BluenessLineInfection
+
+## keeping here just in case
+  annotate("text", x=6, y=1.4, label= "F: 0.01 ; DF: 1,88 ; p = 0.91", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=1.5, label= "Log Infection", fontface = "bold", size = 2)
+
+ggarrange(BrightnessLineInfection, RednessLineInfection, GreennessLineInfection, BluenessLineInfection, ncol=2, nrow=2, common.legend = TRUE, legend="right")
+  
+library(patchwork)
+
+(BrightnessLineDay | RednessLineDay)/
+  (GreenessLineDay | BluenessLineDay)
+
 ## Updated Mate Choice Models ####
 MateChoiceAnalysisInfectedDiff <- read.csv(file.choose())
 MateChoiceAnalysisInfected <- read.csv(file.choose())
@@ -3273,10 +3437,8 @@ plot(InfectedTrialDiffLMER)
 
 ggboxplot(MateChoiceAnalysisInfectedDiff, y = "Difference_Seconds_Female", x = "Type")
 
-InfectedTrialGLMER <- glmer(Weight_Seconds_Female~Group+Clean_Male_Front+Infected_Male_Front+Clean_Male_Wander+
-                                Infected_Male_Wander+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected, 
+InfectedTrialGLMER <- glmer(Weight_Seconds_Female~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected, 
                                 weights = wt, family = "poisson")
 anova(InfectedTrialGLMER)
 summary(InfectedTrialGLMER)
 
-## Model doesn't converge when throw everything together so doesn't seem like a good idea
