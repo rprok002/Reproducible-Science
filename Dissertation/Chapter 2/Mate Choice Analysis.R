@@ -3441,4 +3441,5 @@ InfectedTrialGLMER <- glmer(Weight_Seconds_Female~Group+(1|Male_Pair_Letter)+(1|
                                 weights = wt, family = "poisson")
 anova(InfectedTrialGLMER)
 summary(InfectedTrialGLMER)
+plot(InfectedTrialGLMER)
 
