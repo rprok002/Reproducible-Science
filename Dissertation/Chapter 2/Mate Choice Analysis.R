@@ -3182,33 +3182,33 @@ plot(BluenessDorsalDay)
 ## Interaction not significant
 ## Decrease over day
 
-BrightnessInfectionDorsal <- lmer(Average.Brightness~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BrightnessInfectionDorsal)
 summary(BrightnessInfectionDorsal)
 emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 plot(BrightnessInfectionDorsal)
-## Brightness decreases as infection load increases
+## Brightness decreases as infection load increases, but not different between control and infected frogs
 
-RednessInfectionDorsal <- lmer(Redness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+RednessInfectionDorsal <- lmer(Redness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(RednessInfectionDorsal)
 summary(RednessInfectionDorsal)
 emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 plot(RednessInfectionDorsal)
-## Redness score not significant
+## Redness score not significant for either variable
 
-GreenessInfectionDorsal <- lmer(Greeness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+GreenessInfectionDorsal <- lmer(Greeness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(GreenessInfectionDorsal)
 summary(GreenessInfectionDorsal)
 emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 plot(GreenessInfectionDorsal)
-## not significant
+## not significant for either variable
 
-BluenessInfectionDorsal <- lmer(Blueness.score~Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+BluenessInfectionDorsal <- lmer(Blueness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
 anova(BluenessInfectionDorsal)
 summary(BluenessInfectionDorsal)
 emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
 plot(BluenessInfectionDorsal)
-## not significant
+## not significant for either variable
 
 ## Graphs showing trends ####
 ggplot(FrogImageDataDorsalMale, aes(x = Day, y = Average.Brightness, colour = Frog_Type))+
@@ -3345,7 +3345,7 @@ BrightnessLineInfection <-ggplot(FrogImageDataDorsalMaleInfected, aes(x = Log_In
         axis.title.x = element_text(size = 7))+
   ylim(20,45)+
   xlim(0,8)+
-  annotate("text", x=6, y=43.5, label= "F: 8.66 ; DF: 1,34,83 ; p < 0.01", fontface = "bold", size = 2)+
+  annotate("text", x=6, y=43.5, label= "F: 7.31 ; DF: 1,121.33 ; p < 0.01", fontface = "bold", size = 2)+
   annotate("text", x=6, y=45, label= "Log Infection", fontface = "bold", size = 2)
 BrightnessLineInfection
 
@@ -3434,6 +3434,10 @@ InfectedTrialDiffLMER <- lmer(Difference_Seconds_Female~Clean_Male_Front+Infecte
 anova(InfectedTrialDiffLMER)
 summary(InfectedTrialDiffLMER)
 plot(InfectedTrialDiffLMER)
+emmeans(InfectedTrialDiffLMER, list (pairwise~Infected_Male_Wander), lmer.df = "satterthwaite")
+emmeans(InfectedTrialDiffLMER, list (pairwise~Clean_Male_Wander), lmer.df = "satterthwaite")
+emmeans(InfectedTrialDiffLMER, list (pairwise~Infected_Male_Front), lmer.df = "satterthwaite")
+emmeans(InfectedTrialDiffLMER, list (pairwise~Clean_Male_Front), lmer.df = "satterthwaite")
 
 ggboxplot(MateChoiceAnalysisInfectedDiff, y = "Difference_Seconds_Female", x = "Type")
 
