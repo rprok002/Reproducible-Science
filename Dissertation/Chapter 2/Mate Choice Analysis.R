@@ -3447,3 +3447,48 @@ anova(InfectedTrialGLMER)
 summary(InfectedTrialGLMER)
 plot(InfectedTrialGLMER)
 
+## Mate Choice Figure final examples ####
+## One with three different comparisions
+MateChoiceGraph <- read.csv(file.choose())
+MateChoiceGraph$Factor <- factor(MateChoiceGraph$Factor, levels = c("Female Choice", "Male Wander", "Male Front"))
+ggplot(MateChoiceGraph, aes(x=Factor, y=Value, fill = Group))+
+  geom_boxplot()+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        axis.title.x = element_blank(),
+        legend.title= element_blank(),
+        legend.position = "bottom")+
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  ylab("Time (seconds)")+
+  expand_limits(y = 1100)+
+  scale_fill_manual(values=c("snow3", "snow4"))+
+  geom_signif(y_position = c(1000,1000,1000), xmin = c(0.8,1.8,2.8), xmax = c(1.2,2.2,3.2),
+              annotation = c("***"), tip_length = 0, textsize = 5)+
+  annotate("text", x=0.8, y=277, label="x", size = 5)+
+  annotate("text", x=1.2, y=336, label="x", size = 5)+
+  annotate("text", x=1.8, y=89, label="x", size = 5)+
+  annotate("text", x=2.2, y=97, label="x", size = 5)+
+  annotate("text", x=2.8, y=615, label="x", size = 5)+
+  annotate("text", x=3.2, y=634, label="x", size = 5)
+
+## Just the one comparison
+
+MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Control", "Infected"))
+mc1 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female",  ylab = " Time (seconds)", xlab = "Male",
+                 ylim = c(0, 1100), fill = "Group", palette = c("snow3", "snow4")) + 
+  scale_y_continuous(breaks=seq(0,900,by=100))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(axis.title.x = element_blank(),
+        legend.title=element_blank(),
+        legend.position = "bottom",
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())+
+  annotate("text", x=1, y=277, label="x", size = 7)+
+  annotate("text", x=2, y=336, label="x", size = 7)+
+  geom_signif(y_position = c(1000), xmin = c(1), xmax = c(2),
+              annotation = c("***"), tip_length = 0, textsize = 5)
+mc1
+
