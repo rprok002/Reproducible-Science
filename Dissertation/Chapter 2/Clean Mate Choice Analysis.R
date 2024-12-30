@@ -10,6 +10,9 @@ library(multcomp)
 library(nlme)
 library(lmtest)
 library(car)
+install.packages("DHARMa")
+library(DHARMa)
+library(patchwork)
 
 ## Mate Choice Experiment Data Analyses ####
 
@@ -25,6 +28,7 @@ ggqqplot(MateChoiceAnalysisInfected$Weight_Seconds_Female)
 InfectedTrialLMER <- lmer(Weight_Seconds_Female~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected, 
                             weights = wt)
 anova(InfectedTrialLMER)
+
 ## Check assumptions 
 ## Linearity
 WeightSecondsFemale <- MateChoiceAnalysisInfected$Weight_Seconds_Female
@@ -59,7 +63,7 @@ ggqqplot(MateChoiceAnalysisInfectedDiff$Difference_Seconds_Female)
 ## normal distribution
 ## Distribution of Difference Seconds Female seem to indicate lmer good idea
 
-## ale Movement/Placement Data on Difference between female time near Control vs Infected male LMER
+## Male Movement/Placement Data on Difference between female time near Control vs Infected male LMER
 
 InfectedTrialDiffLMER <- lmer(Difference_Seconds_Female~Clean_Male_Front+Infected_Male_Front+Clean_Male_Wander+
                                 Infected_Male_Wander+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfectedDiff, weights = wt)
@@ -88,7 +92,7 @@ plot(InfectedTrialDiffLMER)
 
 ## seems to meet assumptions for LMER
 
-## Female Mate Choice Boxplot
+## Female Mate Choice Boxplot ####
 MateChoiceAnalysisInfected$Group <- factor(MateChoiceAnalysisInfected$Group, levels = c("Control", "Infected"))
 mc1 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Female",  ylab = " Time (seconds)", xlab = "Male",
                  ylim = c(0, 1100), fill = "Group", palette = c("snow3", "snow4")) + 
@@ -104,3 +108,92 @@ mc1 <- ggboxplot(MateChoiceAnalysisInfected, x = "Group", y = "Weight_Seconds_Fe
   geom_signif(y_position = c(1000), xmin = c(1), xmax = c(2),
               annotation = c("***"), tip_length = 0, textsize = 5)
 mc1
+
+## Picture Data Analysis ####
+## Data Files
+FrogImageData <- read.csv(file.choose())
+FrogImageDataDorsal <- subset(FrogImageData, Dorsal_Ventral == "Dorsal")
+FrogImageDataDorsalMale <- subset(FrogImageDataDorsal, Sex == "Male")
+
+## Check distribution
+ggdensity(FrogImageDataDorsalMale$Average.Brightness)
+ggqqplot(FrogImageDataDorsalMale$Average.Brightness)
+## fairly normal, have a bit of a hump
+
+ggdensity(FrogImageDataDorsalMale$Redness.score)
+ggqqplot(FrogImageDataDorsalMale$Redness.score)
+## normal
+
+ggdensity(FrogImageDataDorsalMale$Greeness.score)
+ggqqplot(FrogImageDataDorsalMale$Greeness.score)
+## normal
+
+ggdensity(FrogImageDataDorsalMale$Blueness.score)
+ggqqplot(FrogImageDataDorsalMale$Blueness.score)
+## normal
+
+## Picture Analysis LMERs for Day
+
+BrightnessDorsalDay <- lmer(Average.Brightness~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessDorsalDay)
+## Interaction not significant, removing
+BrightnessDorsalDay <- lmer(Average.Brightness~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessDorsalDay)
+summary(BrightnessDorsalDay)
+emmeans(BrightnessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+emmeans(BrightnessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Brightness decreases over days for both control and infected frogs and not different between frogs
+
+## Check assumptions 
+## Linearity
+AverageBrightness <- FrogImageDataDorsalMale$Average.Brightness
+BrightnessDorsalDay.Linearity<-plot(resid(BrightnessDorsalDay),AverageBrightness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Bright.Res <- residuals(BrightnessDorsalDay)
+FrogImageDataDorsalMale$Abs.Bright.Res <- abs(FrogImageDataDorsalMale$Bright.Res)
+FrogImageDataDorsalMale$Bright.Res2 <- FrogImageDataDorsalMale$Abs.Bright.Res^2
+Levene.Bright <- lm(Bright.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Bright)
+## homoscedasticity met
+## Visual model
+plot(BrightnessDorsalDay)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsBrightnessDorsalDay <- simulateResiduals(BrightnessDorsalDay)
+plot(simsBrightnessDorsalDay, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+RednessDorsalDay <- lmer(Redness.score~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessDorsalDay)
+## no interaction, so removing
+RednessDorsalDay <- lmer(Redness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessDorsalDay)
+summary(RednessDorsalDay)
+emmeans(RednessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+emmeans(RednessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## neither Day nor frog type is significant, overall redness score next to the
+
+## Check assumptions 
+## Linearity
+Redness <- FrogImageDataDorsalMale$Redness.score
+RednessDorsalDay.Linearity<-plot(resid(RednessDorsalDay),Redness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Red.Res <- residuals(RednessDorsalDay)
+FrogImageDataDorsalMale$Abs.Red.Res <- abs(FrogImageDataDorsalMale$Red.Res)
+FrogImageDataDorsalMale$Red.Res2 <- FrogImageDataDorsalMale$Abs.Red.Res^2
+Levene.Red <- lm(Red.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Red)
+## homoscedasticity met
+## Visual model
+plot(RednessDorsalDay)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsRednessDorsalDay <- simulateResiduals(RednessDorsalDay)
+plot(simsRednessDorsalDay, quantreg = FALSE)
+## No significant tests, so not detecting outliers
