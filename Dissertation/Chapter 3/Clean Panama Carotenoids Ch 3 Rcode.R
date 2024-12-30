@@ -1,5 +1,9 @@
 ## Chapter 3 Carotenoids Clean Rcode
 
+## NOTE: when attach dataset, the next time you have you attach a different dataset
+## you have to restart Rstudio and not save the R environment, otherwise it will not 
+## attach the new dataset properly
+
 ## Packages ####
 library(car)
 install.packages("mvnormtest")
@@ -99,7 +103,7 @@ fviz_pca_var(data.pca, col.var = "cos2",
 ## PCA doesn't really seem to help with picking variables to continue exploring, so moving onto MANOVAs
 
 
-## MANOVA with 4 combined carotenoids ####
+## MANOVA assumptions with 4 combined carotenoids ####
 
 ## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
 ## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2 and ketocarotenoid ester 3 correlated, so summing
@@ -116,7 +120,7 @@ cor.matoriginalcombo
 
 ## Multicollinearity too high between groups, looking for below 0.7 if possible so trying again
 
-## MANOVA with 3 combined carotenoids ####
+## MANOVA assumptions with 3 combined carotenoids ####
 ## 1.Xanthophyll, canary xanthophyll, canary xanthophyll ester 1, canary xanthophyll ester 2, canary xanthophyll ester 3 and lutein ester correlated, so summing (though lutein and canary xan not correlated)
 ## 2.Canthaxanthin, canthaxanthin ester, cis. ketocarotenoid, ketocarotenoid ester 1, ketocarotenoid ester 2, ketocarotenoid ester 3, Echinenone, x3hE hydroxy echinenone and e3hE ester correlated correlated, so summing
 ## 3.Apocarotenoid and beta carotene
@@ -130,7 +134,7 @@ cor.matoriginalcombo3
 
 ## Multicollinearity too high between groups, looking for below 0.7 if possible so trying again
 
-## MANOVA with combined esters ####
+## MANOVA assumptions with combined esters ####
 ## Apocarotenoid: Apocarotenoid
 ## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 2, Can Xan Est 3
 ## Canthaxanthins: canthaxanthin and canthaxanthin ester
@@ -155,7 +159,7 @@ cor.matoriginalcomboester
 ## Removing canthaxanthin but keeping ester
 ## need to remove lutein because highly correlated with beta carotene 
 
-## MANOVA with final carotenoid categories try first with 29 frogs ####
+## MANOVA assumptions with final carotenoid categories try first with 29 frogs ####
 
 ## Final carotenoid categories:
 ## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 3
@@ -219,7 +223,7 @@ MVNHzfull$multivariateNormality
 ## no homogeneity of covariance matrices and not normal
 ## To fix, additionally removed F1 and F19 for outliers to achieve multivariate normality
 
-## MANOVA with final carotenoid categories with final 27 frogs ####
+## MANOVA assumptions with final carotenoid categories with final 27 frogs ####
 
 ## Final carotenoid categories:
 ## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 3
@@ -229,12 +233,12 @@ MVNHzfull$multivariateNormality
 
 Carotenoidscombined5final <- read.csv(file.choose())
 attach(Carotenoidscombined5final)
-Carotenoidsoriginalcombined5final <- Carotenoidscombined5[,c(5,7,9,11)]
+Carotenoidsoriginalcombined5final <- Carotenoidscombined5final[,c(5,7,9,11)]
 
 ## Assumption: Independent observations: ICC
 ICC(Carotenoidsoriginalcombined5final) ## Change columns to have all dependent variables
 ## Look at absolute correlation values
-## -0.078, good
+## -0.117, good
 
 dependentcarotenoidscombo5final <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
 transpose_dependentcarotenoidscombo5final <- t(dependentcarotenoidscombo5final)
@@ -265,7 +269,7 @@ factor(Sex)
 Sex
 ## Run BoxM
 boxM(dependentcarotenoidscombo5final, Type)
-## suggests normality and p-value is significant so no homogeneity of covariance matrices
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
 boxM(dependentcarotenoidscombo5final, Sex)
 ## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
 
@@ -273,9 +277,49 @@ boxM(dependentcarotenoidscombo5final, Sex)
 cor.matoriginalcombo5final <- Carotenoidsoriginalcombined5final %>% cor_mat()
 cor.matoriginalcombo5final
 
-## correlation matrix ranges from 0.37-0.67 so that is ok
+## correlation matrix ranges from 0.51-0.73 so that is ok
 
 ## Assumptions: multivariate normality
 MVNHzfull <- mvn(data = Carotenoidsoriginalcombined5final, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
 MVNHzfull$multivariateNormality
-## not normal
+## normal
+
+## met assumptions for making a MANOVA
+
+## Factorial MANOVA with final dataset of 27 frogs ####
+
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY
+
+## Bind dependent variables together into one vector
+Xanthophylls <- Carotenoidscombined5final$Xanthophylls
+Canthaxanthins <- Carotenoidscombined5final$Canthaxanthins
+Echinenone <- Carotenoidscombined5final$Echinenone
+BetaCarotene <- Carotenoidscombined5final$BetaCarotene
+
+Y <- cbind(Xanthophylls,Canthaxanthins,Echinenone,BetaCarotene)
+## Run with interaction first
+FACTORIALSETUP <- lm(Y~Frog.Type*Sex, data = Carotenoidscombined5final)
+summary(FACTORIALSETUP)
+Anova(FACTORIALSETUP, test.statistic="Roy")
+## no interaction, so taking out and making sure
+## using Type II test because no interaction 
+
+FACTORIALSETUP <- lm(Y~Frog.Type+Sex, data = Carotenoidscombined5final)
+summary(FACTORIALSETUP)
+Anova(FACTORIALSETUP, test.statistic="Roy")
+
+FACTORIALMANOVAroy <-Manova(FACTORIALSETUP, multivariate = TRUE, type = c("II"), test=("Roy"))
+FACTORIALMANOVAroy
+## Neither frog type nor sex significant
+
+## Breakdown by carotenoid category
+Anova(update(FACTORIALSETUP, Xanthophylls ~ .))
+Anova(update(FACTORIALSETUP, Canthaxanthins ~ .))
+Anova(update(FACTORIALSETUP, Echinenone ~ .))
+Anova(update(FACTORIALSETUP, BetaCarotene ~ .))
+
+## Effect size of MANOVA
+
+etasq(FACTORIALSETUP,test="Wilks") # Using Wilks to be consistent with above
+## sex explains more than frog type but not high
+
