@@ -174,7 +174,7 @@ anova(RednessDorsalDay)
 summary(RednessDorsalDay)
 emmeans(RednessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
 emmeans(RednessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
-## neither Day nor frog type is significant, overall redness score next to the
+## neither Day nor frog type is significant
 
 ## Check assumptions 
 ## Linearity
@@ -197,3 +197,191 @@ plot(RednessDorsalDay)
 simsRednessDorsalDay <- simulateResiduals(RednessDorsalDay)
 plot(simsRednessDorsalDay, quantreg = FALSE)
 ## No significant tests, so not detecting outliers
+
+GreenessDorsalDay <- lmer(Greeness.score~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessDorsalDay)
+## No interaction, so removing
+GreenessDorsalDay <- lmer(Greeness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessDorsalDay)
+summary(GreenessDorsalDay)
+emmeans(GreenessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+emmeans(GreenessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+## Greeness increases over day for both control and infected frogs
+
+## Check assumptions 
+## Linearity
+Greeness <- FrogImageDataDorsalMale$Greeness.score
+GreenessDorsalDay.Linearity<-plot(resid(GreenessDorsalDay),Greeness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Green.Res <- residuals(GreenessDorsalDay)
+FrogImageDataDorsalMale$Abs.Green.Res <- abs(FrogImageDataDorsalMale$Green.Res)
+FrogImageDataDorsalMale$Green.Res2 <- FrogImageDataDorsalMale$Abs.Green.Res^2
+Levene.Green <- lm(Green.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Green)
+## homoscedasticity just barely not met statistically but the qqplot earlier looked ok
+## Visual model
+plot(GreenessDorsalDay)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsGreenessDorsalDay <- simulateResiduals(GreenessDorsalDay)
+plot(simsGreenessDorsalDay, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+BluenessDorsalDay <- lmer(Blueness.score~Day*Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessDorsalDay)
+## No interaction, so removing
+BluenessDorsalDay <- lmer(Blueness.score~Day+Frog_Type+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessDorsalDay)
+summary(BluenessDorsalDay)
+emmeans(BluenessDorsalDay, list (pairwise~Day), lmer.df = "satterthwaite")
+emmeans(BluenessDorsalDay, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Decrease over day
+
+## Check assumptions 
+## Linearity
+Blueness <- FrogImageDataDorsalMale$Blueness.score
+BluenessDorsalDay.Linearity<-plot(resid(BluenessDorsalDay),Blueness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Blue.Res <- residuals(BluenessDorsalDay)
+FrogImageDataDorsalMale$Abs.Blue.Res <- abs(FrogImageDataDorsalMale$Blue.Res)
+FrogImageDataDorsalMale$Blue.Res2 <- FrogImageDataDorsalMale$Abs.Blue.Res^2
+Levene.Blue <- lm(Blue.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Blue)
+## homoscedasticity met
+## Visual model
+plot(BluenessDorsalDay)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsBluenessDorsalDay <- simulateResiduals(BluenessDorsalDay)
+plot(simsBluenessDorsalDay, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+## Picture Analysis LMERs for Log Infection
+
+BrightnessInfectionDorsal <- lmer(Average.Brightness~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BrightnessInfectionDorsal)
+summary(BrightnessInfectionDorsal)
+emmeans(BrightnessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+emmeans(BrightnessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Brightness decreases as infection load increases, but not different between control and infected frogs
+
+
+## Check assumptions 
+## Linearity
+AverageBrightness <- FrogImageDataDorsalMale$Average.Brightness
+BrightnessInfection.Linearity<-plot(resid(BrightnessInfectionDorsal),AverageBrightness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Brightlog.Res <- residuals(BrightnessInfectionDorsal)
+FrogImageDataDorsalMale$Abs.Brightlog.Res <- abs(FrogImageDataDorsalMale$Brightlog.Res)
+FrogImageDataDorsalMale$Brightlog.Res2 <- FrogImageDataDorsalMale$Abs.Brightlog.Res^2
+Levene.Brightlog <- lm(Brightlog.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Brightlog)
+## homoscedasticity met
+## Visual model
+plot(BrightnessInfectionDorsal)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsBrightnessInfectionDorsal <- simulateResiduals(BrightnessInfectionDorsal)
+plot(simsBrightnessInfectionDorsal, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+RednessInfectionDorsal <- lmer(Redness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(RednessInfectionDorsal)
+summary(RednessInfectionDorsal)
+emmeans(RednessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+emmeans(RednessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## Redness score not significant for either variable
+
+## Check assumptions 
+## Linearity
+Redness <- FrogImageDataDorsalMale$Redness.score
+RednessInfectionDorsal.Linearity<-plot(resid(RednessInfectionDorsal),Redness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Redlog.Res <- residuals(RednessInfectionDorsal)
+FrogImageDataDorsalMale$Abs.Redlog.Res <- abs(FrogImageDataDorsalMale$Redlog.Res)
+FrogImageDataDorsalMale$Redlog.Res2 <- FrogImageDataDorsalMale$Abs.Redlog.Res^2
+Levene.Redlog <- lm(Redlog.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Redlog)
+## homoscedasticity met
+## Visual model
+plot(RednessInfectionDorsal)
+## randomly distributed
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsRednessInfectionDorsal <- simulateResiduals(RednessInfectionDorsal)
+plot(simsRednessInfectionDorsal, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+GreenessInfectionDorsal <- lmer(Greeness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(GreenessInfectionDorsal)
+summary(GreenessInfectionDorsal)
+emmeans(GreenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+emmeans(GreenessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## not significant for either variable
+
+
+## Check assumptions 
+## Linearity
+Greeness <- FrogImageDataDorsalMale$Greeness.score
+GreenessInfectionDorsal.Linearity<-plot(resid(GreenessInfectionDorsal),Greeness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Greenlog.Res <- residuals(GreenessInfectionDorsal)
+FrogImageDataDorsalMale$Abs.Greenlog.Res <- abs(FrogImageDataDorsalMale$Greenlog.Res)
+FrogImageDataDorsalMale$Greenlog.Res2 <- FrogImageDataDorsalMale$Abs.Greenlog.Res^2
+Levene.Greenlog <- lm(Greenlog.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Greenlog)
+## homoscedasticity not met but qqplot earlier was ok
+## Visual model
+plot(GreenessInfectionDorsal)
+## randomly distributed
+
+## Assumptions not great for LMER but could make an argument to keep 
+
+## DHARMA to check for outliers
+simsGreenessInfectionDorsal <- simulateResiduals(GreenessInfectionDorsal)
+plot(simsGreenessInfectionDorsal, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+BluenessInfectionDorsal <- lmer(Blueness.score~Frog_Type+Log_Infection+(1|Frog_Number), data = FrogImageDataDorsalMale)
+anova(BluenessInfectionDorsal)
+summary(BluenessInfectionDorsal)
+emmeans(BluenessInfectionDorsal, list (pairwise~Log_Infection), lmer.df = "satterthwaite")
+emmeans(BluenessInfectionDorsal, list (pairwise~Frog_Type), lmer.df = "satterthwaite")
+## not significant for either variable
+
+
+## Check assumptions 
+## Linearity
+Blueness <- FrogImageDataDorsalMale$Blueness.score
+BluenessInfectionDorsal.Linearity<-plot(resid(BluenessInfectionDorsal),Blueness) ## has a pattern but not too bad
+## Homogeneity of Variance
+FrogImageDataDorsalMale$Bluelog.Res <- residuals(BluenessInfectionDorsal)
+FrogImageDataDorsalMale$Abs.Bluelog.Res <- abs(FrogImageDataDorsalMale$Bluelog.Res)
+FrogImageDataDorsalMale$Bluelog.Res2 <- FrogImageDataDorsalMale$Abs.Bluelog.Res^2
+Levene.Bluelog <- lm(Bluelog.Res2 ~ Frog_Number, data=FrogImageDataDorsalMale) 
+anova(Levene.Bluelog)
+## homoscedasticity met
+## Visual model
+plot(BluenessInfectionDorsal)
+## randomly distributed
+
+
+## Assumptions seem to support LMER
+
+## DHARMA to check for outliers
+simsBluenessInfectionDorsal <- simulateResiduals(BluenessInfectionDorsal)
+plot(simsBluenessInfectionDorsal, quantreg = FALSE)
+## No significant tests, so not detecting outliers
+
+## Graphs for Picture Analysis ####
