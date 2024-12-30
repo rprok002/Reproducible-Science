@@ -323,3 +323,80 @@ Anova(update(FACTORIALSETUP, BetaCarotene ~ .))
 etasq(FACTORIALSETUP,test="Wilks") # Using Wilks to be consistent with above
 ## sex explains more than frog type but not high
 
+## Two-way ANOVA test for sum of all 17 carotenoid concentrations for 27 frogs ####
+
+## Using SqrtSum of carotenoid concentrations to negate effect of outliers
+
+# Two-way ANOVA with interaction
+# save model
+mod <- aov(SqrtSum ~ Frog.Type * Sex,
+           data = Carotenoidscombined5final
+)
+mod
+# print results
+summary(mod)
+anova(mod)
+## no interaction, so removing
+
+mod <- aov(SqrtSum ~ Frog.Type + Sex,
+           data = Carotenoidscombined5final
+)
+mod
+# print results
+summary(mod)
+anova(mod)
+
+plot(mod, which = 2)
+## residuals have a couple off but not bad
+
+hist(mod$residuals)
+## residuals seem a bit skewed
+
+# normality test
+shapiro.test(mod$residuals)
+## fits normality, so good
+
+## Homogeneity of variance
+plot(mod, which = 3)
+## looks pretty good
+
+# boxplots by sex
+ggplot(Carotenoidscombined5final) +
+  aes(x = Frog.Type, y = SqrtSum) +
+  geom_boxplot()
+## no outliers here 
+
+# boxplots by frog type
+ggplot(Carotenoidscombined5final) +
+  aes(x = Sex, y = Sum) +
+  geom_boxplot()
+## might have a couple outliers in females, but not extreme enough to worry
+
+## MANOVA and two way anova diagrams ####
+colors = c("red", "darkblue", "darkgreen", "brown")
+heplot(FACTORIALSETUP, size="evidence", 
+       col=colors, cex=1.25,
+       fill=TRUE, fill.alpha=0.1)
+heplot(FACTORIALSETUP, size="effect", 
+       add=TRUE, lwd=5, term.labels=FALSE, col=colors)
+
+pairs(FACTORIALSETUP)
+
+## sum two way anova
+ggplot(Carotenoidscombined5final, aes(x=Frog.Type, y=SqrtSum, fill=Sex)) + 
+  geom_boxplot()+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank())+
+  scale_fill_manual(values=c("white", "darkgrey")) +
+  theme(axis.title.x=element_blank(),axis.text.x=element_text(size=rel(1.2)),
+        legend.position = "top")+
+  ylim(0,100)+
+  ylab("SQRT Sum (µg carotenoids per g skin)")+
+  annotate("text", x=0.81, y=66.86, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.19, y=65.83, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=1.81, y=58.27, label= "x", fontface = "bold", size = 4)+
+  annotate("text", x=2.19, y=65.36, label= "x", fontface = "bold", size = 4)
+
