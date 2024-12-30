@@ -173,21 +173,80 @@ ICC(Carotenoidsoriginalcombo5) ## Change columns to have all dependent variables
 ## -0.078, good
 
 dependentcarotenoidscombo5 <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
-dependentcarotenoidssqrtcombo5 <- data.frame(SqrtXanthophylls, SqrtCanthaxanthins,SqrtEchinenone, SqrtBetaCarotene)
 transpose_dependentcarotenoidscombo5 <- t(dependentcarotenoidscombo5)
-transpose_dependentcarotenoidssqrtcombo5 <- t(dependentcarotenoidssqrtcombo5)
 
 ## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
 Covdependentcarotenoidscombo5 <- cov(dependentcarotenoidscombo5)
 det(Covdependentcarotenoidscombo5)
 ## very positive, looks good
-Covdependentcarotenoidssqrtcombo5 <- cov(dependentcarotenoidssqrtcombo5)
-det(Covdependentcarotenoidssqrtcombo5)
-## positive, good
 
 ## Outliers additional test
 mahalanobis_distance(data = dependentcarotenoidscombo5)$is.outlier
-## No outliers in the data
+## No outliers in the data according to this test
+
+## Assumptions: Equality of Variance Between Groups Control and Infected and Sex
+## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
+Type <- c("Infected","Infected","Infected", "Control",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Control", "Infected","Infected","Infected","Infected","Infected",
+          "Infected", "Control","Infected", "Infected",
+          "Control", "Control", "Control", "Infected", "Control", "Infected",
+          "Infected", "Control", "Infected")
+
+Sex <- c("F","F","F","F","F","F","F","F","F","F","F","M","M","M",
+         "M","M","M","M","M","M","M","M","M","M","F","F","M", "F", "F")
+factor(Type)
+Type
+factor(Sex)
+Sex
+## Run BoxM
+boxM(dependentcarotenoidscombo5, Type)
+## suggests normality and p-value is significant so no homogeneity of covariance matrices
+boxM(dependentcarotenoidscombo5, Sex)
+## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
+
+## Assumptions: multicollinearity
+cor.matoriginalcombo5 <- Carotenoidsoriginalcombo5 %>% cor_mat()
+cor.matoriginalcombo5
+
+## correlation matrix ranges from 0.37-0.67 so that is ok
+
+## Assumptions: multivariate normality
+MVNHzfull <- mvn(data = Carotenoidsoriginalcombo5, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHzfull$multivariateNormality
+## not normal
+
+## no homogeneity of covariance matrices and not normal
+## To fix, additionally removed F1 and F19 for outliers to achieve multivariate normality
+
+## MANOVA with final carotenoid categories with final 27 frogs ####
+
+## Final carotenoid categories:
+## Xanthophylls: Xanthophyll, Can Xan, Can Xan Est 1, Can Xan Est 3
+## Echinenone: Echinenone
+## Canthaxanthins: canthaxanthin ester
+## Beta carotene: beta carotene
+
+Carotenoidscombined5final <- read.csv(file.choose())
+attach(Carotenoidscombined5final)
+Carotenoidsoriginalcombined5final <- Carotenoidscombined5[,c(5,7,9,11)]
+
+## Assumption: Independent observations: ICC
+ICC(Carotenoidsoriginalcombined5final) ## Change columns to have all dependent variables
+## Look at absolute correlation values
+## -0.078, good
+
+dependentcarotenoidscombo5final <- data.frame(Xanthophylls, Canthaxanthins,Echinenone, BetaCarotene)
+transpose_dependentcarotenoidscombo5final <- t(dependentcarotenoidscombo5final)
+
+## Assumptions: Variance/Covariance Positive Determinant: needs to be positive
+Covdependentcarotenoidscombo5final <- cov(dependentcarotenoidscombo5final)
+det(Covdependentcarotenoidscombo5final)
+## very positive, looks good
+
+## Outliers additional test
+mahalanobis_distance(data = dependentcarotenoidscombo5final)$is.outlier
+## No outliers in the data according to this test
 
 ## Assumptions: Equality of Variance Between Groups Control and Infected and Sex
 ## MAKE SURE GROUP MATCHES WITH DATASET CORRECTLY!!!!!!!!!
@@ -205,22 +264,18 @@ Type
 factor(Sex)
 Sex
 ## Run BoxM
-boxM(dependentcarotenoidscombo5, Type)
-## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
-boxM(dependentcarotenoidscombo5, Sex)
+boxM(dependentcarotenoidscombo5final, Type)
+## suggests normality and p-value is significant so no homogeneity of covariance matrices
+boxM(dependentcarotenoidscombo5final, Sex)
 ## suggests normality and p-value is nonsignificant so homogeneity of covariance matrices
 
 ## Assumptions: multicollinearity
-cor.matoriginalcombo5 <- Carotenoidsoriginalcombo5 %>% cor_mat()
-cor.matoriginalcombo5
+cor.matoriginalcombo5final <- Carotenoidsoriginalcombined5final %>% cor_mat()
+cor.matoriginalcombo5final
 
-## correlation matrices  good without sqrt, with it they aren't as good but still within limits
-## I am comfortable with so keeping as is
+## correlation matrix ranges from 0.37-0.67 so that is ok
 
 ## Assumptions: multivariate normality
-MVNHzfull <- mvn(data = Carotenoidsoriginalcombo5, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+MVNHzfull <- mvn(data = Carotenoidsoriginalcombined5final, mvnTest = "hz", multivariatePlot = "qq", multivariateOutlierMethod = "quan")
 MVNHzfull$multivariateNormality
-## normal
-
-
-## Additionally removed F1 and F19 for outliers to achieve multivariate normality
+## not normal
