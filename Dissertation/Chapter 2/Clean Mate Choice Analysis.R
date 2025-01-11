@@ -54,6 +54,14 @@ anova(InfectedTrialGLMER)
 summary(InfectedTrialGLMER)
 plot(InfectedTrialGLMER)
 
+## Try Neg binomial
+InfectedTrialGLMERNB <- glmer.nb(Weight_Seconds_Female~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisInfected, 
+                            weights = wt,)
+anova(InfectedTrialGLMERNB)
+summary(InfectedTrialGLMERNB)
+plot(InfectedTrialGLMERNB)
+## plot looks weird, not sure if it should for neg binomial
+
 ## Effect of Male Movement/Placement Data on Difference between female time near Control vs Infected male
 ## Data File
 MateChoiceAnalysisInfectedDiff <- read.csv(file.choose())
@@ -580,6 +588,14 @@ anova(ControlTrialGLMERprop)
 summary(ControlTrialGLMERprop)
 emmeans(ControlTrialGLMERprop, list (pairwise~Group), lmer.df = "satterthwaite")
 
+## Try neg binomial
+ControlTrialGLMERNB <- glmer.nb(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                           weights = wt)
+anova(ControlTrialGLMERNB)
+summary(ControlTrialGLMERNB)
+emmeans(ControlTrialGLMERNB, list (pairwise~Group), lmer.df = "satterthwaite")
+plot(ControlTrialGLMERNB)
+## plot looks weird, not sure if it should for neg binomial
 
 ## Male Move
 
