@@ -573,6 +573,13 @@ summary(ControlTrialGLMER)
 emmeans(ControlTrialGLMER, list (pairwise~Group), lmer.df = "satterthwaite")
 ## females stay closer to control frog in control experiments
 
+## Try proportion
+ControlTrialGLMERprop <- glmer(Proportion~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                           weights = wt, family = "binomial")
+anova(ControlTrialGLMERprop)
+summary(ControlTrialGLMERprop)
+emmeans(ControlTrialGLMERprop, list (pairwise~Group), lmer.df = "satterthwaite")
+
 
 ## Male Move
 
