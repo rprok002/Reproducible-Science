@@ -532,3 +532,124 @@ library(patchwork)
 
 (BrightnessLineDay | RednessLineDay)/
   (GreenessLineDay | BluenessLineDay)
+
+## Movement and Front for Control Frogs ####
+
+## Female Choice
+## Data File
+MateChoiceAnalysisControl <- read.csv(file.choose())
+## Check distribution
+ggdensity(MateChoiceAnalysisControl$Weight_Seconds, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
+ggqqplot(MateChoiceAnalysisControl$Weight_Seconds)
+## Distribution of Weight Seconds Female doesn't seem to indicate lmer good idea
+
+## Female Mate Choice LMER
+ControlTrialLMER <- lmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                          weights = wt)
+anova(ControlTrialLMER)
+
+## Check assumptions 
+## Linearity
+WeightSecondsControlFemale <- MateChoiceAnalysisControl$Weight_Seconds
+ControlTrialLMER.Linearity<-plot(resid(ControlTrialLMER),WeightSecondsControlFemale) ## violates assumption
+## Homogeneity of Variance
+MateChoiceAnalysisControl$Control.Res <- residuals(ControlTrialLMER)
+MateChoiceAnalysisControl$Abs.Control.Res <- abs(MateChoiceAnalysisControl$Control.Res)
+MateChoiceAnalysisControl$Control.Res2 <- MateChoiceAnalysisControl$Abs.Control.Res^2
+Levene.ModelControl <- lm(Control.Res2 ~ Frog_Number, data=MateChoiceAnalysisControl) 
+anova(Levene.ModelControl)
+## homoscedasticity not met
+## Visual model
+plot(ControlTrialLMER)
+## not randomly distributed
+
+## overall doesn't seem an lmer is a good idea for female choice, so doing glmer
+
+## Female Mate Choice GLMER
+ControlTrialGLMER <- glmer(Weight_Seconds~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                            weights = wt, family = "poisson")
+anova(ControlTrialGLMER)
+summary(ControlTrialGLMER)
+emmeans(ControlTrialGLMER, list (pairwise~Group), lmer.df = "satterthwaite")
+## females stay closer to control frog in control experiments
+
+
+## Male Move
+
+## Check distribution
+ggdensity(MateChoiceAnalysisControl$Wander, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
+ggqqplot(MateChoiceAnalysisControl$WWander)
+## Distribution of Male Wander doesn't seem to indicate lmer good idea
+
+## Female Mate Choice LMER
+ControlTrialLMERMove <- lmer(Wander~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                         weights = wt)
+anova(ControlTrialLMERMove)
+
+## Check assumptions 
+## Linearity
+WanderMale <- MateChoiceAnalysisControl$Wander
+ControlTrialLMERMove.Linearity<-plot(resid(ControlTrialLMERMove),WanderMale) ## violates assumption
+## Homogeneity of Variance
+MateChoiceAnalysisControl$ControlMove.Res <- residuals(ControlTrialLMERMove)
+MateChoiceAnalysisControl$Abs.ControlMove.Res <- abs(MateChoiceAnalysisControl$ControlMove.Res)
+MateChoiceAnalysisControl$ControlMove.Res2 <- MateChoiceAnalysisControl$Abs.ControlMove.Res^2
+Levene.ModelControlMove <- lm(ControlMove.Res2 ~ Frog_Number, data=MateChoiceAnalysisControl) 
+anova(Levene.ModelControlMove)
+## homoscedasticity met
+## Visual model
+plot(ControlTrialLMERMove)
+## not very well randomly distributed
+emmeans(ControlTrialLMERMove, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## overall doesn't seem an lmer is a good idea for male move, so doing glmer
+
+## Male Move GLMER
+ControlTrialGLMERMove <- glmer(Wander~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                           weights = wt, family = "poisson")
+anova(ControlTrialGLMERMove)
+summary(ControlTrialGLMERMove)
+emmeans(ControlTrialGLMERMove, list (pairwise~Group), lmer.df = "satterthwaite")
+## control males move more than infected ones
+
+## Male Front
+
+## Check distribution
+ggdensity(MateChoiceAnalysisControl$Front, main = "Density Plot of Weight Seconds", xlab = " Weight Seconds")
+ggqqplot(MateChoiceAnalysisControl$Front)
+## Distribution of Male Front doesn't seem to indicate lmer good idea
+
+## Female Mate Choice LMER
+ControlTrialLMERFront <- lmer(Front~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                             weights = wt)
+anova(ControlTrialLMERFront)
+
+## Check assumptions 
+## Linearity
+FrontMale <- MateChoiceAnalysisControl$Front
+ControlTrialLMERFront.Linearity<-plot(resid(ControlTrialLMERFront),FrontMale) ## violates assumption
+## Homogeneity of Variance
+MateChoiceAnalysisControl$ControlFront.Res <- residuals(ControlTrialLMERFront)
+MateChoiceAnalysisControl$Abs.ControlFront.Res <- abs(MateChoiceAnalysisControl$ControlFront.Res)
+MateChoiceAnalysisControl$ControlFront.Res2 <- MateChoiceAnalysisControl$Abs.ControlFront.Res^2
+Levene.ModelControlFront <- lm(ControlFront.Res2 ~ Frog_Number, data=MateChoiceAnalysisControl) 
+anova(Levene.ModelControlFront)
+## homoscedasticity not met
+## Visual model
+plot(ControlTrialLMERFront)
+## fairly randomly distributed
+emmeans(ControlTrialLMERFront, list (pairwise~Group), lmer.df = "satterthwaite")
+
+## overall doesn't seem an lmer is a good idea for male move, so doing glmer
+
+## Male Front GLMER
+ControlTrialGLMERFront <- glmer(Front~Group+(1|Male_Pair_Letter)+(1|Frog_Number) , data = MateChoiceAnalysisControl, 
+                               weights = wt, family = "poisson")
+anova(ControlTrialGLMERFront)
+summary(ControlTrialGLMERFront)
+emmeans(ControlTrialGLMERFront, list (pairwise~Group), lmer.df = "satterthwaite")
+## control males at front more than infected ones but not as prominent as wandering
+
+
+
+## Seems like something might be there 
