@@ -400,3 +400,152 @@ ggplot(Carotenoidscombined5final, aes(x=Frog.Type, y=SumSqrt, fill=Sex)) +
   annotate("text", x=1.81, y=17.78, label= "x", fontface = "bold", size = 4)+
   annotate("text", x=2.19, y=19.44, label= "x", fontface = "bold", size = 4)
 
+## NMDS ####
+## Package
+install.packages("vegan")
+library(vegan)
+library(tidyverse)
+install.packages("goeveg")
+library(goeveg)
+ 
+
+## NMDS
+## Data File
+NMDSdata <- read.csv(file.choose())
+
+## Long format
+
+com_matrix <- NMDSdata %>% 
+  
+  # Turn our ID, Group, Sex and Carotenoid columns into factors 
+  mutate_at(vars(ID), as.factor) %>% 
+  
+  # pivot to wide format
+  pivot_wider(names_from = Carotenoid,
+              values_from = Value) %>% 
+  
+  # change our column "ID" to our rownames
+  column_to_rownames(var = "ID")
+
+head(com_matrix)
+
+## Running NMDS based on Bray-Curtis
+NMDSnmds <-
+  metaMDS(com_matrix[,3:19],
+          distance = "bray",
+          k = 2)
+print(NMDSnmds)
+
+## stress score is 0.1,less than 0.2 is good for ordination with 2 dimensions
+stressplot(NMDSnmds)
+
+dimcheck_out <- 
+  dimcheckMDS(com_matrix[,3:19],
+              distance = "bray",
+              k = 6)
+print(dimcheck_out)
+## going 1 to 2 dimensions goes 0.172 to 0.104, going to 3 drops to 0.068, maybe worth doing 3?
+
+## plot NMDS
+plot(NMDSnmds)
+## fairly random distribution, not surprising
+
+# get group type  
+group_type <- NMDSdata %>% 
+  distinct(ID, Group) 
+
+# Extract NMDS scores for ID (sites is what the NMDS originally calles it) 
+nmds_IDScores <-
+  # get nmds scores 
+  as.data.frame(scores(NMDSnmds)$sites) %>%
+  # change rownames (site) to a column 
+  rownames_to_column(var = "ID") %>% 
+  # join our habitat type (grouping variable) to each site 
+  left_join(group_type)
+
+# Extract NMDS scores for Carotenoid (NMDS originally thinks it is species) 
+nmds_CarotenoidScores <- 
+  as.data.frame(scores(NMDSnmds, "species"))
+
+# create a column of species, from the rownames of species.scores
+nmds_CarotenoidScores$species <- rownames(nmds_CarotenoidScores) 
+
+## Plot
+ggplot() + 
+  
+  # add site scores
+  geom_point(data = nmds_IDScores, 
+             aes(x=NMDS1, y=NMDS2, colour = Group), 
+             size = 2) + 
+  
+  # add species scores 
+  geom_text(data = nmds_CarotenoidScores, 
+            aes(x=NMDS1, y=NMDS2, label = species)) +
+  
+  theme_classic()
+## once again, fairly cluttered
+
+# get centroid (mean value of grouping variable)
+Group_Centroid <- 
+  nmds_IDScores %>% 
+  group_by(Group) %>% 
+  summarise(axis1 = mean(NMDS1),
+            axis2 = mean(NMDS2)) %>% 
+  ungroup()
+
+# extract convex hull
+Group.hull <- 
+  nmds_IDScores %>% 
+  group_by(Group) %>%
+  slice(chull(NMDS1, NMDS2))
+
+## stress value
+
+nmds_stress <- NMDSnmds$stress
+
+## Now we have all the components for our ordination. 
+## Let’s go ahead and create the plot. 
+## Our axis labels are arbitrary so they can be removed. 
+## This is because NMDS does not use eigenanalysis, so the axes of the plot cannot be interpreted and we instead use the relative position of points on the plot. 
+## For this reason, the ordination can be rotated or inverted as long as the relative position of points is maintained.
+
+
+# use ggplot to plot 
+ggplot() + 
+  
+  # add site scores
+  geom_point(data = nmds_IDScores, 
+             aes(x=NMDS1, y=NMDS2, colour = Group), size = 2) + 
+  
+  # add species scores 
+  geom_text(data = nmds_CarotenoidScores, 
+            aes(x=NMDS1, y=NMDS2, label = species)) +
+  
+  # add centroid 
+  geom_point(data = Group_Centroid, 
+             aes(x = axis1, y = axis2, color = Group), 
+             size = 5, shape = 17) +
+  
+  # add convex hull
+  geom_polygon(data = Group.hull, 
+               aes(x = NMDS1, y = NMDS2, fill = Group, group = Group), 
+               alpha = 0.30) +
+  
+  # add stress value
+  annotate("text", x = 0.3, y = 0.1, 
+           label = paste("2d stress =", round(nmds_stress, 3))) +
+  
+  # edit theme
+  labs(x = "NMDS1", y = "NMDS2") + 
+  theme(axis.text = element_blank(), axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "white"),
+        panel.border = element_rect(color = "black", 
+                                    fill = NA, linewidth = .5),
+        axis.line = element_line(color = "black"),
+        plot.title = element_text(hjust = 0.5),
+        legend.key.size = unit(.25, "cm"))+
+  xlim(-.3,.4)
+
+## Apo, keto1, cann3 and can1 seem more associated with infected and larger spread in 
+## infected than control
+
