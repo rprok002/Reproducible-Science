@@ -452,7 +452,7 @@ plot(NMDSnmds)
 
 # get group type  
 group_type <- NMDSdata %>% 
-  distinct(ID, Group) 
+  distinct(ID, Group, Sex) 
 
 # Extract NMDS scores for ID (sites is what the NMDS originally calles it) 
 nmds_IDScores <-
@@ -515,7 +515,7 @@ ggplot() +
   
   # add site scores
   geom_point(data = nmds_IDScores, 
-             aes(x=NMDS1, y=NMDS2, colour = Group), size = 2) + 
+             aes(x=NMDS1, y=NMDS2, colour = Group, shape = Sex ), size = 2) + 
   
   # add species scores 
   geom_text(data = nmds_CarotenoidScores, 
