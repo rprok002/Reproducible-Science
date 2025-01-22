@@ -1984,3 +1984,226 @@ mean_Live <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers %>%
   summarise(mean= mean(Seconds_Fixed),
             se = sd(Seconds_Fixed))
 glimpse(mean_Live)
+
+
+## Manuscript Revision 1 ####
+## Take away neutral area from data
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed_SR)
+## pretty normal with SR
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed)
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Total_Seconds_Fixed)
+## keeping without SR not looking too great, so keeping as SR
+
+## Nesting trial order with frog number, adding chytrid volume as random factor and checking AIC values
+AllDeadNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+Total_Seconds_Fixed_SR+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaLMER)
+AIC(AllDeadNaiveFIULearnedPanamaLMER) ## 614.2431
+plot(AllDeadNaiveFIULearnedPanamaLMER)
+
+## Moving total trial seconds to random factor to check AIC
+AllDeadNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaLMER)
+AIC(AllDeadNaiveFIULearnedPanamaLMER) ## 679.475
+summary(AllDeadNaiveFIULearnedPanamaLMER)
+
+## raised AIC a bit, but I think total trial seconds should be a random factor
+## Removing liquid amount as random and checking AIC
+AllDeadNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaLMER)
+AIC(AllDeadNaiveFIULearnedPanamaLMER) ## 677.475
+summary(AllDeadNaiveFIULearnedPanamaLMER)
+## didn't change AIC with removal so just going to leave in, but first testing as fixed effect
+
+AllDeadNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+Liquid.Amount+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaLMER)
+AIC(AllDeadNaiveFIULearnedPanamaLMER) ## 676.9281
+summary(AllDeadNaiveFIULearnedPanamaLMER)
+## not significant, using as random effect
+
+AllDeadNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllDeadNaiveFIULearnedPanamaLMER)
+AIC(AllDeadNaiveFIULearnedPanamaLMER) ## 677.475
+summary(AllDeadNaiveFIULearnedPanamaLMER)
+plot(AllDeadNaiveFIULearnedPanamaLMER)
+
+## Check assumptions 
+## Linearity
+SecondsFixedSR<- AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR
+DeadLMER.Linearity<-plot(resid(AllDeadNaiveFIULearnedPanamaLMER),SecondsFixedSR) ## has a pattern but not too bad
+## Homogeneity of Variance
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Dead.Res <- residuals(AllDeadNaiveFIULearnedPanamaLMER)
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Abs.Dead.Res <- abs(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Dead.Res)
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Dead.Res2 <- AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Abs.Dead.Res^2
+Levene.Dead <- lm(Dead.Res2 ~ Frog_Number, data=AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers) 
+anova(Levene.Dead)
+## homoscedasticity not met, but I feel ok with it
+## Visual model
+plot(AllDeadNaiveFIULearnedPanamaLMER)
+## randomly distributed
+
+## Put back trials where either con or dead section frog spent total time in
+
+## Take away neutral area from data
+AllDeadNaiveFIULearnedPanamaAnalysis = read.csv(file.choose())
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysis$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysis$Total_Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysis$Seconds_Fixed_SR)
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysis$Total_Seconds_Fixed_SR)
+## pretty normal with SR
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysis$Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllDeadNaiveFIULearnedPanamaAnalysis$Total_Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysis$Seconds_Fixed)
+ggqqplot(AllDeadNaiveFIULearnedPanamaAnalysis$Total_Seconds_Fixed)
+## keeping without SR not looking too great, so keeping as SR
+
+## Nesting trial order with frog number, adding chytrid volume as random factor and checking AIC values
+AllDeadNaiveFIULearnedPanamaLMER2 <- lmer(Seconds_Fixed_SR~Group+Type+Total_Seconds_Fixed_SR+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount), data = AllDeadNaiveFIULearnedPanamaAnalysis)
+anova(AllDeadNaiveFIULearnedPanamaLMER2)
+AIC(AllDeadNaiveFIULearnedPanamaLMER2) ## 728.7203
+plot(AllDeadNaiveFIULearnedPanamaLMER2)
+## AIC value higher with this model than when outliers removed
+
+## Moving total trial seconds to random factor to check AIC
+AllDeadNaiveFIULearnedPanamaLMER2 <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysis)
+anova(AllDeadNaiveFIULearnedPanamaLMER2)
+AIC(AllDeadNaiveFIULearnedPanamaLMER2) ## 764.2802
+summary(AllDeadNaiveFIULearnedPanamaLMER2)
+## raised AIC a bit, but I think total trial seconds should be a random factor
+
+## Removing liquid amount as random and checking AIC
+AllDeadNaiveFIULearnedPanamaLMER2 <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysis)
+anova(AllDeadNaiveFIULearnedPanamaLMER2)
+AIC(AllDeadNaiveFIULearnedPanamaLMER2) ## 762.2802
+summary(AllDeadNaiveFIULearnedPanamaLMER2)
+## didn't change AIC with removal so just going to leave in, but first testing as fixed effect
+
+AllDeadNaiveFIULearnedPanamaLMER2 <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+Liquid.Amount+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysis)
+anova(AllDeadNaiveFIULearnedPanamaLMER2)
+AIC(AllDeadNaiveFIULearnedPanamaLMER2) ## 761.8908
+summary(AllDeadNaiveFIULearnedPanamaLMER2)
+## not significant, using as random effect
+
+AllDeadNaiveFIULearnedPanamaLMER2 <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount)+ (1|Total_Seconds_Fixed_SR), data = AllDeadNaiveFIULearnedPanamaAnalysis)
+anova(AllDeadNaiveFIULearnedPanamaLMER2)
+AIC(AllDeadNaiveFIULearnedPanamaLMER2) ## 764.2802
+summary(AllDeadNaiveFIULearnedPanamaLMER2)
+plot(AllDeadNaiveFIULearnedPanamaLMER2)
+
+## makes so can't use linear model, so leaving outliers out
+
+SecondsFixedSR2<- AllDeadNaiveFIULearnedPanamaAnalysis$Seconds_Fixed_SR
+DeadLMER.Linearity<-plot(resid(AllDeadNaiveFIULearnedPanamaLMER2),SecondsFixedSR2) ## nope totally linear
+## Homogeneity of Variance
+AllDeadNaiveFIULearnedPanamaAnalysis$Dead2.Res <- residuals(AllDeadNaiveFIULearnedPanamaLMER2)
+AllDeadNaiveFIULearnedPanamaAnalysis$Abs.Dead2.Res <- abs(AllDeadNaiveFIULearnedPanamaAnalysis$Dead2.Res)
+AllDeadNaiveFIULearnedPanamaAnalysis$Dead2.Res2 <- AllDeadNaiveFIULearnedPanamaAnalysis$Abs.Dead2.Res^2
+Levene.Dead2 <- lm(Dead2.Res2 ~ Frog_Number, data=AllDeadNaiveFIULearnedPanamaAnalysis) 
+anova(Levene.Dead2)
+## homoscedasticity not met, not good
+## Visual model
+plot(AllDeadNaiveFIULearnedPanamaLMER2)
+## not randomly distributed
+
+## going to leave those outliers out because makes sense frog behavior wise and makes so can't use lmer
+
+## Live
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers = read.csv(file.choose())
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR)
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed_SR)
+## pretty normal with SR
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama")
+ggdensity(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed, main = "Density Plot", xlab = "All Dead FIU Panama Total")
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed)
+ggqqplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Total_Fixed)
+## keeping without SR not looking too great, so keeping as SR
+
+## Nesting trial order with frog number, adding chytrid volume as random factor and checking AIC values
+AllLiveNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+Seconds_Total_Fixed_SR+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount), data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaLMER)
+AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 620.7889
+plot(AllLiveNaiveFIULearnedPanamaLMER)
+
+## Moving total trial seconds to random factor to check AIC
+AllLiveNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount)+ (1|Seconds_Total_Fixed_SR), data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaLMER)
+AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 674.975
+summary(AllLiveNaiveFIULearnedPanamaLMER)
+## raised AIC a bit, but I think total trial seconds should be a random factor
+
+## Removing liquid amount as random and checking AIC
+AllLiveNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Seconds_Total_Fixed_SR), data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaLMER)
+AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 672.975
+summary(AllLiveNaiveFIULearnedPanamaLMER)
+## model doesn't converge, putting in and trying as fixed factor
+
+AllLiveNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+Liquid.Amount+ (1|Seconds_Total_Fixed_SR), data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaLMER)
+AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 761.8908
+summary(AllLiveNaiveFIULearnedPanamaLMER)
+## Model failed to converge, keeping liquid as random factor
+
+AllLiveNaiveFIULearnedPanamaLMER <- lmer(Seconds_Fixed_SR~Group+Type+(1|Frog_Number:Trial.Order)+ (1|Liquid.Amount)+ (1|Seconds_Total_Fixed_SR), data = AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers)
+anova(AllLiveNaiveFIULearnedPanamaLMER)
+AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 674.975
+summary(AllLiveNaiveFIULearnedPanamaLMER)
+plot(AllLiveNaiveFIULearnedPanamaLMER)
+
+SecondsFixedSR3<- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR
+LiveLMER.Linearity<-plot(resid(AllLiveNaiveFIULearnedPanamaLMER),SecondsFixedSR3) ## linear but not bad
+## Homogeneity of Variance
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Live.Res <- residuals(AllLiveNaiveFIULearnedPanamaLMER)
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Abs.Live.Res <- abs(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Live.Res)
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Live.Res2 <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Abs.Live.Res^2
+Levene.Live <- lm(Live.Res2 ~ Frog_Number, data=AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers) 
+anova(Levene.Live)
+## homoscedasticity not met, but pretty close 
+## Visual model
+plot(AllLiveNaiveFIULearnedPanamaLMER)
+## randomly distributed
+
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Dead"))
+ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", ylab = " Time (seconds)", xlab = "Odor Section",
+          color = "Type", ylim = c(0, 5000)) + 
+  scale_x_discrete(labels=c("Dead Control", "Dead Bd"))+
+  scale_y_continuous(breaks=seq(0,4500,by=500))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  scale_color_manual(values=c("black", "grey60"))
+
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Live"))
+ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey", ylab = " Time (seconds)", xlab = "Odor Section",
+          color = "Type", ylim = c(0, 5000)) + 
+  scale_x_discrete(labels=c("Broth", "Live Bd"))+
+  scale_y_continuous(breaks=seq(0,4500,by=500))+
+  theme(plot.title=element_text(hjust=0.5))+
+  theme(legend.title=element_blank())+
+  scale_color_manual(values=c("black", "grey60"))
+
+## Notes on removing outliers
+
+## No F10 for dead trials, so only 7 dead learned frogs
+
+## A couple trials taken out (M15 1, Kevin 1 and NGP4 1) not used because bacteria found in Bd sample after the fact and so can’t trust it
+
+## F2 1 and M8 1 removed because spent entire trial time in neutral area
+
+## Removed M201, F2 3 and F25 3 because never moved during trial
+
+## Live trials:
+  ## Lost a frog so only 9 naive frogs
+## Missing Dani 2, not sure why
+
+## No M9 1 or M20 1because bacteria in chytrid
+
+## No F10 1 or F25 1 or M8 1 or M8 2 or F10 3 because only neutral zone
+
+## Only F25 3 removed because only sat in one section not neutral section
