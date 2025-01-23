@@ -2156,6 +2156,7 @@ anova(AllLiveNaiveFIULearnedPanamaLMER)
 AIC(AllLiveNaiveFIULearnedPanamaLMER) ## 674.975
 summary(AllLiveNaiveFIULearnedPanamaLMER)
 plot(AllLiveNaiveFIULearnedPanamaLMER)
+emmeans(AllLiveNaiveFIULearnedPanamaLMER, pairwise~Sex,lmer.df = "satterthwaite")$contrasts
 
 SecondsFixedSR3<- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Seconds_Fixed_SR
 LiveLMER.Linearity<-plot(resid(AllLiveNaiveFIULearnedPanamaLMER),SecondsFixedSR3) ## linear but not bad
@@ -2171,22 +2172,45 @@ plot(AllLiveNaiveFIULearnedPanamaLMER)
 ## randomly distributed
 
 AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Dead"))
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Naïve", "Learned"))
 ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", ylab = " Time (seconds)", xlab = "Odor Section",
           color = "Type", ylim = c(0, 5000)) + 
   scale_x_discrete(labels=c("Dead Control", "Dead Bd"))+
   scale_y_continuous(breaks=seq(0,4500,by=500))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())+
-  scale_color_manual(values=c("black", "grey60"))
+  scale_color_manual(values=c("black", "grey60"))+
+  annotate("text", x=0.8, y=953, label="x")+
+  annotate("text", x=1.2, y=933, label="x")+
+  annotate("text", x=1.8, y=822, label="x")+
+  annotate("text", x=2.2, y=1051, label="x")
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Live"))
-ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "grey", ylab = " Time (seconds)", xlab = "Odor Section",
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Naïve", "Learned"))
+ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "lightgrey", ylab = " Time (seconds)", xlab = "Odor Section",
           color = "Type", ylim = c(0, 5000)) + 
-  scale_x_discrete(labels=c("Broth", "Live Bd"))+
+  scale_x_discrete(labels=c("Live Control", "Live Bd"))+
   scale_y_continuous(breaks=seq(0,4500,by=500))+
   theme(plot.title=element_text(hjust=0.5))+
   theme(legend.title=element_blank())+
-  scale_color_manual(values=c("black", "grey60"))
+  scale_color_manual(values=c("black", "grey60"))+
+  annotate("text", x=0.8, y=957, label="x")+
+  annotate("text", x=1.2, y=965, label="x")+
+  annotate("text", x=1.8, y=701, label="x")+
+  annotate("text", x=2.2, y=1042, label="x")
+
+## Means and standard deviations
+mean_Dead <- AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers %>%
+  group_by(Group, Type) %>% 
+  summarise(mean= mean(Seconds_Fixed),
+            se = sd(Seconds_Fixed))
+glimpse(mean_Dead)
+
+mean_Live <- AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers %>%
+  group_by(Group, Type) %>% 
+  summarise(mean= mean(Seconds_Fixed),
+            se = sd(Seconds_Fixed))
+glimpse(mean_Live)
 
 ## Notes on removing outliers
 
