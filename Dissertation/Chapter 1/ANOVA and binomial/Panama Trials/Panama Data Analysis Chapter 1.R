@@ -2172,7 +2172,7 @@ plot(AllLiveNaiveFIULearnedPanamaLMER)
 ## randomly distributed
 
 AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Dead"))
-AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Naïve", "Learned"))
+AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Bd-Naïve", "Bd-Learned"))
 ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", ylab = " Time (seconds)", xlab = "Odor Section",
           color = "Type", ylim = c(0, 5000)) + 
   scale_x_discrete(labels=c("Dead Control", "Dead Bd"))+
@@ -2186,7 +2186,7 @@ ggboxplot(AllDeadNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seco
   annotate("text", x=2.2, y=1051, label="x")
 
 AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Group, levels = c("Con", "Live"))
-AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Naïve", "Learned"))
+AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type <- factor(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers$Type, levels = c("Bd-Naïve", "Bd-Learned"))
 ggboxplot(AllLiveNaiveFIULearnedPanamaAnalysisNoOutliers, x = "Group", y = "Seconds_Fixed", fill = "lightgrey", ylab = " Time (seconds)", xlab = "Odor Section",
           color = "Type", ylim = c(0, 5000)) + 
   scale_x_discrete(labels=c("Live Control", "Live Bd"))+
